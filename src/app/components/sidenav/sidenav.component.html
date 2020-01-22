@@ -1,0 +1,152 @@
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+  <!-- Sidebar - Brand -->
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" (click)="setPage('dashboard')">
+    <img src="../../assets/images/new_mivo_logo.png" alt="brand-logo" />
+  </a>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider my-0">
+
+  <!-- Nav Item - Dashboard -->
+  <li [ngClass]="{'active': page=='dashboard'}" class="nav-item" (click)="setPage('dashboard')">
+    <a class="nav-link">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+
+  <!-- Nav Item - Pages Collapse Menu -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#myAccount" aria-expanded="true"
+      aria-controls="myAccount">
+      <i class="fas fa-fw fa-user"></i>
+      <span>My Account</span>
+    </a>
+    <div id="myAccount" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" [ngClass]="{'active': page=='outstanding-bills'}" (click)="setPage('outstanding-bills')"><i class="fas fa-fw fa-star"></i> Outstanding Bills</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-money-bill-wave"></i> Commissions Paid</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-calculator"></i> Estimated Commissions</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-award"></i> Premium Collection</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#myClient" aria-expanded="true"
+      aria-controls="myClient">
+      <i class="fas fa-fw fa-handshake"></i>
+      <span>My Client</span>
+    </a>
+    <div id="myClient" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Clients:</h6>
+        <a class="collapse-item"><i class="fas fa-fw fa-info-circle"></i> Details</a>
+        <h6 class="collapse-header">Policies:</h6>
+        <a class="collapse-item"><i class="fas fa-fw fa-user-check"></i> Active</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-user-times"></i> Cancelled</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-sync"></i> Renewed</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-user-slash"></i> Not Renewed</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-exclamation-triangle"></i> Expiring</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-user-clock"></i> Provisional</a>
+        <h6 class="collapse-header">Quotations:</h6>
+        <a class="collapse-item"><i class="fas fa-fw fa-user-check"></i> Active</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-user-clock"></i> Provisional</a>
+        <h6 class="collapse-header">Claims:</h6>
+        <a class="collapse-item"><i class="fas fa-fw fa-info-circle"></i> Details</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#applications" aria-expanded="true"
+      aria-controls="applications">
+      <i class="fas fa-fw fa-play"></i>
+      <span>Applications</span>
+    </a>
+    <div id="applications" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Quotation</h6>
+        <a class="collapse-item" [ngClass]="{'active': page=='quotation-car'}"  (click)="setPage('quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <h6 class="collapse-header">Policy Issuance</h6>
+        <a class="collapse-item"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link">
+      <i class="fas fa-fw fa-bell"></i>
+      <span>Requests</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#utilities" aria-expanded="true"
+      aria-controls="utilities">
+      <i class="fas fa-fw fa-tools"></i>
+      <span>Utilities</span>
+    </a>
+    <div id="utilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" [ngClass]="{'active': page=='query'}" (click)="setPage('query')"><i class="fas fa-fw fa-clipboard-list"></i> Query</a>
+        <a class="collapse-item"><i class="fas fa-fw fa-print"></i> Document Printing</a>
+        <a class="collapse-item" [ngClass]="{'active': page=='profile'}" (click)="setPage('profile')"><i class="fas fa-fw fa-key"></i> Change Password</a>
+      </div>
+    </div>
+  </li>
+
+  <li [ngClass]="{'active': page=='news'}" class="nav-item" (click)="setPage('news')">
+    <a class="nav-link">
+      <i class="fas fa-fw fa-newspaper"></i>
+      <span>News</span>
+    </a>
+  </li>
+
+  <li [ngClass]="{'active': page=='faq'}" class="nav-item" (click)="setPage('faq')">
+    <a class="nav-link">
+      <i class="fas fa-fw fa-question"></i>
+      <span>FAQ</span>
+    </a>
+  </li>
+
+  <!-- Divider -->
+  <hr class="sidebar-divider">
+
+  <!-- Heading -->
+  <div class="sidebar-heading">
+    Agent Information
+  </div>
+
+  <!-- Nav Item - Charts -->
+  <li class="nav-item">
+    <div class="nav-link">
+      <i class="fas fa-fw fa-map-marked-alt"></i>
+      <span>Acacia Ave., Madrigal Business Park, Ayala Alabang, Muntinlupa City</span></div>
+  </li>
+
+  <li class="nav-item">
+    <div class="nav-link">
+      <i class="fas fa-fw fa-key"></i>
+      <span>Your password will expire in <strong>60 days</strong></span></div>
+  </li>
+
+
+  <!-- Divider -->
+  <hr class="sidebar-divider d-none d-md-block">
+
+  <!-- Sidebar Toggler (Sidebar) -->
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+
+</ul>

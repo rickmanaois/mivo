@@ -1,0 +1,48 @@
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <app-sidenav></app-sidenav>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Header -->
+        <app-header></app-header>
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <app-dashboard *ngIf="page === 'dashboard'"></app-dashboard>
+
+          <app-profile *ngIf="page === 'profile'"></app-profile>
+
+          <app-outstanding-bills *ngIf="page === 'outstanding-bills'"></app-outstanding-bills>
+
+          <app-quotation-car *ngIf="page === 'quotation-car'"></app-quotation-car>
+
+          <app-query *ngIf="page === 'query'"></app-query>
+
+          <app-missing-page *ngIf="page === 'news'"></app-missing-page>
+
+          <app-faq *ngIf="page === 'faq'"></app-faq>
+        </div>
+        <!-- End Page Content -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <app-footer></app-footer>
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+  </div>
+  <!-- End of Page Wrapper -->

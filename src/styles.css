@@ -1,0 +1,109 @@
+body,
+html {
+  height: 100%;
+}
+
+.btn.btn-primary {
+  background: #3a3a3a;
+  border-color: #464646;
+}
+
+.btn.btn-primary:hover {
+  background: #272727;
+  border-color: #464646;
+}
+
+.bg-gradient-primary {
+  background: #c31f09;
+  background-image: url(/assets/images/bg.jpg);
+  background-size: cover;
+}
+
+.border-left-primary {
+  border-left: .25rem solid #c31f09 !important;
+}
+
+.text-primary {
+  color: #c31f09 !important;
+}
+
+.bg-primary {
+  background-color: #c31f09 !important;
+}
+
+.flexitable {
+  overflow-x: auto;
+}
+
+.btn-group-table {
+  bottom: 20px;
+}
+
+.btn-group-table button {
+  margin-right: 5px;
+}
+
+.page-header {
+  color: #3e3e3e;
+  padding-bottom: 15px;
+}
+
+.page-header h4 {
+  font-weight: 400;
+}
+
+app-sidenav {
+  background: #c31f09;
+  background-image: url('/assets/images/bg.jpg');
+  background-size: cover;
+}
+
+form .required {
+  border-left: 6px solid #ced4da;
+}
+
+form .form-divider {
+  border-top: 1px solid #ececec;
+  width: 100%;
+  padding-bottom: 25px;
+  margin-top: 10px;
+  clear: both;
+}
+
+.btn-group {
+  float: right;
+}
+
+form .form-error {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #c31f09;
+  display: none;
+}
+
+form .form-group.input-error .form-error {
+  display: block !important;
+}
+
+form .form-group.input-error input,
+form .form-group.input-error select {
+  border: 2px solid #c31f09 !important;
+}
+
+.sidebar-dark .nav-item .nav-link,
+.sidebar .nav-item .collapse .collapse-inner .collapse-item,
+.sidebar .nav-item .collapsing .collapse-inner .collapse-item {
+  cursor: pointer;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 300px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

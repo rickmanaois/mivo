@@ -1,0 +1,19 @@
+footer.sticky-footer {
+    padding: 0;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.footer-wrapper {
+    padding-top: 30px;
+}
+
+.footer-wrapper p {
+    margin-bottom: 6px;
+    font-size: 10px;
+}
+
+.footer-wrapper img {
+    width: 200px;
+    margin: 0 -9px 5px;
+}

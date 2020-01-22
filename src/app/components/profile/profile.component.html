@@ -1,0 +1,124 @@
+<div class="row" id="profile">
+  <div class="col-xl-12">
+    <div class="page-header">
+      <h4>Profile</h4>
+    </div>
+    <!-- .page-header -->
+  </div>
+  <!-- .col-xl-12 -->
+
+  <div class="col-xl-12">
+    <div class="row">
+
+      <!-- Area Chart -->
+      <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Agent Information</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Agent Code</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="Agent Code" value="23" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">First Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="Name" value="Lebron" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Last Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword3" placeholder="Last Name" value="James"
+                  disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Address</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword3" placeholder="Address"
+                  value="Los Angeles, California" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pie Chart -->
+      <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Password</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+
+            <form [formGroup]="changePasswordForm">
+              <div class="form-group row" [ngClass]="{'input-error': changePasswordForm.controls['oldPassword'].invalid 
+              && (changePasswordForm.controls['oldPassword'].dirty 
+              || changePasswordForm.controls['oldPassword'].touched)}">
+                <div class="col-sm-12">
+                  <input type="password" class="form-control required" 
+                  formControlName="oldPassword" name="oldPassword"
+                  id="oldPassword" placeholder="Old Password">
+                  <p class="form-error" *ngIf="changePasswordForm.controls['oldPassword'].errors?.required">
+                    * old password is required
+                  </p>
+                </div>
+              </div>
+              <div class="form-group row" [ngClass]="{'input-error': changePasswordForm.controls['newPassword'].invalid 
+              && (changePasswordForm.controls['newPassword'].dirty 
+              || changePasswordForm.controls['newPassword'].touched)}">
+                <div class="col-sm-12">
+                  <input type="password" class="form-control required"
+                  formControlName="newPassword" name="newPassword"
+                  id="newPassword" placeholder="New Password">
+                  <p class="form-error" *ngIf="changePasswordForm.controls['newPassword'].errors?.required">
+                    * new password is required
+                  </p>
+                </div>
+              </div>
+              <div class="form-group row" [ngClass]="{'input-error': changePasswordForm.controls['confirmPassword'].invalid 
+              && (changePasswordForm.controls['confirmPassword'].dirty 
+              || changePasswordForm.controls['confirmPassword'].touched)}">
+                <div class="col-sm-12">
+                  <input type="password" class="form-control required"                  
+                  formControlName="confirmPassword" name="confirmPassword"
+                  id="confirmPassword" placeholder="Confirm Password">
+                  <p class="form-error" *ngIf="changePasswordForm.controls['confirmPassword'].errors?.required">
+                    * confirm password is required
+                  </p>
+                  <!-- <p class="form-error" *ngIf="changePasswordForm.controls['confirmPassword'].errors?.pattern">
+                    * confirm password does not match new password
+                  </p> -->
+                  <!-- <p class="form-error" *ngIf="changePasswordForm.hasError('notSame')">
+                    * confirm password does not match new password
+                  </p> -->
+                </div>
+              </div>
+
+              <p class="text-muted"><i>* Your password will expire in <strong>60 days</strong></i></p>
+
+              <div class="form-group row">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- .col-xl-12 -->
+</div>
+<!-- #profile -->
