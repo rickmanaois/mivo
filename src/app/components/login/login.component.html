@@ -1,7 +1,7 @@
 <div id="login">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8 login-panel left-container">
+      <div class="col-lg-8 d-none d-lg-block login-panel left-container">
         <div class="wrap-banner">
           <div class="login-header">
             <h1>Welcome to</h1>
@@ -9,10 +9,12 @@
           <div class="brand-logo">
             <img src="/assets/images/mivo_logo_light.png" />
           </div>
-          <p>lorem ipsum, dolor</p>
+          <p>You are about to enter MAPFRE INSURANCE INFORMATION SYSTEM. The access and use of this system is limited to
+            duly authorized personnel and strictly for official use only.</p>
+            <a href="#">see more...</a>
         </div>
       </div>
-      <div class="col-md-4 login-panel right-container">
+      <div class="col-lg-4 login-panel right-container">
         <div class="wrap-login">
 
           <form class="login-form" [formGroup]="loginForm">
@@ -40,7 +42,7 @@
             </div>
 
             <div class="container-login-form-btn">
-              <button [disabled]="loginForm.pristine || loginForm.invalid"
+              <button [disabled]="(loginForm.pristine || loginForm.invalid)"
                 class="login-btn btn btn-primary form-control" (click)="onSubmit()">
                 Login
               </button>
@@ -51,7 +53,7 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="contact-form-checkbox">
-                  <input class="input-checkbox" id="ckb1" type="checkbox" name="remember-me">
+                  <input type="checkbox" id="ckb1" class="input-checkbox" formControlName="rememberMe" name="rememberMe">
                   <label class="label-checkbox" for="ckb1">
                     Remember me
                   </label>
