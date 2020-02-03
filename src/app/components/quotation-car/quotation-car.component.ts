@@ -13,7 +13,7 @@ import {
 import {
   QQCar
 } from '../../objects/QQCar';
-import QuickQuoteService from '../../services/quickqoute.service'
+import  { QuickQuoteService } from '../../services/quickqoute.service'
 import {
   LovService
 } from '../../services/lov.service'

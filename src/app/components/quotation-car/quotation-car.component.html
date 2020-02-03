@@ -37,7 +37,7 @@
                 <select
                   class="custom-select mr-sm-2 required"
                   formControlName="quickMake"
-                  (change)="makeOnchange($event)"
+                  (change)="makeOnchange()"
                   [(ngModel)]="carDetails.make">
                   <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
                 </select>
@@ -55,7 +55,7 @@
                 <select
                   class="custom-select mr-sm-2 required"
                   formControlName="quickModel"
-                  (change)="modelOnchange($event)"
+                  (change)="modelOnchange()"
                   [(ngModel)]="carDetails.model"
                   [attr.disabled]=" modelLOV?.length ? null : true">
                   <option selected></option>

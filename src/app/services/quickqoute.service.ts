@@ -10,7 +10,7 @@ import {
 import { ReturnDTO } from '../objects/ReturnDTO';
 
 @Injectable()
-export default class QuickQuoteService {
+export class QuickQuoteService {
   constructor(private app: AppService) {}
 
   async getFMV(carDetails: QQCar): Promise < ReturnDTO > {

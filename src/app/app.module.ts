@@ -66,17 +66,8 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
+import { ServiceModule } from './services/service.module';
 
-/*Services*/
-import
-QuickQuoteService
-from './services/quickqoute.service';
-import {
-  AppService
-} from './services/app.service';
-import {
-  LovService
-} from './services/lov.service';
 
 const appRoutes: Routes = [{
     path: 'login',
@@ -122,9 +113,10 @@ const appRoutes: Routes = [{
     MatSortModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceModule
   ],
-  providers: [QuickQuoteService, AppService, LovService],
+  // providers: [QuickQuoteService, AppService, LovService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
