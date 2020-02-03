@@ -15,7 +15,7 @@ html {
 
 .bg-gradient-primary {
   background: #c31f09;
-  background-image: url(/assets/images/bg.jpg);
+  background-image: url(/mivo/assets/images/bg.jpg);
   background-size: cover;
 }
 
@@ -54,7 +54,7 @@ html {
 
 app-sidenav {
   background: #c31f09;
-  background-image: url('/assets/images/bg.jpg');
+  background-image: url('/mivo/assets/images/bg.jpg');
   background-size: cover;
 }
 
