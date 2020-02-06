@@ -27,7 +27,9 @@
     </a>
     <div id="myAccount" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" [ngClass]="{'active': page=='outstanding-bills'}" (click)="setPage('outstanding-bills')"><i class="fas fa-fw fa-star"></i> Outstanding Bills</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='outstanding-bills'}"
+          (click)="setPage('outstanding-bills')"><i class="fas fa-fw fa-star"></i> Outstanding Bills</a>
         <a class="collapse-item"><i class="fas fa-fw fa-money-bill-wave"></i> Commissions Paid</a>
         <a class="collapse-item"><i class="fas fa-fw fa-calculator"></i> Estimated Commissions</a>
         <a class="collapse-item"><i class="fas fa-fw fa-award"></i> Premium Collection</a>
@@ -62,6 +64,78 @@
   </li>
 
   <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#quickQuotation" aria-expanded="true"
+      aria-controls="quickQuotation">
+      <i class="fas fa-fw fa-play"></i>
+      <span>Quick Quotation</span>
+    </a>
+    <div id="quickQuotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" 
+          [ngClass]="{'active': page=='quick-quotation-car'}"
+          (click)="setPage('quick-quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-home'}"
+          (click)="setPage('quotation-home')"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-travel'}"
+          (click)="setPage('quotation-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-accident'}"
+          (click)="setPage('quotation-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#quotation" aria-expanded="true"
+      aria-controls="quotation">
+      <i class="fas fa-fw fa-play"></i>
+      <span>Quotation</span>
+    </a>
+    <div id="quotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" 
+          [ngClass]="{'active': page=='quotation-car'}"
+          (click)="setPage('quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-home'}"
+          (click)="setPage('quotation-home')"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-travel'}"
+          (click)="setPage('quotation-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-accident'}"
+          (click)="setPage('quotation-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#policyIssuance" aria-expanded="true"
+      aria-controls="policyIssuance">
+      <i class="fas fa-fw fa-play"></i>
+      <span>Policy Issuance</span>
+    </a>
+    <div id="policyIssuance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" 
+          [ngClass]="{'active': page=='quotation-car'}"
+          (click)="setPage('quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-home'}"
+          (click)="setPage('quotation-home')"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-travel'}"
+          (click)="setPage('quotation-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-accident'}"
+          (click)="setPage('quotation-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#applications" aria-expanded="true"
       aria-controls="applications">
       <i class="fas fa-fw fa-play"></i>
@@ -70,10 +144,18 @@
     <div id="applications" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Quotation</h6>
-        <a class="collapse-item" [ngClass]="{'active': page=='quotation-car'}"  (click)="setPage('quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-home"></i> Home</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-plane"></i> Travel</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <a class="collapse-item" 
+          [ngClass]="{'active': page=='quotation-car'}"
+          (click)="setPage('quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-home'}"
+          (click)="setPage('quotation-home')"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-travel'}"
+          (click)="setPage('quotation-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='quotation-accident'}"
+          (click)="setPage('quotation-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
         <h6 class="collapse-header">Policy Issuance</h6>
         <a class="collapse-item"><i class="fas fa-fw fa-car"></i> Car</a>
         <a class="collapse-item"><i class="fas fa-fw fa-home"></i> Home</a>
@@ -98,14 +180,18 @@
     </a>
     <div id="utilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" [ngClass]="{'active': page=='query'}" (click)="setPage('query')"><i class="fas fa-fw fa-clipboard-list"></i> Query</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='query'}"
+          (click)="setPage('query')"><i class="fas fa-fw fa-clipboard-list"></i> Query</a>
         <a class="collapse-item"><i class="fas fa-fw fa-print"></i> Document Printing</a>
-        <a class="collapse-item" [ngClass]="{'active': page=='profile'}" (click)="setPage('profile')"><i class="fas fa-fw fa-key"></i> Change Password</a>
+        <a class="collapse-item"
+          [ngClass]="{'active': page=='profile'}"
+          (click)="setPage('profile')"><i class="fas fa-fw fa-key"></i> Change Password</a>
       </div>
     </div>
   </li>
 
-  <li [ngClass]="{'active': page=='news'}" class="nav-item" (click)="setPage('news')">
+  <li [ngClass]="{'active': page=='news'}"class="nav-item" (click)="setPage('news')">
     <a class="nav-link">
       <i class="fas fa-fw fa-newspaper"></i>
       <span>News</span>

@@ -19,8 +19,31 @@ import {
   AppComponent
 } from './app.component';
 import {
+  BrowserAnimationsModule
+} from '@angular/platform-browser/animations';
+
+// RECOMMENDED
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
+import {
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
+} from '@angular/material';
+import {
+  RouterModule,
+  Routes
+} from '@angular/router';
+import {
+  ServiceModule
+} from './services/service.module';
+
+//login component
+import {
   LoginComponent
 } from './components/login/login.component';
+
+//page component
 import {
   DashboardComponent
 } from './components/dashboard/dashboard.component';
@@ -36,26 +59,8 @@ import {
 import {
   TemplateComponent
 } from './components/template/template.component';
-import {
-  FaqComponent
-} from './components/faq/faq.component';
-import {
-  OutstandingBillsComponent
-} from './components/outstanding-bills/outstanding-bills.component';
-import {
-  BrowserAnimationsModule
-} from '@angular/platform-browser/animations';
-import {
-  MatTableModule,
-  MatPaginatorModule,
-  MatSortModule
-} from '@angular/material';
-import {
-  QuotationCarComponent
-} from './components/quotation-car/quotation-car.component';
-import {
-  QueryComponent
-} from './components/query/query.component';
+
+//other feature components
 import {
   MissingPageComponent
 } from './components/missing-page/missing-page.component';
@@ -63,11 +68,28 @@ import {
   ProfileComponent
 } from './components/profile/profile.component';
 import {
-  RouterModule,
-  Routes
-} from '@angular/router';
-import { ServiceModule } from './services/service.module';
+  QueryComponent
+} from './components/query/query.component';
+import {
+  FaqComponent
+} from './components/faq/faq.component';
 
+//table list components
+import {
+  OutstandingBillsComponent
+} from './components/outstanding-bills/outstanding-bills.component';
+
+
+// quotation components
+import {
+  QuotationCarComponent
+} from './components/quotation-car/quotation-car.component';
+import {
+  QuotationHomeComponent
+} from './components/quotation-home/quotation-home.component';
+import { QuotationTravelComponent } from './components/quotation-travel/quotation-travel.component';
+import { QuotationAccidentComponent } from './components/quotation-accident/quotation-accident.component';
+import { QuickQuotationCarComponent } from './components/quick-quotation-car/quick-quotation-car.component';
 
 const appRoutes: Routes = [{
     path: 'login',
@@ -97,9 +119,13 @@ const appRoutes: Routes = [{
     FaqComponent,
     OutstandingBillsComponent,
     QuotationCarComponent,
+    QuotationHomeComponent,
     QueryComponent,
     MissingPageComponent,
-    ProfileComponent
+    ProfileComponent,
+    QuotationTravelComponent,
+    QuotationAccidentComponent,
+    QuickQuotationCarComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -114,9 +140,9 @@ const appRoutes: Routes = [{
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ServiceModule
+    ServiceModule,
+    BsDatepickerModule.forRoot()
   ],
-  // providers: [QuickQuoteService, AppService, LovService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

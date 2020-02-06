@@ -24,11 +24,11 @@ import {
 } from '../../objects/LOV';
 
 @Component({
-  selector: 'app-quotation-car',
-  templateUrl: './quotation-car.component.html',
-  styleUrls: ['./quotation-car.component.css']
+  selector: 'app-quick-quotation-car',
+  templateUrl: './quick-quotation-car.component.html',
+  styleUrls: ['./quick-quotation-car.component.css']
 })
-export class QuotationCarComponent implements OnInit, AfterViewChecked {
+export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QQCar();
   option: string = '';
   quickQuoteForm: FormGroup;
