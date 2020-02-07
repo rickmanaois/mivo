@@ -3,8 +3,8 @@ export class QQAccident {
   occupationalClass: string;
   disablementValue: number;
   cbPrimaryAge: boolean;
-  primaryAge: string;
-  cbSpouse: boolean;
+  primaryInsuredAge: string;
+  cbSpouseAge: boolean;
   spouseAge: string;
   cbChildAge: boolean;
   childAge: string;

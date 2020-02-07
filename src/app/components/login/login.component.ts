@@ -54,6 +54,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.rememberMe();
-    this.router.navigateByUrl('/template');
+    this.router.navigateByUrl('/mivo');
   }
 }
