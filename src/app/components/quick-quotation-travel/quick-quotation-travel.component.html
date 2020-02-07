@@ -37,66 +37,12 @@
               <label class="form-check-label" for="quickCbCountry6">
                 Select Country to visit
               </label>
-              <div class="card">
-                <!-- <div class="col-lg-12">
-                      <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry1" formControlName="quickCbCountry1"
-                            [(ngModel)]="travelDetails.countries">
-                          <label class="form-check-label" for="quickCbCountry1">
-                            Antartica
-                          </label>
-                        </div>
-        
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry2" formControlName="quickCbCountry2"
-                            [(ngModel)]="travelDetails.countries[2]">
-                          <label class="form-check-label" for="quickCbCountry2">
-                            Afghanistan
-                          </label>
-                        </div>
-  
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry3" formControlName="quickCbCountry3"
-                            [(ngModel)]="travelDetails.countries[3]">
-                          <label class="form-check-label" for="quickCbCountry3">
-                            Afghanistan
-                          </label>
-                        </div>
-  
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry4" formControlName="quickCbCountry4"
-                            [(ngModel)]="travelDetails.countries[4]">
-                          <label class="form-check-label" for="quickCbCountry4">
-                            Afghanistan
-                          </label>
-                        </div>
-  
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry5" formControlName="quickCbCountry5"
-                            [(ngModel)]="travelDetails.countries[5]">
-                          <label class="form-check-label" for="quickCbCountry5">
-                            Afghanistan
-                          </label>
-                        </div>
-  
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry6" formControlName="quickCbCountry6"
-                            [(ngModel)]="travelDetails.countries[6]">
-                          <label class="form-check-label" for="quickCbCountry6">
-                            Afghanistan
-                          </label>
-                        </div>
-  
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="quickCbCountry7" formControlName="quickCbCountry7"
-                            [(ngModel)]="travelDetails.countries[7]">
-                          <label class="form-check-label" for="quickCbCountry7">
-                            Afghanistan
-                          </label>
-                        </div>
-                  </div> -->
 
-              </div>
+              <ng-multiselect-dropdown [placeholder]="'choose country'" 
+                formControlName="quickCountry"
+                [data]="countryLOV" [(ngModel)]="travelDetails.country"
+                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+              </ng-multiselect-dropdown>
             </div>
 
             <div class="form-divider"></div>

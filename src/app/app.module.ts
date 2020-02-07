@@ -24,6 +24,9 @@ import {
 import {
   BsDatepickerModule
 } from 'ngx-bootstrap/datepicker';
+import {
+  NgMultiSelectDropDownModule
+} from 'ng-multiselect-dropdown';
 
 import {
   MatTableModule,
@@ -158,7 +161,8 @@ const appRoutes: Routes = [{
     ReactiveFormsModule,
     HttpClientModule,
     ServiceModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

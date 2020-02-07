@@ -10,6 +10,9 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+// import {
+//   IDropdownSettings
+// } from 'ng-multiselect-dropdown';
 import {
   QQTravel
 } from '../../objects/QQTravel';
@@ -28,10 +31,13 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   enableEndDate: boolean = false;
 
   currencyLOV: any[];
+  countryLOV: any[];
   packageLOV: any[];
   coverageLOV: any[];
   purposeTripLOV: any[];
   ageRangeLOV: any[];
+
+  dropdownSettings = {};
 
   constructor(
     private fb: FormBuilder,
@@ -53,11 +59,23 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
     this.getCoverage();
     this.getPurposeTrip();
     this.getAgeRange();
+    this.getCountry();
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
   }
 
   createQuickQuoteForm() {
     this.quickQuoteForm = this.fb.group({
       quickCurrency: ['', Validators.required],
+      quickCountry: ['', Validators.required],
       quickPackage: ['', Validators.required],
       quickCoverage: ['', Validators.required],
       quickPurposeTrip: ['', Validators.required],
@@ -68,11 +86,42 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+
   getCurrency() {
     this.currencyLOV = [{
       value: "1",
       name: "test"
     }];
+  }
+
+  getCountry(){
+    this.countryLOV = [{
+      item_id: 1,
+      item_text: 'Mumbai'
+    },
+    {
+      item_id: 2,
+      item_text: 'Bangaluru'
+    },
+    {
+      item_id: 3,
+      item_text: 'Pune'
+    },
+    {
+      item_id: 4,
+      item_text: 'Navsari'
+    },
+    {
+      item_id: 5,
+      item_text: 'New Delhi'
+    }
+  ];
   }
 
   getPackage() {
