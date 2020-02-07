@@ -1,4 +1,4 @@
-<div class="row" id="quotationCar">
+<div class="row" id="quickQuotationCar">
   <div class="col-xl-12">
     <div class="page-header">
       <h4>Quick Quotation - Car</h4>
@@ -10,8 +10,6 @@
   <div class="col-xl-12">
     <div class="card shadow">
       <div class="card-body">
-
-        <div class="clearfix"></div>
         <form [formGroup]="quickQuoteForm" class="quick-quote-form">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6">
@@ -19,10 +17,7 @@
                 && (quickQuoteForm.controls['quickMake'].dirty 
                 || quickQuoteForm.controls['quickMake'].touched)}">
                 <label for="quickMake">Make</label>
-                <select
-                  class="custom-select mr-sm-2 required"
-                  formControlName="quickMake"
-                  (change)="makeOnchange()"
+                <select class="custom-select mr-sm-2 required" formControlName="quickMake" (change)="makeOnchange()"
                   [(ngModel)]="carDetails.make">
                   <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
                 </select>
@@ -37,12 +32,8 @@
               && (quickQuoteForm.controls['quickModel'].dirty 
               || quickQuoteForm.controls['quickModel'].touched)}">
                 <label for="quickModel">Model</label>
-                <select
-                  class="custom-select mr-sm-2 required"
-                  formControlName="quickModel"
-                  (change)="modelOnchange()"
-                  [(ngModel)]="carDetails.model"
-                  [attr.disabled]=" modelLOV?.length ? null : true">
+                <select class="custom-select mr-sm-2 required" formControlName="quickModel" (change)="modelOnchange()"
+                  [(ngModel)]="carDetails.model" [attr.disabled]=" modelLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let model of modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}</option>
                 </select>
@@ -57,14 +48,12 @@
               && (quickQuoteForm.controls['quickVehicleType'].dirty 
               || quickQuoteForm.controls['quickVehicleType'].touched)}">
                 <label for="quickVehicleType">Vehicle Type</label>
-                <select
-                  class="custom-select mr-sm-2 required"
-                  formControlName="quickVehicleType"
-                  (change)="vehicleTypeOnchange()"
-                  [(ngModel)]="carDetails.vehicleType"
+                <select class="custom-select mr-sm-2 required" formControlName="quickVehicleType"
+                  (change)="vehicleTypeOnchange()" [(ngModel)]="carDetails.vehicleType"
                   [attr.disabled]=" vehicleTypeLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">{{ vehicleType.NOM_TIP_VEHI }}</option>
+                  <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
+                    {{ vehicleType.NOM_TIP_VEHI }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['quickVehicleType'].errors?.required">
                   * vehicle type is required
@@ -77,13 +66,12 @@
               && (quickQuoteForm.controls['quickModelYear'].dirty 
               || quickQuoteForm.controls['quickModelYear'].touched)}">
                 <label for="quickModelYear">Model Year</label>
-                <select class="custom-select mr-sm-2 required"
-                  formControlName="quickModelYear"
-                  (change)="modelYearOnchange()"
-                  [(ngModel)]="carDetails.modelYear"
+                <select class="custom-select mr-sm-2 required" formControlName="quickModelYear"
+                  (change)="modelYearOnchange()" [(ngModel)]="carDetails.modelYear"
                   [attr.disabled]=" modelYearLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">{{ modelYear.ANIO_SUB_MODELO }}</option>
+                  <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
+                    {{ modelYear.ANIO_SUB_MODELO }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['quickModelYear'].errors?.required">
                   * model year is required
@@ -96,13 +84,13 @@
               && (quickQuoteForm.controls['quickSubModel'].dirty 
               || quickQuoteForm.controls['quickSubModel'].touched)}">
                 <label for="quickSubModel">Sub Model</label>
-                <select class="custom-select mr-sm-2 required"
-                  formControlName="quickSubModel"
-                  (change)="subModelOnchange()"
-                  [(ngModel)]="carDetails.subModel"
+                <select class="custom-select mr-sm-2 required" formControlName="quickSubModel"
+                  (change)="subModelOnchange()" [(ngModel)]="carDetails.subModel"
                   [attr.disabled]=" subModelLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let subModel of subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">{{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}</option>
+                  <option *ngFor="let subModel of subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
+                    {{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}
+                  </option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['quickSubModel'].errors?.required">
                   * sub model is required
@@ -115,13 +103,12 @@
               && (quickQuoteForm.controls['quickTypeOfUse'].dirty 
               || quickQuoteForm.controls['quickTypeOfUse'].touched)}">
                 <label for="quickTypeOfUse">Type of Use</label>
-                <select class="custom-select mr-sm-2 required"
-                  formControlName="quickTypeOfUse"
-                  (change)="typeOfUseOnchange()"
-                  [(ngModel)]="carDetails.typeOfUse"
+                <select class="custom-select mr-sm-2 required" formControlName="quickTypeOfUse"
+                  (change)="typeOfUseOnchange()" [(ngModel)]="carDetails.typeOfUse"
                   [attr.disabled]=" typeOfUseLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let typeOfUse of typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">{{ typeOfUse.NOM_USO_VEHI }}</option>          
+                  <option *ngFor="let typeOfUse of typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
+                    {{ typeOfUse.NOM_USO_VEHI }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['quickTypeOfUse'].errors?.required">
                   * type of use is required
@@ -134,11 +121,8 @@
               && (quickQuoteForm.controls['quickSubline'].dirty 
               || quickQuoteForm.controls['quickSubline'].touched)}">
                 <label for="quickSubline">Subline</label>
-                <select
-                  class="custom-select mr-sm-2 required"
-                  formControlName="quickSubline"
-                  [(ngModel)]="carDetails.subline"
-                  [attr.disabled]=" sublineLOV?.length ? null : true">
+                <select class="custom-select mr-sm-2 required" formControlName="quickSubline"
+                  [(ngModel)]="carDetails.subline" [attr.disabled]=" sublineLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                 </select>
@@ -149,37 +133,33 @@
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group"  [ngClass]="{'input-error': quickQuoteForm.controls['quickValue'].invalid 
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickValue'].invalid 
               && (quickQuoteForm.controls['quickValue'].dirty 
               || quickQuoteForm.controls['quickValue'].touched)}">
                 <label for="quickValue">Vehicle Value</label>
-                <input type="text"
-                  formControlName="quickValue"
-                  class="form-control"
-                  [(ngModel)]="carDetails.vehicleValue"
-                  readonly>
+                <input type="text" formControlName="quickValue" class="form-control"
+                  [(ngModel)]="carDetails.vehicleValue" readonly>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['quickValue'].errors?.required">
                   * vehicle value is required
                 </p>
               </div>
             </div>
           </div>
+          <!-- .row -->
 
           <div class="btn-group" role="group">
-            <button
-              [disabled]="quickQuoteForm.pristine || quickQuoteForm.invalid"
-              type="button"
-              class="btn btn-primary"
+            <button [disabled]="quickQuoteForm.pristine || quickQuoteForm.invalid" type="button" class="btn btn-primary"
               (click)="quickQuote(carDetails)">Generate</button>
           </div>
+          <!-- .btn-group -->
 
           <div class="clearfix"></div>
-
         </form>
         <!-- .quick-quote-form -->
 
         <div id="quickQouteDetails" class="alert alert-info" *ngIf="showQuickQouteDetails">
-          <p><strong>Important Reminder:</strong> All the amounts shown on the product comparison table are only estimates
+          <p><strong>Important Reminder:</strong> All the amounts shown on the product comparison table are only
+            estimates
             and must not be taken as the actual premiums of the products.
           </p>
           <h5>Fixed Values: </h5>
@@ -190,6 +170,7 @@
             <li>LGT: 0.75%</li>
           </ul>
         </div>
+        <!-- #quickQouteDetails -->
       </div>
       <!-- .card-body -->
     </div>
@@ -197,5 +178,4 @@
   </div>
   <!-- .col-xl-12 -->
 </div>
-<!-- #quotationCar -->
-  
+<!-- #quickQuotationCar -->

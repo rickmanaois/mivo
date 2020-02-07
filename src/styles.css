@@ -1,6 +1,12 @@
-body,
-html {
+html,
+body {
   height: 100%;
+  min-height: 300px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .btn.btn-primary {
@@ -97,17 +103,12 @@ form .form-group.input-error select {
   cursor: pointer;
 }
 
-html,
-body {
-  height: 100%;
-  min-height: 300px;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
 .clearfix {
   width: 100%;
+}
+
+.custom-select:disabled,
+.form-control:disabled,
+.form-control[readonly] {
+  border-left: 1px solid #ced4da !important;
 }

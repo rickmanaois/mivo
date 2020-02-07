@@ -32,7 +32,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QQCar();
   option: string = '';
   quickQuoteForm: FormGroup;
- 
+
   makeLOV: any[];
   modelLOV: any[];
   vehicleTypeLOV: any[];
@@ -254,7 +254,6 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   quickQuote(carDetails: QQCar) {
     this.showQuickQouteDetails = true;
-    // this.qq.car(carDetails);
   }
 
 }

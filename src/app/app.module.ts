@@ -21,9 +21,9 @@ import {
 import {
   BrowserAnimationsModule
 } from '@angular/platform-browser/animations';
-
-// RECOMMENDED
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import {
+  BsDatepickerModule
+} from 'ngx-bootstrap/datepicker';
 
 import {
   MatTableModule,
@@ -79,7 +79,6 @@ import {
   OutstandingBillsComponent
 } from './components/outstanding-bills/outstanding-bills.component';
 
-
 // quotation components
 import {
   QuotationCarComponent
@@ -87,16 +86,31 @@ import {
 import {
   QuotationHomeComponent
 } from './components/quotation-home/quotation-home.component';
-import { QuotationTravelComponent } from './components/quotation-travel/quotation-travel.component';
-import { QuotationAccidentComponent } from './components/quotation-accident/quotation-accident.component';
-import { QuickQuotationCarComponent } from './components/quick-quotation-car/quick-quotation-car.component';
+import {
+  QuotationTravelComponent
+} from './components/quotation-travel/quotation-travel.component';
+import {
+  QuotationAccidentComponent
+} from './components/quotation-accident/quotation-accident.component';
+import {
+  QuickQuotationCarComponent
+} from './components/quick-quotation-car/quick-quotation-car.component';
+import {
+  QuickQuotationHomeComponent
+} from './components/quick-quotation-home/quick-quotation-home.component';
+import {
+  QuickQuotationTravelComponent
+} from './components/quick-quotation-travel/quick-quotation-travel.component';
+import {
+  QuickQuotationAccidentComponent
+} from './components/quick-quotation-accident/quick-quotation-accident.component';
 
 const appRoutes: Routes = [{
     path: 'login',
     component: LoginComponent
   },
   {
-    path: 'template',
+    path: 'mivo',
     component: TemplateComponent
   },
   {
@@ -118,14 +132,17 @@ const appRoutes: Routes = [{
     TemplateComponent,
     FaqComponent,
     OutstandingBillsComponent,
-    QuotationCarComponent,
-    QuotationHomeComponent,
     QueryComponent,
     MissingPageComponent,
     ProfileComponent,
+    QuotationCarComponent,
+    QuotationHomeComponent,
     QuotationTravelComponent,
     QuotationAccidentComponent,
-    QuickQuotationCarComponent
+    QuickQuotationCarComponent,
+    QuickQuotationHomeComponent,
+    QuickQuotationTravelComponent,
+    QuickQuotationAccidentComponent
   ],
   imports: [
     RouterModule.forRoot(
