@@ -9,8 +9,8 @@
 
   <div class="col-xl-12">
     <div class="card shadow">
-      <div class="card-body"> 
-        <form class="regular-quote-form">
+      <div class="card-body">
+        <form [formGroup]="quoteForm" class="regular-quote-form">
           <div class="card shadow mb-3">
             <div class="card-header">
               <strong>Vehicle Information</strong>
@@ -20,166 +20,263 @@
                 <div class="col-xl-12">
                   <h6>Risk Details</h6>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Make</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
-                    </select>
-                  </div>
-                </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Model</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['make'].invalid 
+                    && (quoteForm.controls['make'].dirty 
+                    || quoteForm.controls['make'].touched)}">
+                    <label for="make">Make</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="make" (change)="makeOnchange()"
+                      [(ngModel)]="carDetails.make">
+                      <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['make'].errors?.required">
+                      * make is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Vehicle Type</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['model'].invalid 
+                  && (quoteForm.controls['model'].dirty 
+                  || quoteForm.controls['model'].touched)}">
+                    <label for="model">Model</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="model" (change)="modelOnchange()"
+                      [(ngModel)]="carDetails.model" [attr.disabled]=" modelLOV?.length ? null : true">
                       <option selected></option>
-                      <option value="1">One</option>
+                      <option *ngFor="let model of modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}
+                      </option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['model'].errors?.required">
+                      * model is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Model Year</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleType'].invalid 
+                  && (quoteForm.controls['vehicleType'].dirty 
+                  || quoteForm.controls['vehicleType'].touched)}">
+                    <label for="vehicleType">Vehicle Type</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="vehicleType"
+                      (change)="vehicleTypeOnchange()" [(ngModel)]="carDetails.vehicleType"
+                      [attr.disabled]=" vehicleTypeLOV?.length ? null : true">
                       <option selected></option>
-                      <option value="1">One</option>
+                      <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
+                        {{ vehicleType.NOM_TIP_VEHI }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['vehicleType'].errors?.required">
+                      * vehicle type is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Sub Model</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['modelYear'].invalid 
+                  && (quoteForm.controls['modelYear'].dirty 
+                  || quoteForm.controls['modelYear'].touched)}">
+                    <label for="modelYear">Model Year</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="modelYear"
+                      (change)="modelYearOnchange()" [(ngModel)]="carDetails.modelYear"
+                      [attr.disabled]=" modelYearLOV?.length ? null : true">
                       <option selected></option>
-                      <option value="1">One</option>
+                      <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
+                        {{ modelYear.ANIO_SUB_MODELO }}</option>
                     </select>
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Type of Use</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
-                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['modelYear'].errors?.required">
+                      * model year is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Vehicle Value</label>
-                    <input type="text" class="form-control required">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subModel'].invalid 
+                  && (quoteForm.controls['subModel'].dirty 
+                  || quoteForm.controls['subModel'].touched)}">
+                    <label for="subModel">Sub Model</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="subModel"
+                      (change)="subModelOnchange()" [(ngModel)]="carDetails.subModel"
+                      [attr.disabled]=" subModelLOV?.length ? null : true">
+                      <option selected></option>
+                      <option *ngFor="let subModel of subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
+                        {{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}
+                      </option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['subModel'].errors?.required">
+                      * sub model is required
+                    </p>
                   </div>
                 </div>
-
-                <div class="clearfix"></div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Subline</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['typeOfUse'].invalid 
+                  && (quoteForm.controls['typeOfUse'].dirty 
+                  || quoteForm.controls['typeOfUse'].touched)}">
+                    <label for="typeOfUse">Type of Use</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="typeOfUse"
+                      (change)="typeOfUseOnchange()" [(ngModel)]="carDetails.typeOfUse"
+                      [attr.disabled]=" typeOfUseLOV?.length ? null : true">
                       <option selected></option>
-                      <option value="1">One</option>
+                      <option *ngFor="let typeOfUse of typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
+                        {{ typeOfUse.NOM_USO_VEHI }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['typeOfUse'].errors?.required">
+                      * type of use is required
+                    </p>
                   </div>
                 </div>
 
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subline'].invalid 
+                  && (quoteForm.controls['subline'].dirty 
+                  || quoteForm.controls['subline'].touched)}">
+                    <label for="subline">Subline</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="subline"
+                      [(ngModel)]="carDetails.subline" [attr.disabled]=" sublineLOV?.length ? null : true">
+                      <option selected></option>
+                      <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['subline'].errors?.required">
+                      * subline is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
+                  && (quoteForm.controls['vehicleValue'].dirty 
+                  || quoteForm.controls['vehicleValue'].touched)}">
+                    <label for="vehicleValue">Vehicle Value</label>
+                    <input type="text" formControlName="vehicleValue" class="form-control"
+                      [(ngModel)]="carDetails.vehicleValue" readonly>
+                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
+                      * vehicle value is required
+                    </p>
+                  </div>
+                </div>
                 <div class="clearfix"></div>
 
                 <div class="form-divider"></div>
-
                 <div class="col-xl-12">
                   <h6>Vehicle Information</h6>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Color</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['color'].invalid 
+                    && (quoteForm.controls['color'].dirty 
+                    || quoteForm.controls['color'].touched)}">
+                    <label for="color">Color</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="color"
+                      [(ngModel)]="carDetails.color">
+                      <option *ngFor="let color of colorLOV" [ngValue]="color.value">{{ color.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['color'].errors?.required">
+                      * color is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Area of Usage</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['areaOfUsage'].invalid 
+                    && (quoteForm.controls['areaOfUsage'].dirty 
+                    || quoteForm.controls['areaOfUsage'].touched)}">
+                    <label for="areaOfUsage">Area of Usage</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="areaOfUsage"
+                      [(ngModel)]="carDetails.areaOfUsage">
+                      <option *ngFor="let areaOfUsage of areaOfUsageLOV" [ngValue]="areaOfUsage.value">{{ areaOfUsage.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['areaOfUsage'].errors?.required">
+                      * area of usage is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['conductionNumber'].invalid 
+                  && (quoteForm.controls['conductionNumber'].dirty 
+                  || quoteForm.controls['conductionNumber'].touched)}">
+                    <label for="conductionNumber">Conduction Number</label>
+                    <input type="text" formControlName="conductionNumber" class="form-control required"
+                      [(ngModel)]="carDetails.conductionNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['conductionNumber'].errors?.required">
+                      * conduction number is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['plateNumber'].invalid 
+                  && (quoteForm.controls['plateNumber'].dirty 
+                  || quoteForm.controls['plateNumber'].touched)}">
+                    <label for="plateNumber">Plate Number</label>
+                    <input type="text" formControlName="plateNumber" class="form-control required"
+                      [(ngModel)]="carDetails.plateNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['plateNumber'].errors?.required">
+                      * plate number is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group">
-                    <label for="formGroupExampleInput">Conduction Number</label>
-                    <input type="text" class="form-control required">
+                    <label for="serialNumber">Chassis Number/Serial Number</label>
+                    <input type="text" formControlName="serialNumber" class="form-control"
+                      [(ngModel)]="carDetails.serialNumber">
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group">
-                    <label for="formGroupExampleInput">Plate Number</label>
-                    <input type="text" class="form-control required">
+                    <label for="engineNumber">Motor Number/Engine Number</label>
+                    <input type="text" formControlName="engineNumber" class="form-control"
+                      [(ngModel)]="carDetails.engineNumber">
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group">
-                    <label for="formGroupExampleInput">Chassis Number/Serial Number</label>
-                    <input type="text" class="form-control required">
+                    <label for="mvFileNumber">MV File Number</label>
+                    <input type="text" formControlName="mvFileNumber" class="form-control"
+                      [(ngModel)]="carDetails.mvFileNumber">
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Motor Number/Engine Number</label>
-                    <input type="text" class="form-control required">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['purchaseDate'].invalid 
+                      && (quoteForm.controls['purchaseDate'].dirty 
+                      || quoteForm.controls['purchaseDate'].touched)}">
+                    <label for="purchaseDate">Purchase Date</label>
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                      formControlName="purchaseDate" [(ngModel)]="carDetails.purchaseDate" bsDatepicker>
+                    <p class="form-error" *ngIf="quoteForm.controls['purchaseDate'].errors?.required">
+                      * purchase date is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">MV File Number</label>
-                    <input type="text" class="form-control">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['receivedBy'].invalid 
+                  && (quoteForm.controls['receivedBy'].dirty 
+                  || quoteForm.controls['receivedBy'].touched)}">
+                    <label for="receivedBy">Received By</label>
+                    <input type="text" formControlName="receivedBy" class="form-control required"
+                      [(ngModel)]="carDetails.receivedBy">
+                      <p class="form-error" *ngIf="quoteForm.controls['receivedBy'].errors?.required">
+                        * received by is required
+                      </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Purchase Date</label>
-                    <input type="date" class="form-control">
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Received By</label>
-                    <input type="text" class="form-control required">
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Received Date</label>
-                    <input type="text" class="form-control required">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['receivedDate'].invalid 
+                      && (quoteForm.controls['receivedDate'].dirty 
+                      || quoteForm.controls['receivedDate'].touched)}">
+                    <label for="receivedDate">Received Date</label>
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                      formControlName="receivedDate" [(ngModel)]="carDetails.receivedDate" bsDatepicker>
+                    <p class="form-error" *ngIf="quoteForm.controls['receivedDate'].errors?.required">
+                      * received date is required
+                    </p>
                   </div>
                 </div>
 
@@ -187,13 +284,13 @@
             </div>
           </div>
 
-          <div class="card shadow mb-3">
+          <!-- <div class="card shadow mb-3">
             <div class="card-header">
               <strong>Accessories</strong>
             </div>
             <div class="card-body">
             </div>
-          </div>
+          </div> -->
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -205,13 +302,16 @@
                   <h6>Policy Holder</h6>
                 </div>
 
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Client's Name</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
-                    </select>
+                <div class="col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['clientName'].invalid 
+                  && (quoteForm.controls['clientName'].dirty 
+                  || quoteForm.controls['clientName'].touched)}">
+                    <label for="clientName">Client's Name</label>
+                    <input type="text" formControlName="clientName" class="form-control required"
+                      [(ngModel)]="carDetails.clientName">
+                      <p class="form-error" *ngIf="quoteForm.controls['clientName'].errors?.required">
+                        * client's name is required
+                      </p>
                   </div>
                 </div>
               </div>
@@ -229,51 +329,76 @@
                   <h6>Group Policy</h6>
                 </div>
 
-
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Group Policy</label>
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['groupPolicy'].invalid 
+                    && (quoteForm.controls['groupPolicy'].dirty 
+                    || quoteForm.controls['groupPolicy'].touched)}">
+                    <label for="groupPolicy">Group Policy</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="groupPolicy"
+                      [(ngModel)]="carDetails.groupPolicy">
+                      <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">{{ groupPolicy.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['groupPolicy'].errors?.required">
+                      * group policy is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Contract</label>
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['contract'].invalid 
+                    && (quoteForm.controls['contract'].dirty 
+                    || quoteForm.controls['contract'].touched)}">
+                    <label for="contract">Contract</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="contract"
+                      [(ngModel)]="carDetails.contract">
+                      <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['contract'].errors?.required">
+                      * contract is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Sub Contract</label>
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subContract'].invalid 
+                    && (quoteForm.controls['subContract'].dirty 
+                    || quoteForm.controls['subContract'].touched)}">
+                    <label for="subContract">Sub Contract</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="subContract"
+                      [(ngModel)]="carDetails.subContract">
+                      <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">{{ subContract.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['subContract'].errors?.required">
+                      * sub contract is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Commercial Structure</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['commercialStructure'].invalid 
+                    && (quoteForm.controls['commercialStructure'].dirty 
+                    || quoteForm.controls['commercialStructure'].touched)}">
+                    <label for="commercialStructure">Commercial Structure</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
+                      [(ngModel)]="carDetails.commercialStructure">
+                      <option *ngFor="let commercialStructure of commercialStructureLOV" [ngValue]="commercialStructure.value">{{ areaOfUsage.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
+                      * commercial structure is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Agent Code</label>
-                    <input type="text" class="form-control required">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['agentCode'].invalid 
+                  && (quoteForm.controls['agentCode'].dirty 
+                  || quoteForm.controls['agentCode'].touched)}">
+                    <label for="agentCode">Agent Code</label>
+                    <input type="text" formControlName="agentCode" class="form-control required"
+                      [(ngModel)]="carDetails.agentCode">
+                      <p class="form-error" *ngIf="quoteForm.controls['agentCode'].errors?.required">
+                        * agent code is required
+                      </p>
                   </div>
                 </div>
 
@@ -284,16 +409,28 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Effectivity Date</label>
-                    <input type="text" class="form-control required">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['effectivityDate'].invalid 
+                      && (quoteForm.controls['effectivityDate'].dirty 
+                      || quoteForm.controls['effectivityDate'].touched)}">
+                    <label for="effectivityDate">Effectivity Date</label>
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                      formControlName="effectivityDate" [(ngModel)]="carDetails.effectivityDate" bsDatepicker>
+                    <p class="form-error" *ngIf="quoteForm.controls['effectivityDate'].errors?.required">
+                      * effectivity date is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Expiry Date</label>
-                    <input type="text" class="form-control required">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['expiryDate'].invalid 
+                      && (quoteForm.controls['expiryDate'].dirty 
+                      || quoteForm.controls['expiryDate'].touched)}">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                      formControlName="expiryDate" [(ngModel)]="carDetails.expiryDate" bsDatepicker>
+                    <p class="form-error" *ngIf="quoteForm.controls['expiryDate'].errors?.required">
+                      * expiry date is required
+                    </p>
                   </div>
                 </div>
 
@@ -304,24 +441,35 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Payment Method</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['paymentMethod'].invalid 
+                    && (quoteForm.controls['paymentMethod'].dirty 
+                    || quoteForm.controls['paymentMethod'].touched)}">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="paymentMethod"
+                      [(ngModel)]="carDetails.paymentMethod">
+                      <option *ngFor="let paymentMethod of paymentMethodLOV" [ngValue]="paymentMethod.value">{{ paymentMethod.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['paymentMethod'].errors?.required">
+                      * payment method is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Product List</label>
-                    <select class="custom-select mr-sm-2 required" id="inlineFormCustomSelect">
-                      <option selected></option>
-                      <option value="1">One</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['product'].invalid 
+                    && (quoteForm.controls['product'].dirty 
+                    || quoteForm.controls['product'].touched)}">
+                    <label for="product">Product List</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="product"
+                      [(ngModel)]="carDetails.product">
+                      <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}</option>
                     </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['product'].errors?.required">
+                      * product list is required
+                    </p>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>

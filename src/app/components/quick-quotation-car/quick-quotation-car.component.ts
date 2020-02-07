@@ -30,7 +30,6 @@ import {
 })
 export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QQCar();
-  option: string = '';
   quickQuoteForm: FormGroup;
 
   makeLOV: any[];
@@ -59,10 +58,6 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.getMakeList();
-  }
-
-  setOption(val: string) {
-    this.option = val;
   }
 
   createQuickQuoteForm() {

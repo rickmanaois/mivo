@@ -11,8 +11,8 @@ import {
   Validators
 } from '@angular/forms';
 import {
-  QQCar
-} from '../../objects/QQCar';
+  QuoteCar
+} from '../../objects/QuoteCar';
 import {
   QuickQuoteService
 } from '../../services/quickqoute.service'
@@ -29,9 +29,9 @@ import {
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
-  @Input() carDetails = new QQCar();
-  option: string = '';
-  quickQuoteForm: FormGroup;
+  @Input() carDetails = new QuoteCar();
+  quoteForm: FormGroup;
+  mindate = new Date();
  
   makeLOV: any[];
   modelLOV: any[];
@@ -40,7 +40,17 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   subModelLOV: any[];
   typeOfUseLOV: any[];
   sublineLOV: any[];
-  vehicleValue: any;
+
+  colorLOV: any[];
+  areaOfUsageLOV: any[];
+
+  groupPolicyLOV: any[];
+  contractLOV: any[];
+  subContractLOV: any[];
+  commercialStructureLOV: any[];
+
+  paymentMethodLOV: any[];
+  productListLOV: any[];
 
   showQuickQouteDetails: boolean = false;
 
@@ -50,7 +60,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private lov: LovService,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.createQuickQuoteForm();
+    this.createQuoteForm();
   }
 
   ngAfterViewChecked() {
@@ -59,22 +69,48 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.getMakeList();
+    this.getColor();
+    this.getAreaOfUsage();
   }
 
-  setOption(val: string) {
-    this.option = val;
-  }
-
-  createQuickQuoteForm() {
-    this.quickQuoteForm = this.fb.group({
-      quickMake: ['', Validators.required],
-      quickModel: ['', Validators.required],
-      quickVehicleType: ['', Validators.required],
-      quickModelYear: ['', Validators.required],
-      quickSubModel: ['', Validators.required],
-      quickTypeOfUse: ['', Validators.required],
-      quickSubline: ['', Validators.required],
-      quickValue: ['', Validators.required],
+  createQuoteForm() {
+    this.quoteForm = this.fb.group({
+      //risk details
+      make: ['', Validators.required],
+      model: ['', Validators.required],
+      vehicleType: ['', Validators.required],
+      modelYear: ['', Validators.required],
+      subModel: ['', Validators.required],
+      typeOfUse: ['', Validators.required],
+      subline: ['', Validators.required],
+      vehicleValue: ['', Validators.required],
+      //vehicle information
+      color: ['', Validators.required],
+      areaOfUsage: ['', Validators.required],
+      conductionNumber: ['', Validators.required],
+      plateNumber: ['', Validators.required],
+      serialNumber: [null],
+      engineNumber: [null],
+      mvFileNumber: [null],
+      purchaseDate: [null],
+      receivedBy: ['', Validators.required],
+      receivedDate: [null],
+      //policy holder information
+      clientName: ['', Validators.required],
+      //general information
+      groupPolicy: [null],
+      contract: [null],
+      subContract: [null],
+      commercialStructure: ['', Validators.required],
+      agentCode: ['', Validators.required],
+      isRenewal: [null],
+      expiringPolicyNumber: [null],
+      //movement dates
+      effectivityDate: ['', Validators.required],
+      expiryDate: ['', Validators.required],
+      //product data
+      paymentMethod: ['', Validators.required],
+      product: ['', Validators.required],
     });
   }
 
@@ -95,7 +131,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.sublineLOV = [];
 
     const _carDetails = this.carDetails;
-    this.carDetails = new QQCar();
+    this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.getModelList();
   }
@@ -120,7 +156,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.sublineLOV = [];
 
     const _carDetails = this.carDetails;
-    this.carDetails = new QQCar();
+    this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
     this.getVehicleTypeList();
@@ -146,7 +182,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.sublineLOV = [];
 
     const _carDetails = this.carDetails;
-    this.carDetails = new QQCar();
+    this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
     this.carDetails.vehicleType = _carDetails.vehicleType;
@@ -173,7 +209,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.sublineLOV = [];
 
     const _carDetails = this.carDetails;
-    this.carDetails = new QQCar();
+    this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
     this.carDetails.vehicleType = _carDetails.vehicleType;
@@ -214,7 +250,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   subModelOnchange() {
     const _carDetails = this.carDetails;
-    this.carDetails = new QQCar();
+    this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
     this.carDetails.vehicleType = _carDetails.vehicleType;
@@ -227,7 +263,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   typeOfUseOnchange() {
     const _carDetails = this.carDetails;
-    this.carDetails = new QQCar();
+    this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
     this.carDetails.vehicleType = _carDetails.vehicleType;
@@ -252,9 +288,64 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  quickQuote(carDetails: QQCar) {
-    this.showQuickQouteDetails = true;
-    // this.qq.car(carDetails);
+  getColor() {
+    this.colorLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getAreaOfUsage() {
+    this.areaOfUsageLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getGroupPolicy() {
+    this.groupPolicyLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getContract() {
+    this.contractLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getSubContract() {
+    this.subContractLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getCommercialStructure() {
+    this.commercialStructureLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getPaymentMethod() {
+    this.paymentMethodLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  getProductList() {
+    this.productListLOV = [{
+      value: "test",
+      name: "test"
+    }];
+  }
+
+  quickQuote(carDetails: QuoteCar) {
+    console.log(carDetails);
   }
 
 }
