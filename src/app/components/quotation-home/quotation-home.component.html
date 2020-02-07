@@ -18,16 +18,16 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['make'].invalid 
-                    && (quoteForm.controls['make'].dirty 
-                    || quoteForm.controls['make'].touched)}">
-                    <label for="make">Business Line</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="make" (change)="makeOnchange()"
-                      [(ngModel)]="carDetails.make">
-                      <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['businessLine'].invalid 
+                    && (quoteForm.controls['businessLine'].dirty 
+                    || quoteForm.controls['businessLine'].touched)}">
+                    <label for="businessLine">Business Line</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="businessLine" (change)="makeOnchange()"
+                      [(ngModel)]="homeDetails.businessLine">
+                      <option *ngFor="let businessLine of makeLOV" [ngValue]="businessLine.COD_MARCA">{{ businessLine.NOM_MARCA }}</option>
                     </select>
-                    <p class="form-error" *ngIf="quoteForm.controls['make'].errors?.required">
-                      * make is required
+                    <p class="form-error" *ngIf="quoteForm.controls['businessLine'].errors?.required">
+                      * business line is required
                     </p>
                   </div>
                 </div>
@@ -35,18 +35,18 @@
                 <div class="clearfix"></div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['model'].invalid 
-                  && (quoteForm.controls['model'].dirty 
-                  || quoteForm.controls['model'].touched)}">
-                    <label for="model">Currency</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="model" (change)="modelOnchange()"
-                      [(ngModel)]="carDetails.model" [attr.disabled]=" modelLOV?.length ? null : true">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['currency'].invalid 
+                  && (quoteForm.controls['currency'].dirty 
+                  || quoteForm.controls['currency'].touched)}">
+                    <label for="currency">Currency</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="currency" (change)="modelOnchange()"
+                      [(ngModel)]="homeDetails.currency">
                       <option selected></option>
-                      <option *ngFor="let model of modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}
+                      <option *ngFor="let currency of currencyLOV" [ngValue]="currency.COD_MODELO">{{ currency.NOM_MODELO }}
                       </option>
                     </select>
-                    <p class="form-error" *ngIf="quoteForm.controls['model'].errors?.required">
-                      * model is required
+                    <p class="form-error" *ngIf="quoteForm.controls['currency'].errors?.required">
+                      * currency is required
                     </p>
                   </div>
                 </div>
@@ -57,121 +57,118 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">House/Building Name</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['buildingName'].invalid 
+                  && (quoteForm.controls['buildingName'].dirty 
+                  || quoteForm.controls['buildingName'].touched)}">
+                    <label for="buildingName">House/Building Number</label>
+                    <input type="text" formControlName="buildingName" class="form-control"
+                      [(ngModel)]="homeDetails.buildingName">
+                    <p class="form-error" *ngIf="quoteForm.controls['buildingName'].errors?.required">
+                      * building name is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Village/Subdivision</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subdivision'].invalid 
+                  && (quoteForm.controls['subdivision'].dirty 
+                  || quoteForm.controls['subdivision'].touched)}">
+                    <label for="subdivision">Village/Subdivision</label>
+                    <input type="text" formControlName="subdivision" class="form-control"
+                      [(ngModel)]="homeDetails.subdivision">
+                    <p class="form-error" *ngIf="quoteForm.controls['subdivision'].errors?.required">
+                      * subdivision is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Building Name</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['buildingName'].invalid 
+                  && (quoteForm.controls['buildingName'].dirty 
+                  || quoteForm.controls['buildingName'].touched)}">
+                    <label for="buildingName">Building Name</label>
+                    <input type="text" formControlName="buildingName" class="form-control"
+                      [(ngModel)]="homeDetails.buildingName">
+                    <p class="form-error" *ngIf="quoteForm.controls['buildingName'].errors?.required">
+                      * building name is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Street Name</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['streetName'].invalid 
+                  && (quoteForm.controls['streetName'].dirty 
+                  || quoteForm.controls['streetName'].touched)}">
+                    <label for="streetName">Street Name</label>
+                    <input type="text" formControlName="streetName" class="form-control"
+                      [(ngModel)]="homeDetails.streetName">
+                    <p class="form-error" *ngIf="quoteForm.controls['streetName'].errors?.required">
+                      * street name is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Barangay</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['barangay'].invalid 
+                  && (quoteForm.controls['barangay'].dirty 
+                  || quoteForm.controls['barangay'].touched)}">
+                    <label for="barangay">Barangay</label>
+                    <input type="text" formControlName="barangay" class="form-control"
+                      [(ngModel)]="homeDetails.barangay">
+                    <p class="form-error" *ngIf="quoteForm.controls['barangay'].errors?.required">
+                      * barangay is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleType'].invalid 
-                  && (quoteForm.controls['vehicleType'].dirty 
-                  || quoteForm.controls['vehicleType'].touched)}">
-                    <label for="vehicleType">Region</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="vehicleType"
-                      (change)="vehicleTypeOnchange()" [(ngModel)]="carDetails.vehicleType"
-                      [attr.disabled]=" vehicleTypeLOV?.length ? null : true">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['region'].invalid 
+                  && (quoteForm.controls['region'].dirty 
+                  || quoteForm.controls['region'].touched)}">
+                    <label for="region">Region</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="region"
+                      [(ngModel)]="homeDetails.region">
                       <option selected></option>
-                      <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
-                        {{ vehicleType.NOM_TIP_VEHI }}</option>
+                      <option *ngFor="let region of regionLOV" [ngValue]="region.COD_TIP_VEHI">
+                        {{ region.NOM_TIP_VEHI }}</option>
                     </select>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleType'].errors?.required">
-                      * vehicle type is required
+                    <p class="form-error" *ngIf="quoteForm.controls['region'].errors?.required">
+                      * region is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['modelYear'].invalid 
-                  && (quoteForm.controls['modelYear'].dirty 
-                  || quoteForm.controls['modelYear'].touched)}">
-                    <label for="modelYear">Province</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="modelYear"
-                      (change)="modelYearOnchange()" [(ngModel)]="carDetails.modelYear"
-                      [attr.disabled]=" modelYearLOV?.length ? null : true">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['province'].invalid 
+                  && (quoteForm.controls['province'].dirty 
+                  || quoteForm.controls['province'].touched)}">
+                    <label for="province">Province</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="province"
+                      [(ngModel)]="homeDetails.province">
                       <option selected></option>
-                      <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
-                        {{ modelYear.ANIO_SUB_MODELO }}</option>
+                      <option *ngFor="let province of provinceLOV" [ngValue]="province.ANIO_SUB_MODELO">
+                        {{ province.ANIO_SUB_MODELO }}</option>
                     </select>
-                    <p class="form-error" *ngIf="quoteForm.controls['modelYear'].errors?.required">
-                      * model year is required
+                    <p class="form-error" *ngIf="quoteForm.controls['province'].errors?.required">
+                      * province is required
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subModel'].invalid 
-                  && (quoteForm.controls['subModel'].dirty 
-                  || quoteForm.controls['subModel'].touched)}">
-                    <label for="subModel">Municipality</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="subModel"
-                      (change)="subModelOnchange()" [(ngModel)]="carDetails.subModel"
-                      [attr.disabled]=" subModelLOV?.length ? null : true">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['municipality'].invalid 
+                  && (quoteForm.controls['municipality'].dirty 
+                  || quoteForm.controls['municipality'].touched)}">
+                    <label for="municipality">Municipality</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="municipality"
+                      [(ngModel)]="homeDetails.municipality">
                       <option selected></option>
-                      <option *ngFor="let subModel of subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
-                        {{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}
-                      </option>
+                      <option *ngFor="let municipality of municipalityLOV" [ngValue]="municipality.COD_SUB_MODELO">
+                        {{ municipality.ANIO_SUB_MODELO }}
+                       </option>
                     </select>
-                    <p class="form-error" *ngIf="quoteForm.controls['subModel'].errors?.required">
-                      * sub model is required
+                    <p class="form-error" *ngIf="quoteForm.controls['municipality'].errors?.required">
+                      * municipality is required
                     </p>
                   </div>
                 </div>
@@ -189,117 +186,117 @@
                 <div class="col-xl-12">
                   <h6>Building/Content</h6>
                 </div>
-  
+
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Building Capital</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['buildingCapital'].invalid 
+                  && (quoteForm.controls['buildingCapital'].dirty 
+                  || quoteForm.controls['buildingCapital'].touched)}">
+                    <label for="buildingCapital">Building Capital</label>
+                    <input type="number" formControlName="buildingCapital" class="form-control required"
+                      [(ngModel)]="homeDetails.buildingCapital">
+                    <p class="form-error" *ngIf="quoteForm.controls['buildingCapital'].errors?.required">
+                      * building capital is required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Content Value</label>
-                    <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue">
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['contentValue'].invalid 
+                  && (quoteForm.controls['contentValue'].dirty 
+                  || quoteForm.controls['contentValue'].touched)}">
+                    <label for="contentValue">Content Value</label>
+                    <input type="number" formControlName="contentValue" class="form-control required"
+                      [(ngModel)]="homeDetails.contentValue">
+                    <p class="form-error" *ngIf="quoteForm.controls['contentValue'].errors?.required">
+                      * content value is required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="form-divider"></div>
                 <div class="col-xl-12">
                   <h6>Additional Details</h6>
                 </div>
-  
+
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Construction of Building</label>
-                    <textarea type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue"></textarea>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['constructionOfBuilding'].invalid 
+                  && (quoteForm.controls['constructionOfBuilding'].dirty 
+                  || quoteForm.controls['constructionOfBuilding'].touched)}">
+                    <label for="constructionOfBuilding">Construction of Building</label>
+                    <textarea type="text" formControlName="constructionOfBuilding" class="form-control required"
+                      [(ngModel)]="homeDetails.constructionOfBuilding"></textarea>
+                    <p class="form-error" *ngIf="quoteForm.controls['constructionOfBuilding'].errors?.required">
+                      * construction of building required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Occupancy of Building</label>
-                    <textarea type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue"></textarea>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['occupancyOfBuilding'].invalid 
+                  && (quoteForm.controls['occupancyOfBuilding'].dirty 
+                  || quoteForm.controls['occupancyOfBuilding'].touched)}">
+                    <label for="occupancyOfBuilding">Occupancy of Building</label>
+                    <textarea type="text" formControlName="occupancyOfBuilding" class="form-control required"
+                      [(ngModel)]="homeDetails.occupancyOfBuilding"></textarea>
+                    <p class="form-error" *ngIf="quoteForm.controls['occupancyOfBuilding'].errors?.required">
+                      * occupancy of building is required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="form-divider"></div>
                 <div class="col-xl-12">
                   <h6>Boundaries</h6>
                 </div>
-  
+
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Front</label>
-                    <textarea type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue"></textarea>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['front'].invalid 
+                  && (quoteForm.controls['front'].dirty 
+                  || quoteForm.controls['front'].touched)}">
+                    <label for="front">Front</label>
+                    <textarea type="text" formControlName="front" class="form-control required"
+                      [(ngModel)]="homeDetails.front"></textarea>
+                    <p class="form-error" *ngIf="quoteForm.controls['front'].errors?.required">
+                      * front is required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Right</label>
-                    <textarea type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue"></textarea>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['right'].invalid 
+                  && (quoteForm.controls['right'].dirty 
+                  || quoteForm.controls['right'].touched)}">
+                    <label for="right">Right</label>
+                    <textarea type="text" formControlName="right" class="form-control required"
+                      [(ngModel)]="homeDetails.right"></textarea>
+                    <p class="form-error" *ngIf="quoteForm.controls['right'].errors?.required">
+                      * right is required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Left</label>
-                    <textarea type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue"></textarea>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['left'].invalid 
+                  && (quoteForm.controls['left'].dirty 
+                  || quoteForm.controls['left'].touched)}">
+                    <label for="left">Left</label>
+                    <textarea type="text" formControlName="left" class="form-control required"
+                      [(ngModel)]="homeDetails.left"></textarea>
+                    <p class="form-error" *ngIf="quoteForm.controls['left'].errors?.required">
+                      * left is required
                     </p>
                   </div>
                 </div>
-  
+
                 <div class="col-lg-12">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['vehicleValue'].invalid 
-                  && (quoteForm.controls['vehicleValue'].dirty 
-                  || quoteForm.controls['vehicleValue'].touched)}">
-                    <label for="vehicleValue">Rear</label>
-                    <textarea type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue"></textarea>
-                    <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
-                      * vehicle value is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['rear'].invalid 
+                  && (quoteForm.controls['rear'].dirty 
+                  || quoteForm.controls['rear'].touched)}">
+                    <label for="rear">Rear</label>
+                    <textarea type="text" formControlName="rear" class="form-control required"
+                      [(ngModel)]="homeDetails.rear"></textarea>
+                    <p class="form-error" *ngIf="quoteForm.controls['rear'].errors?.required">
+                      * rear is required
                     </p>
                   </div>
                 </div>
@@ -324,7 +321,7 @@
                   || quoteForm.controls['clientName'].touched)}">
                     <label for="clientName">Client's Name</label>
                     <input type="text" formControlName="clientName" class="form-control required"
-                      [(ngModel)]="carDetails.clientName">
+                      [(ngModel)]="homeDetails.clientName">
                     <p class="form-error" *ngIf="quoteForm.controls['clientName'].errors?.required">
                       * client's name is required
                     </p>
@@ -351,7 +348,7 @@
                     || quoteForm.controls['groupPolicy'].touched)}">
                     <label for="groupPolicy">Group Policy</label>
                     <select class="custom-select mr-sm-2 required" formControlName="groupPolicy"
-                      [(ngModel)]="carDetails.groupPolicy">
+                      [(ngModel)]="homeDetails.groupPolicy">
                       <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
                         {{ groupPolicy.name }}</option>
                     </select>
@@ -367,7 +364,7 @@
                     || quoteForm.controls['contract'].touched)}">
                     <label for="contract">Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
-                      [(ngModel)]="carDetails.contract">
+                      [(ngModel)]="homeDetails.contract">
                       <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
                     </select>
@@ -383,7 +380,7 @@
                     || quoteForm.controls['subContract'].touched)}">
                     <label for="subContract">Sub Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
-                      [(ngModel)]="carDetails.subContract">
+                      [(ngModel)]="homeDetails.subContract">
                       <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
                     </select>
@@ -399,7 +396,7 @@
                     || quoteForm.controls['commercialStructure'].touched)}">
                     <label for="commercialStructure">Commercial Structure</label>
                     <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
-                      [(ngModel)]="carDetails.commercialStructure">
+                      [(ngModel)]="homeDetails.commercialStructure">
                       <option *ngFor="let commercialStructure of commercialStructureLOV"
                         [ngValue]="commercialStructure.value">{{ areaOfUsage.name }}</option>
                     </select>
@@ -415,7 +412,7 @@
                   || quoteForm.controls['agentCode'].touched)}">
                     <label for="agentCode">Agent Code</label>
                     <input type="text" formControlName="agentCode" class="form-control required"
-                      [(ngModel)]="carDetails.agentCode">
+                      [(ngModel)]="homeDetails.agentCode">
                     <p class="form-error" *ngIf="quoteForm.controls['agentCode'].errors?.required">
                       * agent code is required
                     </p>
@@ -434,7 +431,7 @@
                       || quoteForm.controls['effectivityDate'].touched)}">
                     <label for="effectivityDate">Effectivity Date</label>
                     <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
-                      formControlName="effectivityDate" [(ngModel)]="carDetails.effectivityDate" bsDatepicker>
+                      formControlName="effectivityDate" [(ngModel)]="homeDetails.effectivityDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['effectivityDate'].errors?.required">
                       * effectivity date is required
                     </p>
@@ -447,7 +444,7 @@
                       || quoteForm.controls['expiryDate'].touched)}">
                     <label for="expiryDate">Expiry Date</label>
                     <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
-                      formControlName="expiryDate" [(ngModel)]="carDetails.expiryDate" bsDatepicker>
+                      formControlName="expiryDate" [(ngModel)]="homeDetails.expiryDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['expiryDate'].errors?.required">
                       * expiry date is required
                     </p>
@@ -466,7 +463,7 @@
                     || quoteForm.controls['paymentMethod'].touched)}">
                     <label for="paymentMethod">Payment Method</label>
                     <select class="custom-select mr-sm-2 required" formControlName="paymentMethod"
-                      [(ngModel)]="carDetails.paymentMethod">
+                      [(ngModel)]="homeDetails.paymentMethod">
                       <option *ngFor="let paymentMethod of paymentMethodLOV" [ngValue]="paymentMethod.value">
                         {{ paymentMethod.name }}</option>
                     </select>
@@ -482,7 +479,7 @@
                     || quoteForm.controls['product'].touched)}">
                     <label for="product">Product List</label>
                     <select class="custom-select mr-sm-2 required" formControlName="product"
-                      [(ngModel)]="carDetails.product">
+                      [(ngModel)]="homeDetails.product">
                       <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}
                       </option>
                     </select>
@@ -497,9 +494,7 @@
           </div>
 
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary">Print Qoute</button>
             <button type="button" class="btn btn-primary">Issue Qoute</button>
-            <button type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 
         </form>

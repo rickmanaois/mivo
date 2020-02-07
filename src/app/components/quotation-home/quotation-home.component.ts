@@ -11,8 +11,8 @@ import {
   Validators
 } from '@angular/forms';
 import {
-  QQHome
-} from '../../objects/QQHome';
+  QuoteHome
+} from '../../objects/QuoteHome';
 import {
   Utility
 } from '../../utils/utility';
@@ -23,9 +23,8 @@ import {
   styleUrls: ['./quotation-home.component.css']
 })
 export class QuotationHomeComponent implements OnInit, AfterViewChecked {
-  @Input() homeDetails = new QQHome();
-  option: string = '';
-  quickQuoteForm: FormGroup;
+  @Input() homeDetails = new QuoteHome();
+  quoteForm: FormGroup;
 
   sublineLOV: any[];
 
@@ -35,7 +34,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     // private lov: LovService,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.createQuickQuoteForm();
+    this.createquoteForm();
     this.setValidators();
   }
 
@@ -47,86 +46,58 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     this.getSubline();
   }
 
-  createQuickQuoteForm() {
-    this.quickQuoteForm = this.fb.group({
-      quickSubline: ['', Validators.required],
-      quickCbBuilding: [null],
-      quickBuilding: [null],
-      quickCbContent: [null],
-      quickContent: [null],
-      quickCbImprovements: [null],
-      quickImprovements: [null],
-      quickCbRelatedBuild: [null],
-      quickRelatedBuild: [null],
-      quickCbRelatedContent: [null],
-      quickRelatedContent: [null],
+  createquoteForm() {
+    this.quoteForm = this.fb.group({
+      businessLine: ['', Validators.required],
+      currency: ['', Validators.required],
+      buildingNumber: [null],
+      subdivision: [null],
+      buildingName: [null],
+      streetName: [null],
+      barangay: [null],
+      region: ['', Validators.required],
+      province: ['', Validators.required],
+      municipality: ['', Validators.required],
+      //building / content details
+      buildingCapital: ['', Validators.required],
+      contentValue: ['', Validators.required],
+      constructionOfBuilding: ['', Validators.required],
+      occupancyOfBuilding: ['', Validators.required],
+      front: ['', Validators.required],
+      right: ['', Validators.required],
+      left: ['', Validators.required],
+      rear: ['', Validators.required],
+      // policy holder information
+      clientName: [null],
+      //general information
+      groupPolicy: ['', Validators.required],
+      contract: [null],
+      subContract: [null],
+      commercialStructure: ['', Validators.required],
+      agentCode: ['', Validators.required],
+      isRenewal: [null],
+      expiringPolicyNumber: [null],
+      //movement dates
+      effectivityDate: ['', Validators.required],
+      expiryDate: ['', Validators.required],
+      //product data
+      paymentMethod: ['', Validators.required],
+      product: ['', Validators.required],
     });
   }
 
   setValidators() {
-    const quickCbBuilding = this.quickQuoteForm.get('quickCbBuilding');
-    const quickCbContent = this.quickQuoteForm.get('quickCbContent');
-    const quickCbImprovements = this.quickQuoteForm.get('quickCbImprovements');
-    const quickCbRelatedBuild = this.quickQuoteForm.get('quickCbRelatedBuild');
-    const quickCbRelatedContent = this.quickQuoteForm.get('quickCbRelatedContent');
 
-    const quickImprovements = this.quickQuoteForm.get('quickImprovements');
-    const quickRelatedBuild = this.quickQuoteForm.get('quickRelatedBuild');
-    const quickRelatedContent = this.quickQuoteForm.get('quickRelatedContent');
-
-    quickCbBuilding.valueChanges.subscribe(checked => {
-      const quickBuilding = this.quickQuoteForm.get('quickBuilding');
-      Utility.updateValidator(quickBuilding, checked ? [Validators.required] : null);
-
-      if (!checked && quickCbContent.value !== true) {
-        Utility.updateValidator(quickImprovements, null);
-        Utility.updateValidator(quickRelatedBuild, null);
-        Utility.updateValidator(quickRelatedContent, null);
-      } else if (quickCbContent.value === true) {
-        Utility.updateValidator(quickImprovements, quickCbImprovements.value === true ? [Validators.required] : null);
-        Utility.updateValidator(quickRelatedBuild, quickCbRelatedBuild.value === true ? [Validators.required] : null);
-        Utility.updateValidator(quickRelatedContent, quickCbRelatedContent.value === true ? [Validators.required] : null);
-      }
-    });
-
-    quickCbContent.valueChanges.subscribe(checked => {
-      const quickContent = this.quickQuoteForm.get('quickContent');
-      Utility.updateValidator(quickContent, checked ? [Validators.required] : null);
-
-      if (!checked && quickCbBuilding.value !== true) {
-        Utility.updateValidator(quickImprovements, null);
-        Utility.updateValidator(quickRelatedBuild, null);
-        Utility.updateValidator(quickRelatedContent, null);
-      } else if (quickCbBuilding.value === true) {
-        Utility.updateValidator(quickImprovements, quickCbImprovements.value === true ? [Validators.required] : null);
-        Utility.updateValidator(quickRelatedBuild, quickCbRelatedBuild.value === true ? [Validators.required] : null);
-        Utility.updateValidator(quickRelatedContent, quickCbRelatedContent.value === true ? [Validators.required] : null);
-      }
-    });
-
-    quickCbImprovements.valueChanges.subscribe(checked => {
-      Utility.updateValidator(quickImprovements, checked ? [Validators.required] : null);
-    });
-
-    quickCbRelatedBuild.valueChanges.subscribe(checked => {
-      Utility.updateValidator(quickRelatedBuild, checked ? [Validators.required] : null);
-    });
-
-    quickCbRelatedContent.valueChanges.subscribe(checked => {
-      Utility.updateValidator(quickRelatedContent, checked ? [Validators.required] : null);
-    });
   }
 
   getSubline() {
-    this.sublineLOV = [{value: "test", name:"test"}];
+    this.sublineLOV = [{
+      value: "test",
+      name: "test"
+    }];
   }
 
-  setOption(val: string) {
-    this.option = val;
-  }
-
-  quickQuote(homeDetails: QQHome) {
+  quickQuote(homeDetails: QuoteHome) {
     console.log(homeDetails);
-    // this.qq.car(carDetails);
   }
 }

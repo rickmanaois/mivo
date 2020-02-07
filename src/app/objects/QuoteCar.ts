@@ -23,7 +23,7 @@ export class QuoteCar {
   
   effectivityDate: Date;
   expiryDate: Date;
-  paymentMetho: string;
+  paymentMethod: string;
   productList: string;
   
   //new object
