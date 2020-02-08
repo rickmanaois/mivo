@@ -426,7 +426,7 @@
                       && (quoteForm.controls['expiryDate'].dirty 
                       || quoteForm.controls['expiryDate'].touched)}">
                     <label for="expiryDate">Expiry Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="expiryDateMinDate"
                       formControlName="expiryDate" [(ngModel)]="carDetails.expiryDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['expiryDate'].errors?.required">
                       * expiry date is required

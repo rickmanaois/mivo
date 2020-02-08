@@ -10,6 +10,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import * as moment from 'moment';
 import {
   QuoteHome
 } from '../../objects/QuoteHome';
@@ -25,6 +26,8 @@ import {
 export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   @Input() homeDetails = new QuoteHome();
   quoteForm: FormGroup;
+  mindate : Date = new Date();
+  expiryDateMinDate : Date = moment().add(1, 'years').toDate();
 
   sublineLOV: any[];
 
@@ -35,7 +38,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef
   ) {
     this.createquoteForm();
-    this.setValidators();
+    this.setValidations();
   }
 
   ngAfterViewChecked() {
@@ -86,8 +89,11 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  setValidators() {
-
+  setValidations() {
+    this.quoteForm.get('effectivityDate').valueChanges.subscribe(date => {
+      this.homeDetails.expiryDate = moment(date).add(1, 'years').toDate();
+      this.expiryDateMinDate = this.homeDetails.expiryDate;
+    });
   }
 
   getSubline() {

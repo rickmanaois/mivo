@@ -10,6 +10,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import * as moment from 'moment';
 import {
   QuoteCar
 } from '../../objects/QuoteCar';
@@ -31,7 +32,8 @@ import {
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QuoteCar();
   quoteForm: FormGroup;
-  mindate = new Date();
+  mindate : Date = new Date();
+  expiryDateMinDate : Date = moment().add(1, 'years').toDate();
  
   makeLOV: any[];
   modelLOV: any[];
@@ -61,6 +63,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef
   ) {
     this.createQuoteForm();
+    this.setValidations();
   }
 
   ngAfterViewChecked() {
@@ -111,6 +114,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       //product data
       paymentMethod: ['', Validators.required],
       product: ['', Validators.required],
+    });
+  }
+
+  setValidations() {
+    this.quoteForm.get('effectivityDate').valueChanges.subscribe(date => {
+      this.carDetails.expiryDate = moment(date).add(1, 'years').toDate();
+      this.expiryDateMinDate = this.carDetails.expiryDate;
     });
   }
 
