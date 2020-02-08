@@ -155,17 +155,19 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   setValidations() {
     this.quickQuoteForm.get('quickEndDate').valueChanges.subscribe(date => {
       var diff = (date - this.quickQuoteForm.get('quickStartDate').value) / 1000 / 60 / 60 / 24;
-      if (diff === NaN) {
-        diff = 0;
-      }
+      diff = diff === NaN ? 0 : diff;
       this.travelDetails.noOfDays = diff > 0 ? diff : 0;
     });
 
     this.quickQuoteForm.get('quickStartDate').valueChanges.subscribe(date => {
       this.enableEndDate = date !== null && date !== undefined;
-      if (!this.enableEndDate) {
+      var diff = (this.quickQuoteForm.get('quickEndDate').value - date) / 1000 / 60 / 60 / 24;
+      diff = diff === NaN ? 0 : diff;
+
+      if (!this.enableEndDate || (diff < 0)) {
         this.travelDetails.endDate = null;
       }
+      this.travelDetails.noOfDays = diff > 0 ? diff : 0;
     });
   }
 

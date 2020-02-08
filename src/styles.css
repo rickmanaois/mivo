@@ -94,7 +94,8 @@ form .form-group.input-error .form-error {
 
 form .form-group.input-error input,
 form .form-group.input-error select,
-form .form-group.input-error textarea {
+form .form-group.input-error textarea,
+form .form-group.input-error .multiselect-dropdown {
   border: 2px solid #c31f09 !important;
 }
 
