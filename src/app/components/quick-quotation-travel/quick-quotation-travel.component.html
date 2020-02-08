@@ -13,16 +13,16 @@
         <form [formGroup]="quickQuoteForm" class="quick-quote-form">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickCurrency'].invalid 
-                    && (quickQuoteForm.controls['quickCurrency'].dirty 
-                    || quickQuoteForm.controls['quickCurrency'].touched)}">
-                <label for="quickCurrency">Currency</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickCurrency"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['currency'].invalid 
+                && (quickQuoteForm.controls['currency'].dirty 
+                || quickQuoteForm.controls['currency'].touched)}">
+                <label for="currency">Currency</label>
+                <select class="custom-select mr-sm-2 required" formControlName="currency"
                   [(ngModel)]="travelDetails.currency">
                   <option selected></option>
                   <option *ngFor="let currency of currencyLOV" [ngValue]="currency.value">{{ currency.name }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickCurrency'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['currency'].errors?.required">
                   * currency is required
                 </p>
               </div>
@@ -32,17 +32,19 @@
               <h6>Itinerary</h6>
             </div>
 
-
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <label class="form-check-label" for="quickCbCountry6">
-                Select Country to visit
-              </label>
-
-              <ng-multiselect-dropdown [placeholder]="'choose country'" 
-                formControlName="quickCountry"
-                [data]="countryLOV" [(ngModel)]="travelDetails.country"
-                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-              </ng-multiselect-dropdown>
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['country'].invalid 
+                  && (quickQuoteForm.controls['country'].dirty 
+                  || quickQuoteForm.controls['country'].touched)}">
+                <label for="country">Select Country to visit</label>
+                <ng-multiselect-dropdown [placeholder]="'choose country'" formControlName="country" [data]="countryLOV"
+                  [(ngModel)]="travelDetails.country" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                  (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                <p class="form-error" *ngIf="quickQuoteForm.controls['country'].errors?.required">
+                  * country is required
+                </p>
+              </div>
             </div>
 
             <div class="form-divider"></div>
@@ -50,31 +52,31 @@
               <h6>Travel Information</h6>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickPackage'].invalid 
-                  && (quickQuoteForm.controls['quickPackage'].dirty 
-                  || quickQuoteForm.controls['quickPackage'].touched)}">
-                <label for="quickPackage">Travel Package</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickPackage"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['package'].invalid 
+                && (quickQuoteForm.controls['package'].dirty 
+                || quickQuoteForm.controls['package'].touched)}">
+                <label for="package">Travel Package</label>
+                <select class="custom-select mr-sm-2 required" formControlName="package"
                   [(ngModel)]="travelDetails.package">
                   <option selected></option>
                   <option *ngFor="let package of packageLOV" [ngValue]="package.name">{{ package.value }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickPackage'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['package'].errors?.required">
                   * travel package is required
                 </p>
               </div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickCoverage'].invalid 
-                    && (quickQuoteForm.controls['quickCoverage'].dirty 
-                    || quickQuoteForm.controls['quickCoverage'].touched)}">
-                <label for="quickCoverage">Type of Coverage</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickCoverage"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['coverage'].invalid 
+                && (quickQuoteForm.controls['coverage'].dirty 
+                || quickQuoteForm.controls['coverage'].touched)}">
+                <label for="coverage">Type of Coverage</label>
+                <select class="custom-select mr-sm-2 required" formControlName="coverage"
                   [(ngModel)]="travelDetails.coverage">
                   <option selected></option>
                   <option *ngFor="let coverage of coverageLOV" [ngValue]="coverage.name">{{ coverage.value }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickCoverage'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['coverage'].errors?.required">
                   * type of coverage is required
                 </p>
               </div>
@@ -83,73 +85,73 @@
             <div class="clearfix"></div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickPurposeTrip'].invalid 
-                      && (quickQuoteForm.controls['quickPurposeTrip'].dirty 
-                      || quickQuoteForm.controls['quickPurposeTrip'].touched)}">
-                <label for="quickPurposeTrip">Purpose of Trip</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickPurposeTrip"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['purposeTrip'].invalid 
+                && (quickQuoteForm.controls['purposeTrip'].dirty 
+                || quickQuoteForm.controls['purposeTrip'].touched)}">
+                <label for="purposeTrip">Purpose of Trip</label>
+                <select class="custom-select mr-sm-2 required" formControlName="purposeTrip"
                   [(ngModel)]="travelDetails.purposeTrip">
                   <option selected></option>
                   <option *ngFor="let purposeTrip of purposeTripLOV" [ngValue]="purposeTrip.name">
                     {{ purposeTrip.value }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickPurposeTrip'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['purposeTrip'].errors?.required">
                   * purpose of trip is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickStartDate'].invalid 
-                    && (quickQuoteForm.controls['quickStartDate'].dirty 
-                    || quickQuoteForm.controls['quickStartDate'].touched)}">
-                <label for="quickStartDate">Start Date</label>
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['startDate'].invalid 
+                && (quickQuoteForm.controls['startDate'].dirty 
+                || quickQuoteForm.controls['startDate'].touched)}">
+                <label for="startDate">Start Date</label>
                 <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
-                  formControlName="quickStartDate" [(ngModel)]="travelDetails.startDate" bsDatepicker>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickStartDate'].errors?.required">
+                  formControlName="startDate" [(ngModel)]="travelDetails.startDate" bsDatepicker>
+                <p class="form-error" *ngIf="quickQuoteForm.controls['startDate'].errors?.required">
                   * start date is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickEndDate'].invalid 
-                    && (quickQuoteForm.controls['quickEndDate'].dirty 
-                    || quickQuoteForm.controls['quickEndDate'].touched)}">
-                <label for="quickEndDate">End Date</label>
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['endDate'].invalid 
+                && (quickQuoteForm.controls['endDate'].dirty 
+                || quickQuoteForm.controls['endDate'].touched)}">
+                <label for="endDate">End Date</label>
                 <input type="text" placeholder="Datepicker" class="form-control required"
-                  [minDate]="travelDetails.startDate" formControlName="quickEndDate" [(ngModel)]="travelDetails.endDate"
+                  [minDate]="endDateMinDate" formControlName="endDate" [(ngModel)]="travelDetails.endDate"
                   bsDatepicker [attr.disabled]="enableEndDate ? null : ''">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickEndDate'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['endDate'].errors?.required">
                   * end date is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickNoOfDays'].invalid 
-                    && (quickQuoteForm.controls['quickNoOfDays'].dirty 
-                    || quickQuoteForm.controls['quickNoOfDays'].touched)}">
-                <label for="quickNoOfDays">No. of Days</label>
-                <input class="form-control required" id="quickNoOfDays" formControlName="quickNoOfDays"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['noOfDays'].invalid 
+                && (quickQuoteForm.controls['noOfDays'].dirty 
+                || quickQuoteForm.controls['noOfDays'].touched)}">
+                <label for="noOfDays">No. of Days</label>
+                <input class="form-control required" id="noOfDays" formControlName="noOfDays"
                   [(ngModel)]="travelDetails.noOfDays" [attr.disabled]="true">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickNoOfDays'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['noOfDays'].errors?.required">
                   * number of days is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickAgeRange'].invalid 
-                    && (quickQuoteForm.controls['quickAgeRange'].dirty 
-                    || quickQuoteForm.controls['quickAgeRange'].touched)}">
-                <label for="quickAgeRange">Select the range of the eldest insured from the list</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickAgeRange"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['ageRange'].invalid 
+                && (quickQuoteForm.controls['ageRange'].dirty 
+                || quickQuoteForm.controls['ageRange'].touched)}">
+                <label for="ageRange">Select the range of the eldest insured from the list</label>
+                <select class="custom-select mr-sm-2 required" formControlName="ageRange"
                   [(ngModel)]="travelDetails.ageRange">
                   <option selected></option>
                   <option *ngFor="let ageRange of ageRangeLOV" [ngValue]="ageRange.name">{{ ageRange.value }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickAgeRange'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['ageRange'].errors?.required">
                   * age range is required
                 </p>
               </div>

@@ -117,7 +117,7 @@
                     || quoteForm.controls['endDate'].touched)}">
                     <label for="endDate">End Date</label>
                     <input type="text" placeholder="Datepicker" class="form-control required"
-                      [minDate]="travelDetails.startDate" formControlName="endDate" [(ngModel)]="travelDetails.endDate"
+                      [minDate]="endDateMinDate" formControlName="endDate" [(ngModel)]="travelDetails.endDate"
                       bsDatepicker [attr.disabled]="enableEndDate ? null : ''">
                     <p class="form-error" *ngIf="quoteForm.controls['endDate'].errors?.required">
                       * end date is required

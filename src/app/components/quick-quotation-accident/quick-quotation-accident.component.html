@@ -14,16 +14,16 @@
         <form [formGroup]="quickQuoteForm">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickSubline'].invalid 
-                    && (quickQuoteForm.controls['quickSubline'].dirty 
-                    || quickQuoteForm.controls['quickSubline'].touched)}">
-                <label for="quickSubline">Subline</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickSubline"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['subline'].invalid 
+                  && (quickQuoteForm.controls['subline'].dirty 
+                  || quickQuoteForm.controls['subline'].touched)}">
+                <label for="subline">Subline</label>
+                <select class="custom-select mr-sm-2 required" formControlName="subline"
                   [(ngModel)]="accidentDetails.subline">
                   <option selected></option>
                   <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickSubline'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
                 </p>
               </div>
@@ -41,34 +41,35 @@
               <div class="acci-spa col-lg-12" *ngIf="showSPADetails">
                 <div class="row">
                   <div class="col-md-4 col-sm-6">
-                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickOccupationalClass'].invalid 
-                                && (quickQuoteForm.controls['quickOccupationalClass'].dirty 
-                                || quickQuoteForm.controls['quickOccupationalClass'].touched)}">
-                      <label for="quickOccupationalClass">Occupational Class</label>
-                      <select class="custom-select mr-sm-2 required" formControlName="quickOccupationalClass"
+                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['occupationalClass'].invalid 
+                        && (quickQuoteForm.controls['occupationalClass'].dirty 
+                        || quickQuoteForm.controls['occupationalClass'].touched)}">
+                      <label for="occupationalClass">Occupational Class</label>
+                      <select class="custom-select mr-sm-2 required" formControlName="occupationalClass"
                         [(ngModel)]="accidentDetails.occupationalClass">
                         <option selected></option>
                         <option *ngFor="let occupationalClass of occupationalClassLOV"
                           [ngValue]="occupationalClass.name">
                           {{ occupationalClass.value }}</option>
                       </select>
-                      <p class="form-error" *ngIf="quickQuoteForm.controls['quickOccupationalClass'].errors?.required">
+                      <p class="form-error" *ngIf="quickQuoteForm.controls['occupationalClass'].errors?.required">
                         * occupational class is required
                       </p>
                     </div>
                   </div>
+
                   <div class="col-md-4 col-sm-6">
-                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickDisablementValue'].invalid 
-                                  && (quickQuoteForm.controls['quickDisablementValue'].dirty 
-                                  || quickQuoteForm.controls['quickDisablementValue'].touched)}">
-                      <label for="quickDisablementValue">Accidental Death and Disablement Value</label>
-                      <select class="custom-select mr-sm-2 required" formControlName="quickDisablementValue"
+                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['disablementValue'].invalid 
+                        && (quickQuoteForm.controls['disablementValue'].dirty 
+                        || quickQuoteForm.controls['disablementValue'].touched)}">
+                      <label for="disablementValue">Accidental Death and Disablement Value</label>
+                      <select class="custom-select mr-sm-2 required" formControlName="disablementValue"
                         [(ngModel)]="accidentDetails.disablementValue">
                         <option selected></option>
                         <option *ngFor="let disablementValue of disablementValueLOV" [ngValue]="disablementValue.name">
                           {{ disablementValue.value }}</option>
                       </select>
-                      <p class="form-error" *ngIf="quickQuoteForm.controls['quickDisablementValue'].errors?.required">
+                      <p class="form-error" *ngIf="quickQuoteForm.controls['disablementValue'].errors?.required">
                         * accidental death and disablement value is required
                       </p>
                     </div>
@@ -85,17 +86,17 @@
                     <label class="form-check-label">
                       Primary Insured
                     </label>
-                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickPrimaryInsuredAge'].invalid 
-                                && (quickQuoteForm.controls['quickPrimaryInsuredAge'].dirty 
-                                || quickQuoteForm.controls['quickPrimaryInsuredAge'].touched)}">
-                      <select class="custom-select mr-sm-2 required" formControlName="quickPrimaryInsuredAge"
+                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['primaryInsuredAge'].invalid 
+                        && (quickQuoteForm.controls['primaryInsuredAge'].dirty 
+                        || quickQuoteForm.controls['primaryInsuredAge'].touched)}">
+                      <select class="custom-select mr-sm-2 required" formControlName="primaryInsuredAge"
                         [(ngModel)]="accidentDetails.primaryInsuredAge">
                         <option selected></option>
                         <option *ngFor="let primaryInsuredAge of primaryInsuredAgeLOV"
                           [ngValue]="primaryInsuredAge.name">
                           {{ primaryInsuredAge.value }}</option>
                       </select>
-                      <p class="form-error" *ngIf="quickQuoteForm.controls['quickPrimaryInsuredAge'].errors?.required">
+                      <p class="form-error" *ngIf="quickQuoteForm.controls['primaryInsuredAge'].errors?.required">
                         * primary insured is required
                       </p>
                     </div>
@@ -103,23 +104,23 @@
 
                   <div class="col-md-4 col-sm-6">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="quickCbSpouseAge"
-                        formControlName="quickCbSpouseAge" [(ngModel)]="accidentDetails.cbSpouseAge">
-                      <label class="form-check-label" for="quickCbSpouseAge">
+                      <input class="form-check-input" type="checkbox" id="cbSpouseAge"
+                        formControlName="cbSpouseAge" [(ngModel)]="accidentDetails.cbSpouseAge">
+                      <label class="form-check-label" for="cbSpouseAge">
                         Spouse
                       </label>
                     </div>
-                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickSpouseAge'].invalid 
-                                && (quickQuoteForm.controls['quickSpouseAge'].dirty 
-                                || quickQuoteForm.controls['quickSpouseAge'].touched)}">
+                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['spouseAge'].invalid 
+                        && (quickQuoteForm.controls['spouseAge'].dirty 
+                        || quickQuoteForm.controls['spouseAge'].touched)}">
                       <select class="custom-select mr-sm-2 required"
-                        [attr.disabled]="accidentDetails.cbSpouseAge ? null : ''" formControlName="quickSpouseAge"
+                        [attr.disabled]="accidentDetails.cbSpouseAge ? null : ''" formControlName="spouseAge"
                         [(ngModel)]="accidentDetails.spouseAge">
                         <option selected></option>
                         <option *ngFor="let spouseAge of spouseAgeLOV" [ngValue]="spouseAge.name">{{ spouseAge.value }}
                         </option>
                       </select>
-                      <p class="form-error" *ngIf="quickQuoteForm.controls['quickSpouseAge'].errors?.required">
+                      <p class="form-error" *ngIf="quickQuoteForm.controls['spouseAge'].errors?.required">
                         * spouse is required
                       </p>
                     </div>
@@ -127,27 +128,28 @@
 
                   <div class="col-md-4 col-sm-6">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="quickCbChildAge"
-                        formControlName="quickCbChildAge" [(ngModel)]="accidentDetails.cbChildAge">
-                      <label class="form-check-label" for="quickCbChildAge">
+                      <input class="form-check-input" type="checkbox" id="cbChildAge"
+                        formControlName="cbChildAge" [(ngModel)]="accidentDetails.cbChildAge">
+                      <label class="form-check-label" for="cbChildAge">
                         Child/Children
                       </label>
                     </div>
-                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickChildAge'].invalid 
-                                && (quickQuoteForm.controls['quickChildAge'].dirty 
-                                || quickQuoteForm.controls['quickChildAge'].touched)}">
+                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['childAge'].invalid 
+                        && (quickQuoteForm.controls['childAge'].dirty 
+                        || quickQuoteForm.controls['childAge'].touched)}">
                       <select class="custom-select mr-sm-2 required"
-                        [attr.disabled]="accidentDetails.cbChildAge ? null : ''" formControlName="quickChildAge"
+                        [attr.disabled]="accidentDetails.cbChildAge ? null : ''" formControlName="childAge"
                         [(ngModel)]="accidentDetails.childAge">
                         <option selected></option>
                         <option *ngFor="let childAge of childAgeLOV" [ngValue]="childAge.name">{{ childAge.value }}
                         </option>
                       </select>
-                      <p class="form-error" *ngIf="quickQuoteForm.controls['quickChildAge'].errors?.required">
+                      <p class="form-error" *ngIf="quickQuoteForm.controls['childAge'].errors?.required">
                         * child/children is required
                       </p>
                     </div>
                   </div>
+
                 </div>
                 <!-- .row -->
               </div>

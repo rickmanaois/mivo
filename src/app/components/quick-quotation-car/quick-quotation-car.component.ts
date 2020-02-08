@@ -62,14 +62,14 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   createQuickQuoteForm() {
     this.quickQuoteForm = this.fb.group({
-      quickMake: ['', Validators.required],
-      quickModel: ['', Validators.required],
-      quickVehicleType: ['', Validators.required],
-      quickModelYear: ['', Validators.required],
-      quickSubModel: ['', Validators.required],
-      quickTypeOfUse: ['', Validators.required],
-      quickSubline: ['', Validators.required],
-      quickValue: ['', Validators.required],
+      make: ['', Validators.required],
+      model: ['', Validators.required],
+      vehicleType: ['', Validators.required],
+      modelYear: ['', Validators.required],
+      subModel: ['', Validators.required],
+      typeOfUse: ['', Validators.required],
+      subline: ['', Validators.required],
+      value: ['', Validators.required],
     });
   }
 

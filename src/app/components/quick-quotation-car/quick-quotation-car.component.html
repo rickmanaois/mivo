@@ -13,78 +13,78 @@
         <form [formGroup]="quickQuoteForm" class="quick-quote-form">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickMake'].invalid 
-                && (quickQuoteForm.controls['quickMake'].dirty 
-                || quickQuoteForm.controls['quickMake'].touched)}">
-                <label for="quickMake">Make</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickMake" (change)="makeOnchange()"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['make'].invalid 
+                && (quickQuoteForm.controls['make'].dirty 
+                || quickQuoteForm.controls['make'].touched)}">
+                <label for="make">Make</label>
+                <select class="custom-select mr-sm-2 required" formControlName="make" (change)="makeOnchange()"
                   [(ngModel)]="carDetails.make">
                   <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickMake'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['make'].errors?.required">
                   * make is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickModel'].invalid 
-              && (quickQuoteForm.controls['quickModel'].dirty 
-              || quickQuoteForm.controls['quickModel'].touched)}">
-                <label for="quickModel">Model</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickModel" (change)="modelOnchange()"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['model'].invalid 
+              && (quickQuoteForm.controls['model'].dirty 
+              || quickQuoteForm.controls['model'].touched)}">
+                <label for="model">Model</label>
+                <select class="custom-select mr-sm-2 required" formControlName="model" (change)="modelOnchange()"
                   [(ngModel)]="carDetails.model" [attr.disabled]=" modelLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let model of modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickModel'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['model'].errors?.required">
                   * model is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickVehicleType'].invalid 
-              && (quickQuoteForm.controls['quickVehicleType'].dirty 
-              || quickQuoteForm.controls['quickVehicleType'].touched)}">
-                <label for="quickVehicleType">Vehicle Type</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickVehicleType"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['vehicleType'].invalid 
+              && (quickQuoteForm.controls['vehicleType'].dirty 
+              || quickQuoteForm.controls['vehicleType'].touched)}">
+                <label for="vehicleType">Vehicle Type</label>
+                <select class="custom-select mr-sm-2 required" formControlName="vehicleType"
                   (change)="vehicleTypeOnchange()" [(ngModel)]="carDetails.vehicleType"
                   [attr.disabled]=" vehicleTypeLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
                     {{ vehicleType.NOM_TIP_VEHI }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickVehicleType'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['vehicleType'].errors?.required">
                   * vehicle type is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickModelYear'].invalid 
-              && (quickQuoteForm.controls['quickModelYear'].dirty 
-              || quickQuoteForm.controls['quickModelYear'].touched)}">
-                <label for="quickModelYear">Model Year</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickModelYear"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['modelYear'].invalid 
+              && (quickQuoteForm.controls['modelYear'].dirty 
+              || quickQuoteForm.controls['modelYear'].touched)}">
+                <label for="modelYear">Model Year</label>
+                <select class="custom-select mr-sm-2 required" formControlName="modelYear"
                   (change)="modelYearOnchange()" [(ngModel)]="carDetails.modelYear"
                   [attr.disabled]=" modelYearLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
                     {{ modelYear.ANIO_SUB_MODELO }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickModelYear'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['modelYear'].errors?.required">
                   * model year is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickSubModel'].invalid 
-              && (quickQuoteForm.controls['quickSubModel'].dirty 
-              || quickQuoteForm.controls['quickSubModel'].touched)}">
-                <label for="quickSubModel">Sub Model</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickSubModel"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['subModel'].invalid 
+              && (quickQuoteForm.controls['subModel'].dirty 
+              || quickQuoteForm.controls['subModel'].touched)}">
+                <label for="subModel">Sub Model</label>
+                <select class="custom-select mr-sm-2 required" formControlName="subModel"
                   (change)="subModelOnchange()" [(ngModel)]="carDetails.subModel"
                   [attr.disabled]=" subModelLOV?.length ? null : true">
                   <option selected></option>
@@ -92,54 +92,54 @@
                     {{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}
                   </option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickSubModel'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['subModel'].errors?.required">
                   * sub model is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickTypeOfUse'].invalid 
-              && (quickQuoteForm.controls['quickTypeOfUse'].dirty 
-              || quickQuoteForm.controls['quickTypeOfUse'].touched)}">
-                <label for="quickTypeOfUse">Type of Use</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickTypeOfUse"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['typeOfUse'].invalid 
+              && (quickQuoteForm.controls['typeOfUse'].dirty 
+              || quickQuoteForm.controls['typeOfUse'].touched)}">
+                <label for="typeOfUse">Type of Use</label>
+                <select class="custom-select mr-sm-2 required" formControlName="typeOfUse"
                   (change)="typeOfUseOnchange()" [(ngModel)]="carDetails.typeOfUse"
                   [attr.disabled]=" typeOfUseLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let typeOfUse of typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
                     {{ typeOfUse.NOM_USO_VEHI }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickTypeOfUse'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['typeOfUse'].errors?.required">
                   * type of use is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickSubline'].invalid 
-              && (quickQuoteForm.controls['quickSubline'].dirty 
-              || quickQuoteForm.controls['quickSubline'].touched)}">
-                <label for="quickSubline">Subline</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickSubline"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['subline'].invalid 
+              && (quickQuoteForm.controls['subline'].dirty 
+              || quickQuoteForm.controls['subline'].touched)}">
+                <label for="subline">Subline</label>
+                <select class="custom-select mr-sm-2 required" formControlName="subline"
                   [(ngModel)]="carDetails.subline" [attr.disabled]=" sublineLOV?.length ? null : true">
                   <option selected></option>
                   <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickSubline'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
                 </p>
               </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickValue'].invalid 
-              && (quickQuoteForm.controls['quickValue'].dirty 
-              || quickQuoteForm.controls['quickValue'].touched)}">
-                <label for="quickValue">Vehicle Value</label>
-                <input type="text" formControlName="quickValue" class="form-control"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['value'].invalid 
+              && (quickQuoteForm.controls['value'].dirty 
+              || quickQuoteForm.controls['value'].touched)}">
+                <label for="value">Vehicle Value</label>
+                <input type="text" formControlName="value" class="form-control"
                   [(ngModel)]="carDetails.vehicleValue" readonly>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickValue'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['value'].errors?.required">
                   * vehicle value is required
                 </p>
               </div>

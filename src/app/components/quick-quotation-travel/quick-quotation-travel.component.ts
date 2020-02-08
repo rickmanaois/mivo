@@ -10,6 +10,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import * as moment from 'moment';
 // import {
 //   IDropdownSettings
 // } from 'ng-multiselect-dropdown';
@@ -27,7 +28,8 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   option: string = '';
   quickQuoteForm: FormGroup;
 
-  mindate = new Date();
+  mindate : Date = new Date();
+  endDateMinDate : Date = moment().add(1, 'days').toDate();
   enableEndDate: boolean = false;
 
   currencyLOV: any[];
@@ -74,15 +76,15 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
 
   createQuickQuoteForm() {
     this.quickQuoteForm = this.fb.group({
-      quickCurrency: ['', Validators.required],
-      quickCountry: ['', Validators.required],
-      quickPackage: ['', Validators.required],
-      quickCoverage: ['', Validators.required],
-      quickPurposeTrip: ['', Validators.required],
-      quickStartDate: ['', Validators.required],
-      quickEndDate: ['', Validators.required],
-      quickNoOfDays: ['', Validators.required],
-      quickAgeRange: ['', Validators.required]
+      currency: ['', Validators.required],
+      country: ['', Validators.required],
+      package: ['', Validators.required],
+      coverage: ['', Validators.required],
+      purposeTrip: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      noOfDays: ['', Validators.required],
+      ageRange: ['', Validators.required]
     });
   }
 
@@ -153,21 +155,26 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   }
 
   setValidations() {
-    this.quickQuoteForm.get('quickEndDate').valueChanges.subscribe(date => {
-      var diff = (date - this.quickQuoteForm.get('quickStartDate').value) / 1000 / 60 / 60 / 24;
-      diff = diff === NaN ? 0 : diff;
-      this.travelDetails.noOfDays = diff > 0 ? diff : 0;
+    this.quickQuoteForm.get('endDate').valueChanges.subscribe(date => {
+      var diff = moment(date).diff(moment(this.quickQuoteForm.get('startDate').value), 'days');
+      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
 
-    this.quickQuoteForm.get('quickStartDate').valueChanges.subscribe(date => {
+    this.quickQuoteForm.get('startDate').valueChanges.subscribe(date => {
       this.enableEndDate = date !== null && date !== undefined;
-      var diff = (this.quickQuoteForm.get('quickEndDate').value - date) / 1000 / 60 / 60 / 24;
-      diff = diff === NaN ? 0 : diff;
-
-      if (!this.enableEndDate || (diff < 0)) {
+      var diff = 0;
+      if (this.enableEndDate) {
+        var diff = moment(this.quickQuoteForm.get('endDate').value).diff(moment(date), 'days');
+        diff = diff === NaN ? 0 : diff;
+        this.endDateMinDate = moment(date).add(1, 'days').toDate();
+        if (diff < 1) {
+          this.travelDetails.endDate = null;
+        }
+      } else {
         this.travelDetails.endDate = null;
       }
-      this.travelDetails.noOfDays = diff > 0 ? diff : 0;
+
+      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
   }
 

@@ -10,6 +10,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import * as moment from 'moment';
 import {
   QQTravel
 } from '../../objects/QQTravel';
@@ -24,7 +25,8 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   option: string = '';
   quoteForm: FormGroup;
 
-  mindate = new Date();
+  mindate : Date = new Date();
+  endDateMinDate : Date = moment().add(1, 'days').toDate();
   enableEndDate: boolean = false;
 
   currencyLOV: any[];
@@ -169,20 +171,25 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
 
   setValidations() {
     this.quoteForm.get('endDate').valueChanges.subscribe(date => {
-      var diff = (date - this.quoteForm.get('startDate').value) / 1000 / 60 / 60 / 24;
-      diff = diff === NaN ? 0 : diff;
-      this.travelDetails.noOfDays = diff > 0 ? diff : 0;
+      var diff = moment(date).diff(moment(this.quoteForm.get('startDate').value), 'days');
+      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
 
     this.quoteForm.get('startDate').valueChanges.subscribe(date => {
       this.enableEndDate = date !== null && date !== undefined;
-      var diff = (this.quoteForm.get('endDate').value - date) / 1000 / 60 / 60 / 24;
-      diff = diff === NaN ? 0 : diff;
-
-      if (!this.enableEndDate || (diff < 0)) {
+      var diff = 0;
+      if (this.enableEndDate) {
+        var diff = moment(this.quoteForm.get('endDate').value).diff(moment(date), 'days');
+        diff = diff === NaN ? 0 : diff;
+        this.endDateMinDate = moment(date).add(1, 'days').toDate();
+        if (diff < 1) {
+          this.travelDetails.endDate = null;
+        }
+      } else {
         this.travelDetails.endDate = null;
       }
-      this.travelDetails.noOfDays = diff > 0 ? diff : 0;
+
+      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
   }
 

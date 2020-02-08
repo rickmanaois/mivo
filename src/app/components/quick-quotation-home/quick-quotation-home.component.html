@@ -13,21 +13,21 @@
         <form [formGroup]="quickQuoteForm" class="quick-quote-form">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickSubline'].invalid 
-                  && (quickQuoteForm.controls['quickSubline'].dirty 
-                  || quickQuoteForm.controls['quickSubline'].touched)}">
-                <label for="quickSubline">Subline</label>
-                <select class="custom-select mr-sm-2 required" formControlName="quickSubline"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['subline'].invalid 
+                  && (quickQuoteForm.controls['subline'].dirty 
+                  || quickQuoteForm.controls['subline'].touched)}">
+                <label for="subline">Subline</label>
+                <select class="custom-select mr-sm-2 required" formControlName="subline"
                   [(ngModel)]="homeDetails.subline">
                   <option selected></option>
                   <option *ngFor="let subline of sublineLOV" [ngValue]="subline.name">{{ subline.value }}</option>
                 </select>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickSubline'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
                 </p>
               </div>
             </div>
-            
+
             <div class="form-divider"></div>
             <div class="col-xl-12">
               <h6>Coverage</h6>
@@ -35,18 +35,18 @@
 
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="quickCbBuilding" formControlName="quickCbBuilding"
+                <input class="form-check-input" type="checkbox" id="cbBuilding" formControlName="cbBuilding"
                   [(ngModel)]="homeDetails.cbBuilding">
-                <label class="form-check-label" for="quickCbBuilding">
+                <label class="form-check-label" for="cbBuilding">
                   Building
                 </label>
               </div>
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickBuilding'].invalid 
-                  && (quickQuoteForm.controls['quickBuilding'].dirty 
-                  || quickQuoteForm.controls['quickBuilding'].touched)}">
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['building'].invalid 
+                && (quickQuoteForm.controls['building'].dirty 
+                || quickQuoteForm.controls['building'].touched)}">
                 <input class="form-control required" [attr.disabled]="homeDetails.cbBuilding ? null : ''" type="text"
-                  id="quickBuilding" formControlName="quickBuilding" [(ngModel)]="homeDetails.building">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickBuilding'].errors?.required">
+                  id="building" formControlName="building" [(ngModel)]="homeDetails.building">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['building'].errors?.required">
                   * building is required
                 </p>
               </div>
@@ -54,18 +54,18 @@
 
             <div class="col-lg-3 col-md-4 col-sm-6">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="quickCbContent" formControlName="quickCbContent"
+                <input class="form-check-input" type="checkbox" id="cbContent" formControlName="cbContent"
                   [(ngModel)]="homeDetails.cbContent">
-                <label class="form-check-label" for="quickCbContent">
+                <label class="form-check-label" for="cbContent">
                   Content
                 </label>
               </div>
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickContent'].invalid 
-                  && (quickQuoteForm.controls['quickContent'].dirty 
-                  || quickQuoteForm.controls['quickContent'].touched)}">
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['content'].invalid 
+                && (quickQuoteForm.controls['content'].dirty 
+                || quickQuoteForm.controls['content'].touched)}">
                 <input class="form-control required" [attr.disabled]="homeDetails.cbContent ? null : ''" type="text"
-                  id="quickContent" formControlName="quickContent" [(ngModel)]="homeDetails.content">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickContent'].errors?.required">
+                  id="content" formControlName="content" [(ngModel)]="homeDetails.content">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['content'].errors?.required">
                   * content is required
                 </p>
               </div>
@@ -79,20 +79,20 @@
               <div class="form-check">
                 <input class="form-check-input"
                   [attr.disabled]="homeDetails.cbBuilding || homeDetails.cbContent ? null : ''" type="checkbox"
-                  id="quickCbImprovements" formControlName="quickCbImprovements"
+                  id="cbImprovements" formControlName="cbImprovements"
                   [(ngModel)]="homeDetails.cbImprovements">
-                <label class="form-check-label" for="quickCbImprovements">
+                <label class="form-check-label" for="cbImprovements">
                   Improvements
                 </label>
               </div>
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickImprovements'].invalid 
-                  && (quickQuoteForm.controls['quickImprovements'].dirty 
-                  || quickQuoteForm.controls['quickImprovements'].touched)}">
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['improvements'].invalid 
+                && (quickQuoteForm.controls['improvements'].dirty 
+                || quickQuoteForm.controls['improvements'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbImprovements ? null : ''"
-                  type="text" id="quickImprovements" formControlName="quickImprovements"
+                  type="text" id="improvements" formControlName="improvements"
                   [(ngModel)]="homeDetails.improvements">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickImprovements'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['improvements'].errors?.required">
                   * improvements is required
                 </p>
               </div>
@@ -102,20 +102,20 @@
               <div class="form-check">
                 <input class="form-check-input"
                   [attr.disabled]="homeDetails.cbBuilding || homeDetails.cbContent ? null : ''" type="checkbox"
-                  id="quickCbRelatedBuild" formControlName="quickCbRelatedBuild"
+                  id="cbRelatedBuild" formControlName="cbRelatedBuild"
                   [(ngModel)]="homeDetails.cbRelatedBuild">
-                <label class="form-check-label" for="quickCbRelatedBuild">
+                <label class="form-check-label" for="cbRelatedBuild">
                   Other Related Build
                 </label>
               </div>
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickRelatedBuild'].invalid 
-                  && (quickQuoteForm.controls['quickRelatedBuild'].dirty 
-                  || quickQuoteForm.controls['quickRelatedBuild'].touched)}">
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['relatedBuild'].invalid 
+                && (quickQuoteForm.controls['relatedBuild'].dirty 
+                || quickQuoteForm.controls['relatedBuild'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbRelatedBuild ? null : ''"
-                  type="text" id="quickRelatedBuild" formControlName="quickRelatedBuild"
+                  type="text" id="relatedBuild" formControlName="relatedBuild"
                   [(ngModel)]="homeDetails.relatedBuild">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickRelatedBuild'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['relatedBuild'].errors?.required">
                   * related build is required
                 </p>
               </div>
@@ -125,20 +125,20 @@
               <div class="form-check">
                 <input class="form-check-input"
                   [attr.disabled]="homeDetails.cbBuilding || homeDetails.cbContent ? null : ''" type="checkbox"
-                  id="quickCbRelatedContent" formControlName="quickCbRelatedContent"
+                  id="cbRelatedContent" formControlName="cbRelatedContent"
                   [(ngModel)]="homeDetails.cbRelatedContent">
-                <label class="form-check-label" for="quickCbRelatedContent">
+                <label class="form-check-label" for="cbRelatedContent">
                   Other Related Content
                 </label>
               </div>
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['quickRelatedContent'].invalid 
-                  && (quickQuoteForm.controls['quickRelatedContent'].dirty 
-                  || quickQuoteForm.controls['quickRelatedContent'].touched)}">
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['relatedContent'].invalid 
+                && (quickQuoteForm.controls['relatedContent'].dirty 
+                || quickQuoteForm.controls['relatedContent'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbRelatedContent ? null : ''"
-                  type="text" id="quickRelatedContent" formControlName="quickRelatedContent"
+                  type="text" id="relatedContent" formControlName="relatedContent"
                   [(ngModel)]="homeDetails.relatedContent">
-                <p class="form-error" *ngIf="quickQuoteForm.controls['quickRelatedContent'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['relatedContent'].errors?.required">
                   * related content is required
                 </p>
               </div>
