@@ -461,7 +461,7 @@
                     || quoteForm.controls['product'].touched)}">
                     <label for="product">Product List</label>
                     <select class="custom-select mr-sm-2 required" formControlName="product"
-                      [(ngModel)]="carDetails.product">
+                      [(ngModel)]="carDetails.productList">
                       <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['product'].errors?.required">
@@ -474,9 +474,9 @@
             </div>
           </div>
 
-          <div class="btn-group" role="group" aria-label="Basic example">
+          <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary">Print Qoute</button>
-            <button type="button" class="btn btn-primary">Issue Qoute</button>
+            <button type="button" class="btn btn-primary" (click)="issueQuote(carDetails)">Issue Qoute</button>
             <button type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 

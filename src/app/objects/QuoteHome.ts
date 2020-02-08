@@ -1,6 +1,8 @@
+import { GroupPolicy } from './GroupPolicy';
+
 export class QuoteHome {
-  //risk details
   quotationNumber: string;
+  //risk details
   businessLine: string;
   currency: string;
   buildingNumber: string;
@@ -22,19 +24,23 @@ export class QuoteHome {
   left: string;
   rear: string;
 
+  //improvement
+
+  //other related structure details
+
+  //other related content details
+
   //policy holder information
   clientName: string;
 
+  //group policy
+  groupPolicy: GroupPolicy;
+
+  //general information
   effectivityDate: Date;
   expiryDate: Date;
   paymentMethod: string;
   productList: string;
-  
-  //new object
-  //policyInformation
-
-  //new object
-  //subAgent
 
   constructor() {}
 }

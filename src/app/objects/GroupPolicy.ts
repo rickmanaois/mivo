@@ -1,4 +1,4 @@
-export class GeneralInformation {
+export class GroupPolicy {
   groupPolicy: string;
   contract: string;
   subContract: string;

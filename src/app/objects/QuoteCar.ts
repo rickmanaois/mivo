@@ -1,5 +1,8 @@
+import { GroupPolicy } from './GroupPolicy';
+
 export class QuoteCar {
   quotationNumber: string;
+  //vehicle information
   make: string;
   model: string;
   vehicleType: string;
@@ -18,19 +21,24 @@ export class QuoteCar {
   purchaseDate: Date;
   receivedBy: string;
   receivedDate: Date;
-  accessories: [];
+
+  //accessories
+
+  //policy holder information
   policyHolder: string;
+
+  //group policy
+  groupPolicy : GroupPolicy;
   
+  //general information
   effectivityDate: Date;
   expiryDate: Date;
   paymentMethod: string;
   productList: string;
   
-  //new object
-  //policyInformation
+  //additional policy information
 
-  //new object
-  //subAgent
+  //subagent
 
   constructor() {}
 }

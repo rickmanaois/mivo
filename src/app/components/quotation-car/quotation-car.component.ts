@@ -354,7 +354,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }];
   }
 
-  quickQuote(carDetails: QuoteCar) {
+  issueQuote(carDetails: QuoteCar) {
     console.log(carDetails);
   }
 
