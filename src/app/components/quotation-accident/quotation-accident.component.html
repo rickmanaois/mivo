@@ -1,1 +1,278 @@
-<p>quotation-accident works!</p>
+<div class="row" id="quotationAccident">
+  <div class="col-xl-12">
+    <div class="page-header">
+      <h4>Quotation - Accident</h4>
+    </div>
+    <!-- .page-header -->
+  </div>
+  <!-- .col-xl-12 -->
+
+  <div class="col-xl-12">
+    <div class="card shadow">
+      <div class="card-body">
+        <div class="clearfix"></div>
+        <form [formGroup]="quoteForm">
+          <div class="card shadow mb-3">
+            <div class="card-header">
+              <strong>Business Line</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subline'].invalid 
+                    && (quoteForm.controls['subline'].dirty 
+                    || quoteForm.controls['subline'].touched)}">
+                    <label for="subline">Subline</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="subline"
+                      [(ngModel)]="accidentDetails.subline">
+                      <option selected></option>
+                      <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['subline'].errors?.required">
+                      * subline is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header">
+              <strong>General Information</strong>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-12">
+                  <h6>Group Policy</h6>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['groupPolicy'].invalid 
+                        && (quoteForm.controls['groupPolicy'].dirty 
+                        || quoteForm.controls['groupPolicy'].touched)}">
+                    <label for="groupPolicy">Group Policy</label>
+                    <select class="custom-select mr-sm-2" formControlName="groupPolicy"
+                      [(ngModel)]="accidentDetails.groupPolicy">
+                      <option></option>
+                      <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
+                        {{ groupPolicy.name }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['groupPolicy'].errors?.required">
+                      * group policy is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['contract'].invalid 
+                        && (quoteForm.controls['contract'].dirty 
+                        || quoteForm.controls['contract'].touched)}">
+                    <label for="contract">Contract</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="contract"
+                      [(ngModel)]="accidentDetails.contract"
+                      [attr.disabled]=" accidentDetails.groupPolicy ? null : true">
+                      <option></option>
+                      <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
+                      </option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['contract'].errors?.required">
+                      * contract is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subContract'].invalid 
+                        && (quoteForm.controls['subContract'].dirty 
+                        || quoteForm.controls['subContract'].touched)}">
+                    <label for="subContract">Sub Contract</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="subContract"
+                      [(ngModel)]="accidentDetails.subContract"
+                      [attr.disabled]=" accidentDetails.groupPolicy ? null : true">
+                      <option></option>
+                      <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
+                        {{ subContract.name }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['subContract'].errors?.required">
+                      * sub contract is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['commercialStructure'].invalid 
+                        && (quoteForm.controls['commercialStructure'].dirty 
+                        || quoteForm.controls['commercialStructure'].touched)}">
+                    <label for="commercialStructure">Commercial Structure</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
+                      [(ngModel)]="accidentDetails.commercialStructure">
+                      <option></option>
+                      <option *ngFor="let commercialStructure of commercialStructureLOV"
+                        [ngValue]="commercialStructure.value">{{ commercialStructure.name }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
+                      * commercial structure is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['agentCode'].invalid 
+                      && (quoteForm.controls['agentCode'].dirty 
+                      || quoteForm.controls['agentCode'].touched)}">
+                    <label for="agentCode">Agent Code</label>
+                    <input type="text" formControlName="agentCode" class="form-control required"
+                      [(ngModel)]="accidentDetails.agentCode">
+                    <p class="form-error" *ngIf="quoteForm.controls['agentCode'].errors?.required">
+                      * agent code is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="form-divider"></div>
+
+                <div class="col-xl-12">
+                  <h6>Movement Dates</h6>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['effectivityDate'].invalid 
+                          && (quoteForm.controls['effectivityDate'].dirty 
+                          || quoteForm.controls['effectivityDate'].touched)}">
+                    <label for="effectivityDate">Effectivity Date</label>
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                      formControlName="effectivityDate" [(ngModel)]="accidentDetails.effectivityDate" bsDatepicker>
+                    <p class="form-error" *ngIf="quoteForm.controls['effectivityDate'].errors?.required">
+                      * effectivity date is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['expiryDate'].invalid 
+                          && (quoteForm.controls['expiryDate'].dirty 
+                          || quoteForm.controls['expiryDate'].touched)}">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" placeholder="Datepicker" class="form-control required"
+                      [minDate]="expiryDateMinDate" formControlName="expiryDate" [(ngModel)]="accidentDetails.expiryDate"
+                      bsDatepicker>
+                    <p class="form-error" *ngIf="quoteForm.controls['expiryDate'].errors?.required">
+                      * expiry date is required
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header">
+              <strong>Policy Holder Information</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-12">
+                  <h6>Policy Holder</h6>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['firstName'].invalid 
+                    && (quoteForm.controls['firstName'].dirty 
+                    || quoteForm.controls['firstName'].touched)}">
+                    <label for="firstName">First Name</label>
+                    <input type="text" formControlName="firstName" class="form-control required"
+                      [(ngModel)]="accidentDetails.firstName">
+                    <p class="form-error" *ngIf="quoteForm.controls['firstName'].errors?.required">
+                      * first name is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['lastName'].invalid 
+                    && (quoteForm.controls['lastName'].dirty 
+                    || quoteForm.controls['lastName'].touched)}">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" formControlName="lastName" class="form-control required"
+                      [(ngModel)]="accidentDetails.lastName">
+                    <p class="form-error" *ngIf="quoteForm.controls['lastName'].errors?.required">
+                      * last name is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3" *ngIf="showSPADetails">
+            <div class="card-header">
+              <strong>Accidental Death / Disablement Detail</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['disablementValue'].invalid 
+                        && (quoteForm.controls['disablementValue'].dirty 
+                        || quoteForm.controls['disablementValue'].touched)}">
+                    <label for="disablementValue">Accidental Death and Disablement Value</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="disablementValue"
+                      [(ngModel)]="accidentDetails.disablementValue">
+                      <option selected></option>
+                      <option *ngFor="let disablementValue of disablementValueLOV" [ngValue]="disablementValue.name">
+                        {{ disablementValue.value }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['disablementValue'].errors?.required">
+                      * accidental death and disablement value is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header">
+              <strong>Product</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['productList'].invalid 
+                    && (quoteForm.controls['productList'].dirty 
+                    || quoteForm.controls['productList'].touched)}">
+                    <label for="productList">Product List</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="productList"
+                      [(ngModel)]="accidentDetails.productList">
+                      <option selected></option>
+                      <option *ngFor="let productList of productListLOV" [ngValue]="productList.name">
+                        {{ productList.value }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['productList'].errors?.required">
+                      * product list is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary">Print Qoute</button>
+            <button type="button" class="btn btn-primary" (click)="issueQuote(accidentDetails)">Issue Qoute</button>
+            <button type="button" class="btn btn-primary">Proceed to Issuance</button>
+          </div>
+          <!-- .btn-group -->
+          <div class="clearfix"></div>
+        </form>
+        <!-- .quick-quote-form -->
+      </div>
+      <!-- .card-body -->
+    </div>
+    <!-- .card.shadow -->
+  </div>
+  <!-- .col-xl-12 -->
+</div>
+<!-- #quotationAccident -->

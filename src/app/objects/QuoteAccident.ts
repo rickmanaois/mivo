@@ -1,6 +1,6 @@
 import { GroupPolicy } from './GroupPolicy';
 
-export class QuoteTravel {
+export class QuoteAccident {
   quotationNumber: string;
   
   //risk details

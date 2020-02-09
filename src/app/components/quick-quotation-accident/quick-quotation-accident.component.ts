@@ -134,17 +134,18 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
     var childAge = this.quickQuoteForm.get('childAge');
     var cbChildAge = this.quickQuoteForm.get('cbChildAge');
 
-    //removing required validation
-    Utility.updateValidator(occupationalClass, null);
-    Utility.updateValidator(disablementValue, null);
-    Utility.updateValidator(primaryInsuredAge, null);
-    Utility.updateValidator(spouseAge, null);
-    Utility.updateValidator(childAge, null);
-
     this.quickQuoteForm.get('subline').valueChanges.subscribe(subline => {
       this.showDetails = false;
       this.showSPADetails = false;
       this.showHCBIDetails = false;
+
+      //removing required validation
+      Utility.updateValidator(occupationalClass, null);
+      Utility.updateValidator(disablementValue, null);
+      Utility.updateValidator(primaryInsuredAge, null);
+      Utility.updateValidator(spouseAge, null);
+      Utility.updateValidator(childAge, null);
+
       if (subline == 323) { //standard personal accident
         this.showDetails = true;
         this.showSPADetails = true;
