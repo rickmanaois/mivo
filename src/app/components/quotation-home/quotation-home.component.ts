@@ -18,8 +18,7 @@ import {
   GroupPolicy
 } from 'src/app/objects/GroupPolicy';
 import {
-  setGroupPolicyValidations,
-  setEffecivityDateValidations
+  Validate
 } from '../../validators/validate';
 import {
   LOV as lovUtil
@@ -116,8 +115,8 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   }
 
   setValidations() {
-    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
-    setEffecivityDateValidations(this.quoteForm, this.homeDetails, this.expiryDateMinDate);
+    Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+    Validate.setEffecivityDateValidations(this.quoteForm, this.homeDetails, this.expiryDateMinDate);
   }
 
   getSubline() {

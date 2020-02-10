@@ -36,8 +36,7 @@ import {
   LOV as lovUtil
 } from '../../utils/lov';
 import {
-  setGroupPolicyValidations,
-  setEffecivityDateValidations
+  Validate
 } from '../../validators/validate';
 
 @Component({
@@ -157,9 +156,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
-
-    setEffecivityDateValidations(this.quoteForm, this.carDetails, this.expiryDateMinDate);
+    Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+    Validate.setEffecivityDateValidations(this.quoteForm, this.carDetails, this.expiryDateMinDate);
   }
 
   getMakeList() {

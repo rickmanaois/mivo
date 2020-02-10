@@ -11,9 +11,6 @@ import {
   Validators
 } from '@angular/forms';
 import * as moment from 'moment';
-// import {
-//   IDropdownSettings
-// } from 'ng-multiselect-dropdown';
 import {
   QQTravel
 } from '../../objects/QQTravel';

@@ -18,7 +18,7 @@ import {
   GroupPolicy
 } from 'src/app/objects/GroupPolicy';
 import {
-  setGroupPolicyValidations
+  Validate
 } from '../../validators/validate';
 import {
   LOV as lovUtil
@@ -219,7 +219,7 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
 
-    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+    Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
   }
 
   quickQuote(travelDetails: QuoteTravel, groupPolicy: GroupPolicy) {
