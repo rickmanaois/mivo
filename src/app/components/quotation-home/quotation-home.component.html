@@ -425,6 +425,31 @@
                   </div>
                 </div>
 
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['expiringPolicyNumber'].invalid 
+                      && (quoteForm.controls['expiringPolicyNumber'].dirty 
+                      || quoteForm.controls['expiringPolicyNumber'].touched)}">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox"
+                          id="cbIsRenewal" formControlName="cbIsRenewal"
+                          [(ngModel)]="groupPolicy.cbIsRenewal">
+                        <label class="form-check-label" for="cbIsRenewal">
+                          Renewal
+                        </label>
+                      </div>
+                    <label class="form-check-label" for="cbIsRenewal">
+                      Expiring Policy Number
+                    </label>
+                    <input type="text" formControlName="expiringPolicyNumber" 
+                      [attr.disabled]="groupPolicy.cbIsRenewal ? null : ''"
+                      class="form-control required"
+                      [(ngModel)]="groupPolicy.expiringPolicyNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['expiringPolicyNumber'].errors?.required">
+                      * expiring policy number is required
+                    </p>
+                  </div>
+                </div>
+
                 <div class="form-divider"></div>
 
                 <div class="col-xl-12">

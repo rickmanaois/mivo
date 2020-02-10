@@ -76,9 +76,13 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
 
     cbBuilding.valueChanges.subscribe(checked => {
       const building = this.quickQuoteForm.get('building');
+      this.homeDetails.building = Utility.setNull(checked, this.homeDetails.building);
       Utility.updateValidator(building, checked ? [Validators.required] : null);
 
       if (!checked && cbContent.value !== true) {
+        this.homeDetails.improvements = null;
+        this.homeDetails.relatedBuild = null;
+        this.homeDetails.relatedContent = null;
         Utility.updateValidator(improvements, null);
         Utility.updateValidator(relatedBuild, null);
         Utility.updateValidator(relatedContent, null);
@@ -91,9 +95,13 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
 
     cbContent.valueChanges.subscribe(checked => {
       const content = this.quickQuoteForm.get('content');
+      this.homeDetails.content = Utility.setNull(checked, this.homeDetails.content);
       Utility.updateValidator(content, checked ? [Validators.required] : null);
 
       if (!checked && cbBuilding.value !== true) {
+        this.homeDetails.improvements = null;
+        this.homeDetails.relatedBuild = null;
+        this.homeDetails.relatedContent = null;
         Utility.updateValidator(improvements, null);
         Utility.updateValidator(relatedBuild, null);
         Utility.updateValidator(relatedContent, null);
@@ -105,14 +113,17 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
     });
 
     cbImprovements.valueChanges.subscribe(checked => {
+      this.homeDetails.improvements = Utility.setNull(checked, this.homeDetails.improvements);
       Utility.updateValidator(improvements, checked ? [Validators.required] : null);
     });
 
     cbRelatedBuild.valueChanges.subscribe(checked => {
+      this.homeDetails.relatedBuild = Utility.setNull(checked, this.homeDetails.relatedBuild);
       Utility.updateValidator(relatedBuild, checked ? [Validators.required] : null);
     });
 
     cbRelatedContent.valueChanges.subscribe(checked => {
+      this.homeDetails.relatedContent = Utility.setNull(checked, this.homeDetails.relatedContent);
       Utility.updateValidator(relatedContent, checked ? [Validators.required] : null);
     });
   }

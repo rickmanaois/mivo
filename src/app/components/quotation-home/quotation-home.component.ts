@@ -97,7 +97,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
       subContract: [null],
       commercialStructure: ['', Validators.required],
       agentCode: ['', Validators.required],
-      isRenewal: [null],
+      cbIsRenewal: [null],
       expiringPolicyNumber: [null],
       //general information
       effectivityDate: ['', Validators.required],

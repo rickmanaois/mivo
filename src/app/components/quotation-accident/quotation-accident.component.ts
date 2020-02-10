@@ -86,6 +86,9 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
       subContract: [null],
       commercialStructure: ['', Validators.required],
       agentCode: ['', Validators.required],
+      cbIsRenewal: [null],
+      expiringPolicyNumber: [null],
+      //general information
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
       //policy holder information

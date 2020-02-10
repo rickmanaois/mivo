@@ -7,4 +7,8 @@ export class Utility {
     input.setValidators(validator);
     input.updateValueAndValidity();
   }
+
+  static setNull(checked: boolean, value: any) {
+    return !checked ? null : value;
+  }
 }

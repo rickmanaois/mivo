@@ -74,6 +74,52 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
     });
   }
 
+  setValidations() {
+    var occupationalClass = this.quickQuoteForm.get('occupationalClass');
+    var disablementValue = this.quickQuoteForm.get('disablementValue');
+    var primaryInsuredAge = this.quickQuoteForm.get('primaryInsuredAge');
+    var spouseAge = this.quickQuoteForm.get('spouseAge');
+    var cbSpouseAge = this.quickQuoteForm.get('cbSpouseAge');
+    var childAge = this.quickQuoteForm.get('childAge');
+    var cbChildAge = this.quickQuoteForm.get('cbChildAge');
+
+    this.quickQuoteForm.get('subline').valueChanges.subscribe(subline => {
+      this.showDetails = false;
+      this.showSPADetails = false;
+      this.showHCBIDetails = false;
+
+      //removing required validation
+      Utility.updateValidator(occupationalClass, null);
+      Utility.updateValidator(disablementValue, null);
+      Utility.updateValidator(primaryInsuredAge, null);
+      Utility.updateValidator(spouseAge, null);
+      Utility.updateValidator(childAge, null);
+
+      if (subline == 323) { //standard personal accident
+        this.showDetails = true;
+        this.showSPADetails = true;
+        Utility.updateValidator(occupationalClass, [Validators.required]);
+        Utility.updateValidator(disablementValue, [Validators.required]);
+      } else if (subline == 326) { //hospital cassh benefit
+        this.showDetails = true;
+        this.showHCBIDetails = true;
+        Utility.updateValidator(primaryInsuredAge, [Validators.required]);
+        Utility.updateValidator(spouseAge, cbSpouseAge.value === true ? [Validators.required] : null);
+        Utility.updateValidator(childAge, cbChildAge.value === true ? [Validators.required] : null);
+      }
+    });
+
+    cbSpouseAge.valueChanges.subscribe(checked => {
+      this.accidentDetails.spouseAge = Utility.setNull(checked, this.accidentDetails.spouseAge);
+      Utility.updateValidator(spouseAge, checked === true ? [Validators.required] : null);
+    });
+
+    cbChildAge.valueChanges.subscribe(checked => {
+      this.accidentDetails.childAge = Utility.setNull(checked, this.accidentDetails.childAge);
+      Utility.updateValidator(childAge, checked === true ? [Validators.required] : null);
+    });
+  }
+
   getSubline() {
     this.sublineLOV = [{
         value: "323",
@@ -123,50 +169,6 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
       value: "1",
       name: "test"
     }];
-  }
-
-  setValidations() {
-    var occupationalClass = this.quickQuoteForm.get('occupationalClass');
-    var disablementValue = this.quickQuoteForm.get('disablementValue');
-    var primaryInsuredAge = this.quickQuoteForm.get('primaryInsuredAge');
-    var spouseAge = this.quickQuoteForm.get('spouseAge');
-    var cbSpouseAge = this.quickQuoteForm.get('cbSpouseAge');
-    var childAge = this.quickQuoteForm.get('childAge');
-    var cbChildAge = this.quickQuoteForm.get('cbChildAge');
-
-    this.quickQuoteForm.get('subline').valueChanges.subscribe(subline => {
-      this.showDetails = false;
-      this.showSPADetails = false;
-      this.showHCBIDetails = false;
-
-      //removing required validation
-      Utility.updateValidator(occupationalClass, null);
-      Utility.updateValidator(disablementValue, null);
-      Utility.updateValidator(primaryInsuredAge, null);
-      Utility.updateValidator(spouseAge, null);
-      Utility.updateValidator(childAge, null);
-
-      if (subline == 323) { //standard personal accident
-        this.showDetails = true;
-        this.showSPADetails = true;
-        Utility.updateValidator(occupationalClass, [Validators.required]);
-        Utility.updateValidator(disablementValue, [Validators.required]);
-      } else if (subline == 326) { //hospital cassh benefit
-        this.showDetails = true;
-        this.showHCBIDetails = true;
-        Utility.updateValidator(primaryInsuredAge, [Validators.required]);
-        Utility.updateValidator(spouseAge, cbSpouseAge.value === true ? [Validators.required] : null);
-        Utility.updateValidator(childAge, cbChildAge.value === true ? [Validators.required] : null);
-      }
-    });
-
-    cbSpouseAge.valueChanges.subscribe(checked => {
-      Utility.updateValidator(spouseAge, checked === true ? [Validators.required] : null);
-    });
-
-    cbChildAge.valueChanges.subscribe(checked => {
-      Utility.updateValidator(childAge, checked === true ? [Validators.required] : null);
-    });
   }
 
   quickQuote(accidentDetails: QQAccident) {

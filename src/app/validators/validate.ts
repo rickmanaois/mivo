@@ -24,6 +24,9 @@ export function setGroupPolicyValidations(form: any, gp: GroupPolicy) {
   var contract = form.get('contract');
   var subContract = form.get('subContract');
 
+  var cbIsRenewal = form.get('cbIsRenewal');
+  var expiringPolicyNumber = form.get('expiringPolicyNumber');
+
   groupPolicy.valueChanges.subscribe(policy => {
     if (policy !== undefined) {
       var hasPolicy = policy !== null && policy !== '';
@@ -34,6 +37,13 @@ export function setGroupPolicyValidations(form: any, gp: GroupPolicy) {
 
       Utility.updateValidator(contract, hasPolicy ? Validators.required : null);
       Utility.updateValidator(subContract, hasPolicy ? Validators.required : null);
+    }
+  });
+
+  cbIsRenewal.valueChanges.subscribe(isRenewal => {
+    if (isRenewal != undefined ) {
+      gp.expiringPolicyNumber = Utility.setNull(isRenewal, gp.expiringPolicyNumber);
+      Utility.updateValidator(expiringPolicyNumber, isRenewal ? Validators.required : null);
     }
   });
 }

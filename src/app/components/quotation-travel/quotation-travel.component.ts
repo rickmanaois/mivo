@@ -110,7 +110,7 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       subContract: [null],
       commercialStructure: ['', Validators.required],
       agentCode: ['', Validators.required],
-      isRenewal: [null],
+      cbIsRenewal: [null],
       expiringPolicyNumber: [null],
       //policy holder information
       clientName: ['', Validators.required],
