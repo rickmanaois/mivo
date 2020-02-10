@@ -39,11 +39,18 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
   sublineLOV: any[];
+  currencyLOV: any[];
+  regionLOV: any[];
+  provinceLOV: any[];
+  municipalityLOV: any[];
 
   groupPolicyLOV: any[];
   contractLOV: any[];
   subContractLOV: any[];
   commercialStructureLOV: any[];
+
+  paymentMethodLOV: any[];
+  productListLOV: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -104,7 +111,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
       expiryDate: ['', Validators.required],
       //product data
       paymentMethod: ['', Validators.required],
-      product: ['', Validators.required],
+      productList: ['', Validators.required],
     });
   }
 

@@ -22,9 +22,9 @@
                     && (quoteForm.controls['businessLine'].dirty 
                     || quoteForm.controls['businessLine'].touched)}">
                     <label for="businessLine">Business Line</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="businessLine" (change)="makeOnchange()"
+                    <select class="custom-select mr-sm-2 required" formControlName="businessLine"
                       [(ngModel)]="homeDetails.businessLine">
-                      <option *ngFor="let businessLine of makeLOV" [ngValue]="businessLine.COD_MARCA">{{ businessLine.NOM_MARCA }}</option>
+                      <option *ngFor="let businessLine of sublineLOV" [ngValue]="businessLine.COD_MARCA">{{ businessLine.NOM_MARCA }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['businessLine'].errors?.required">
                       * business line is required
@@ -39,7 +39,7 @@
                   && (quoteForm.controls['currency'].dirty 
                   || quoteForm.controls['currency'].touched)}">
                     <label for="currency">Currency</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="currency" (change)="modelOnchange()"
+                    <select class="custom-select mr-sm-2 required" formControlName="currency"
                       [(ngModel)]="homeDetails.currency">
                       <option selected></option>
                       <option *ngFor="let currency of currencyLOV" [ngValue]="currency.COD_MODELO">{{ currency.NOM_MODELO }}
@@ -505,16 +505,16 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['product'].invalid 
-                    && (quoteForm.controls['product'].dirty 
-                    || quoteForm.controls['product'].touched)}">
-                    <label for="product">Product List</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="product"
-                      [(ngModel)]="homeDetails.product">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['productList'].invalid 
+                    && (quoteForm.controls['productList'].dirty 
+                    || quoteForm.controls['productList'].touched)}">
+                    <label for="productList">Product List</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="productList"
+                      [(ngModel)]="homeDetails.productList">
                       <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}
                       </option>
                     </select>
-                    <p class="form-error" *ngIf="quoteForm.controls['product'].errors?.required">
+                    <p class="form-error" *ngIf="quoteForm.controls['productList'].errors?.required">
                       * product list is required
                     </p>
                   </div>

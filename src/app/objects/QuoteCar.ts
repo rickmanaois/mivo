@@ -23,7 +23,7 @@ export class QuoteCar {
   //accessories
 
   //policy holder information
-  policyHolder: string;
+  clientName: string;
   
   //general information
   effectivityDate: Date;

@@ -4,7 +4,7 @@ export class GroupPolicy {
   subContract: string;
   commercialStructure: string;
   agentCode: string;
-  isRenewal: boolean;
+  cbIsRenewal: boolean;
   expiringPolicyNumber: string;
   constructor() {
   }

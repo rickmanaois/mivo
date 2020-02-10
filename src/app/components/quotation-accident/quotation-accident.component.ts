@@ -52,6 +52,8 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   subContractLOV: any[];
   commercialStructureLOV: any[];
 
+  productListLOV: any[];
+
   constructor(
     private fb: FormBuilder,
     // private qq: QuickQuoteService,

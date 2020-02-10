@@ -41,15 +41,19 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
 
   currencyLOV: any[];
   countryLOV: any[];
-  packageLOV: any[];
-  coverageLOV: any[];
-  purposeTripLOV: any[];
-  ageRangeLOV: any[];
+  travelPackageLOV: any[];
+  travelTypeLOV: any[];
+  purposeOfTripLOV: any[];
+  oneTripOnlyLOV: any[];
 
   groupPolicyLOV: any[];
   contractLOV: any[];
   subContractLOV: any[];
   commercialStructureLOV: any[];
+
+  travelInsuranceLOV: any[];
+  optionPackLOV: any[];
+  medicalExpensesLOV: any[];
 
   dropdownSettings = {};
 
@@ -68,12 +72,13 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.getCurrency();
-    this.getPackage();
-    this.getCoverage();
-    this.getPurposeTrip();
-    this.getAgeRange();
     this.getCountry();
+    this.getCurrency();
+
+    this.getPackage();
+    this.getType();
+    this.getPurposeTrip();
+    this.getOneTrip();
 
     this.groupPolicyLOV = lovUtil.getGroupPolicy();
     this.contractLOV = lovUtil.getContract();
@@ -161,28 +166,28 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   }
 
   getPackage() {
-    this.packageLOV = [{
+    this.travelPackageLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
-  getCoverage() {
-    this.coverageLOV = [{
+  getType() {
+    this.travelTypeLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getPurposeTrip() {
-    this.purposeTripLOV = [{
+    this.purposeOfTripLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
-  getAgeRange() {
-    this.ageRangeLOV = [{
+  getOneTrip() {
+    this.oneTripOnlyLOV = [{
       value: "1",
       name: "test"
     }];

@@ -1,6 +1,6 @@
 export class QQTravel {
   currency: string;
-  countries: [Object];
+  country: [Object];
   package: string;
   coverage: string;
   purposeTrip: string;
