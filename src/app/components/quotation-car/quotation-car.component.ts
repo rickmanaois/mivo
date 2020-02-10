@@ -12,8 +12,14 @@ import {
 } from '@angular/forms';
 import * as moment from 'moment';
 import {
+  distinctUntilChanged
+} from 'rxjs/operators';
+import {
   QuoteCar
 } from '../../objects/QuoteCar';
+import {
+  GroupPolicy
+} from 'src/app/objects/GroupPolicy';
 import {
   QuickQuoteService
 } from '../../services/quickqoute.service'
@@ -23,6 +29,16 @@ import {
 import {
   LOV
 } from '../../objects/LOV';
+import {
+  Utility
+} from '../../utils/utility';
+import {
+  LOV as lovUtil
+} from '../../utils/lov';
+import {
+  setGroupPolicyValidations,
+  setEffecivityDateValidations
+} from '../../validators/validate';
 
 @Component({
   selector: 'app-quotation-car',
@@ -31,10 +47,11 @@ import {
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QuoteCar();
+  @Input() groupPolicy = new GroupPolicy();
   quoteForm: FormGroup;
-  mindate : Date = new Date();
-  expiryDateMinDate : Date = moment().add(1, 'years').toDate();
- 
+  mindate: Date = new Date();
+  expiryDateMinDate: Date = moment().add(1, 'years').toDate();
+
   makeLOV: any[];
   modelLOV: any[];
   vehicleTypeLOV: any[];
@@ -74,6 +91,11 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.getMakeList();
     this.getColor();
     this.getAreaOfUsage();
+
+    this.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.contractLOV = lovUtil.getContract();
+    this.subContractLOV = lovUtil.getSubContract();
+    this.commercialStructureLOV = lovUtil.getCommercialStructure();
   }
 
   createQuoteForm() {
@@ -100,7 +122,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       receivedDate: [null],
       //policy holder information
       clientName: ['', Validators.required],
-      //general information
+      //group policy
       groupPolicy: [null],
       contract: [null],
       subContract: [null],
@@ -108,7 +130,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       agentCode: ['', Validators.required],
       isRenewal: [null],
       expiringPolicyNumber: [null],
-      //movement dates
+      //general information
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
       //product data
@@ -118,18 +140,34 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   setValidations() {
-    this.quoteForm.get('effectivityDate').valueChanges.subscribe(date => {
-      this.carDetails.expiryDate = moment(date).add(1, 'years').toDate();
-      this.expiryDateMinDate = this.carDetails.expiryDate;
+    var conductionNumber = this.quoteForm.get('conductionNumber');
+    var plateNumber = this.quoteForm.get('plateNumber');
+
+    conductionNumber.valueChanges.subscribe(number => {
+      if (number != undefined) {
+        var hasNumber = number !== null && number !== '';
+        Utility.updateValidator(plateNumber, hasNumber ? null : Validators.required);
+      }
     });
+
+    plateNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
+      if (number != undefined) {
+        var hasNumber = number !== null && number !== '';
+        Utility.updateValidator(conductionNumber, hasNumber ? null : Validators.required);
+      }
+    });
+
+    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+
+    setEffecivityDateValidations(this.quoteForm, this.carDetails, this.expiryDateMinDate);
   }
 
   getMakeList() {
-    const dto = new LOV('A2100400', '3', 'COD_CIA~1');
-    const _this = this;
-    this.lov.getLOV(dto).then(lovs => {
-      _this.makeLOV = lovs;
-    });
+    // const dto = new LOV('A2100400', '3', 'COD_CIA~1');
+    // const _this = this;
+    // this.lov.getLOV(dto).then(lovs => {
+    //   _this.makeLOV = lovs;
+    // });
   }
 
   makeOnchange() {
@@ -354,8 +392,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }];
   }
 
-  issueQuote(carDetails: QuoteCar) {
-    console.log(carDetails);
+  issueQuote(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
+    console.log(carDetails, groupPolicy);
   }
 
 }

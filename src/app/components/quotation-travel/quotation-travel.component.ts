@@ -12,8 +12,17 @@ import {
 } from '@angular/forms';
 import * as moment from 'moment';
 import {
-  QQTravel
-} from '../../objects/QQTravel';
+  QuoteTravel
+} from '../../objects/QuoteTravel';
+import {
+  GroupPolicy
+} from 'src/app/objects/GroupPolicy';
+import {
+  setGroupPolicyValidations
+} from '../../validators/validate';
+import {
+  LOV as lovUtil
+} from '../../utils/lov';
 
 @Component({
   selector: 'app-quotation-travel',
@@ -21,12 +30,13 @@ import {
   styleUrls: ['./quotation-travel.component.css']
 })
 export class QuotationTravelComponent implements OnInit, AfterViewChecked {
-  @Input() travelDetails = new QQTravel();
-  option: string = '';
+  @Input() travelDetails = new QuoteTravel();
+  @Input() groupPolicy = new GroupPolicy();
   quoteForm: FormGroup;
 
-  mindate : Date = new Date();
-  endDateMinDate : Date = moment().add(1, 'days').toDate();
+  mindate: Date = new Date();
+  expiryDateMinDate: Date = moment().add(1, 'years').toDate();
+  endDateMinDate: Date = moment().add(1, 'days').toDate();
   enableEndDate: boolean = false;
 
   currencyLOV: any[];
@@ -36,6 +46,11 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   purposeTripLOV: any[];
   ageRangeLOV: any[];
 
+  groupPolicyLOV: any[];
+  contractLOV: any[];
+  subContractLOV: any[];
+  commercialStructureLOV: any[];
+
   dropdownSettings = {};
 
   constructor(
@@ -44,7 +59,7 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
     // private lov: LovService,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.createquoteForm();
+    this.createQuoteForm();
     this.setValidations();
   }
 
@@ -60,6 +75,11 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
     this.getAgeRange();
     this.getCountry();
 
+    this.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.contractLOV = lovUtil.getContract();
+    this.subContractLOV = lovUtil.getSubContract();
+    this.commercialStructureLOV = lovUtil.getCommercialStructure();
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -71,7 +91,7 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
     };
   }
 
-  createquoteForm() {
+  createQuoteForm() {
     this.quoteForm = this.fb.group({
       currency: ['', Validators.required],
       country: ['', Validators.required],
@@ -84,7 +104,7 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       completeItinerary: ['', Validators.required],
       purposeOfTrip: ['', Validators.required],
       oneTripOnly: ['', Validators.required],
-
+      //group policy
       groupPolicy: [null],
       contract: [null],
       subContract: [null],
@@ -95,7 +115,6 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       //policy holder information
       clientName: ['', Validators.required],
       //travellers
-      //new object
       //coverages
       travelInsurance: ['', Validators.required],
       optionPack: ['', Validators.required],
@@ -170,16 +189,19 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   }
 
   setValidations() {
-    this.quoteForm.get('endDate').valueChanges.subscribe(date => {
-      var diff = moment(date).diff(moment(this.quoteForm.get('startDate').value), 'days');
+    var endDate = this.quoteForm.get('endDate');
+    var startDate = this.quoteForm.get('startDate');
+
+    endDate.valueChanges.subscribe(date => {
+      var diff = moment(date).diff(moment(startDate.value), 'days');
       this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
 
-    this.quoteForm.get('startDate').valueChanges.subscribe(date => {
+    startDate.valueChanges.subscribe(date => {
       this.enableEndDate = date !== null && date !== undefined;
       var diff = 0;
       if (this.enableEndDate) {
-        var diff = moment(this.quoteForm.get('endDate').value).diff(moment(date), 'days');
+        var diff = moment(endDate.value).diff(moment(date), 'days');
         diff = diff === NaN ? 0 : diff;
         this.endDateMinDate = moment(date).add(1, 'days').toDate();
         if (diff < 1) {
@@ -191,10 +213,12 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
 
       this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
     });
+
+    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
   }
 
-  quickQuote(travelDetails: QQTravel) {
-    console.log(travelDetails);
+  quickQuote(travelDetails: QuoteTravel, groupPolicy: GroupPolicy) {
+    console.log(travelDetails, groupPolicy);
   }
 
 }

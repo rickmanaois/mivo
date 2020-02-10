@@ -1,13 +1,8 @@
-import { GroupPolicy } from './GroupPolicy';
-
 export class QuoteAccident {
   quotationNumber: string;
   
   //risk details
   subline: string;
-
-  //group policy
-  groupPolicy: GroupPolicy;
 
   //general information
   effectivityDate: Date;

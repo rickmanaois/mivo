@@ -1,5 +1,3 @@
-import { GroupPolicy } from './GroupPolicy';
-
 export class QuoteHome {
   quotationNumber: string;
   //risk details
@@ -32,9 +30,6 @@ export class QuoteHome {
 
   //policy holder information
   clientName: string;
-
-  //group policy
-  groupPolicy: GroupPolicy;
 
   //general information
   effectivityDate: Date;

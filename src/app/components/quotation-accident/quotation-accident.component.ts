@@ -10,12 +10,23 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import * as moment from 'moment';
 import {
   QuoteAccident
 } from '../../objects/QuoteAccident';
 import {
+  GroupPolicy
+} from 'src/app/objects/GroupPolicy';
+import {
   Utility
 } from '../../utils/utility';
+import {
+  LOV as lovUtil
+} from '../../utils/lov';
+import {
+  setGroupPolicyValidations,
+  setEffecivityDateValidations
+} from '../../validators/validate';
 
 @Component({
   selector: 'app-quotation-accident',
@@ -24,8 +35,10 @@ import {
 })
 export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   @Input() accidentDetails = new QuoteAccident();
-  option: string = '';
+  @Input() groupPolicy = new GroupPolicy();
   quoteForm: FormGroup;
+  mindate: Date = new Date();
+  expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
   showDetails: boolean = false;
   showSPADetails: boolean = false;
@@ -55,16 +68,19 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.getSubline();
-    this.getGroupPolicy();
-    this.getContract();
-    this.getSubContract();
-    this.getCommercialStructure();
+
+    this.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.contractLOV = lovUtil.getContract();
+    this.subContractLOV = lovUtil.getSubContract();
+    this.commercialStructureLOV = lovUtil.getCommercialStructure();
+
     this.getDisablementValue();
   }
 
   createQuoteForm() {
     this.quoteForm = this.fb.group({
       subline: ['', Validators.required],
+      //group policy
       groupPolicy: [null],
       contract: [null],
       subContract: [null],
@@ -72,11 +88,36 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
       agentCode: ['', Validators.required],
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
+      //policy holder information
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      //disablement value
       disablementValue: [null],
+      //product data
       productList: ['', Validators.required],
     });
+  }
+
+  setValidations() {
+    var subline = this.quoteForm.get('subline');
+    var disablementValue = this.quoteForm.get('disablementValue');
+
+    subline.valueChanges.subscribe(subline => {
+      //removing required validation
+      Utility.updateValidator(disablementValue, null);
+      this.showDetails = false;
+      this.showSPADetails = false;
+      this.showHCBIDetails = false;
+      if (subline == 323) { //standard personal accident
+        this.showDetails = true;
+        this.showSPADetails = true;
+        Utility.updateValidator(disablementValue, Validators.required);
+      }
+    });
+
+    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+    setEffecivityDateValidations(this.quoteForm, this.accidentDetails, this.expiryDateMinDate);
+
   }
 
   getSubline() {
@@ -95,34 +136,6 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
     ];
   }
 
-  getGroupPolicy() {
-    this.groupPolicyLOV = [{
-      value: "1",
-      name: "test"
-    }];
-  }
-
-  getContract() {
-    this.contractLOV = [{
-      value: "1",
-      name: "test"
-    }];
-  }
-
-  getSubContract() {
-    this.subContractLOV = [{
-      value: "1",
-      name: "test"
-    }];
-  }
-
-  getCommercialStructure() {
-    this.commercialStructureLOV = [{
-      value: "1",
-      name: "test"
-    }];
-  }
-
   getDisablementValue() {
     this.disablementValueLOV = [{
       value: "1",
@@ -130,41 +143,8 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
     }];
   }
 
-  setValidations() {
-    var subline = this.quoteForm.get('subline');
-    var disablementValue = this.quoteForm.get('disablementValue');
-    var groupPolicy = this.quoteForm.get('groupPolicy');
-    // var contract = this.quoteForm.get('contract');
-    var subContract = this.quoteForm.get('subContract');
-
-    subline.valueChanges.subscribe(subline => {
-      //removing required validation
-      Utility.updateValidator(disablementValue, null);
-      this.showDetails = false;
-      this.showSPADetails = false;
-      this.showHCBIDetails = false;
-      if (subline == 323) { //standard personal accident
-        this.showDetails = true;
-        this.showSPADetails = true;
-        Utility.updateValidator(disablementValue, ['', Validators.required]);
-      }
-    });
-
-    groupPolicy.valueChanges.subscribe(policy => {
-      var hasPolicy = policy !== null && policy !== undefined && policy !== '';
-      console.log(subContract);
-      // if (hasPolicy) {
-      //   Utility.updateValidator(subContract, ['', Validators.required])
-      // } else {
-      //   Utility.updateValidator(subContract, null)
-      // }
-      // Utility.updateValidator(contract, hasPolicy ? ['', Validators.required] : null);
-      // Utility.updateValidator(subContract, hasPolicy ? ['', Validators.required] : null);
-    });
-  }
-
-  quickQuote(accidentDetails: QuoteAccident) {
-    console.log(accidentDetails);
+  issueQuote(accidentDetails: QuoteAccident, groupPolicy: GroupPolicy) {
+    console.log(accidentDetails, groupPolicy);
   }
 
 }

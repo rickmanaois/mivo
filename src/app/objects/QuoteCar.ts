@@ -1,5 +1,3 @@
-import { GroupPolicy } from './GroupPolicy';
-
 export class QuoteCar {
   quotationNumber: string;
   //vehicle information
@@ -26,9 +24,6 @@ export class QuoteCar {
 
   //policy holder information
   policyHolder: string;
-
-  //group policy
-  groupPolicy : GroupPolicy;
   
   //general information
   effectivityDate: Date;

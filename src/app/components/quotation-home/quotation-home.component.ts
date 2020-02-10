@@ -15,8 +15,15 @@ import {
   QuoteHome
 } from '../../objects/QuoteHome';
 import {
-  Utility
-} from '../../utils/utility';
+  GroupPolicy
+} from 'src/app/objects/GroupPolicy';
+import {
+  setGroupPolicyValidations,
+  setEffecivityDateValidations
+} from '../../validators/validate';
+import {
+  LOV as lovUtil
+} from '../../utils/lov';
 
 @Component({
   selector: 'app-quotation-home',
@@ -25,11 +32,18 @@ import {
 })
 export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   @Input() homeDetails = new QuoteHome();
+  @Input() groupPolicy = new GroupPolicy();
+
   quoteForm: FormGroup;
-  mindate : Date = new Date();
-  expiryDateMinDate : Date = moment().add(1, 'years').toDate();
+  mindate: Date = new Date();
+  expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
   sublineLOV: any[];
+
+  groupPolicyLOV: any[];
+  contractLOV: any[];
+  subContractLOV: any[];
+  commercialStructureLOV: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +51,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     // private lov: LovService,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.createquoteForm();
+    this.createQuoteForm();
     this.setValidations();
   }
 
@@ -47,9 +61,14 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.getSubline();
+
+    this.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.contractLOV = lovUtil.getContract();
+    this.subContractLOV = lovUtil.getSubContract();
+    this.commercialStructureLOV = lovUtil.getCommercialStructure();
   }
 
-  createquoteForm() {
+  createQuoteForm() {
     this.quoteForm = this.fb.group({
       businessLine: ['', Validators.required],
       currency: ['', Validators.required],
@@ -72,7 +91,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
       rear: ['', Validators.required],
       // policy holder information
       clientName: [null],
-      //general information
+      //group policy
       groupPolicy: ['', Validators.required],
       contract: [null],
       subContract: [null],
@@ -80,7 +99,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
       agentCode: ['', Validators.required],
       isRenewal: [null],
       expiringPolicyNumber: [null],
-      //movement dates
+      //general information
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
       //product data
@@ -90,10 +109,8 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   }
 
   setValidations() {
-    this.quoteForm.get('effectivityDate').valueChanges.subscribe(date => {
-      this.homeDetails.expiryDate = moment(date).add(1, 'years').toDate();
-      this.expiryDateMinDate = this.homeDetails.expiryDate;
-    });
+    setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+    setEffecivityDateValidations(this.quoteForm, this.homeDetails, this.expiryDateMinDate);
   }
 
   getSubline() {
@@ -103,7 +120,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     }];
   }
 
-  quickQuote(homeDetails: QuoteHome) {
-    console.log(homeDetails);
+  quickQuote(homeDetails: QuoteHome, groupPolicy: GroupPolicy) {
+    console.log(homeDetails, groupPolicy);
   }
 }

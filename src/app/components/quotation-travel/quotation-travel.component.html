@@ -196,11 +196,12 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['groupPolicy'].invalid 
-                      && (quoteForm.controls['groupPolicy'].dirty 
-                      || quoteForm.controls['groupPolicy'].touched)}">
+                        && (quoteForm.controls['groupPolicy'].dirty 
+                        || quoteForm.controls['groupPolicy'].touched)}">
                     <label for="groupPolicy">Group Policy</label>
-                    <select class="custom-select mr-sm-2 required" formControlName="groupPolicy"
-                      [(ngModel)]="travelDetails.groupPolicy">
+                    <select class="custom-select mr-sm-2" formControlName="groupPolicy"
+                      [(ngModel)]="groupPolicy.groupPolicy">
+                      <option></option>
                       <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
                         {{ groupPolicy.name }}</option>
                     </select>
@@ -212,11 +213,13 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['contract'].invalid 
-                      && (quoteForm.controls['contract'].dirty 
-                      || quoteForm.controls['contract'].touched)}">
+                        && (quoteForm.controls['contract'].dirty 
+                        || quoteForm.controls['contract'].touched)}">
                     <label for="contract">Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
-                      [(ngModel)]="travelDetails.contract">
+                      [(ngModel)]="groupPolicy.contract"
+                      [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
+                      <option></option>
                       <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
                     </select>
@@ -228,11 +231,13 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subContract'].invalid 
-                      && (quoteForm.controls['subContract'].dirty 
-                      || quoteForm.controls['subContract'].touched)}">
+                        && (quoteForm.controls['subContract'].dirty 
+                        || quoteForm.controls['subContract'].touched)}">
                     <label for="subContract">Sub Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
-                      [(ngModel)]="travelDetails.subContract">
+                      [(ngModel)]="groupPolicy.subContract"
+                      [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
+                      <option></option>
                       <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
                     </select>
@@ -244,13 +249,14 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['commercialStructure'].invalid 
-                      && (quoteForm.controls['commercialStructure'].dirty 
-                      || quoteForm.controls['commercialStructure'].touched)}">
+                        && (quoteForm.controls['commercialStructure'].dirty 
+                        || quoteForm.controls['commercialStructure'].touched)}">
                     <label for="commercialStructure">Commercial Structure</label>
                     <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
-                      [(ngModel)]="travelDetails.commercialStructure">
+                      [(ngModel)]="groupPolicy.commercialStructure">
+                      <option></option>
                       <option *ngFor="let commercialStructure of commercialStructureLOV"
-                        [ngValue]="commercialStructure.value">{{ areaOfUsage.name }}</option>
+                        [ngValue]="commercialStructure.value">{{ commercialStructure.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
                       * commercial structure is required
@@ -260,16 +266,17 @@
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['agentCode'].invalid 
-                    && (quoteForm.controls['agentCode'].dirty 
-                    || quoteForm.controls['agentCode'].touched)}">
+                      && (quoteForm.controls['agentCode'].dirty 
+                      || quoteForm.controls['agentCode'].touched)}">
                     <label for="agentCode">Agent Code</label>
                     <input type="text" formControlName="agentCode" class="form-control required"
-                      [(ngModel)]="travelDetails.agentCode">
+                      [(ngModel)]="groupPolicy.agentCode">
                     <p class="form-error" *ngIf="quoteForm.controls['agentCode'].errors?.required">
                       * agent code is required
                     </p>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

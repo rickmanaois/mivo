@@ -14,9 +14,6 @@ export class QuoteTravel {
   purposeOfTrip: string;
   oneTripOnly: string;
 
-  //group policy
-  groupPolicy : GroupPolicy;
-
   //policy holder information
   clientName: string;
 
