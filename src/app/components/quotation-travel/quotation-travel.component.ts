@@ -8,7 +8,8 @@ import {
 import {
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
+  FormArray
 } from '@angular/forms';
 import * as moment from 'moment';
 import {
@@ -23,6 +24,7 @@ import {
 import {
   LOV as lovUtil
 } from '../../utils/lov';
+
 
 @Component({
   selector: 'app-quotation-travel',
@@ -120,11 +122,34 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       //policy holder information
       clientName: ['', Validators.required],
       //travellers
+      travellers: this.fb.array([this.newTraveller()]),
       //coverages
       travelInsurance: ['', Validators.required],
       optionPack: ['', Validators.required],
       medicalExpenses: ['', Validators.required],
     });
+  }
+
+  travellers(): FormArray {
+    return this.quoteForm.get("travellers") as FormArray
+  }
+
+  newTraveller(): FormGroup {
+    return this.fb.group({
+      completeName: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      relationship: ['', Validators.required],
+      passportNumber: ['', Validators.required],
+      physicianName: [null],
+    });
+  }
+
+  addTraveller() {
+    this.travellers().push(this.newTraveller());
+  }
+
+  removeTraveller(index: number) {
+    this.travellers().removeAt(index);
   }
 
   onItemSelect(item: any) {
@@ -222,7 +247,9 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
   }
 
-  quickQuote(travelDetails: QuoteTravel, groupPolicy: GroupPolicy) {
+  issueQuote(travelDetails: QuoteTravel, groupPolicy: GroupPolicy) {
+    var check = new QuoteTravel(this.quoteForm.value);
+    console.log(check);
     console.log(travelDetails, groupPolicy);
   }
 

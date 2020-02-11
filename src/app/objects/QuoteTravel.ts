@@ -1,4 +1,4 @@
-import { GroupPolicy } from './GroupPolicy';
+import { Traveller } from './Traveller';
 
 export class QuoteTravel {
   quotationNumber: string;
@@ -18,6 +18,7 @@ export class QuoteTravel {
   clientName: string;
 
   //travellers
+  travellers: [Traveller];
 
   //additional policy information
 
@@ -26,5 +27,7 @@ export class QuoteTravel {
   optionPack: string;
   medicalExpenses: string;
 
-  constructor() {}
+  constructor(init?: Partial<QuoteTravel>) {
+    Object.assign(this, init);
+  }
 }
