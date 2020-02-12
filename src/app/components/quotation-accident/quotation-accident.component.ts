@@ -51,6 +51,12 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   subContractLOV: any[];
   commercialStructureLOV: any[];
 
+  suffixLOV: any[];
+  genderLOV: any[];
+  relationshipLOV: any[];
+  occupationalClassLOV: any[];
+  occupationLOV: any[];
+
   productListLOV: any[];
 
   constructor(
@@ -75,6 +81,12 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
     this.subContractLOV = lovUtil.getSubContract();
     this.commercialStructureLOV = lovUtil.getCommercialStructure();
 
+    this.getSuffix();
+    this.getGender();
+    this.getRelationship();
+    this.getOccupationalClass();
+    this.getOccupation();
+
     this.getDisablementValue();
     this.getProductList();
   }
@@ -96,6 +108,17 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
       //policy holder information
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      //insured details
+      middleName: [null],
+      suffix: [null],
+      gender: ['', Validators.required],
+      relationship: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      cbWithHealthDeclaration: [null],
+      preExistingIllness: [null],
+      occupationalClass: ['', Validators.required],
+      occupation: ['', Validators.required],
+
       //disablement value
       disablementValue: [null],
       //product data
@@ -138,6 +161,41 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
         name: "Hospital Cash Benefit Insurance"
       }
     ];
+  }
+
+  getSuffix() {
+    this.suffixLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
+
+  getGender() {
+    this.genderLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
+  
+  getRelationship() {
+    this.relationshipLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
+
+  getOccupationalClass() {
+    this.occupationalClassLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
+
+  getOccupation() {
+    this.occupationLOV = [{
+      value: "1",
+      name: "test"
+    }];
   }
 
   getDisablementValue() {

@@ -595,29 +595,29 @@
           </div>
 
           <div class="card shadow mb-3">
-              <div class="card-header optional">
-                <strong>Subagent</strong>
-              </div>
-              <div class="card-body">
-                <div class="row">
-  
-                  <div class="col-sm-6">
-                    <h6>Subagent List</h6>
-                    <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
+            <div class="card-header optional">
+              <strong>Subagent</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <h6>Subagent List</h6>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
                       && (quoteForm.controls['subagent'].dirty 
                       || quoteForm.controls['subagent'].touched)}">
-                      <ng-multiselect-dropdown [placeholder]="'Select subagent'" formControlName="subagent"
-                        [data]="subagentLOV" [(ngModel)]="carDetails.subagent" [settings]="dropdownSettings"
-                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-                      </ng-multiselect-dropdown>
-                      <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
-                        * subagent is required
-                      </p>
-                    </div>
+                    <ng-multiselect-dropdown [placeholder]="'Select subagent'" formControlName="subagent"
+                      [data]="subagentLOV" [(ngModel)]="carDetails.subagent" [settings]="dropdownSettings"
+                      (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                    <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
+                      * subagent is required
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary">Print Qoute</button>

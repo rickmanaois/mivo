@@ -24,6 +24,9 @@ import {
 import {
   LOV as lovUtil
 } from '../../utils/lov';
+import {
+  Utility
+} from '../../utils/utility';
 
 
 @Component({
@@ -131,6 +134,11 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       clientName: ['', Validators.required],
       //travellers
       travellers: this.fb.array([this.newTraveller()]),
+      //additional policy information
+      cbSportsEquipment: [null],
+      sportsEquipment: [null],
+      cbHazardousSports: [null],
+      hazardousSports: [null],
       //coverages
       travelInsurance: ['', Validators.required],
       optionPack: ['', Validators.required],
@@ -141,6 +149,11 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   setValidations() {
     var endDate = this.quoteForm.get('endDate');
     var startDate = this.quoteForm.get('startDate');
+
+    var cbSportsEquipment = this.quoteForm.get('cbSportsEquipment');
+    var sportsEquipment = this.quoteForm.get('sportsEquipment');
+    var cbHazardousSports = this.quoteForm.get('cbHazardousSports');
+    var hazardousSports = this.quoteForm.get('hazardousSports');
 
     endDate.valueChanges.subscribe(date => {
       var diff = moment(date).diff(moment(startDate.value), 'days');
@@ -162,6 +175,16 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       }
 
       this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
+    });
+
+    cbSportsEquipment.valueChanges.subscribe(checked => {
+      this.travelDetails.sportsEquipment = Utility.setNull(checked, this.travelDetails.sportsEquipment);
+      Utility.updateValidator(sportsEquipment, checked ? [Validators.required] : null);
+    });
+
+    cbHazardousSports.valueChanges.subscribe(checked => {
+      this.travelDetails.hazardousSports = Utility.setNull(checked, this.travelDetails.hazardousSports);
+      Utility.updateValidator(hazardousSports, checked ? [Validators.required] : null);
     });
 
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);

@@ -21,6 +21,10 @@ export class QuoteTravel {
   travellers: [Traveller];
 
   //additional policy information
+  cbSportsEquipment: boolean;
+  sportsEquipment: string;
+  cbHazardousSports: boolean;
+  hazardousSports: string;
 
   //coverages
   travelInsurance: string;

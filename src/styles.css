@@ -124,3 +124,7 @@ form .card-header.optional {
   background: #fff;
   color: #212529;
 }
+
+.sidebar.toggled {
+  display: none;
+}

@@ -13,6 +13,15 @@ export class QuoteAccident {
   firstName: string;
 
   //insured details
+  middleName: string;
+  suffix: string;
+  gender: string;
+  relationship: string;
+  birthDate: Date;
+  cbWithHealthDeclaration: boolean;
+  preExistingIllness: string;
+  occupationalClass: string;
+  occupation: string;
 
   //accident death and disablement value
   disablementValue: number;
