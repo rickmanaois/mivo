@@ -114,3 +114,13 @@ form .form-group.input-error .multiselect-dropdown {
 .form-control[readonly] {
   border-left: 1px solid #ced4da !important;
 }
+
+form .card-header {
+  background: #7e7e7e;
+  color: #fff;
+}
+
+form .card-header.optional {
+  background: #fff;
+  color: #212529;
+}

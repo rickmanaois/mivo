@@ -8,7 +8,8 @@ import {
 import {
   FormGroup,
   FormBuilder,
-  Validators
+  Validators,
+  FormArray
 } from '@angular/forms';
 import * as moment from 'moment';
 import {
@@ -62,6 +63,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   colorLOV: any[];
   areaOfUsageLOV: any[];
 
+  accessoryListLOV: any[];
+
   groupPolicyLOV: any[];
   contractLOV: any[];
   subContractLOV: any[];
@@ -70,7 +73,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   paymentMethodLOV: any[];
   productListLOV: any[];
 
+  subagentLOV: any[];
+
   showQuickQouteDetails: boolean = false;
+  dropdownSettings = {};
 
   constructor(
     private fb: FormBuilder,
@@ -80,6 +86,16 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   ) {
     this.createQuoteForm();
     this.setValidations();
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
   }
 
   ngAfterViewChecked() {
@@ -91,6 +107,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.getColor();
     this.getAreaOfUsage();
 
+    this.getAccessoryList();
+
     this.groupPolicyLOV = lovUtil.getGroupPolicy();
     this.contractLOV = lovUtil.getContract();
     this.subContractLOV = lovUtil.getSubContract();
@@ -98,6 +116,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     this.getPaymentMethod();
     this.getProductList();
+
+    this.getSubagent();
   }
 
   createQuoteForm() {
@@ -122,6 +142,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       purchaseDate: [null],
       receivedBy: ['', Validators.required],
       receivedDate: [null],
+      //travellers
+      accessories: this.fb.array([]),
       //policy holder information
       clientName: ['', Validators.required],
       //group policy
@@ -138,6 +160,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       //product data
       paymentMethod: ['', Validators.required],
       product: ['', Validators.required],
+      //subagent
+      subagent: [null],
     });
   }
 
@@ -161,6 +185,34 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
     Validate.setEffecivityDateValidations(this.quoteForm, this.carDetails, this.expiryDateMinDate);
+  }
+
+  accessory(): FormArray {
+    return this.quoteForm.get("accessories") as FormArray
+  }
+
+  newAccessory(): FormGroup {
+    return this.fb.group({
+      accessoryList: ['', Validators.required],
+      accessoryType: ['', Validators.required],
+      price: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+  }
+
+  addAccessory() {
+    this.accessory().push(this.newAccessory());
+  }
+
+  removeAccessory(index: number) {
+    this.accessory().removeAt(index);
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 
   getMakeList() {
@@ -351,6 +403,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }];
   }
 
+  getAccessoryList() {
+    this.accessoryListLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
+
   getPaymentMethod() {
     this.paymentMethodLOV = [{
       value: 1,
@@ -363,6 +422,30 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       value: 1,
       name: "test"
     }];
+  }
+
+  getSubagent() {
+    this.subagentLOV = [{
+        item_id: 1,
+        item_text: 'Subagent1'
+      },
+      {
+        item_id: 2,
+        item_text: 'Subagent2'
+      },
+      {
+        item_id: 3,
+        item_text: 'Subagent3'
+      },
+      {
+        item_id: 4,
+        item_text: 'Subagent4'
+      },
+      {
+        item_id: 5,
+        item_text: 'Subagent5'
+      }
+    ];
   }
 
   issueQuote(carDetails: QuoteCar, groupPolicy: GroupPolicy) {

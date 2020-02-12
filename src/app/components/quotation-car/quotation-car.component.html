@@ -183,7 +183,8 @@
                     <label for="areaOfUsage">Area of Usage</label>
                     <select class="custom-select mr-sm-2 required" formControlName="areaOfUsage"
                       [(ngModel)]="carDetails.areaOfUsage">
-                      <option *ngFor="let areaOfUsage of areaOfUsageLOV" [ngValue]="areaOfUsage.value">{{ areaOfUsage.name }}</option>
+                      <option *ngFor="let areaOfUsage of areaOfUsageLOV" [ngValue]="areaOfUsage.value">
+                        {{ areaOfUsage.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['areaOfUsage'].errors?.required">
                       * area of usage is required
@@ -261,9 +262,9 @@
                     <label for="receivedBy">Received By</label>
                     <input type="text" formControlName="receivedBy" class="form-control required"
                       [(ngModel)]="carDetails.receivedBy">
-                      <p class="form-error" *ngIf="quoteForm.controls['receivedBy'].errors?.required">
-                        * received by is required
-                      </p>
+                    <p class="form-error" *ngIf="quoteForm.controls['receivedBy'].errors?.required">
+                      * received by is required
+                    </p>
                   </div>
                 </div>
 
@@ -284,13 +285,90 @@
             </div>
           </div>
 
-          <!-- <div class="card shadow mb-3">
-            <div class="card-header">
+          <div class="card shadow mb-3">
+            <div class="card-header optional">
               <strong>Accessories</strong>
             </div>
             <div class="card-body">
+
+              <div formArrayName="accessories">
+                <div *ngFor="let accessories of quoteForm.get('accessories')['controls']; let i=index">
+                  <div [formGroupName]="i" class="card accessory-card">
+                    <div class="card-body">
+                      <div class="row">
+
+                        <div class="col-md-4 col-sm-6">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['accessoryList'].invalid 
+                            && (accessories.controls['accessoryList'].dirty 
+                            || accessories.controls['accessoryList'].touched)}">
+                            <label for="accessoryList">Accessory List</label>
+                            <select class="custom-select mr-sm-2 required" formControlName="accessoryList">
+                              <option *ngFor="let accessoryList of accessoryListLOV" [ngValue]="accessoryList.value">
+                                {{ accessoryList.name }}</option>
+                            </select>
+                            <p class="form-error" *ngIf="accessories.controls['accessoryList'].errors?.required">
+                              * accessory list is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['accessoryType'].invalid 
+                            && (accessories.controls['accessoryType'].dirty 
+                            || accessories.controls['accessoryType'].touched)}">
+                            <label for="accessoryType">Accessory Type</label>
+                            <input type="text" formControlName="accessoryType" class="form-control required">
+                            <p class="form-error" *ngIf="accessories.controls['accessoryType'].errors?.required">
+                              * accessory type is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['price'].invalid 
+                            && (accessories.controls['price'].dirty 
+                            || accessories.controls['price'].touched)}">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control required" formControlName="price">
+                            <p class="form-error" *ngIf="accessories.controls['price'].errors?.required">
+                              * price is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['description'].invalid 
+                            && (accessories.controls['description'].dirty 
+                            || accessories.controls['description'].touched)}">
+                            <label for="description">Description</label>
+                            <textarea type="text" formControlName="description"
+                              class="form-control required"></textarea>
+                            <p class="form-error" *ngIf="accessories.controls['description'].errors?.required">
+                              * description is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-lg-12">
+                          <div class="btn-group">
+                            <button class="btn btn-primary" (click)="removeAccessory(i)">Remove</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button [disabled]="quoteForm.get('accessories').status !== 'VALID'" type="button"
+                  (click)="addAccessory()" class="btn btn-primary">Add Accessory</button>
+              </div>
+
             </div>
-          </div> -->
+          </div>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -309,9 +387,9 @@
                     <label for="clientName">Client's Name</label>
                     <input type="text" formControlName="clientName" class="form-control required"
                       [(ngModel)]="carDetails.clientName">
-                      <p class="form-error" *ngIf="quoteForm.controls['clientName'].errors?.required">
-                        * client's name is required
-                      </p>
+                    <p class="form-error" *ngIf="quoteForm.controls['clientName'].errors?.required">
+                      * client's name is required
+                    </p>
                   </div>
                 </div>
               </div>
@@ -352,8 +430,7 @@
                         || quoteForm.controls['contract'].touched)}">
                     <label for="contract">Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
-                      [(ngModel)]="groupPolicy.contract"
-                      [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
+                      [(ngModel)]="groupPolicy.contract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
                       <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
@@ -370,8 +447,7 @@
                         || quoteForm.controls['subContract'].touched)}">
                     <label for="subContract">Sub Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
-                      [(ngModel)]="groupPolicy.subContract"
-                      [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
+                      [(ngModel)]="groupPolicy.subContract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
                       <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
@@ -416,20 +492,18 @@
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['expiringPolicyNumber'].invalid 
                       && (quoteForm.controls['expiringPolicyNumber'].dirty 
                       || quoteForm.controls['expiringPolicyNumber'].touched)}">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                          id="cbIsRenewal" formControlName="cbIsRenewal"
-                          [(ngModel)]="groupPolicy.cbIsRenewal">
-                        <label class="form-check-label" for="cbIsRenewal">
-                          Renewal
-                        </label>
-                      </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="cbIsRenewal" formControlName="cbIsRenewal"
+                        [(ngModel)]="groupPolicy.cbIsRenewal">
+                      <label class="form-check-label" for="cbIsRenewal">
+                        Renewal
+                      </label>
+                    </div>
                     <label class="form-check-label" for="cbIsRenewal">
                       Expiring Policy Number
                     </label>
-                    <input type="text" formControlName="expiringPolicyNumber" 
-                      [attr.disabled]="groupPolicy.cbIsRenewal ? null : ''"
-                      class="form-control required"
+                    <input type="text" formControlName="expiringPolicyNumber"
+                      [attr.disabled]="groupPolicy.cbIsRenewal ? null : ''" class="form-control required"
                       [(ngModel)]="groupPolicy.expiringPolicyNumber">
                     <p class="form-error" *ngIf="quoteForm.controls['expiringPolicyNumber'].errors?.required">
                       * expiring policy number is required
@@ -461,67 +535,94 @@
                       && (quoteForm.controls['expiryDate'].dirty 
                       || quoteForm.controls['expiryDate'].touched)}">
                     <label for="expiryDate">Expiry Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="expiryDateMinDate"
-                      formControlName="expiryDate" [(ngModel)]="carDetails.expiryDate" bsDatepicker>
+                    <input type="text" placeholder="Datepicker" class="form-control required"
+                      [minDate]="expiryDateMinDate" formControlName="expiryDate" [(ngModel)]="carDetails.expiryDate"
+                      bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['expiryDate'].errors?.required">
                       * expiry date is required
                     </p>
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
 
           <div class="card shadow mb-3">
-              <div class="card-header">
-                <strong>Product</strong>
+            <div class="card-header">
+              <strong>Product</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-xl-12">
+                  <h6>Product Data</h6>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['paymentMethod'].invalid 
+                        && (quoteForm.controls['paymentMethod'].dirty 
+                        || quoteForm.controls['paymentMethod'].touched)}">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="paymentMethod"
+                      [(ngModel)]="carDetails.paymentMethod">
+                      <option *ngFor="let paymentMethod of paymentMethodLOV" [ngValue]="paymentMethod.value">
+                        {{ paymentMethod.name }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['paymentMethod'].errors?.required">
+                      * payment method is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['product'].invalid 
+                        && (quoteForm.controls['product'].dirty 
+                        || quoteForm.controls['product'].touched)}">
+                    <label for="product">Product List</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="product"
+                      [(ngModel)]="carDetails.productList">
+                      <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}
+                      </option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['product'].errors?.required">
+                      * product list is required
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+              <div class="card-header optional">
+                <strong>Subagent</strong>
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-xl-12">
-                    <h6>Product Data</h6>
-                  </div>
-
-                  <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['paymentMethod'].invalid 
-                        && (quoteForm.controls['paymentMethod'].dirty 
-                        || quoteForm.controls['paymentMethod'].touched)}">
-                      <label for="paymentMethod">Payment Method</label>
-                      <select class="custom-select mr-sm-2 required" formControlName="paymentMethod"
-                        [(ngModel)]="carDetails.paymentMethod">
-                        <option *ngFor="let paymentMethod of paymentMethodLOV" [ngValue]="paymentMethod.value">
-                          {{ paymentMethod.name }}</option>
-                      </select>
-                      <p class="form-error" *ngIf="quoteForm.controls['paymentMethod'].errors?.required">
-                        * payment method is required
+  
+                  <div class="col-sm-6">
+                    <h6>Subagent List</h6>
+                    <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
+                      && (quoteForm.controls['subagent'].dirty 
+                      || quoteForm.controls['subagent'].touched)}">
+                      <ng-multiselect-dropdown [placeholder]="'Select subagent'" formControlName="subagent"
+                        [data]="subagentLOV" [(ngModel)]="carDetails.subagent" [settings]="dropdownSettings"
+                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                      </ng-multiselect-dropdown>
+                      <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
+                        * subagent is required
                       </p>
                     </div>
                   </div>
-
-                  <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['product'].invalid 
-                        && (quoteForm.controls['product'].dirty 
-                        || quoteForm.controls['product'].touched)}">
-                      <label for="product">Product List</label>
-                      <select class="custom-select mr-sm-2 required" formControlName="product"
-                        [(ngModel)]="carDetails.productList">
-                        <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}
-                        </option>
-                      </select>
-                      <p class="form-error" *ngIf="quoteForm.controls['product'].errors?.required">
-                        * product list is required
-                      </p>
-                    </div>
-                  </div>
-
                 </div>
               </div>
-              </div>
+            </div>
 
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary">Print Qoute</button>
-            <button type="button" class="btn btn-primary" (click)="issueQuote(carDetails, groupPolicy)">Issue Qoute</button>
+            <button type="button" class="btn btn-primary" (click)="issueQuote(carDetails, groupPolicy)">Issue
+              Qoute</button>
             <button type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 

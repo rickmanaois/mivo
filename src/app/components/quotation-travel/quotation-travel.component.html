@@ -332,10 +332,8 @@
             </div>
             <div class="card-body">
 
-              <!-- <form [formGroup]="travellerForm"> -->
               <div formArrayName="travellers">
-                <!-- <div *ngFor="let traveller of travellers().controls; let empIndex=index"> -->
-                <div *ngFor="let traveller of quoteForm.get('travellers').controls; let i=index">
+                <div *ngFor="let traveller of quoteForm.get('travellers')['controls']; let i=index">
                   <div [formGroupName]="i" class="card traveller-card">
                     <div class="card-body">
                       <div class="row">
@@ -344,8 +342,7 @@
                               && (traveller.controls['completeName'].dirty 
                               || traveller.controls['completeName'].touched)}">
                             <label for="completeName">Complete Name</label>
-                            <input type="text" formControlName="completeName" class="form-control required"
-                              [ngModel]="completeName">
+                            <input type="text" formControlName="completeName" class="form-control required">
                             <p class="form-error" *ngIf="traveller.controls['completeName'].errors?.required">
                               * complete name is required
                             </p>
@@ -370,8 +367,7 @@
                           && (traveller.controls['relationship'].dirty 
                           || traveller.controls['relationship'].touched)}">
                             <label for="relationship">Relationship</label>
-                            <select class="custom-select mr-sm-2 required" formControlName="relationship"
-                              [(ngModel)]="relationship">
+                            <select class="custom-select mr-sm-2 required" formControlName="relationship">
                               <option *ngFor="let relationship of relationshipLOV" [ngValue]="relationship.value">
                                 {{ relationship.name }}</option>
                             </select>
@@ -412,7 +408,6 @@
                   </div>
                 </div>
               </div>
-              <!-- </form> -->
 
               <div class="btn-group">
                 <button [disabled]="quoteForm.get('travellers').status !== 'VALID'" type="button"
@@ -487,7 +482,7 @@
           <div class="btn-group" role="group">
             <button type="button" class="btn btn-primary">Print Qoute</button>
             <button type="button" class="btn btn-primary"
-              (click)="issueQuote(travelDetails, groupPolicy, traveller)">Issue Qoute</button>
+              (click)="issueQuote(travelDetails, groupPolicy)">Issue Qoute</button>
             <button type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
           <!-- .btn-group -->

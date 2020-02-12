@@ -34,6 +34,7 @@ export class QuoteCar {
   //additional policy information
 
   //subagent
+  subagent: [];
 
   constructor() {}
 }
