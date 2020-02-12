@@ -53,6 +53,8 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   subContractLOV: any[];
   commercialStructureLOV: any[];
 
+  relationshipLOV: any[];
+
   travelInsuranceLOV: any[];
   optionPackLOV: any[];
   medicalExpensesLOV: any[];
@@ -82,10 +84,16 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
     this.getPurposeTrip();
     this.getOneTrip();
 
+    this.getRelationship();
+
     this.groupPolicyLOV = lovUtil.getGroupPolicy();
     this.contractLOV = lovUtil.getContract();
     this.subContractLOV = lovUtil.getSubContract();
     this.commercialStructureLOV = lovUtil.getCommercialStructure();
+
+    this.getTravelInsurance();
+    this.getOptionPack();
+    this.getMedicalExpenses();
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -128,6 +136,35 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
       optionPack: ['', Validators.required],
       medicalExpenses: ['', Validators.required],
     });
+  }
+
+  setValidations() {
+    var endDate = this.quoteForm.get('endDate');
+    var startDate = this.quoteForm.get('startDate');
+
+    endDate.valueChanges.subscribe(date => {
+      var diff = moment(date).diff(moment(startDate.value), 'days');
+      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
+    });
+
+    startDate.valueChanges.subscribe(date => {
+      this.enableEndDate = date !== null && date !== undefined;
+      var diff = 0;
+      if (this.enableEndDate) {
+        var diff = moment(endDate.value).diff(moment(date), 'days');
+        diff = diff === NaN ? 0 : diff;
+        this.endDateMinDate = moment(date).add(1, 'days').toDate();
+        if (diff < 1) {
+          this.travelDetails.endDate = null;
+        }
+      } else {
+        this.travelDetails.endDate = null;
+      }
+
+      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
+    });
+
+    Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
   }
 
   travellers(): FormArray {
@@ -218,33 +255,32 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
     }];
   }
 
-  setValidations() {
-    var endDate = this.quoteForm.get('endDate');
-    var startDate = this.quoteForm.get('startDate');
+  getRelationship() {
+    this.relationshipLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
 
-    endDate.valueChanges.subscribe(date => {
-      var diff = moment(date).diff(moment(startDate.value), 'days');
-      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
-    });
+  getTravelInsurance() {
+    this.travelInsuranceLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
 
-    startDate.valueChanges.subscribe(date => {
-      this.enableEndDate = date !== null && date !== undefined;
-      var diff = 0;
-      if (this.enableEndDate) {
-        var diff = moment(endDate.value).diff(moment(date), 'days');
-        diff = diff === NaN ? 0 : diff;
-        this.endDateMinDate = moment(date).add(1, 'days').toDate();
-        if (diff < 1) {
-          this.travelDetails.endDate = null;
-        }
-      } else {
-        this.travelDetails.endDate = null;
-      }
+  getOptionPack() {
+    this.optionPackLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
 
-      this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
-    });
-
-    Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
+  getMedicalExpenses() {
+    this.medicalExpensesLOV = [{
+      value: "1",
+      name: "test"
+    }];
   }
 
   issueQuote(travelDetails: QuoteTravel, groupPolicy: GroupPolicy) {

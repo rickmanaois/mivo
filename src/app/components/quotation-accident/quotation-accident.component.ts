@@ -76,6 +76,7 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
     this.commercialStructureLOV = lovUtil.getCommercialStructure();
 
     this.getDisablementValue();
+    this.getProductList();
   }
 
   createQuoteForm() {
@@ -141,6 +142,13 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
 
   getDisablementValue() {
     this.disablementValueLOV = [{
+      value: "1",
+      name: "test"
+    }];
+  }
+
+  getProductList() {
+    this.productListLOV = [{
       value: "1",
       name: "test"
     }];

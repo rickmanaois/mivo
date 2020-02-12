@@ -17,7 +17,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['currency'].invalid 
                     && (quoteForm.controls['currency'].dirty 
                     || quoteForm.controls['currency'].touched)}">
@@ -33,17 +33,13 @@
                     </p>
                   </div>
                 </div>
-                <div class="form-divider"></div>
-                <div class="col-xl-12">
-                  <h6>Itinerary</h6>
-                </div>
 
-                <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6">
+                  <h6>Itinerary</h6>
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['country'].invalid 
                     && (quoteForm.controls['country'].dirty 
                     || quoteForm.controls['country'].touched)}">
-                    <label for="country">Select Country to visit</label>
-                    <ng-multiselect-dropdown [placeholder]="'choose country'" formControlName="country"
+                    <ng-multiselect-dropdown [placeholder]="'Select Country to visit'" formControlName="country"
                       [data]="countryLOV" [(ngModel)]="travelDetails.country" [settings]="dropdownSettings"
                       (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
                     </ng-multiselect-dropdown>
@@ -349,7 +345,7 @@
                               || traveller.controls['completeName'].touched)}">
                             <label for="completeName">Complete Name</label>
                             <input type="text" formControlName="completeName" class="form-control required"
-                            [ngModel]="completeName">
+                              [ngModel]="completeName">
                             <p class="form-error" *ngIf="traveller.controls['completeName'].errors?.required">
                               * complete name is required
                             </p>
@@ -405,8 +401,10 @@
                         </div>
 
                         <div class="clearfix"></div>
-                        <div class="col-lg-3 col-md-4 col-sm-6" *ngIf="i > 0">
-                          <button class="btn btn-primary" (click)="removeTraveller(i)">Remove</button>
+                        <div class="col-lg-12">
+                          <div class="btn-group" *ngIf="i > 0">
+                            <button class="btn btn-primary" (click)="removeTraveller(i)">Remove</button>
+                          </div>
                         </div>
 
                       </div>
@@ -416,8 +414,11 @@
               </div>
               <!-- </form> -->
 
-              <button [disabled]="quoteForm.get('travellers').status !== 'VALID'" type="button" (click)="addTraveller()"
-                class="btn btn-primary">Add Travellers</button>
+              <div class="btn-group">
+                <button [disabled]="quoteForm.get('travellers').status !== 'VALID'" type="button"
+                  (click)="addTraveller()" class="btn btn-primary">Add Travellers</button>
+              </div>
+
             </div>
           </div>
 

@@ -95,6 +95,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.contractLOV = lovUtil.getContract();
     this.subContractLOV = lovUtil.getSubContract();
     this.commercialStructureLOV = lovUtil.getCommercialStructure();
+
+    this.getPaymentMethod();
+    this.getProductList();
   }
 
   createQuoteForm() {
@@ -348,44 +351,16 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }];
   }
 
-  getGroupPolicy() {
-    this.groupPolicyLOV = [{
-      value: "test",
-      name: "test"
-    }];
-  }
-
-  getContract() {
-    this.contractLOV = [{
-      value: "test",
-      name: "test"
-    }];
-  }
-
-  getSubContract() {
-    this.subContractLOV = [{
-      value: "test",
-      name: "test"
-    }];
-  }
-
-  getCommercialStructure() {
-    this.commercialStructureLOV = [{
-      value: "test",
-      name: "test"
-    }];
-  }
-
   getPaymentMethod() {
     this.paymentMethodLOV = [{
-      value: "test",
+      value: 1,
       name: "test"
     }];
   }
 
   getProductList() {
     this.productListLOV = [{
-      value: "test",
+      value: 1,
       name: "test"
     }];
   }

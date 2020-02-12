@@ -67,6 +67,12 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.getSubline();
+    this.getCurrency();
+    this.getRegion();
+    this.getProvince();
+    this.getMunicipality();
+    this.getPaymentMethod();
+    this.getProductList();
 
     this.groupPolicyLOV = lovUtil.getGroupPolicy();
     this.contractLOV = lovUtil.getContract();
@@ -121,12 +127,54 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
 
   getSubline() {
     this.sublineLOV = [{
-      value: "test",
+      value: 1,
       name: "test"
     }];
   }
 
-  quickQuote(homeDetails: QuoteHome, groupPolicy: GroupPolicy) {
+  getCurrency() {
+    this.currencyLOV = [{
+      value: 1,
+      name: "test"
+    }];
+  }
+
+  getRegion() {
+    this.regionLOV = [{
+      value: 1,
+      name: "test"
+    }];
+  }
+
+  getProvince() {
+    this.provinceLOV = [{
+      value: 1,
+      name: "test"
+    }];
+  }
+
+  getMunicipality() {
+    this.municipalityLOV = [{
+      value: 1,
+      name: "test"
+    }];
+  }
+
+  getPaymentMethod() {
+    this.paymentMethodLOV = [{
+      value: 1,
+      name: "test"
+    }];
+  }
+
+  getProductList() {
+    this.productListLOV = [{
+      value: 1,
+      name: "test"
+    }];
+  }
+
+  issueQuote(homeDetails: QuoteHome, groupPolicy: GroupPolicy) {
     console.log(homeDetails, groupPolicy);
   }
 }

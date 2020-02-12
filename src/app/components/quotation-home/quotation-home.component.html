@@ -24,7 +24,7 @@
                     <label for="businessLine">Business Line</label>
                     <select class="custom-select mr-sm-2 required" formControlName="businessLine"
                       [(ngModel)]="homeDetails.businessLine">
-                      <option *ngFor="let businessLine of sublineLOV" [ngValue]="businessLine.COD_MARCA">{{ businessLine.NOM_MARCA }}</option>
+                      <option *ngFor="let businessLine of sublineLOV" [ngValue]="businessLine.value">{{ businessLine.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['businessLine'].errors?.required">
                       * business line is required
@@ -42,7 +42,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="currency"
                       [(ngModel)]="homeDetails.currency">
                       <option selected></option>
-                      <option *ngFor="let currency of currencyLOV" [ngValue]="currency.COD_MODELO">{{ currency.NOM_MODELO }}
+                      <option *ngFor="let currency of currencyLOV" [ngValue]="currency.value">{{ currency.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['currency'].errors?.required">
@@ -57,14 +57,14 @@
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['buildingName'].invalid 
-                  && (quoteForm.controls['buildingName'].dirty 
-                  || quoteForm.controls['buildingName'].touched)}">
-                    <label for="buildingName">House/Building Number</label>
-                    <input type="text" formControlName="buildingName" class="form-control"
-                      [(ngModel)]="homeDetails.buildingName">
-                    <p class="form-error" *ngIf="quoteForm.controls['buildingName'].errors?.required">
-                      * building name is required
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['buildingNumber'].invalid 
+                  && (quoteForm.controls['buildingNumber'].dirty 
+                  || quoteForm.controls['buildingNumber'].touched)}">
+                    <label for="buildingNumber">House/Building Number</label>
+                    <input type="text" formControlName="buildingNumber" class="form-control"
+                      [(ngModel)]="homeDetails.buildingNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['buildingNumber'].errors?.required">
+                      * building number is required
                     </p>
                   </div>
                 </div>
@@ -129,8 +129,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="region"
                       [(ngModel)]="homeDetails.region">
                       <option selected></option>
-                      <option *ngFor="let region of regionLOV" [ngValue]="region.COD_TIP_VEHI">
-                        {{ region.NOM_TIP_VEHI }}</option>
+                      <option *ngFor="let region of regionLOV" [ngValue]="region.value">
+                        {{ region.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['region'].errors?.required">
                       * region is required
@@ -146,8 +146,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="province"
                       [(ngModel)]="homeDetails.province">
                       <option selected></option>
-                      <option *ngFor="let province of provinceLOV" [ngValue]="province.ANIO_SUB_MODELO">
-                        {{ province.ANIO_SUB_MODELO }}</option>
+                      <option *ngFor="let province of provinceLOV" [ngValue]="province.value">
+                        {{ province.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['province'].errors?.required">
                       * province is required
@@ -163,8 +163,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="municipality"
                       [(ngModel)]="homeDetails.municipality">
                       <option selected></option>
-                      <option *ngFor="let municipality of municipalityLOV" [ngValue]="municipality.COD_SUB_MODELO">
-                        {{ municipality.ANIO_SUB_MODELO }}
+                      <option *ngFor="let municipality of municipalityLOV" [ngValue]="municipality.value">
+                        {{ municipality.name }}
                        </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['municipality'].errors?.required">
@@ -525,7 +525,8 @@
           </div>
 
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary">Issue Qoute</button>
+            <button type="button" class="btn btn-primary"
+            (click)="issueQuote(homeDetails, groupPolicy)">Issue Qoute</button>
           </div>
 
         </form>
