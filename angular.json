@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "mivo"
+  "defaultProject": "mivo",
+  "cli": {
+    "analytics": "0bc99e38-96f0-4156-8802-b802a406202c"
+  }
 }

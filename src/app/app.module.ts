@@ -107,6 +107,7 @@ import {
 import {
   QuickQuotationAccidentComponent
 } from './components/quick-quotation-accident/quick-quotation-accident.component';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 const appRoutes: Routes = [{
     path: 'login',
@@ -162,7 +163,8 @@ const appRoutes: Routes = [{
     HttpClientModule,
     ServiceModule,
     BsDatepickerModule.forRoot(),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    NgHttpLoaderModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })
