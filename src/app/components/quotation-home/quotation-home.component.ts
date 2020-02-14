@@ -23,8 +23,12 @@ import {
 import {
   GroupPolicyLOV as lovUtil
 } from '../../utils/lov/groupPolicy';
-import { HomeListObject } from 'src/app/objects/LOV/homeList';
-import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
+import {
+  HomeListObject
+} from 'src/app/objects/LOV/homeList';
+import {
+  GroupPolicyListObject
+} from 'src/app/objects/LOV/groupPolicyList';
 
 @Component({
   selector: 'app-quotation-home',

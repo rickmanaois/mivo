@@ -27,8 +27,12 @@ import {
 import {
   Utility
 } from '../../utils/utility';
-import { TravelListObject } from 'src/app/objects/LOV/travelList';
-import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
+import {
+  TravelListObject
+} from 'src/app/objects/LOV/travelList';
+import {
+  GroupPolicyListObject
+} from 'src/app/objects/LOV/groupPolicyList';
 
 
 @Component({

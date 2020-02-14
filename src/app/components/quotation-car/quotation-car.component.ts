@@ -39,7 +39,9 @@ import {
 import {
   CarListObject
 } from 'src/app/objects/LOV/carList';
-import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
+import {
+  GroupPolicyListObject
+} from 'src/app/objects/LOV/groupPolicyList';
 
 @Component({
   selector: 'app-quotation-car',
@@ -182,15 +184,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.accessory().removeAt(index);
   }
 
-  onItemSelect(item: any) {
-    console.log(item);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-
   makeOnchange() {
-    alert('make');
     this.LOV.modelLOV = [];
     this.LOV.vehicleTypeLOV = [];
     this.LOV.modelYearLOV = [];

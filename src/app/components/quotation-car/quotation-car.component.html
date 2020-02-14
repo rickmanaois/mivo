@@ -134,7 +134,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="subline"
                       [(ngModel)]="carDetails.subline" [attr.disabled]=" LOV.sublineLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                      <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}
+                      </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subline'].errors?.required">
                       * subline is required
@@ -303,7 +304,8 @@
                             || accessories.controls['accessoryList'].touched)}">
                             <label for="accessoryList">Accessory List</label>
                             <select class="custom-select mr-sm-2 required" formControlName="accessoryList">
-                              <option *ngFor="let accessoryList of LOV.accessoryListLOV" [ngValue]="accessoryList.value">
+                              <option *ngFor="let accessoryList of LOV.accessoryListLOV"
+                                [ngValue]="accessoryList.value">
                                 {{ accessoryList.name }}</option>
                             </select>
                             <p class="form-error" *ngIf="accessories.controls['accessoryList'].errors?.required">
@@ -606,8 +608,8 @@
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
                       && (quoteForm.controls['subagent'].dirty 
                       || quoteForm.controls['subagent'].touched)}">
-                    <ng-select [items]="LOV.subagentLOV" bindLabel="name" placeholder="Select Subagent"
-                      appendTo="body" formControlName="subagent" multiple="true" [(ngModel)]="carDetails.subagent">
+                    <ng-select [items]="LOV.subagentLOV" bindLabel="name" placeholder="Select Subagent" appendTo="body"
+                      formControlName="subagent" multiple="true" [(ngModel)]="carDetails.subagent">
                     </ng-select>
                     <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
                       * subagent is required
@@ -619,10 +621,11 @@
           </div>
 
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary">Print Qoute</button>
-            <button type="button" class="btn btn-primary" (click)="issueQuote(carDetails, groupPolicy)">Issue
+            <button [disabled]="quoteForm.pristine || quoteForm.invalid" type="button" class="btn btn-primary"
+              (click)="issueQuote(carDetails, groupPolicy)">Issue
               Qoute</button>
-            <button type="button" class="btn btn-primary">Proceed to Issuance</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 
         </form>

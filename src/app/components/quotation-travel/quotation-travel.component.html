@@ -530,10 +530,11 @@
           </div>
 
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary">Print Qoute</button>
-            <button type="button" class="btn btn-primary" (click)="issueQuote(travelDetails, groupPolicy)">Issue
+            <button [disabled]="quoteForm.pristine || quoteForm.invalid" type="button" class="btn btn-primary"
+              (click)="issueQuote(travelDetails, groupPolicy)">Issue
               Qoute</button>
-            <button type="button" class="btn btn-primary">Proceed to Issuance</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
           <!-- .btn-group -->
 

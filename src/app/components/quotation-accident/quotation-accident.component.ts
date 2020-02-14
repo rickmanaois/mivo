@@ -26,8 +26,12 @@ import {
 import {
   Validate
 } from '../../validators/validate';
-import { AccidentListObject } from 'src/app/objects/LOV/accidentList';
-import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
+import {
+  AccidentListObject
+} from 'src/app/objects/LOV/accidentList';
+import {
+  GroupPolicyListObject
+} from 'src/app/objects/LOV/groupPolicyList';
 
 @Component({
   selector: 'app-quotation-accident',
@@ -165,7 +169,7 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
       name: "test"
     }];
   }
-  
+
   getRelationship() {
     this.LOV.relationshipLOV = [{
       value: "1",

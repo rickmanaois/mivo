@@ -26,7 +26,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="subline"
                       [(ngModel)]="accidentDetails.subline">
                       <option selected></option>
-                      <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                      <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}
+                      </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subline'].errors?.required">
                       * subline is required
@@ -321,7 +322,7 @@
                       && (quoteForm.controls['birthDate'].dirty 
                       || quoteForm.controls['birthDate'].touched)}">
                     <label for="birthDate">Birth Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                    <input type="text" placeholder="Datepicker" class="form-control required" [maxDate]="mindate"
                       formControlName="birthDate" [(ngModel)]="accidentDetails.birthDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['birthDate'].errors?.required">
                       * birth date is required
@@ -405,7 +406,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="disablementValue"
                       [(ngModel)]="accidentDetails.disablementValue">
                       <option selected></option>
-                      <option *ngFor="let disablementValue of LOV.disablementValueLOV" [ngValue]="disablementValue.name">
+                      <option *ngFor="let disablementValue of LOV.disablementValueLOV"
+                        [ngValue]="disablementValue.name">
                         {{ disablementValue.value }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['disablementValue'].errors?.required">
@@ -444,10 +446,11 @@
           </div>
 
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary">Print Qoute</button>
-            <button type="button" class="btn btn-primary" (click)="issueQuote(accidentDetails, groupPolicy)">Issue
+            <button [disabled]="quoteForm.pristine || quoteForm.invalid" type="button" class="btn btn-primary"
+              (click)="issueQuote(accidentDetails, groupPolicy)">Issue
               Qoute</button>
-            <button type="button" class="btn btn-primary">Proceed to Issuance</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button>
           </div>
           <!-- .btn-group -->
           <div class="clearfix"></div>

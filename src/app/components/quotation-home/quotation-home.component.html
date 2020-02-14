@@ -24,7 +24,8 @@
                     <label for="businessLine">Business Line</label>
                     <select class="custom-select mr-sm-2 required" formControlName="businessLine"
                       [(ngModel)]="homeDetails.businessLine">
-                      <option *ngFor="let businessLine of LOV.sublineLOV" [ngValue]="businessLine.value">{{ businessLine.name }}</option>
+                      <option *ngFor="let businessLine of LOV.sublineLOV" [ngValue]="businessLine.value">
+                        {{ businessLine.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['businessLine'].errors?.required">
                       * business line is required
@@ -165,7 +166,7 @@
                       <option selected></option>
                       <option *ngFor="let municipality of LOV.municipalityLOV" [ngValue]="municipality.value">
                         {{ municipality.name }}
-                       </option>
+                      </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['municipality'].errors?.required">
                       * municipality is required
@@ -365,8 +366,7 @@
                         || quoteForm.controls['contract'].touched)}">
                     <label for="contract">Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
-                      [(ngModel)]="groupPolicy.contract"
-                      [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
+                      [(ngModel)]="groupPolicy.contract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
                       <option *ngFor="let contract of GPLOV.contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
@@ -383,8 +383,7 @@
                         || quoteForm.controls['subContract'].touched)}">
                     <label for="subContract">Sub Contract</label>
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
-                      [(ngModel)]="groupPolicy.subContract"
-                      [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
+                      [(ngModel)]="groupPolicy.subContract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
                       <option *ngFor="let subContract of GPLOV.subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
@@ -429,20 +428,18 @@
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['expiringPolicyNumber'].invalid 
                       && (quoteForm.controls['expiringPolicyNumber'].dirty 
                       || quoteForm.controls['expiringPolicyNumber'].touched)}">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                          id="cbIsRenewal" formControlName="cbIsRenewal"
-                          [(ngModel)]="groupPolicy.cbIsRenewal">
-                        <label class="form-check-label" for="cbIsRenewal">
-                          Renewal
-                        </label>
-                      </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="cbIsRenewal" formControlName="cbIsRenewal"
+                        [(ngModel)]="groupPolicy.cbIsRenewal">
+                      <label class="form-check-label" for="cbIsRenewal">
+                        Renewal
+                      </label>
+                    </div>
                     <label class="form-check-label" for="cbIsRenewal">
                       Expiring Policy Number
                     </label>
-                    <input type="text" formControlName="expiringPolicyNumber" 
-                      [attr.disabled]="groupPolicy.cbIsRenewal ? null : ''"
-                      class="form-control required"
+                    <input type="text" formControlName="expiringPolicyNumber"
+                      [attr.disabled]="groupPolicy.cbIsRenewal ? null : ''" class="form-control required"
                       [(ngModel)]="groupPolicy.expiringPolicyNumber">
                     <p class="form-error" *ngIf="quoteForm.controls['expiringPolicyNumber'].errors?.required">
                       * expiring policy number is required
@@ -474,8 +471,9 @@
                       && (quoteForm.controls['expiryDate'].dirty 
                       || quoteForm.controls['expiryDate'].touched)}">
                     <label for="expiryDate">Expiry Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="expiryDateMinDate"
-                      formControlName="expiryDate" [(ngModel)]="homeDetails.expiryDate" bsDatepicker>
+                    <input type="text" placeholder="Datepicker" class="form-control required"
+                      [minDate]="expiryDateMinDate" formControlName="expiryDate" [(ngModel)]="homeDetails.expiryDate"
+                      bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['expiryDate'].errors?.required">
                       * expiry date is required
                     </p>
@@ -525,8 +523,8 @@
           </div>
 
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary"
-            (click)="issueQuote(homeDetails, groupPolicy)">Issue Qoute</button>
+            <button [disabled]="quoteForm.pristine || quoteForm.invalid" type="button" class="btn btn-primary"
+              (click)="issueQuote(homeDetails, groupPolicy)">Issue Qoute</button>
           </div>
 
         </form>
