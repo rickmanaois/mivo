@@ -21,11 +21,13 @@ import {
   Utility
 } from '../../utils/utility';
 import {
-  LOV as lovUtil
-} from '../../utils/lov';
+  GroupPolicyLOV as lovUtil
+} from '../../utils/lov/groupPolicy';
 import {
   Validate
 } from '../../validators/validate';
+import { AccidentListObject } from 'src/app/objects/LOV/accidentList';
+import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
 
 @Component({
   selector: 'app-quotation-accident',
@@ -43,21 +45,8 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   showSPADetails: boolean = false;
   showHCBIDetails: boolean = false;
 
-  sublineLOV: any[];
-  disablementValueLOV: any[];
-
-  groupPolicyLOV: any[];
-  contractLOV: any[];
-  subContractLOV: any[];
-  commercialStructureLOV: any[];
-
-  suffixLOV: any[];
-  genderLOV: any[];
-  relationshipLOV: any[];
-  occupationalClassLOV: any[];
-  occupationLOV: any[];
-
-  productListLOV: any[];
+  LOV = new AccidentListObject();
+  GPLOV = new GroupPolicyListObject();
 
   constructor(
     private fb: FormBuilder,
@@ -76,10 +65,10 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.getSubline();
 
-    this.groupPolicyLOV = lovUtil.getGroupPolicy();
-    this.contractLOV = lovUtil.getContract();
-    this.subContractLOV = lovUtil.getSubContract();
-    this.commercialStructureLOV = lovUtil.getCommercialStructure();
+    this.GPLOV.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.GPLOV.contractLOV = lovUtil.getContract();
+    this.GPLOV.subContractLOV = lovUtil.getSubContract();
+    this.GPLOV.commercialStructureLOV = lovUtil.getCommercialStructure();
 
     this.getSuffix();
     this.getGender();
@@ -148,7 +137,7 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   }
 
   getSubline() {
-    this.sublineLOV = [{
+    this.LOV.sublineLOV = [{
         value: "323",
         name: "Standard Personal Accident"
       },
@@ -164,49 +153,49 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
   }
 
   getSuffix() {
-    this.suffixLOV = [{
+    this.LOV.suffixLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getGender() {
-    this.genderLOV = [{
+    this.LOV.genderLOV = [{
       value: "1",
       name: "test"
     }];
   }
   
   getRelationship() {
-    this.relationshipLOV = [{
+    this.LOV.relationshipLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getOccupationalClass() {
-    this.occupationalClassLOV = [{
+    this.LOV.occupationalClassLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getOccupation() {
-    this.occupationLOV = [{
+    this.LOV.occupationLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getDisablementValue() {
-    this.disablementValueLOV = [{
+    this.LOV.disablementValueLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getProductList() {
-    this.productListLOV = [{
+    this.LOV.productListLOV = [{
       value: "1",
       name: "test"
     }];

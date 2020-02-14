@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import {
   QQTravel
 } from '../../objects/QQTravel';
+import { TravelListObject } from 'src/app/objects/LOV/travelList';
 
 @Component({
   selector: 'app-quick-quotation-travel',
@@ -25,18 +26,11 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   option: string = '';
   quickQuoteForm: FormGroup;
 
-  mindate : Date = new Date();
-  endDateMinDate : Date = moment().add(1, 'days').toDate();
+  mindate: Date = new Date();
+  endDateMinDate: Date = moment().add(1, 'days').toDate();
   enableEndDate: boolean = false;
 
-  currencyLOV: any[];
-  countryLOV: any[];
-  packageLOV: any[];
-  coverageLOV: any[];
-  purposeTripLOV: any[];
-  ageRangeLOV: any[];
-
-  dropdownSettings = {};
+  LOV = new TravelListObject();
 
   constructor(
     private fb: FormBuilder,
@@ -59,16 +53,6 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
     this.getPurposeTrip();
     this.getAgeRange();
     this.getCountry();
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: true
-    };
   }
 
   createQuickQuoteForm() {
@@ -93,59 +77,64 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   }
 
   getCurrency() {
-    this.currencyLOV = [{
+    this.LOV.currencyLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
-  getCountry(){
-    this.countryLOV = [{
-      item_id: 1,
-      item_text: 'Mumbai'
-    },
-    {
-      item_id: 2,
-      item_text: 'Bangaluru'
-    },
-    {
-      item_id: 3,
-      item_text: 'Pune'
-    },
-    {
-      item_id: 4,
-      item_text: 'Navsari'
-    },
-    {
-      item_id: 5,
-      item_text: 'New Delhi'
-    }
-  ];
+  getCountry() {
+    this.LOV.countryLOV = [{
+        id: 1,
+        name: 'Mumbai',
+        type: 'asia'
+      },
+      {
+        id: 2,
+        name: 'Bangaluru',
+        type: 'asia'
+      },
+      {
+        id: 3,
+        name: 'Pune',
+        type: 'asia'
+      },
+      {
+        id: 4,
+        name: 'Navsari',
+        type: 'asia'
+      },
+      {
+        id: 5,
+        name: 'New Delhi',
+        type: 'asia'
+      }
+    ];
   }
 
   getPackage() {
-    this.packageLOV = [{
+    this.LOV.packageLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getCoverage() {
-    this.coverageLOV = [{
+    this.LOV.coverageLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getPurposeTrip() {
-    this.purposeTripLOV = [{
+    this.LOV.purposeOfTripLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getAgeRange() {
-    this.ageRangeLOV = [{
+    this.LOV.ageRangeLOV = [{
       value: "1",
       name: "test"
     }];
@@ -172,6 +161,10 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
       }
 
       this.travelDetails.noOfDays = diff >= 1 ? diff : 0;
+    });
+
+    this.quickQuoteForm.get('country').valueChanges.subscribe(countries => {
+      // alert(countries);
     });
   }
 

@@ -16,6 +16,7 @@ import {
 import {
   Utility
 } from '../../utils/utility';
+import { AccidentListObject } from 'src/app/objects/LOV/accidentList';
 
 @Component({
   selector: 'app-quick-quotation-accident',
@@ -31,12 +32,7 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
   showSPADetails: boolean = false;
   showHCBIDetails: boolean = false;
 
-  sublineLOV: any[];
-  occupationalClassLOV: any[];
-  disablementValueLOV: any[];
-  primaryInsuredAgeLOV: any[];
-  spouseAgeLOV: any[];
-  childAgeLOV: any[];
+  LOV = new AccidentListObject();
 
   constructor(
     private fb: FormBuilder,
@@ -121,7 +117,7 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
   }
 
   getSubline() {
-    this.sublineLOV = [{
+    this.LOV.sublineLOV = [{
         value: "323",
         name: "Standard Personal Accident"
       },
@@ -137,35 +133,35 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
   }
 
   getOccupationalClass() {
-    this.occupationalClassLOV = [{
+    this.LOV.occupationalClassLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getDisablementValue() {
-    this.disablementValueLOV = [{
+    this.LOV.disablementValueLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getPrimaryAge() {
-    this.primaryInsuredAgeLOV = [{
+    this.LOV.primaryInsuredAgeLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getSpouseAge() {
-    this.spouseAgeLOV = [{
+    this.LOV.spouseAgeLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getChildAge() {
-    this.childAgeLOV = [{
+    this.LOV.childAgeLOV = [{
       value: "1",
       name: "test"
     }];

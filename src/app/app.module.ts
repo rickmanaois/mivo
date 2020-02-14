@@ -27,7 +27,7 @@ import {
 import {
   NgMultiSelectDropDownModule
 } from 'ng-multiselect-dropdown';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   MatTableModule,
   MatPaginatorModule,
@@ -162,6 +162,7 @@ const appRoutes: Routes = [{
     ReactiveFormsModule,
     HttpClientModule,
     ServiceModule,
+    NgSelectModule,
     BsDatepickerModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
     NgHttpLoaderModule.forRoot()

@@ -19,7 +19,7 @@
                 <label for="make">Make</label>
                 <select class="custom-select mr-sm-2 required" formControlName="make" (change)="makeOnchange()"
                   [(ngModel)]="carDetails.make">
-                  <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                  <option *ngFor="let make of LOV.makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['make'].errors?.required">
                   * make is required
@@ -33,9 +33,10 @@
               || quickQuoteForm.controls['model'].touched)}">
                 <label for="model">Model</label>
                 <select class="custom-select mr-sm-2 required" formControlName="model" (change)="modelOnchange()"
-                  [(ngModel)]="carDetails.model" [attr.disabled]=" modelLOV?.length ? null : true">
+                  [(ngModel)]="carDetails.model" [attr.disabled]=" LOV.modelLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let model of modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}</option>
+                  <option *ngFor="let model of LOV.modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}
+                  </option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['model'].errors?.required">
                   * model is required
@@ -50,9 +51,9 @@
                 <label for="vehicleType">Vehicle Type</label>
                 <select class="custom-select mr-sm-2 required" formControlName="vehicleType"
                   (change)="vehicleTypeOnchange()" [(ngModel)]="carDetails.vehicleType"
-                  [attr.disabled]=" vehicleTypeLOV?.length ? null : true">
+                  [attr.disabled]=" LOV.vehicleTypeLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
+                  <option *ngFor="let vehicleType of LOV.vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
                     {{ vehicleType.NOM_TIP_VEHI }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['vehicleType'].errors?.required">
@@ -68,9 +69,9 @@
                 <label for="modelYear">Model Year</label>
                 <select class="custom-select mr-sm-2 required" formControlName="modelYear"
                   (change)="modelYearOnchange()" [(ngModel)]="carDetails.modelYear"
-                  [attr.disabled]=" modelYearLOV?.length ? null : true">
+                  [attr.disabled]=" LOV.modelYearLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
+                  <option *ngFor="let modelYear of LOV.modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
                     {{ modelYear.ANIO_SUB_MODELO }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['modelYear'].errors?.required">
@@ -84,11 +85,10 @@
               && (quickQuoteForm.controls['subModel'].dirty 
               || quickQuoteForm.controls['subModel'].touched)}">
                 <label for="subModel">Sub Model</label>
-                <select class="custom-select mr-sm-2 required" formControlName="subModel"
-                  (change)="subModelOnchange()" [(ngModel)]="carDetails.subModel"
-                  [attr.disabled]=" subModelLOV?.length ? null : true">
+                <select class="custom-select mr-sm-2 required" formControlName="subModel" (change)="subModelOnchange()"
+                  [(ngModel)]="carDetails.subModel" [attr.disabled]=" LOV.subModelLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let subModel of subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
+                  <option *ngFor="let subModel of LOV.subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
                     {{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}
                   </option>
                 </select>
@@ -105,9 +105,9 @@
                 <label for="typeOfUse">Type of Use</label>
                 <select class="custom-select mr-sm-2 required" formControlName="typeOfUse"
                   (change)="typeOfUseOnchange()" [(ngModel)]="carDetails.typeOfUse"
-                  [attr.disabled]=" typeOfUseLOV?.length ? null : true">
+                  [attr.disabled]=" LOV.typeOfUseLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let typeOfUse of typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
+                  <option *ngFor="let typeOfUse of LOV.typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
                     {{ typeOfUse.NOM_USO_VEHI }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['typeOfUse'].errors?.required">
@@ -122,9 +122,9 @@
               || quickQuoteForm.controls['subline'].touched)}">
                 <label for="subline">Subline</label>
                 <select class="custom-select mr-sm-2 required" formControlName="subline"
-                  [(ngModel)]="carDetails.subline" [attr.disabled]=" sublineLOV?.length ? null : true">
+                  [(ngModel)]="carDetails.subline" [attr.disabled]=" LOV.sublineLOV?.length ? null : true">
                   <option selected></option>
-                  <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                  <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
@@ -137,8 +137,8 @@
               && (quickQuoteForm.controls['value'].dirty 
               || quickQuoteForm.controls['value'].touched)}">
                 <label for="value">Vehicle Value</label>
-                <input type="text" formControlName="value" class="form-control"
-                  [(ngModel)]="carDetails.vehicleValue" readonly>
+                <input type="text" formControlName="value" class="form-control" [(ngModel)]="carDetails.vehicleValue"
+                  readonly>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['value'].errors?.required">
                   * vehicle value is required
                 </p>

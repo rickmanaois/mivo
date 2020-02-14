@@ -11,6 +11,9 @@ import {
 import {
   LovService
 } from './lov.service';
+import {
+  CarLOVServices
+} from './lov/car.service';
 import 
   { QuickQuoteService }
 from './quickqoute.service';
@@ -24,6 +27,7 @@ from './quickqoute.service';
   providers: [
     AppService,
     QuickQuoteService,
+    CarLOVServices,
     LovService,
   ]
 })

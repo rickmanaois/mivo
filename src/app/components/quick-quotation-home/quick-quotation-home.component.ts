@@ -16,6 +16,7 @@ import {
 import {
   Utility
 } from '../../utils/utility';
+import { HomeListObject } from 'src/app/objects/LOV/homeList';
 
 @Component({
   selector: 'app-quick-quotation-home',
@@ -27,7 +28,7 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
   option: string = '';
   quickQuoteForm: FormGroup;
 
-  sublineLOV: any[];
+  LOV = new HomeListObject();
 
   constructor(
     private fb: FormBuilder,
@@ -129,7 +130,7 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
   }
 
   getSubline() {
-    this.sublineLOV = [{
+    this.LOV.sublineLOV = [{
       value: "test",
       name: "test"
     }];

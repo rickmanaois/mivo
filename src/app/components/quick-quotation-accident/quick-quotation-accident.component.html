@@ -21,7 +21,7 @@
                 <select class="custom-select mr-sm-2 required" formControlName="subline"
                   [(ngModel)]="accidentDetails.subline">
                   <option selected></option>
-                  <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                  <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
@@ -48,7 +48,7 @@
                       <select class="custom-select mr-sm-2 required" formControlName="occupationalClass"
                         [(ngModel)]="accidentDetails.occupationalClass">
                         <option selected></option>
-                        <option *ngFor="let occupationalClass of occupationalClassLOV"
+                        <option *ngFor="let occupationalClass of LOV.occupationalClassLOV"
                           [ngValue]="occupationalClass.name">
                           {{ occupationalClass.value }}</option>
                       </select>
@@ -66,7 +66,8 @@
                       <select class="custom-select mr-sm-2 required" formControlName="disablementValue"
                         [(ngModel)]="accidentDetails.disablementValue">
                         <option selected></option>
-                        <option *ngFor="let disablementValue of disablementValueLOV" [ngValue]="disablementValue.name">
+                        <option *ngFor="let disablementValue of LOV.disablementValueLOV"
+                          [ngValue]="disablementValue.name">
                           {{ disablementValue.value }}</option>
                       </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['disablementValue'].errors?.required">
@@ -92,7 +93,7 @@
                       <select class="custom-select mr-sm-2 required" formControlName="primaryInsuredAge"
                         [(ngModel)]="accidentDetails.primaryInsuredAge">
                         <option selected></option>
-                        <option *ngFor="let primaryInsuredAge of primaryInsuredAgeLOV"
+                        <option *ngFor="let primaryInsuredAge of LOV.primaryInsuredAgeLOV"
                           [ngValue]="primaryInsuredAge.name">
                           {{ primaryInsuredAge.value }}</option>
                       </select>
@@ -104,8 +105,8 @@
 
                   <div class="col-md-4 col-sm-6">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="cbSpouseAge"
-                        formControlName="cbSpouseAge" [(ngModel)]="accidentDetails.cbSpouseAge">
+                      <input class="form-check-input" type="checkbox" id="cbSpouseAge" formControlName="cbSpouseAge"
+                        [(ngModel)]="accidentDetails.cbSpouseAge">
                       <label class="form-check-label" for="cbSpouseAge">
                         Spouse
                       </label>
@@ -117,7 +118,8 @@
                         [attr.disabled]="accidentDetails.cbSpouseAge ? null : ''" formControlName="spouseAge"
                         [(ngModel)]="accidentDetails.spouseAge">
                         <option selected></option>
-                        <option *ngFor="let spouseAge of spouseAgeLOV" [ngValue]="spouseAge.name">{{ spouseAge.value }}
+                        <option *ngFor="let spouseAge of LOV.spouseAgeLOV" [ngValue]="spouseAge.name">
+                          {{ spouseAge.value }}
                         </option>
                       </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['spouseAge'].errors?.required">
@@ -128,8 +130,8 @@
 
                   <div class="col-md-4 col-sm-6">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="cbChildAge"
-                        formControlName="cbChildAge" [(ngModel)]="accidentDetails.cbChildAge">
+                      <input class="form-check-input" type="checkbox" id="cbChildAge" formControlName="cbChildAge"
+                        [(ngModel)]="accidentDetails.cbChildAge">
                       <label class="form-check-label" for="cbChildAge">
                         Child/Children
                       </label>
@@ -141,7 +143,7 @@
                         [attr.disabled]="accidentDetails.cbChildAge ? null : ''" formControlName="childAge"
                         [(ngModel)]="accidentDetails.childAge">
                         <option selected></option>
-                        <option *ngFor="let childAge of childAgeLOV" [ngValue]="childAge.name">{{ childAge.value }}
+                        <option *ngFor="let childAge of LOV.childAgeLOV" [ngValue]="childAge.name">{{ childAge.value }}
                         </option>
                       </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['childAge'].errors?.required">

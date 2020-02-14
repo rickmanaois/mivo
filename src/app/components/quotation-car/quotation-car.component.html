@@ -28,7 +28,7 @@
                     <label for="make">Make</label>
                     <select class="custom-select mr-sm-2 required" formControlName="make" (change)="makeOnchange()"
                       [(ngModel)]="carDetails.make">
-                      <option *ngFor="let make of makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                      <option *ngFor="let make of LOV.makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['make'].errors?.required">
                       * make is required
@@ -42,9 +42,9 @@
                   || quoteForm.controls['model'].touched)}">
                     <label for="model">Model</label>
                     <select class="custom-select mr-sm-2 required" formControlName="model" (change)="modelOnchange()"
-                      [(ngModel)]="carDetails.model" [attr.disabled]=" modelLOV?.length ? null : true">
+                      [(ngModel)]="carDetails.model" [attr.disabled]=" LOV.modelLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let model of modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}
+                      <option *ngFor="let model of LOV.modelLOV" [ngValue]="model.COD_MODELO">{{ model.NOM_MODELO }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['model'].errors?.required">
@@ -60,9 +60,9 @@
                     <label for="vehicleType">Vehicle Type</label>
                     <select class="custom-select mr-sm-2 required" formControlName="vehicleType"
                       (change)="vehicleTypeOnchange()" [(ngModel)]="carDetails.vehicleType"
-                      [attr.disabled]=" vehicleTypeLOV?.length ? null : true">
+                      [attr.disabled]=" LOV.vehicleTypeLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let vehicleType of vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
+                      <option *ngFor="let vehicleType of LOV.vehicleTypeLOV" [ngValue]="vehicleType.COD_TIP_VEHI">
                         {{ vehicleType.NOM_TIP_VEHI }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['vehicleType'].errors?.required">
@@ -78,9 +78,9 @@
                     <label for="modelYear">Model Year</label>
                     <select class="custom-select mr-sm-2 required" formControlName="modelYear"
                       (change)="modelYearOnchange()" [(ngModel)]="carDetails.modelYear"
-                      [attr.disabled]=" modelYearLOV?.length ? null : true">
+                      [attr.disabled]=" LOV.modelYearLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let modelYear of modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
+                      <option *ngFor="let modelYear of LOV.modelYearLOV" [ngValue]="modelYear.ANIO_SUB_MODELO">
                         {{ modelYear.ANIO_SUB_MODELO }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['modelYear'].errors?.required">
@@ -96,9 +96,9 @@
                     <label for="subModel">Sub Model</label>
                     <select class="custom-select mr-sm-2 required" formControlName="subModel"
                       (change)="subModelOnchange()" [(ngModel)]="carDetails.subModel"
-                      [attr.disabled]=" subModelLOV?.length ? null : true">
+                      [attr.disabled]=" LOV.subModelLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let subModel of subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
+                      <option *ngFor="let subModel of LOV.subModelLOV" [ngValue]="subModel.COD_SUB_MODELO">
                         {{subModel.NOM_SUB_MODELO + '('+ subModel.TIP_CAJA_CAMBIO+ ') '+ (subModel.NOM_TRACCION == 'UNKNOWN' ? "": subModel.NOM_TRACCION)}}
                       </option>
                     </select>
@@ -115,9 +115,9 @@
                     <label for="typeOfUse">Type of Use</label>
                     <select class="custom-select mr-sm-2 required" formControlName="typeOfUse"
                       (change)="typeOfUseOnchange()" [(ngModel)]="carDetails.typeOfUse"
-                      [attr.disabled]=" typeOfUseLOV?.length ? null : true">
+                      [attr.disabled]=" LOV.typeOfUseLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let typeOfUse of typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
+                      <option *ngFor="let typeOfUse of LOV.typeOfUseLOV" [ngValue]="typeOfUse.COD_USO_VEHI">
                         {{ typeOfUse.NOM_USO_VEHI }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['typeOfUse'].errors?.required">
@@ -132,9 +132,9 @@
                   || quoteForm.controls['subline'].touched)}">
                     <label for="subline">Subline</label>
                     <select class="custom-select mr-sm-2 required" formControlName="subline"
-                      [(ngModel)]="carDetails.subline" [attr.disabled]=" sublineLOV?.length ? null : true">
+                      [(ngModel)]="carDetails.subline" [attr.disabled]=" LOV.sublineLOV?.length ? null : true">
                       <option selected></option>
-                      <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                      <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subline'].errors?.required">
                       * subline is required
@@ -168,7 +168,7 @@
                     <label for="color">Color</label>
                     <select class="custom-select mr-sm-2 required" formControlName="color"
                       [(ngModel)]="carDetails.color">
-                      <option *ngFor="let color of colorLOV" [ngValue]="color.value">{{ color.name }}</option>
+                      <option *ngFor="let color of LOV.colorLOV" [ngValue]="color.value">{{ color.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['color'].errors?.required">
                       * color is required
@@ -183,7 +183,7 @@
                     <label for="areaOfUsage">Area of Usage</label>
                     <select class="custom-select mr-sm-2 required" formControlName="areaOfUsage"
                       [(ngModel)]="carDetails.areaOfUsage">
-                      <option *ngFor="let areaOfUsage of areaOfUsageLOV" [ngValue]="areaOfUsage.value">
+                      <option *ngFor="let areaOfUsage of LOV.areaOfUsageLOV" [ngValue]="areaOfUsage.value">
                         {{ areaOfUsage.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['areaOfUsage'].errors?.required">
@@ -303,7 +303,7 @@
                             || accessories.controls['accessoryList'].touched)}">
                             <label for="accessoryList">Accessory List</label>
                             <select class="custom-select mr-sm-2 required" formControlName="accessoryList">
-                              <option *ngFor="let accessoryList of accessoryListLOV" [ngValue]="accessoryList.value">
+                              <option *ngFor="let accessoryList of LOV.accessoryListLOV" [ngValue]="accessoryList.value">
                                 {{ accessoryList.name }}</option>
                             </select>
                             <p class="form-error" *ngIf="accessories.controls['accessoryList'].errors?.required">
@@ -415,7 +415,7 @@
                     <select class="custom-select mr-sm-2" formControlName="groupPolicy"
                       [(ngModel)]="groupPolicy.groupPolicy">
                       <option></option>
-                      <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
+                      <option *ngFor="let groupPolicy of GPLOV.groupPolicyLOV" [ngValue]="groupPolicy.value">
                         {{ groupPolicy.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['groupPolicy'].errors?.required">
@@ -432,7 +432,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
                       [(ngModel)]="groupPolicy.contract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
+                      <option *ngFor="let contract of GPLOV.contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['contract'].errors?.required">
@@ -449,7 +449,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
                       [(ngModel)]="groupPolicy.subContract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
+                      <option *ngFor="let subContract of GPLOV.subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subContract'].errors?.required">
@@ -466,7 +466,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
                       [(ngModel)]="groupPolicy.commercialStructure">
                       <option></option>
-                      <option *ngFor="let commercialStructure of commercialStructureLOV"
+                      <option *ngFor="let commercialStructure of GPLOV.commercialStructureLOV"
                         [ngValue]="commercialStructure.value">{{ commercialStructure.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
@@ -565,7 +565,7 @@
                     <label for="paymentMethod">Payment Method</label>
                     <select class="custom-select mr-sm-2 required" formControlName="paymentMethod"
                       [(ngModel)]="carDetails.paymentMethod">
-                      <option *ngFor="let paymentMethod of paymentMethodLOV" [ngValue]="paymentMethod.value">
+                      <option *ngFor="let paymentMethod of LOV.paymentMethodLOV" [ngValue]="paymentMethod.value">
                         {{ paymentMethod.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['paymentMethod'].errors?.required">
@@ -581,7 +581,7 @@
                     <label for="product">Product List</label>
                     <select class="custom-select mr-sm-2 required" formControlName="product"
                       [(ngModel)]="carDetails.productList">
-                      <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}
+                      <option *ngFor="let product of LOV.productListLOV" [ngValue]="product.value">{{ product.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['product'].errors?.required">
@@ -606,10 +606,9 @@
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
                       && (quoteForm.controls['subagent'].dirty 
                       || quoteForm.controls['subagent'].touched)}">
-                    <ng-multiselect-dropdown [placeholder]="'Select subagent'" formControlName="subagent"
-                      [data]="subagentLOV" [(ngModel)]="carDetails.subagent" [settings]="dropdownSettings"
-                      (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-                    </ng-multiselect-dropdown>
+                    <ng-select [items]="LOV.subagentLOV" bindLabel="name" placeholder="Select Subagent"
+                      appendTo="body" formControlName="subagent" multiple="true" [(ngModel)]="carDetails.subagent">
+                    </ng-select>
                     <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
                       * subagent is required
                     </p>

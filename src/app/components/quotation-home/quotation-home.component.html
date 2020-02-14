@@ -24,7 +24,7 @@
                     <label for="businessLine">Business Line</label>
                     <select class="custom-select mr-sm-2 required" formControlName="businessLine"
                       [(ngModel)]="homeDetails.businessLine">
-                      <option *ngFor="let businessLine of sublineLOV" [ngValue]="businessLine.value">{{ businessLine.name }}</option>
+                      <option *ngFor="let businessLine of LOV.sublineLOV" [ngValue]="businessLine.value">{{ businessLine.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['businessLine'].errors?.required">
                       * business line is required
@@ -42,7 +42,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="currency"
                       [(ngModel)]="homeDetails.currency">
                       <option selected></option>
-                      <option *ngFor="let currency of currencyLOV" [ngValue]="currency.value">{{ currency.name }}
+                      <option *ngFor="let currency of LOV.currencyLOV" [ngValue]="currency.value">{{ currency.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['currency'].errors?.required">
@@ -129,7 +129,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="region"
                       [(ngModel)]="homeDetails.region">
                       <option selected></option>
-                      <option *ngFor="let region of regionLOV" [ngValue]="region.value">
+                      <option *ngFor="let region of LOV.regionLOV" [ngValue]="region.value">
                         {{ region.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['region'].errors?.required">
@@ -146,7 +146,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="province"
                       [(ngModel)]="homeDetails.province">
                       <option selected></option>
-                      <option *ngFor="let province of provinceLOV" [ngValue]="province.value">
+                      <option *ngFor="let province of LOV.provinceLOV" [ngValue]="province.value">
                         {{ province.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['province'].errors?.required">
@@ -163,7 +163,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="municipality"
                       [(ngModel)]="homeDetails.municipality">
                       <option selected></option>
-                      <option *ngFor="let municipality of municipalityLOV" [ngValue]="municipality.value">
+                      <option *ngFor="let municipality of LOV.municipalityLOV" [ngValue]="municipality.value">
                         {{ municipality.name }}
                        </option>
                     </select>
@@ -350,7 +350,7 @@
                     <select class="custom-select mr-sm-2" formControlName="groupPolicy"
                       [(ngModel)]="groupPolicy.groupPolicy">
                       <option></option>
-                      <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
+                      <option *ngFor="let groupPolicy of GPLOV.groupPolicyLOV" [ngValue]="groupPolicy.value">
                         {{ groupPolicy.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['groupPolicy'].errors?.required">
@@ -368,7 +368,7 @@
                       [(ngModel)]="groupPolicy.contract"
                       [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
+                      <option *ngFor="let contract of GPLOV.contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['contract'].errors?.required">
@@ -386,7 +386,7 @@
                       [(ngModel)]="groupPolicy.subContract"
                       [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
+                      <option *ngFor="let subContract of GPLOV.subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subContract'].errors?.required">
@@ -403,7 +403,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
                       [(ngModel)]="groupPolicy.commercialStructure">
                       <option></option>
-                      <option *ngFor="let commercialStructure of commercialStructureLOV"
+                      <option *ngFor="let commercialStructure of GPLOV.commercialStructureLOV"
                         [ngValue]="commercialStructure.value">{{ commercialStructure.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
@@ -495,7 +495,7 @@
                     <label for="paymentMethod">Payment Method</label>
                     <select class="custom-select mr-sm-2 required" formControlName="paymentMethod"
                       [(ngModel)]="homeDetails.paymentMethod">
-                      <option *ngFor="let paymentMethod of paymentMethodLOV" [ngValue]="paymentMethod.value">
+                      <option *ngFor="let paymentMethod of LOV.paymentMethodLOV" [ngValue]="paymentMethod.value">
                         {{ paymentMethod.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['paymentMethod'].errors?.required">
@@ -511,7 +511,7 @@
                     <label for="productList">Product List</label>
                     <select class="custom-select mr-sm-2 required" formControlName="productList"
                       [(ngModel)]="homeDetails.productList">
-                      <option *ngFor="let product of productListLOV" [ngValue]="product.value">{{ product.name }}
+                      <option *ngFor="let product of LOV.productListLOV" [ngValue]="product.value">{{ product.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['productList'].errors?.required">

@@ -26,7 +26,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="subline"
                       [(ngModel)]="accidentDetails.subline">
                       <option selected></option>
-                      <option *ngFor="let subline of sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                      <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subline'].errors?.required">
                       * subline is required
@@ -56,7 +56,7 @@
                     <select class="custom-select mr-sm-2" formControlName="groupPolicy"
                       [(ngModel)]="groupPolicy.groupPolicy">
                       <option></option>
-                      <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
+                      <option *ngFor="let groupPolicy of GPLOV.groupPolicyLOV" [ngValue]="groupPolicy.value">
                         {{ groupPolicy.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['groupPolicy'].errors?.required">
@@ -73,7 +73,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
                       [(ngModel)]="groupPolicy.contract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
+                      <option *ngFor="let contract of GPLOV.contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['contract'].errors?.required">
@@ -90,7 +90,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
                       [(ngModel)]="groupPolicy.subContract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
+                      <option *ngFor="let subContract of GPLOV.subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subContract'].errors?.required">
@@ -107,7 +107,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
                       [(ngModel)]="groupPolicy.commercialStructure">
                       <option></option>
-                      <option *ngFor="let commercialStructure of commercialStructureLOV"
+                      <option *ngFor="let commercialStructure of GPLOV.commercialStructureLOV"
                         [ngValue]="commercialStructure.value">{{ commercialStructure.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
@@ -278,7 +278,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="suffix"
                       [(ngModel)]="accidentDetails.suffix">
                       <option></option>
-                      <option *ngFor="let suffix of suffixLOV" [ngValue]="suffix.value">{{ suffix.name }}</option>
+                      <option *ngFor="let suffix of LOV.suffixLOV" [ngValue]="suffix.value">{{ suffix.name }}</option>
                     </select>
                   </div>
                 </div>
@@ -291,7 +291,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="gender"
                       [(ngModel)]="accidentDetails.gender">
                       <option></option>
-                      <option *ngFor="let gender of genderLOV" [ngValue]="gender.value">{{ gender.name }}</option>
+                      <option *ngFor="let gender of LOV.genderLOV" [ngValue]="gender.value">{{ gender.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['gender'].errors?.required">
                       * gender is required
@@ -307,7 +307,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="relationship"
                       [(ngModel)]="accidentDetails.relationship">
                       <option></option>
-                      <option *ngFor="let relationship of relationshipLOV" [ngValue]="relationship.value">
+                      <option *ngFor="let relationship of LOV.relationshipLOV" [ngValue]="relationship.value">
                         {{ relationship.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['relationship'].errors?.required">
@@ -361,7 +361,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="occupationalClass"
                       [(ngModel)]="accidentDetails.occupationalClass">
                       <option></option>
-                      <option *ngFor="let occupationalClass of occupationalClassLOV"
+                      <option *ngFor="let occupationalClass of LOV.occupationalClassLOV"
                         [ngValue]="occupationalClass.value">{{ occupationalClass.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['occupationalClass'].errors?.required">
@@ -378,7 +378,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="occupation"
                       [(ngModel)]="accidentDetails.occupation">
                       <option></option>
-                      <option *ngFor="let occupation of occupationLOV" [ngValue]="occupation.value">
+                      <option *ngFor="let occupation of LOV.occupationLOV" [ngValue]="occupation.value">
                         {{ occupation.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['occupation'].errors?.required">
@@ -405,7 +405,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="disablementValue"
                       [(ngModel)]="accidentDetails.disablementValue">
                       <option selected></option>
-                      <option *ngFor="let disablementValue of disablementValueLOV" [ngValue]="disablementValue.name">
+                      <option *ngFor="let disablementValue of LOV.disablementValueLOV" [ngValue]="disablementValue.name">
                         {{ disablementValue.value }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['disablementValue'].errors?.required">
@@ -431,7 +431,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="productList"
                       [(ngModel)]="accidentDetails.productList">
                       <option selected></option>
-                      <option *ngFor="let productList of productListLOV" [ngValue]="productList.name">
+                      <option *ngFor="let productList of LOV.productListLOV" [ngValue]="productList.name">
                         {{ productList.value }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['productList'].errors?.required">

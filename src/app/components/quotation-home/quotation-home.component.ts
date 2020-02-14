@@ -21,8 +21,10 @@ import {
   Validate
 } from '../../validators/validate';
 import {
-  LOV as lovUtil
-} from '../../utils/lov';
+  GroupPolicyLOV as lovUtil
+} from '../../utils/lov/groupPolicy';
+import { HomeListObject } from 'src/app/objects/LOV/homeList';
+import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
 
 @Component({
   selector: 'app-quotation-home',
@@ -37,19 +39,13 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   mindate: Date = new Date();
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
-  sublineLOV: any[];
-  currencyLOV: any[];
-  regionLOV: any[];
-  provinceLOV: any[];
-  municipalityLOV: any[];
+  LOV = new HomeListObject();
+  GPLOV = new GroupPolicyListObject();
 
   groupPolicyLOV: any[];
   contractLOV: any[];
   subContractLOV: any[];
   commercialStructureLOV: any[];
-
-  paymentMethodLOV: any[];
-  productListLOV: any[];
 
   constructor(
     private fb: FormBuilder,
@@ -74,10 +70,10 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
     this.getPaymentMethod();
     this.getProductList();
 
-    this.groupPolicyLOV = lovUtil.getGroupPolicy();
-    this.contractLOV = lovUtil.getContract();
-    this.subContractLOV = lovUtil.getSubContract();
-    this.commercialStructureLOV = lovUtil.getCommercialStructure();
+    this.GPLOV.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.GPLOV.contractLOV = lovUtil.getContract();
+    this.GPLOV.subContractLOV = lovUtil.getSubContract();
+    this.GPLOV.commercialStructureLOV = lovUtil.getCommercialStructure();
   }
 
   createQuoteForm() {
@@ -126,49 +122,49 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
   }
 
   getSubline() {
-    this.sublineLOV = [{
+    this.LOV.sublineLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getCurrency() {
-    this.currencyLOV = [{
+    this.LOV.currencyLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getRegion() {
-    this.regionLOV = [{
+    this.LOV.regionLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getProvince() {
-    this.provinceLOV = [{
+    this.LOV.provinceLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getMunicipality() {
-    this.municipalityLOV = [{
+    this.LOV.municipalityLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getPaymentMethod() {
-    this.paymentMethodLOV = [{
+    this.LOV.paymentMethodLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getProductList() {
-    this.productListLOV = [{
+    this.LOV.productListLOV = [{
       value: 1,
       name: "test"
     }];

@@ -25,20 +25,21 @@ import {
   QuickQuoteService
 } from '../../services/quickqoute.service'
 import {
-  LovService
-} from '../../services/lov.service'
-import {
-  LOV
-} from '../../objects/LOV';
-import {
   Utility
 } from '../../utils/utility';
 import {
-  LOV as lovUtil
-} from '../../utils/lov';
+  GroupPolicyLOV as lovUtil
+} from '../../utils/lov/groupPolicy';
 import {
   Validate
 } from '../../validators/validate';
+import {
+  CarLOVServices
+} from '../../services/lov/car.service'
+import {
+  CarListObject
+} from 'src/app/objects/LOV/carList';
+import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
 
 @Component({
   selector: 'app-quotation-car',
@@ -52,50 +53,19 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   mindate: Date = new Date();
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
-  makeLOV: any[];
-  modelLOV: any[];
-  vehicleTypeLOV: any[];
-  modelYearLOV: any[];
-  subModelLOV: any[];
-  typeOfUseLOV: any[];
-  sublineLOV: any[];
-
-  colorLOV: any[];
-  areaOfUsageLOV: any[];
-
-  accessoryListLOV: any[];
-
-  groupPolicyLOV: any[];
-  contractLOV: any[];
-  subContractLOV: any[];
-  commercialStructureLOV: any[];
-
-  paymentMethodLOV: any[];
-  productListLOV: any[];
-
-  subagentLOV: any[];
+  LOV = new CarListObject();
+  GPLOV = new GroupPolicyListObject();
 
   showQuickQouteDetails: boolean = false;
-  dropdownSettings = {};
 
   constructor(
     private fb: FormBuilder,
     private qq: QuickQuoteService,
-    private lov: LovService,
+    private carlov: CarLOVServices,
     private changeDetector: ChangeDetectorRef
   ) {
     this.createQuoteForm();
     this.setValidations();
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: true
-    };
   }
 
   ngAfterViewChecked() {
@@ -103,16 +73,20 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.getMakeList();
+    var _this = this;
+    this.carlov.getMakeList().then(res => {
+      _this.LOV.makeLOV = res;
+    });
+
     this.getColor();
     this.getAreaOfUsage();
 
     this.getAccessoryList();
 
-    this.groupPolicyLOV = lovUtil.getGroupPolicy();
-    this.contractLOV = lovUtil.getContract();
-    this.subContractLOV = lovUtil.getSubContract();
-    this.commercialStructureLOV = lovUtil.getCommercialStructure();
+    this.GPLOV.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.GPLOV.contractLOV = lovUtil.getContract();
+    this.GPLOV.subContractLOV = lovUtil.getSubContract();
+    this.GPLOV.commercialStructureLOV = lovUtil.getCommercialStructure();
 
     this.getPaymentMethod();
     this.getProductList();
@@ -215,99 +189,65 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     console.log(items);
   }
 
-  getMakeList() {
-    // const dto = new LOV('A2100400', '3', 'COD_CIA~1');
-    // const _this = this;
-    // this.lov.getLOV(dto).then(lovs => {
-    //   _this.makeLOV = lovs;
-    // });
-  }
-
   makeOnchange() {
-    this.modelLOV = [];
-    this.vehicleTypeLOV = [];
-    this.modelYearLOV = [];
-    this.subModelLOV = [];
-    this.typeOfUseLOV = [];
-    this.sublineLOV = [];
+    alert('make');
+    this.LOV.modelLOV = [];
+    this.LOV.vehicleTypeLOV = [];
+    this.LOV.modelYearLOV = [];
+    this.LOV.subModelLOV = [];
+    this.LOV.typeOfUseLOV = [];
+    this.LOV.sublineLOV = [];
 
     const _carDetails = this.carDetails;
     this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
-    this.getModelList();
-  }
 
-  getModelList() {
-    const dto = new LOV(
-      'A2100410',
-      '4',
-      '|COD_MARCA~' + this.carDetails.make +
-      '|NUM_COTIZACION~1|COD_CIA~1');
-    const _this = this;
-    this.lov.getLOV(dto).then(lovs => {
-      _this.modelLOV = lovs;
+    var _this = this;
+    this.carlov.getModelList(this.carDetails).then(res => {
+      _this.LOV.modelLOV = res;
     });
   }
 
   modelOnchange() {
-    this.vehicleTypeLOV = [];
-    this.modelYearLOV = [];
-    this.subModelLOV = [];
-    this.typeOfUseLOV = [];
-    this.sublineLOV = [];
+    this.LOV.vehicleTypeLOV = [];
+    this.LOV.modelYearLOV = [];
+    this.LOV.subModelLOV = [];
+    this.LOV.typeOfUseLOV = [];
+    this.LOV.sublineLOV = [];
 
     const _carDetails = this.carDetails;
     this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
-    this.getVehicleTypeList();
-  }
 
-  getVehicleTypeList() {
-    const dto = new LOV(
-      'A2100100',
-      '2',
-      '|COD_MARCA~' + this.carDetails.make +
-      '|COD_MODELO~' + this.carDetails.model +
-      '|NUM_COTIZACION~1|COD_CIA~1');
-    const _this = this;
-    this.lov.getLOV(dto).then(lovs => {
-      _this.vehicleTypeLOV = lovs;
+    var _this = this;
+    this.carlov.getVehicleTypeList(this.carDetails).then(res => {
+      _this.LOV.vehicleTypeLOV = res;
     });
   }
 
   vehicleTypeOnchange() {
-    this.modelYearLOV = [];
-    this.subModelLOV = [];
-    this.typeOfUseLOV = [];
-    this.sublineLOV = [];
+    this.LOV.modelYearLOV = [];
+    this.LOV.subModelLOV = [];
+    this.LOV.typeOfUseLOV = [];
+    this.LOV.sublineLOV = [];
 
     const _carDetails = this.carDetails;
     this.carDetails = new QuoteCar();
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
     this.carDetails.vehicleType = _carDetails.vehicleType;
-    this.getModelYearList();
-  }
 
-  getModelYearList() {
-    const dto = new LOV(
-      'A2100430',
-      '4',
-      '|COD_MARCA~' + this.carDetails.make +
-      '|COD_MODELO~' + this.carDetails.model +
-      '|COD_TIP_VEHI~' + this.carDetails.vehicleType +
-      '|NUM_COTIZACION~1|COD_CIA~1');
-    const _this = this;
-    this.lov.getLOV(dto).then(lovs => {
-      _this.modelYearLOV = lovs;
+    var _this = this;
+    this.carlov.getModelYearList(this.carDetails).then(res => {
+      _this.LOV.modelYearLOV = res;
     });
   }
 
   modelYearOnchange() {
-    this.subModelLOV = [];
-    this.typeOfUseLOV = [];
-    this.sublineLOV = [];
+    this.LOV.subModelLOV = [];
+    this.LOV.typeOfUseLOV = [];
+    this.LOV.sublineLOV = [];
 
     const _carDetails = this.carDetails;
     this.carDetails = new QuoteCar();
@@ -315,37 +255,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.model = _carDetails.model;
     this.carDetails.vehicleType = _carDetails.vehicleType;
     this.carDetails.modelYear = _carDetails.modelYear;
-    this.getSubModelList();
-    this.getTypeOfUseList();
-  }
 
-  getSubModelList() {
-    const dto = new LOV(
-      'A2100420',
-      '4',
-      '|COD_MARCA~' + this.carDetails.make +
-      '|COD_MODELO~' + this.carDetails.model +
-      '|COD_TIP_VEHI~' + this.carDetails.vehicleType +
-      '|ANIO_SUB_MODELO~' + this.carDetails.modelYear +
-      '|NUM_COTIZACION~1|COD_CIA~1');
-    const _this = this;
-    this.lov.getLOV(dto).then(lovs => {
-      _this.subModelLOV = lovs;
+    var _this = this;
+    this.carlov.getSubModelList(this.carDetails).then(res => {
+      _this.LOV.subModelLOV = res;
     });
-  }
-
-  getTypeOfUseList() {
-    const dto = new LOV(
-      'A2100200',
-      '4',
-      '|COD_MARCA~' + this.carDetails.make +
-      '|COD_MODELO~' + this.carDetails.model +
-      '|COD_TIP_VEHI~' + this.carDetails.vehicleType +
-      '|ANIO_SUB_MODELO~' + this.carDetails.modelYear +
-      '|NUM_COTIZACION~1|COD_CIA~1');
-    const _this = this;
-    this.lov.getLOV(dto).then(lovs => {
-      _this.typeOfUseLOV = lovs;
+    this.carlov.getTypeOfUseList(this.carDetails).then(res => {
+      _this.LOV.typeOfUseLOV = res;
     });
   }
 
@@ -385,65 +301,65 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   getSubline() {
     const _this = this;
     this.qq.getSubline(this.carDetails).then(res => {
-      _this.sublineLOV = res.obj["list"];
+      _this.LOV.sublineLOV = res.obj["list"];
     });
   }
 
   getColor() {
-    this.colorLOV = [{
+    this.LOV.colorLOV = [{
       value: "test",
       name: "test"
     }];
   }
 
   getAreaOfUsage() {
-    this.areaOfUsageLOV = [{
+    this.LOV.areaOfUsageLOV = [{
       value: "test",
       name: "test"
     }];
   }
 
   getAccessoryList() {
-    this.accessoryListLOV = [{
+    this.LOV.accessoryListLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getPaymentMethod() {
-    this.paymentMethodLOV = [{
+    this.LOV.paymentMethodLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getProductList() {
-    this.productListLOV = [{
+    this.LOV.productListLOV = [{
       value: 1,
       name: "test"
     }];
   }
 
   getSubagent() {
-    this.subagentLOV = [{
-        item_id: 1,
-        item_text: 'Subagent1'
+    this.LOV.subagentLOV = [{
+        value: 1,
+        name: 'Subagent1'
       },
       {
-        item_id: 2,
-        item_text: 'Subagent2'
+        value: 2,
+        name: 'Subagent2'
       },
       {
-        item_id: 3,
-        item_text: 'Subagent3'
+        value: 3,
+        name: 'Subagent3'
       },
       {
-        item_id: 4,
-        item_text: 'Subagent4'
+        value: 4,
+        name: 'Subagent4'
       },
       {
-        item_id: 5,
-        item_text: 'Subagent5'
+        value: 5,
+        name: 'Subagent5'
       }
     ];
   }

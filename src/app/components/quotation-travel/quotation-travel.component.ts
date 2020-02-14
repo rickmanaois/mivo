@@ -22,11 +22,13 @@ import {
   Validate
 } from '../../validators/validate';
 import {
-  LOV as lovUtil
-} from '../../utils/lov';
+  GroupPolicyLOV as lovUtil
+} from '../../utils/lov/groupPolicy';
 import {
   Utility
 } from '../../utils/utility';
+import { TravelListObject } from 'src/app/objects/LOV/travelList';
+import { GroupPolicyListObject } from 'src/app/objects/LOV/groupPolicyList';
 
 
 @Component({
@@ -44,25 +46,8 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   endDateMinDate: Date = moment().add(1, 'days').toDate();
   enableEndDate: boolean = false;
 
-  currencyLOV: any[];
-  countryLOV: any[];
-  travelPackageLOV: any[];
-  travelTypeLOV: any[];
-  purposeOfTripLOV: any[];
-  oneTripOnlyLOV: any[];
-
-  groupPolicyLOV: any[];
-  contractLOV: any[];
-  subContractLOV: any[];
-  commercialStructureLOV: any[];
-
-  relationshipLOV: any[];
-
-  travelInsuranceLOV: any[];
-  optionPackLOV: any[];
-  medicalExpensesLOV: any[];
-
-  dropdownSettings = {};
+  LOV = new TravelListObject();
+  GPLOV = new GroupPolicyListObject();
 
   constructor(
     private fb: FormBuilder,
@@ -89,24 +74,14 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
 
     this.getRelationship();
 
-    this.groupPolicyLOV = lovUtil.getGroupPolicy();
-    this.contractLOV = lovUtil.getContract();
-    this.subContractLOV = lovUtil.getSubContract();
-    this.commercialStructureLOV = lovUtil.getCommercialStructure();
+    this.GPLOV.groupPolicyLOV = lovUtil.getGroupPolicy();
+    this.GPLOV.contractLOV = lovUtil.getContract();
+    this.GPLOV.subContractLOV = lovUtil.getSubContract();
+    this.GPLOV.commercialStructureLOV = lovUtil.getCommercialStructure();
 
     this.getTravelInsurance();
     this.getOptionPack();
     this.getMedicalExpenses();
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: true
-    };
   }
 
   createQuoteForm() {
@@ -220,87 +195,92 @@ export class QuotationTravelComponent implements OnInit, AfterViewChecked {
   }
 
   getCurrency() {
-    this.currencyLOV = [{
+    this.LOV.currencyLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getCountry() {
-    this.countryLOV = [{
-        item_id: 1,
-        item_text: 'Mumbai'
+    this.LOV.countryLOV = [{
+        id: 1,
+        name: 'Mumbai',
+        type: 'asia'
       },
       {
-        item_id: 2,
-        item_text: 'Bangaluru'
+        id: 2,
+        name: 'Bangaluru',
+        type: 'asia'
       },
       {
-        item_id: 3,
-        item_text: 'Pune'
+        id: 3,
+        name: 'Pune',
+        type: 'asia'
       },
       {
-        item_id: 4,
-        item_text: 'Navsari'
+        id: 4,
+        name: 'Navsari',
+        type: 'asia'
       },
       {
-        item_id: 5,
-        item_text: 'New Delhi'
+        id: 5,
+        name: 'New Delhi',
+        type: 'asia'
       }
     ];
   }
 
   getPackage() {
-    this.travelPackageLOV = [{
+    this.LOV.travelPackageLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getType() {
-    this.travelTypeLOV = [{
+    this.LOV.travelTypeLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getPurposeTrip() {
-    this.purposeOfTripLOV = [{
+    this.LOV.purposeOfTripLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getOneTrip() {
-    this.oneTripOnlyLOV = [{
+    this.LOV.oneTripOnlyLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getRelationship() {
-    this.relationshipLOV = [{
+    this.LOV.relationshipLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getTravelInsurance() {
-    this.travelInsuranceLOV = [{
+    this.LOV.travelInsuranceLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getOptionPack() {
-    this.optionPackLOV = [{
+    this.LOV.optionPackLOV = [{
       value: "1",
       name: "test"
     }];
   }
 
   getMedicalExpenses() {
-    this.medicalExpensesLOV = [{
+    this.LOV.medicalExpensesLOV = [{
       value: "1",
       name: "test"
     }];

@@ -25,7 +25,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="currency"
                       [(ngModel)]="travelDetails.currency">
                       <option selected></option>
-                      <option *ngFor="let currency of currencyLOV" [ngValue]="currency.value">{{ currency.name }}
+                      <option *ngFor="let currency of LOV.currencyLOV" [ngValue]="currency.value">{{ currency.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['currency'].errors?.required">
@@ -34,15 +34,14 @@
                   </div>
                 </div>
 
-                <div class="col-md-4 col-sm-6">
-                  <h6>Itinerary</h6>
+                <div class="col-md-5 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['country'].invalid 
                     && (quoteForm.controls['country'].dirty 
                     || quoteForm.controls['country'].touched)}">
-                    <ng-multiselect-dropdown [placeholder]="'Select Country to visit'" formControlName="country"
-                      [data]="countryLOV" [(ngModel)]="travelDetails.country" [settings]="dropdownSettings"
-                      (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-                    </ng-multiselect-dropdown>
+                    <label for="currency">Itinerary</label>
+                    <ng-select [items]="LOV.countryLOV" bindLabel="name" placeholder="Select Country to visit"
+                      appendTo="body" formControlName="country" multiple="true" [(ngModel)]="travelDetails.country">
+                    </ng-select>
                     <p class="form-error" *ngIf="quoteForm.controls['country'].errors?.required">
                       * country is required
                     </p>
@@ -66,7 +65,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="travelPackage"
                       [(ngModel)]="travelDetails.travelPackage">
                       <option selected></option>
-                      <option *ngFor="let travelPackage of travelPackageLOV" [ngValue]="travelPackage.value">
+                      <option *ngFor="let travelPackage of LOV.travelPackageLOV" [ngValue]="travelPackage.value">
                         {{ travelPackage.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['travelPackage'].errors?.required">
@@ -83,7 +82,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="travelType"
                       [(ngModel)]="travelDetails.travelType">
                       <option selected></option>
-                      <option *ngFor="let travelType of travelTypeLOV" [ngValue]="travelType.value">
+                      <option *ngFor="let travelType of LOV.travelTypeLOV" [ngValue]="travelType.value">
                         {{ travelType.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['travelType'].errors?.required">
@@ -159,7 +158,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="purposeOfTrip"
                       [(ngModel)]="travelDetails.purposeOfTrip">
                       <option selected></option>
-                      <option *ngFor="let purposeOfTrip of purposeOfTripLOV" [ngValue]="purposeOfTrip.name">
+                      <option *ngFor="let purposeOfTrip of LOV.purposeOfTripLOV" [ngValue]="purposeOfTrip.name">
                         {{ purposeOfTrip.value }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['purposeOfTrip'].errors?.required">
@@ -176,7 +175,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="oneTripOnly"
                       [(ngModel)]="travelDetails.oneTripOnly">
                       <option selected></option>
-                      <option *ngFor="let oneTripOnly of oneTripOnlyLOV" [ngValue]="oneTripOnly.name">
+                      <option *ngFor="let oneTripOnly of LOV.oneTripOnlyLOV" [ngValue]="oneTripOnly.name">
                         {{ oneTripOnly.value }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['oneTripOnly'].errors?.required">
@@ -198,7 +197,7 @@
                     <select class="custom-select mr-sm-2" formControlName="groupPolicy"
                       [(ngModel)]="groupPolicy.groupPolicy">
                       <option></option>
-                      <option *ngFor="let groupPolicy of groupPolicyLOV" [ngValue]="groupPolicy.value">
+                      <option *ngFor="let groupPolicy of GPLOV.groupPolicyLOV" [ngValue]="groupPolicy.value">
                         {{ groupPolicy.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['groupPolicy'].errors?.required">
@@ -215,7 +214,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="contract"
                       [(ngModel)]="groupPolicy.contract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let contract of contractLOV" [ngValue]="contract.value">{{ contract.name }}
+                      <option *ngFor="let contract of GPLOV.contractLOV" [ngValue]="contract.value">{{ contract.name }}
                       </option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['contract'].errors?.required">
@@ -232,7 +231,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="subContract"
                       [(ngModel)]="groupPolicy.subContract" [attr.disabled]=" groupPolicy.groupPolicy ? null : true">
                       <option></option>
-                      <option *ngFor="let subContract of subContractLOV" [ngValue]="subContract.value">
+                      <option *ngFor="let subContract of GPLOV.subContractLOV" [ngValue]="subContract.value">
                         {{ subContract.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['subContract'].errors?.required">
@@ -249,7 +248,7 @@
                     <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
                       [(ngModel)]="groupPolicy.commercialStructure">
                       <option></option>
-                      <option *ngFor="let commercialStructure of commercialStructureLOV"
+                      <option *ngFor="let commercialStructure of GPLOV.commercialStructureLOV"
                         [ngValue]="commercialStructure.value">{{ commercialStructure.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['commercialStructure'].errors?.required">
@@ -368,7 +367,7 @@
                           || traveller.controls['relationship'].touched)}">
                             <label for="relationship">Relationship</label>
                             <select class="custom-select mr-sm-2 required" formControlName="relationship">
-                              <option *ngFor="let relationship of relationshipLOV" [ngValue]="relationship.value">
+                              <option *ngFor="let relationship of LOV.relationshipLOV" [ngValue]="relationship.value">
                                 {{ relationship.name }}</option>
                             </select>
                             <p class="form-error" *ngIf="traveller.controls['relationship'].errors?.required">
@@ -435,9 +434,9 @@
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['sportsEquipment'].invalid 
                     && (quoteForm.controls['sportsEquipment'].dirty 
                     || quoteForm.controls['sportsEquipment'].touched)}">
-                    <textarea class="form-control required" [attr.disabled]="travelDetails.cbSportsEquipment ? null : ''"
-                      type="text" id="sportsEquipment" formControlName="sportsEquipment"
-                      [(ngModel)]="travelDetails.sportsEquipment"></textarea>
+                    <textarea class="form-control required"
+                      [attr.disabled]="travelDetails.cbSportsEquipment ? null : ''" type="text" id="sportsEquipment"
+                      formControlName="sportsEquipment" [(ngModel)]="travelDetails.sportsEquipment"></textarea>
                     <p class="form-error" *ngIf="quoteForm.controls['sportsEquipment'].errors?.required">
                       * please indicate sport equipment/s
                     </p>
@@ -455,9 +454,9 @@
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['hazardousSports'].invalid 
                     && (quoteForm.controls['hazardousSports'].dirty 
                     || quoteForm.controls['hazardousSports'].touched)}">
-                    <textarea class="form-control required" [attr.disabled]="travelDetails.cbHazardousSports ? null : ''"
-                      type="text" id="hazardousSports" formControlName="hazardousSports"
-                      [(ngModel)]="travelDetails.hazardousSports"></textarea>
+                    <textarea class="form-control required"
+                      [attr.disabled]="travelDetails.cbHazardousSports ? null : ''" type="text" id="hazardousSports"
+                      formControlName="hazardousSports" [(ngModel)]="travelDetails.hazardousSports"></textarea>
                     <p class="form-error" *ngIf="quoteForm.controls['hazardousSports'].errors?.required">
                       * please indicate the sport
                     </p>
@@ -485,7 +484,7 @@
                     <label for="travelInsurance">Travel Insurance Coverage</label>
                     <select class="custom-select mr-sm-2 required" formControlName="travelInsurance"
                       [(ngModel)]="travelDetails.travelInsurance">
-                      <option *ngFor="let travelInsurance of travelInsuranceLOV" [ngValue]="travelInsurance.value">
+                      <option *ngFor="let travelInsurance of LOV.travelInsuranceLOV" [ngValue]="travelInsurance.value">
                         {{ travelInsurance.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['travelInsurance'].errors?.required">
@@ -501,7 +500,7 @@
                     <label for="optionPack">Coverage Option Pack</label>
                     <select class="custom-select mr-sm-2 required" formControlName="optionPack"
                       [(ngModel)]="travelDetails.optionPack">
-                      <option *ngFor="let optionPack of optionPackLOV" [ngValue]="optionPack.value">
+                      <option *ngFor="let optionPack of LOV.optionPackLOV" [ngValue]="optionPack.value">
                         {{ optionPack.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['optionPack'].errors?.required">
@@ -517,7 +516,7 @@
                     <label for="medicalExpenses">Medical Expenses Coverage</label>
                     <select class="custom-select mr-sm-2 required" formControlName="medicalExpenses"
                       [(ngModel)]="travelDetails.medicalExpenses">
-                      <option *ngFor="let medicalExpenses of medicalExpensesLOV" [ngValue]="medicalExpenses.value">
+                      <option *ngFor="let medicalExpenses of LOV.medicalExpensesLOV" [ngValue]="medicalExpenses.value">
                         {{ medicalExpenses.name }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['medicalExpenses'].errors?.required">
