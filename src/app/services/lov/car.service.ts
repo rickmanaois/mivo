@@ -13,8 +13,6 @@ import {
 export class CarLOVServices {
   constructor(private lov: LovService) {}
 
-  makeLove: any[];
-
   async getMakeList() : Promise < any[] > {
     const dto = new LOV('A2100400', '3', 'COD_CIA~1');
     return this.lov.getLOV(dto).then(lovs => lovs as any[]);
@@ -39,7 +37,7 @@ export class CarLOVServices {
     return this.lov.getLOV(dto).then(lovs => lovs as any[]);
   }
 
-  getModelYearList(carDetails : any) : Promise < any[] > {
+  async getModelYearList(carDetails : any) : Promise < any[] > {
     const dto = new LOV(
       'A2100430',
       '4',
@@ -50,7 +48,7 @@ export class CarLOVServices {
     return this.lov.getLOV(dto).then(lovs => lovs as any[]);
   }
 
-  getSubModelList(carDetails : any) : Promise < any[] > {
+  async getSubModelList(carDetails : any) : Promise < any[] > {
     const dto = new LOV(
       'A2100420',
       '4',
@@ -62,7 +60,7 @@ export class CarLOVServices {
     return this.lov.getLOV(dto).then(lovs => lovs as any[]);
   }
 
-  getTypeOfUseList(carDetails : any) : Promise < any[] > {
+  async getTypeOfUseList(carDetails : any) : Promise < any[] > {
     const dto = new LOV(
       'A2100200',
       '4',

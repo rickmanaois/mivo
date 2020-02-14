@@ -133,13 +133,13 @@
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['value'].invalid 
-              && (quickQuoteForm.controls['value'].dirty 
-              || quickQuoteForm.controls['value'].touched)}">
-                <label for="value">Vehicle Value</label>
-                <input type="text" formControlName="value" class="form-control" [(ngModel)]="carDetails.vehicleValue"
+              <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['vehicleValue'].invalid 
+              && (quickQuoteForm.controls['vehicleValue'].dirty 
+              || quickQuoteForm.controls['vehicleValue'].touched)}">
+                <label for="vehicleValue">Vehicle Value</label>
+                <input type="text" formControlName="vehicleValue" class="form-control" [(ngModel)]="carDetails.vehicleValue"
                   readonly>
-                <p class="form-error" *ngIf="quickQuoteForm.controls['value'].errors?.required">
+                <p class="form-error" *ngIf="quickQuoteForm.controls['vehicleValue'].errors?.required">
                   * vehicle value is required
                 </p>
               </div>

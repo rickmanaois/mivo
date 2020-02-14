@@ -36,5 +36,7 @@ export class QuoteCar {
   //subagent
   subagent: [];
 
-  constructor() {}
+  constructor(init?: Partial<QuoteCar>) {
+    Object.assign(this, init);
+  }
 }
