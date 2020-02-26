@@ -16,6 +16,17 @@ import {
 } from '../../objects/QQTravel';
 import { TravelListObject } from 'src/app/objects/LOV/travelList';
 
+export interface QuickQuoteResultDTO {
+  label: string;
+  compre: string;
+  ctpl: string;
+  autoCompre: string;
+  autoComprePlus: string;
+  autoLiabilityRegular: string;
+  autoLiabilitySelect: string;
+  autoSelect: string;
+}
+
 @Component({
   selector: 'app-quick-quotation-travel',
   templateUrl: './quick-quotation-travel.component.html',
@@ -30,6 +41,8 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
   endDateMinDate: Date = moment().add(1, 'days').toDate();
   enableEndDate: boolean = false;
 
+  displayedColumns: string[] = ['label', 'compre', 'ctpl', 'autoCompre'];
+
   LOV = new TravelListObject();
 
   constructor(
@@ -41,6 +54,12 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
     this.createQuickQuoteForm();
     this.setValidations();
   }
+
+  annualData: Array < QuickQuoteResultDTO > = [];
+  plan30Data: Array < QuickQuoteResultDTO > = [];
+  plan60Data: Array < QuickQuoteResultDTO > = [];
+  plan90Data: Array < QuickQuoteResultDTO > = [];
+  coveragelist: Array < QuickQuoteResultDTO > = [];
 
   ngAfterViewChecked() {
     this.changeDetector.detectChanges();

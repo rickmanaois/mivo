@@ -6,6 +6,7 @@ export class QQCar {
   subModel: string;
   typeOfUse: string;
   subline: string;
+  effectivityDate: string;
   vehicleValue: string;
 
   constructor() {}

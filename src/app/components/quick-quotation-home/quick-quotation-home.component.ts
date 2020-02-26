@@ -18,6 +18,17 @@ import {
 } from '../../utils/utility';
 import { HomeListObject } from 'src/app/objects/LOV/homeList';
 
+export interface QuickQuoteResultDTO {
+  label: string;
+  compre: string;
+  ctpl: string;
+  autoCompre: string;
+  autoComprePlus: string;
+  autoLiabilityRegular: string;
+  autoLiabilitySelect: string;
+  autoSelect: string;
+}
+
 @Component({
   selector: 'app-quick-quotation-home',
   templateUrl: './quick-quotation-home.component.html',
@@ -27,6 +38,8 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
   @Input() homeDetails = new QQHome();
   option: string = '';
   quickQuoteForm: FormGroup;
+
+  displayedColumns: string[] = ['label', 'compre', 'ctpl', 'autoCompre'];
 
   LOV = new HomeListObject();
 
@@ -39,6 +52,12 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
     this.createQuickQuoteForm();
     this.setValidations();
   }
+
+  annualData: Array < QuickQuoteResultDTO > = [];
+  plan30Data: Array < QuickQuoteResultDTO > = [];
+  plan60Data: Array < QuickQuoteResultDTO > = [];
+  plan90Data: Array < QuickQuoteResultDTO > = [];
+  coveragelist: Array < QuickQuoteResultDTO > = [];
 
   ngAfterViewChecked() {
     this.changeDetector.detectChanges();

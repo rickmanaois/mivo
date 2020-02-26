@@ -29,20 +29,14 @@ export class Validate {
     var expiringPolicyNumber = form.get('expiringPolicyNumber');
 
     groupPolicy.valueChanges.subscribe(policy => {
-      if (policy !== undefined) {
-        var hasPolicy = policy !== null && policy !== '';
-        if (!hasPolicy) {
-          gp.contract = null;
-          gp.subContract = null;
-        }
-
-        Utility.updateValidator(contract, hasPolicy ? Validators.required : null);
-        Utility.updateValidator(subContract, hasPolicy ? Validators.required : null);
-      }
+      Utility.updateValidator(contract, Utility.isUndefined(policy) ? null : Validators.required);
+      Utility.updateValidator(subContract, Utility.isUndefined(policy) ? null : Validators.required);
+      gp.contract = Utility.setNull(!Utility.isUndefined(policy), gp.contract);
+      gp.subContract = Utility.setNull(!Utility.isUndefined(policy), gp.subContract);
     });
 
     cbIsRenewal.valueChanges.subscribe(isRenewal => {
-      if (isRenewal != undefined) {
+      if (!Utility.isUndefined(isRenewal)) {
         gp.expiringPolicyNumber = Utility.setNull(isRenewal, gp.expiringPolicyNumber);
         Utility.updateValidator(expiringPolicyNumber, isRenewal ? Validators.required : null);
       }

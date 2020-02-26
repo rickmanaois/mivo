@@ -10,6 +10,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import * as moment from 'moment';
 import {
   QQCar
 } from '../../objects/QQCar';
@@ -19,21 +20,71 @@ import {
 import {
   CarLOVServices
 } from '../../services/lov/car.service'
-import { CarListObject } from 'src/app/objects/LOV/carList';
+import {
+  CarListObject
+} from 'src/app/objects/LOV/carList';
+import {
+  MatTableDataSource
+} from '@angular/material/table';
+
+export interface QuickQuoteResultDTO {
+  label: string;
+  compre: string;
+  ctpl: string;
+  autoCompre: string;
+  autoComprePlus: string;
+  autoLiabilityRegular: string;
+  autoLiabilitySelect: string;
+  autoSelect: string;
+}
+
+// const ELEMENT_DATA: QuickQuoteResultDTO[] = [{
+//   label: 'COMP. THIRD PAR. LIAB.',
+//   compre: "<i class='far fa-times-circle'></i>",
+//   ctpl: "<i class='far fa-check-circle'></i>",
+//   autoCompre: "<i class='far fa-circle'></i>",
+//   autoComprePlus: "<i class='far fa-circle'></i>",
+//   autoLiabilityRegular: "<i class='far fa-circle'></i>",
+//   autoLiabilitySelect: "<i class='far fa-circle'></i>",
+//   autoSelect: "<i class='far fa-circle'></i>",
+// }, {
+//   label: 'LOSS AND DAMAGE',
+//   compre: "<i class='far fa-times-circle'></i>",
+//   ctpl: "<i class='far fa-times-circle'></i>",
+//   autoCompre: "<i class='far fa-check-circle'></i>",
+//   autoComprePlus: "<i class='far fa-check-circle'></i>",
+//   autoLiabilityRegular: "<i class='far fa-times-circle'></i>",
+//   autoLiabilitySelect: "<i class='far fa-times-circle'></i>",
+//   autoSelect: "<i class='far fa-check-circle'></i>",
+// }];
 
 @Component({
   selector: 'app-quick-quotation-car',
   templateUrl: './quick-quotation-car.component.html',
   styleUrls: ['./quick-quotation-car.component.css']
 })
+
 export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QQCar();
   quickQuoteForm: FormGroup;
 
+  displayedColumns: string[] = [
+    'label',
+    'compre',
+    'ctpl',
+    'autoCompre',
+    'autoComprePlus',
+    'autoLiabilityRegular',
+    'autoLiabilitySelect',
+    'autoSelect'];
+  // dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  //list of object - both quick and regular quote
   LOV = new CarListObject();
   vehicleValue: any;
 
-  showQuickQouteDetails: boolean = false;
+  //flag to display product comparison
+  showProductComparison: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -42,6 +93,256 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef
   ) {
     this.createQuickQuoteForm();
+  }
+
+  annualData: Array < QuickQuoteResultDTO > = [];
+  plan30Data: Array < QuickQuoteResultDTO > = [];
+  plan60Data: Array < QuickQuoteResultDTO > = [];
+  plan90Data: Array < QuickQuoteResultDTO > = [];
+  coveragelist: Array < QuickQuoteResultDTO > = [];
+
+  getDiff() {
+    var today = new Date();
+    var currentYear = today.getFullYear();
+    return currentYear - parseInt(this.carDetails.modelYear);
+  }
+
+  createObj(name: String, value: String, installment: String, product: number) {
+    var diff = this.getDiff();
+
+    if (product != 1 && name == '2') {
+      value = "0";
+    } else if ((name == '3' || name == '4') && diff > 8) {
+      value = "0";
+    } else if ((name == '1') && diff < 8) {
+      value = "0";
+    }
+
+    return {
+      'name': name,
+      'value': value,
+      'installment': installment,
+      'product': product
+    };
+  }
+
+  createQuickQuoteData(quickQuoteDetails: any[], products: any[], productList: any[]) {
+    this.annualData = [];
+    this.plan30Data = [];
+    this.plan60Data = [];
+    this.plan90Data = [];
+    var annual = [];
+    var plan30 = [];
+    var plan60 = [];
+    var plan90 = [];
+    productList.forEach(a => {
+      quickQuoteDetails.forEach(b => {
+        products.forEach(c => {
+          if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "1" && b.numSimulacion === c.numSimulacion) {
+            annual.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 1));
+          } else if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "30" && b.numSimulacion === c.numSimulacion) {
+            if (b.numCuota === "1") {
+              plan30.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 30));
+            } else if (b.numCuota === "2") {
+              plan30.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 30));
+            }
+          } else if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "60" && b.numSimulacion === c.numSimulacion) {
+            if (b.numCuota === "1") {
+              plan60.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 60));
+            } else if (b.numCuota === "2") {
+              plan60.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 60));
+            } else if (b.numCuota === "3") {
+              plan60.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 60));
+            }
+          } else if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "90" && b.numSimulacion === c.numSimulacion) {
+            if (b.numCuota === "1") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            } else if (b.numCuota === "2") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            } else if (b.numCuota === "3") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            } else if (b.numCuota === "4") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            }
+          }
+        });
+      });
+    });
+
+    this.annualData.push(this.createQQResultDTO(annual, '1', true));
+    this.annualData.push(this.getInstallmentTotal(plan30));
+
+    this.plan30Data.push(this.createQQResultDTO(plan30, '1'));
+    this.plan30Data.push(this.createQQResultDTO(plan30, '2'));
+    this.plan60Data.push(this.createQQResultDTO(plan60, '1'));
+    this.plan60Data.push(this.createQQResultDTO(plan60, '2'));
+    this.plan60Data.push(this.createQQResultDTO(plan60, '3'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '1'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '2'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '3'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '4'));
+  }
+
+  createQuickQuoteCoverage(coverage: any[]) {
+    var hasRa = true;
+    var coverages = [];
+
+    var diff = this.getDiff();
+    coverage.forEach(cov => {
+      var coverageName = cov.nomCob;
+      var coverageCode = cov.codCob;
+      var product = cov.numSimulacion;
+      var isIncluded = "N";
+
+      if ("S" == cov.mcaOligatorio) {
+        isIncluded = ((product == 3 || product == 4) && diff > 8) || (product == 1 && diff < 8) ? "N" : "S";
+      } else if ("N" == cov.mcaOligatorio) {
+        if (((product == 3 || product == 4) && diff > 8) || (product == 1 && diff < 8)) {
+          isIncluded = "N";
+        } else {
+          if (hasRa && (coverageCode == "1040" || coverageCode == "1027" || coverageCode == "1029")) {
+            if (coverageCode == "1040" && (product != 2 && product != 5 && product != 6)) {
+              isIncluded = "ODRA";//optional disabled ra with check
+            } else {
+              if ((coverageCode == "1040" || coverageCode == "1027" || coverageCode == "1029")
+              && (product == 2 || product == 5 || product == 6)) {
+                isIncluded = "ORA"; //optional ra
+              } else {
+                isIncluded = "ORA";//optional disabled ra without check
+              }
+            }
+          } else {
+            if (coverageCode == '1036' && product == 1) {
+              isIncluded = "N";
+            } else if ((coverageCode == "1004" || coverageCode == "1005") && product == "1") {
+              isIncluded = "O"; //optional
+            } else {
+              isIncluded = "O"; //optional
+            }
+          }
+        }
+      } else {
+        isIncluded = coverageCode == '1018' || coverageCode == '1037' || coverageCode == '1026' ? "S" : "N";
+      }
+
+      var icon = '';
+      if (isIncluded == "S" || isIncluded == "ODRA") {
+        icon = "<i class='far fa-check-circle'></i>"
+      } else if (isIncluded == "N") {
+        icon = "<i class='far fa-times-circle'></i>";
+      } else if (isIncluded == "O" || isIncluded == "ORA") {
+        icon = "<i class='far fa-circle'></i>";
+      }
+
+      if (!coverages.includes(coverageName)
+        && coverageName != "UPPA - MR"
+        && coverageName != "ACCD\'L DEATH/DISABL."
+        && coverageName != "ALTERNATIVE TRANSPORT BENEFIT") {
+        coverages.push(coverageName);
+        var obj = {} as QuickQuoteResultDTO;
+        obj.label = coverageName;
+        obj.compre = "<i class='far fa-times-circle'></i>";
+        obj.ctpl = "<i class='far fa-times-circle'></i>";
+        obj.autoCompre = "<i class='far fa-times-circle'></i>";
+        obj.autoComprePlus = "<i class='far fa-times-circle'></i>";
+        obj.autoLiabilityRegular = "<i class='far fa-times-circle'></i>";
+        obj.autoLiabilitySelect = "<i class='far fa-times-circle'></i>";
+        obj.autoSelect = "<i class='far fa-times-circle'></i>";
+        this.coveragelist.push(obj);
+      }
+
+      this.coveragelist.forEach(c => {
+        if (c.label == coverageName) {
+          if (product == 1) {
+            c.compre = icon;
+          } else if (product == 2) {
+            c.ctpl = icon;
+          } else if (product == 3) {
+            c.autoCompre = icon;
+          } else if (product == 4) {
+            c.autoComprePlus = icon;
+          } else if (product == 5) {
+            c.autoLiabilityRegular = icon;
+          } else if (product == 6) {
+            c.autoLiabilitySelect = icon;
+          } else if (product == 9) {
+            c.autoSelect = icon;
+          }
+        }
+      });
+    });
+  }
+
+  setTotalValue(product, value) {
+    if (product === undefined) {
+      return value;
+    } else {
+      var x = parseFloat(product);
+      var y = parseFloat(value);
+      return (x + y).toString();
+    }
+  }
+
+  getInstallmentTotal(arr: any[]) {
+    var obj = {} as QuickQuoteResultDTO;
+    obj.label = "Installment";
+    arr.forEach((a: any) => {
+      var product = a["name"];
+      var value = a["value"];
+      if (product == 1) {
+        obj.compre = this.setTotalValue(obj.compre, value);
+      } else if (product == 2) {
+        obj.ctpl = this.setTotalValue(obj.ctpl, value);
+      } else if (product == 3) {
+        obj.autoCompre = this.setTotalValue(obj.autoCompre, value);
+      } else if (product == 4) {
+        obj.autoComprePlus = this.setTotalValue(obj.autoComprePlus, value);
+      } else if (product == 5) {
+        obj.autoLiabilityRegular = this.setTotalValue(obj.autoLiabilityRegular, value);
+      } else if (product == 6) {
+        obj.autoLiabilitySelect = this.setTotalValue(obj.autoLiabilitySelect, value);
+      } else if (product == 9) {
+        obj.autoSelect = this.setTotalValue(obj.autoSelect, value);
+      }
+    });
+    return obj;
+  }
+
+  createQQResultDTO(arr: any[], installment: String, isAnnual ? : boolean) {
+    var obj = {} as QuickQuoteResultDTO;
+
+    if (installment == '1') {
+      obj.label = isAnnual ? 'Annual' : '1st Installment';
+    } else if (installment == '2') {
+      obj.label = '2nd Installment';
+    } else if (installment == '3') {
+      obj.label = '3rd Installment';
+    } else if (installment == '4') {
+      obj.label = '4th Installment';
+    }
+
+    arr.forEach((a: any) => {
+      var price = a["value"];
+      var product = a["name"];
+      if (a["installment"] == installment) {
+        if (product == 1) {
+          obj.compre = price;
+        } else if (product == 2) {
+          obj.ctpl = price;
+        } else if (product == 3) {
+          obj.autoCompre = price;
+        } else if (product == 4) {
+          obj.autoComprePlus = price;
+        } else if (product == 5) {
+          obj.autoLiabilityRegular = price;
+        } else if (product == 6) {
+          obj.autoLiabilitySelect = price;
+        } else if (product == 9) {
+          obj.autoSelect = price;
+        }
+      }
+    });
+    return obj;
   }
 
   ngAfterViewChecked() {
@@ -69,22 +370,22 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   clearRiskDetails(level: number, type ? : boolean) {
-    if (level <= 1) {//if user changes car make
+    if (level <= 1) { //if user changes car make
       this.LOV.modelLOV = [];
       this.carDetails.model = undefined;
       this.quickQuoteForm.get('model').reset();
     }
-    if (level <= 2) {//if user changes car model
+    if (level <= 2) { //if user changes car model
       this.LOV.vehicleTypeLOV = [];
       this.carDetails.vehicleType = undefined;
       this.quickQuoteForm.get('vehicleType').reset();
     }
-    if (level <= 3) {//if user changes vehicle type
+    if (level <= 3) { //if user changes vehicle type
       this.LOV.modelYearLOV = [];
       this.carDetails.modelYear = undefined;
       this.quickQuoteForm.get('modelYear').reset();
     }
-    if (level <= 4) {//if user changes car model year
+    if (level <= 4) { //if user changes car model year
       this.LOV.subModelLOV = [];
       this.LOV.typeOfUseLOV = [];
       this.carDetails.subModel = undefined;
@@ -92,7 +393,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
       this.quickQuoteForm.get('subModel').reset();
       this.quickQuoteForm.get('typeOfUse').reset();
     }
-    if (level <= 5) {//if user changes car sub model or type of use
+    if (level <= 5) { //if user changes car sub model or type of use
       if (level == 5) {
         if (type) {
           //if user changes type of use
@@ -206,8 +507,34 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  sublineOnchange(event: any) {
+    var options = event.target.options;
+    if (options.length) {
+      //effectivity date is based on selected subline
+      var selectedIndex = event.target.options.selectedIndex;
+      var effectivityDate = event.target.options[selectedIndex].dataset.sublinedate;
+      
+      //effectivity date change format
+      var d = moment(effectivityDate, 'DDMMYYYY').format('MMDDYYYY');
+      this.carDetails.effectivityDate = d.toString();
+    }
+  }
+
   quickQuote(carDetails: QQCar) {
-    this.showQuickQouteDetails = true;
+    this.qq.quickQuoteCar(carDetails).then(res => {
+      if (res.status) {
+        var quickQuoteDetails = res.obj["quickQuoteDetails"];
+        var productList = res.obj["productList"];
+        var products = res.obj["products"];
+        var coverage = res.obj["coverage"];
+
+        this.createQuickQuoteData(quickQuoteDetails, productList, products);
+        this.createQuickQuoteCoverage(coverage);
+        this.showProductComparison = true;
+      } else {
+        alert(res.message);
+      }
+    });
   }
 
 }

@@ -130,3 +130,46 @@ form .card-header.optional {
 .sidebar.toggled {
   display: none;
 }
+
+/* product comparison styles */
+.product-comparison  .card,
+.product-comparison  h6 {
+  margin-top: 10px;
+}
+
+.product-comparison  .mat-table {
+  width: 100%;
+}
+
+.product-comparison  table {
+  text-align: center !important;
+  width: 100%;
+}
+
+.product-comparison  table .amount {
+  text-align: right !important;
+}
+
+.product-comparison  table h6 {
+  margin: 0 !important;
+}
+
+.product-comparison  tr.mat-header-row {
+  background: #f7f7f7;
+}
+
+.product-comparison  .mat-header-cell {
+  text-align: center;
+}
+
+.product-img-banner, .payment-img-banner {
+  width: 100%;
+}
+
+.product-comparison .fa-check-circle {
+  color: green !important;
+}
+
+.product-comparison .fa-times-circle {
+  color: indianred !important;
+}

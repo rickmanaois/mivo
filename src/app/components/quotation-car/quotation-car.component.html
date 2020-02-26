@@ -198,10 +198,15 @@
                   && (quoteForm.controls['conductionNumber'].dirty 
                   || quoteForm.controls['conductionNumber'].touched)}">
                     <label for="conductionNumber">Conduction Number</label>
-                    <input type="text" formControlName="conductionNumber" class="form-control required"
-                      [(ngModel)]="carDetails.conductionNumber">
+                    <input type="text" formControlName="conductionNumber" class="form-control" [ngClass]="{'required' : carDetails.plateNumber === undefined
+                      || carDetails.plateNumber === null
+                      || carDetails.plateNumber === ''}" [(ngModel)]="carDetails.conductionNumber">
                     <p class="form-error" *ngIf="quoteForm.controls['conductionNumber'].errors?.required">
                       * conduction number is required
+                    </p>
+                    <p class="form-error"
+                      *ngIf="quoteForm.controls['conductionNumber'].errors?.invalidConductionNumber">
+                      * conduction number is invalid
                     </p>
                   </div>
                 </div>
@@ -211,27 +216,42 @@
                   && (quoteForm.controls['plateNumber'].dirty 
                   || quoteForm.controls['plateNumber'].touched)}">
                     <label for="plateNumber">Plate Number</label>
-                    <input type="text" formControlName="plateNumber" class="form-control required"
-                      [(ngModel)]="carDetails.plateNumber">
+                    <input type="text" formControlName="plateNumber" class="form-control"
+                      [attr.disabled]=" (LOV.sublineLOV?.length && LOV.modelYearLOV?.length) ? null : true" [ngClass]="{'required' : carDetails.conductionNumber === undefined
+                      || carDetails.conductionNumber === null
+                      || carDetails.conductionNumber === ''}" [(ngModel)]="carDetails.plateNumber">
                     <p class="form-error" *ngIf="quoteForm.controls['plateNumber'].errors?.required">
                       * plate number is required
+                    </p>
+                    <p class="form-error" *ngIf="quoteForm.controls['plateNumber'].errors?.invalidPlateNumber">
+                      * plate number is invalid
                     </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['serialNumber'].invalid 
+                  && (quoteForm.controls['serialNumber'].dirty 
+                  || quoteForm.controls['serialNumber'].touched)}">
                     <label for="serialNumber">Chassis Number/Serial Number</label>
-                    <input type="text" formControlName="serialNumber" class="form-control"
+                    <input type="text" formControlName="serialNumber" class="form-control required"
                       [(ngModel)]="carDetails.serialNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['serialNumber'].errors?.required">
+                      * serial number is required
+                    </p>
                   </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="form-group">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['engineNumber'].invalid 
+                  && (quoteForm.controls['engineNumber'].dirty 
+                  || quoteForm.controls['engineNumber'].touched)}">
                     <label for="engineNumber">Motor Number/Engine Number</label>
-                    <input type="text" formControlName="engineNumber" class="form-control"
+                    <input type="text" formControlName="engineNumber" class="form-control required"
                       [(ngModel)]="carDetails.engineNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['engineNumber'].errors?.required">
+                      * engine number is required
+                    </p>
                   </div>
                 </div>
 
@@ -248,7 +268,7 @@
                       && (quoteForm.controls['purchaseDate'].dirty 
                       || quoteForm.controls['purchaseDate'].touched)}">
                     <label for="purchaseDate">Purchase Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="today"
                       formControlName="purchaseDate" [(ngModel)]="carDetails.purchaseDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['purchaseDate'].errors?.required">
                       * purchase date is required
@@ -274,7 +294,7 @@
                       && (quoteForm.controls['receivedDate'].dirty 
                       || quoteForm.controls['receivedDate'].touched)}">
                     <label for="receivedDate">Received Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="today"
                       formControlName="receivedDate" [(ngModel)]="carDetails.receivedDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['receivedDate'].errors?.required">
                       * received date is required
@@ -283,92 +303,6 @@
                 </div>
 
               </div>
-            </div>
-          </div>
-
-          <div class="card shadow mb-3">
-            <div class="card-header optional">
-              <strong>Accessories</strong>
-            </div>
-            <div class="card-body">
-
-              <div formArrayName="accessories">
-                <div *ngFor="let accessories of quoteForm.get('accessories')['controls']; let i=index">
-                  <div [formGroupName]="i" class="card accessory-card">
-                    <div class="card-body">
-                      <div class="row">
-
-                        <div class="col-md-4 col-sm-6">
-                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['accessoryList'].invalid 
-                            && (accessories.controls['accessoryList'].dirty 
-                            || accessories.controls['accessoryList'].touched)}">
-                            <label for="accessoryList">Accessory List</label>
-                            <select class="custom-select mr-sm-2 required" formControlName="accessoryList">
-                              <option *ngFor="let accessoryList of LOV.accessoryListLOV"
-                                [ngValue]="accessoryList.value">
-                                {{ accessoryList.name }}</option>
-                            </select>
-                            <p class="form-error" *ngIf="accessories.controls['accessoryList'].errors?.required">
-                              * accessory list is required
-                            </p>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6">
-                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['accessoryType'].invalid 
-                            && (accessories.controls['accessoryType'].dirty 
-                            || accessories.controls['accessoryType'].touched)}">
-                            <label for="accessoryType">Accessory Type</label>
-                            <input type="text" formControlName="accessoryType" class="form-control required">
-                            <p class="form-error" *ngIf="accessories.controls['accessoryType'].errors?.required">
-                              * accessory type is required
-                            </p>
-                          </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6">
-                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['price'].invalid 
-                            && (accessories.controls['price'].dirty 
-                            || accessories.controls['price'].touched)}">
-                            <label for="price">Price</label>
-                            <input type="number" class="form-control required" formControlName="price">
-                            <p class="form-error" *ngIf="accessories.controls['price'].errors?.required">
-                              * price is required
-                            </p>
-                          </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['description'].invalid 
-                            && (accessories.controls['description'].dirty 
-                            || accessories.controls['description'].touched)}">
-                            <label for="description">Description</label>
-                            <textarea type="text" formControlName="description"
-                              class="form-control required"></textarea>
-                            <p class="form-error" *ngIf="accessories.controls['description'].errors?.required">
-                              * description is required
-                            </p>
-                          </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                        <div class="col-lg-12">
-                          <div class="btn-group">
-                            <button class="btn btn-primary" (click)="removeAccessory(i)">Remove</button>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="btn-group">
-                <button [disabled]="quoteForm.get('accessories').status !== 'VALID'" type="button"
-                  (click)="addAccessory()" class="btn btn-primary">Add Accessory</button>
-              </div>
-
             </div>
           </div>
 
@@ -524,7 +458,7 @@
                       && (quoteForm.controls['effectivityDate'].dirty 
                       || quoteForm.controls['effectivityDate'].touched)}">
                     <label for="effectivityDate">Effectivity Date</label>
-                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="mindate"
+                    <input type="text" placeholder="Datepicker" class="form-control required" [minDate]="today"
                       formControlName="effectivityDate" [(ngModel)]="carDetails.effectivityDate" bsDatepicker>
                     <p class="form-error" *ngIf="quoteForm.controls['effectivityDate'].errors?.required">
                       * effectivity date is required
@@ -546,6 +480,116 @@
                   </div>
                 </div>
 
+              </div>
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header optional">
+              <strong>Accessories</strong>
+            </div>
+            <div class="card-body">
+
+              <div formArrayName="accessories">
+                <div *ngFor="let accessories of quoteForm.get('accessories')['controls']; let i=index">
+                  <div [formGroupName]="i" class="card accessory-card">
+                    <div class="card-body">
+                      <div class="row">
+
+                        <div class="col-md-4 col-sm-6">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['accessoryList'].invalid 
+                            && (accessories.controls['accessoryList'].dirty 
+                            || accessories.controls['accessoryList'].touched)}">
+                            <label for="accessoryList">Accessory List</label>
+                            <select class="custom-select mr-sm-2 required" formControlName="accessoryList">
+                              <option *ngFor="let accessoryList of LOV.accessoryListLOV"
+                                [ngValue]="accessoryList.value">
+                                {{ accessoryList.name }}</option>
+                            </select>
+                            <p class="form-error" *ngIf="accessories.controls['accessoryList'].errors?.required">
+                              * accessory list is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['accessoryType'].invalid 
+                            && (accessories.controls['accessoryType'].dirty 
+                            || accessories.controls['accessoryType'].touched)}">
+                            <label for="accessoryType">Accessory Type</label>
+                            <input type="text" formControlName="accessoryType" class="form-control required">
+                            <p class="form-error" *ngIf="accessories.controls['accessoryType'].errors?.required">
+                              * accessory type is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['price'].invalid 
+                            && (accessories.controls['price'].dirty 
+                            || accessories.controls['price'].touched)}">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control required" formControlName="price">
+                            <p class="form-error" *ngIf="accessories.controls['price'].errors?.required">
+                              * price is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                          <div class="form-group" [ngClass]="{'input-error': accessories.controls['description'].invalid 
+                            && (accessories.controls['description'].dirty 
+                            || accessories.controls['description'].touched)}">
+                            <label for="description">Description</label>
+                            <textarea type="text" formControlName="description"
+                              class="form-control required"></textarea>
+                            <p class="form-error" *ngIf="accessories.controls['description'].errors?.required">
+                              * description is required
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-lg-12">
+                          <div class="btn-group">
+                            <button class="btn btn-primary" (click)="removeAccessory(i)">Remove</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <button [disabled]="quoteForm.get('accessories').status !== 'VALID'" type="button"
+                  (click)="addAccessory()" class="btn btn-primary">Add Accessory</button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card shadow mb-3">
+            <div class="card-header optional">
+              <strong>Subagent</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <h6>Subagent List</h6>
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
+                      && (quoteForm.controls['subagent'].dirty 
+                      || quoteForm.controls['subagent'].touched)}">
+                    <ng-select [items]="LOV.subagentLOV" bindLabel="name" placeholder="Select Subagent" appendTo="body"
+                      formControlName="subagent" multiple="true" [(ngModel)]="carDetails.subagent">
+                    </ng-select>
+                    <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
+                      * subagent is required
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -592,30 +636,6 @@
                   </div>
                 </div>
 
-              </div>
-            </div>
-          </div>
-
-          <div class="card shadow mb-3">
-            <div class="card-header optional">
-              <strong>Subagent</strong>
-            </div>
-            <div class="card-body">
-              <div class="row">
-
-                <div class="col-sm-6">
-                  <h6>Subagent List</h6>
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
-                      && (quoteForm.controls['subagent'].dirty 
-                      || quoteForm.controls['subagent'].touched)}">
-                    <ng-select [items]="LOV.subagentLOV" bindLabel="name" placeholder="Select Subagent" appendTo="body"
-                      formControlName="subagent" multiple="true" [(ngModel)]="carDetails.subagent">
-                    </ng-select>
-                    <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
-                      * subagent is required
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

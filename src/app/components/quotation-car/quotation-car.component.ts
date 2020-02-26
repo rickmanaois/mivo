@@ -9,7 +9,8 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormArray
+  FormArray,
+  AbstractControl
 } from '@angular/forms';
 import * as moment from 'moment';
 import {
@@ -42,6 +43,7 @@ import {
 import {
   GroupPolicyListObject
 } from 'src/app/objects/LOV/groupPolicyList';
+import { QQCar } from 'src/app/objects/QQCar';
 
 @Component({
   selector: 'app-quotation-car',
@@ -52,7 +54,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QuoteCar();
   @Input() groupPolicy = new GroupPolicy();
   quoteForm: FormGroup;
-  mindate: Date = new Date();
+  today: Date = new Date();
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
   LOV = new CarListObject();
@@ -94,6 +96,19 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.getProductList();
 
     this.getSubagent();
+
+    this.setValue();
+  }
+
+  setValue() {
+    this.carDetails.color = 'test';
+    this.carDetails.receivedBy = 'MIV01101'
+    this.carDetails.purchaseDate = this.today;
+    this.carDetails.receivedDate = this.today;
+    
+    this.groupPolicy.agentCode = '1101';
+
+    this.carDetails.effectivityDate = this.today;
   }
 
   createQuoteForm() {
@@ -110,14 +125,14 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       //vehicle information
       color: ['', Validators.required],
       areaOfUsage: ['', Validators.required],
-      conductionNumber: ['', Validators.required],
-      plateNumber: ['', Validators.required],
-      serialNumber: [null],
-      engineNumber: [null],
+      conductionNumber: ['', Validators.required, this.validateConductionNumber.bind(this)],
+      plateNumber: ['', Validators.required, this.validatePlateNumber.bind(this)],
+      serialNumber: ['', Validators.required],
+      engineNumber: ['', Validators.required],
       mvFileNumber: [null],
       purchaseDate: [null],
       receivedBy: ['', Validators.required],
-      receivedDate: [null],
+      receivedDate: ['', Validators.required],
       //travellers
       accessories: this.fb.array([]),
       //policy holder information
@@ -141,22 +156,38 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
+  async validateConductionNumber(control: AbstractControl) {
+    if (!Utility.isUndefined(control.value)) {
+      this.carDetails.conductionNumber = control.value;
+      return this.qq.validateConductionNumberFormat(this.carDetails).then(res => {
+        return res.status && res.obj["valid"] ? null : {
+          invalidConductionNumber: true
+        };
+      });
+    }
+  }
+
+  async validatePlateNumber(control: AbstractControl) {
+    if (!Utility.isUndefined(control.value)) {
+      this.carDetails.plateNumber = control.value;
+      return this.qq.validatePlateNumberFormat(this.carDetails).then(res => {
+        return res.status && res.obj["valid"] ? null : {
+          invalidPlateNumber: true
+        };
+      });
+    }
+  }
+
   setValidations() {
     var conductionNumber = this.quoteForm.get('conductionNumber');
     var plateNumber = this.quoteForm.get('plateNumber');
 
-    conductionNumber.valueChanges.subscribe(number => {
-      if (number != undefined) {
-        var hasNumber = number !== null && number !== '';
-        Utility.updateValidator(plateNumber, hasNumber ? null : Validators.required);
-      }
+    conductionNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
+      Utility.updateValidator(plateNumber, !Utility.isUndefined(number) ? null : Validators.required);
     });
 
     plateNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
-      if (number != undefined) {
-        var hasNumber = number !== null && number !== '';
-        Utility.updateValidator(conductionNumber, hasNumber ? null : Validators.required);
-      }
+      Utility.updateValidator(conductionNumber, !Utility.isUndefined(number) ? null : Validators.required);
     });
 
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
@@ -185,22 +216,22 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   clearRiskDetails(level: number, type ? : boolean) {
-    if (level <= 1) {//if user changes car make
+    if (level <= 1) { //if user changes car make
       this.LOV.modelLOV = [];
       this.carDetails.model = undefined;
       this.quoteForm.get('model').reset();
     }
-    if (level <= 2) {//if user changes car model
+    if (level <= 2) { //if user changes car model
       this.LOV.vehicleTypeLOV = [];
       this.carDetails.vehicleType = undefined;
       this.quoteForm.get('vehicleType').reset();
     }
-    if (level <= 3) {//if user changes vehicle type
+    if (level <= 3) { //if user changes vehicle type
       this.LOV.modelYearLOV = [];
       this.carDetails.modelYear = undefined;
       this.quoteForm.get('modelYear').reset();
     }
-    if (level <= 4) {//if user changes car model year
+    if (level <= 4) { //if user changes car model year
       this.LOV.subModelLOV = [];
       this.LOV.typeOfUseLOV = [];
       this.carDetails.subModel = undefined;
@@ -208,7 +239,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       this.quoteForm.get('subModel').reset();
       this.quoteForm.get('typeOfUse').reset();
     }
-    if (level <= 5) {//if user changes car sub model or type of use
+    if (level <= 5) { //if user changes car sub model or type of use
       if (level == 5) {
         if (type) {
           //if user changes type of use
@@ -311,15 +342,29 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   getVehicleValue() {
     const _this = this;
-    this.qq.getFMV(this.carDetails).then(res => {
+    var qqDetails = new QQCar;
+    qqDetails.make = this.carDetails.make;
+    qqDetails.model = this.carDetails.model;
+    qqDetails.subModel = this.carDetails.subModel;
+    qqDetails.modelYear = this.carDetails.modelYear;
+    this.qq.getFMV(qqDetails).then(res => {
       _this.carDetails.vehicleValue = res.obj["fmv"];
     });
   }
 
   getSubline() {
     const _this = this;
-    this.qq.getSubline(this.carDetails).then(res => {
+    var qqDetails = new QQCar;
+    qqDetails.vehicleType = this.carDetails.vehicleType;
+    qqDetails.typeOfUse = this.carDetails.typeOfUse;
+    this.qq.getSubline(qqDetails).then(res => {
       _this.LOV.sublineLOV = res.obj["list"];
+    });
+  }
+
+  validatePlateNumberFormat() {
+    this.qq.validatePlateNumberFormat(this.carDetails).then(res => {
+      alert(res.obj["valid"]);
     });
   }
 

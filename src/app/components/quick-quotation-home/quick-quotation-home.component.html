@@ -79,8 +79,7 @@
               <div class="form-check">
                 <input class="form-check-input"
                   [attr.disabled]="homeDetails.cbBuilding || homeDetails.cbContent ? null : ''" type="checkbox"
-                  id="cbImprovements" formControlName="cbImprovements"
-                  [(ngModel)]="homeDetails.cbImprovements">
+                  id="cbImprovements" formControlName="cbImprovements" [(ngModel)]="homeDetails.cbImprovements">
                 <label class="form-check-label" for="cbImprovements">
                   Improvements
                 </label>
@@ -90,8 +89,7 @@
                 || quickQuoteForm.controls['improvements'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbImprovements ? null : ''"
-                  type="text" id="improvements" formControlName="improvements"
-                  [(ngModel)]="homeDetails.improvements">
+                  type="text" id="improvements" formControlName="improvements" [(ngModel)]="homeDetails.improvements">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['improvements'].errors?.required">
                   * improvements is required
                 </p>
@@ -102,8 +100,7 @@
               <div class="form-check">
                 <input class="form-check-input"
                   [attr.disabled]="homeDetails.cbBuilding || homeDetails.cbContent ? null : ''" type="checkbox"
-                  id="cbRelatedBuild" formControlName="cbRelatedBuild"
-                  [(ngModel)]="homeDetails.cbRelatedBuild">
+                  id="cbRelatedBuild" formControlName="cbRelatedBuild" [(ngModel)]="homeDetails.cbRelatedBuild">
                 <label class="form-check-label" for="cbRelatedBuild">
                   Other Related Build
                 </label>
@@ -113,8 +110,7 @@
                 || quickQuoteForm.controls['relatedBuild'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbRelatedBuild ? null : ''"
-                  type="text" id="relatedBuild" formControlName="relatedBuild"
-                  [(ngModel)]="homeDetails.relatedBuild">
+                  type="text" id="relatedBuild" formControlName="relatedBuild" [(ngModel)]="homeDetails.relatedBuild">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['relatedBuild'].errors?.required">
                   * related build is required
                 </p>
@@ -125,8 +121,7 @@
               <div class="form-check">
                 <input class="form-check-input"
                   [attr.disabled]="homeDetails.cbBuilding || homeDetails.cbContent ? null : ''" type="checkbox"
-                  id="cbRelatedContent" formControlName="cbRelatedContent"
-                  [(ngModel)]="homeDetails.cbRelatedContent">
+                  id="cbRelatedContent" formControlName="cbRelatedContent" [(ngModel)]="homeDetails.cbRelatedContent">
                 <label class="form-check-label" for="cbRelatedContent">
                   Other Related Content
                 </label>
@@ -162,5 +157,197 @@
     <!-- .card.shadow -->
   </div>
   <!-- .col-xl-12 -->
+
+
+  <div class="col-xl-12">
+    <!-- <div *ngIf="showProductComparison"> -->
+    <div class="product-comparison">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <img class="product-img-banner" src="./assets/images/product-home.png" alt="product-home" />
+            </div>
+            <div class="col-lg-12">
+              <div class="flexitable">
+                <table mat-table [dataSource]="annualData" matSort class="mat-elevation-z8">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>Payment</th>
+                    <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="compre">
+                    <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="ctpl">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="autoCompre">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+              </div>
+            </div>
+            <!-- .col-xl-12 -->
+          </div>
+          <!-- .row -->
+        </div>
+        <!-- .card-body -->
+      </div>
+      <!-- .card  -->
+
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <img class="payment-img-banner" src="./assets/images/product-payment.png" alt="product-payment" />
+            </div>
+            <div class="col-lg-12">
+              <div class="flexitable">
+
+                <table mat-table [dataSource]="plan30Data" matSort class="mat-elevation-z8">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <h6>PLAN 30</h6>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="compre">
+                    <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="ctpl">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="autoCompre">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+              </div>
+            </div>
+            <!-- .col-xl-12 -->
+
+            <div class="col-lg-12">
+              <div class="flexitable">
+
+                <table mat-table [dataSource]="plan60Data" matSort class="mat-elevation-z8">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <h6>PLAN 60</h6>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="compre">
+                    <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="ctpl">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="autoCompre">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+              </div>
+            </div>
+            <!-- .col-xl-12 -->
+
+            <div class="col-lg-12">
+              <div class="flexitable">
+                <table mat-table [dataSource]="plan90Data" matSort class="mat-elevation-z8">
+
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <h6>PLAN 90</h6>
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="compre">
+                    <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="ctpl">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="autoCompre">
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+              </div>
+            </div>
+            <!-- .col-xl-12 -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- .showProductComparison -->
+
 </div>
 <!-- #quickQuotationHome -->
