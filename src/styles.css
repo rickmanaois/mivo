@@ -11,6 +11,12 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.btn-default {
+  color: #4c4c4c;
+  background-color: #dedede;
+  border-color: #b1b1b1;
+}
+
 .btn.btn-primary {
   background: #3a3a3a;
   border-color: #464646;
@@ -172,4 +178,13 @@ form .card-header.optional {
 
 .product-comparison .fa-times-circle {
   color: indianred !important;
+}
+
+/* quick quote details note/reminder */
+#quickQouteDetails {
+  font-size: 13px;
+}
+
+#quickQouteDetails p {
+  margin-bottom: 0px;
 }

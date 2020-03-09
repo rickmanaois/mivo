@@ -5,21 +5,24 @@ import {API_URL} from '../constants/app.constant';
 
 export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 
+import {
+  BsModalService,
+  BsModalRef
+} from 'ngx-bootstrap/modal';
+import { Utility } from '../utils/utility';
+
 @Injectable()
 export class AppService {
+  modalRef: BsModalRef;
   constructor(
-    private http: HttpClient) {
+    private http: HttpClient,
+    private modalService: BsModalService) {
   }
 
-  doWhatever(param: any, endpoint: string): Promise<any> {
+  async doWhatever(param: any, endpoint: string): Promise<any> {
     return this.http.post(API_URL + endpoint, param)
       .toPromise()
       .then(response => response)
-      .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
+      .catch(err => this.modalRef = Utility.showError(this.modalService, err.message));
   }
 }

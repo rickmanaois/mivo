@@ -1,8 +1,8 @@
 export class QQTravel {
   currency: string;
   country: [Object];
-  package: string;
-  coverage: string;
+  travelPackage: string;
+  typeOfCoverage: string;
   purposeTrip: string;
   startDate: Date;
   endDate: Date;

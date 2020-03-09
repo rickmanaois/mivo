@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <strong>{{title}}</strong>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-12">
+      {{message}}
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div *ngIf="isConfirm">
+    <button type="button" class="btn btn-success" (click)="confirm()">{{ 'Confirm' }}</button>
+  </div>
+
+  <div *ngIf="isOkay">
+    <button type="button" class="btn btn-default" (click)="okay()">{{ 'Okay' }}</button>
+  </div>
+
+  <div *ngIf="isClose">
+    <button type="button" class="btn btn-default" (click)="close()">{{ 'Close' }}</button>
+  </div>
+
+  <div *ngIf="isCancel">
+    <button class="btn btn-default" type="button" (click)="cancel()">{{ 'Cancel' }}</button>
+  </div>
+</div>

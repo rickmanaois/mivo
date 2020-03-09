@@ -12,9 +12,8 @@ export class AccidentListObject {
   productListLOV: any[];
 
   //quick quote
-  primaryInsuredAgeLOV: any[];
-  spouseAgeLOV: any[];
-  childAgeLOV: any[];
+  ageLOV: any[];
+  childNumberLOV: any[];
   constructor() {
   }
 }

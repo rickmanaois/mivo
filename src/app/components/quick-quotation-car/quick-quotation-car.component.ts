@@ -12,20 +12,24 @@ import {
 } from '@angular/forms';
 import * as moment from 'moment';
 import {
+  BsModalService,
+  BsModalRef
+} from 'ngx-bootstrap/modal';
+import {
+  Utility
+} from '../../utils/utility';
+import {
   QQCar
 } from '../../objects/QQCar';
-import {
-  QuickQuoteService
-} from '../../services/quickqoute.service'
-import {
-  CarLOVServices
-} from '../../services/lov/car.service'
 import {
   CarListObject
 } from 'src/app/objects/LOV/carList';
 import {
-  MatTableDataSource
-} from '@angular/material/table';
+  QuickQuoteService
+} from '../../services/quickqoute.service';
+import {
+  CarLOVServices
+} from '../../services/lov/car.service';
 
 export interface QuickQuoteResultDTO {
   label: string;
@@ -36,27 +40,8 @@ export interface QuickQuoteResultDTO {
   autoLiabilityRegular: string;
   autoLiabilitySelect: string;
   autoSelect: string;
+  isNotAvailable: boolean;
 }
-
-// const ELEMENT_DATA: QuickQuoteResultDTO[] = [{
-//   label: 'COMP. THIRD PAR. LIAB.',
-//   compre: "<i class='far fa-times-circle'></i>",
-//   ctpl: "<i class='far fa-check-circle'></i>",
-//   autoCompre: "<i class='far fa-circle'></i>",
-//   autoComprePlus: "<i class='far fa-circle'></i>",
-//   autoLiabilityRegular: "<i class='far fa-circle'></i>",
-//   autoLiabilitySelect: "<i class='far fa-circle'></i>",
-//   autoSelect: "<i class='far fa-circle'></i>",
-// }, {
-//   label: 'LOSS AND DAMAGE',
-//   compre: "<i class='far fa-times-circle'></i>",
-//   ctpl: "<i class='far fa-times-circle'></i>",
-//   autoCompre: "<i class='far fa-check-circle'></i>",
-//   autoComprePlus: "<i class='far fa-check-circle'></i>",
-//   autoLiabilityRegular: "<i class='far fa-times-circle'></i>",
-//   autoLiabilitySelect: "<i class='far fa-times-circle'></i>",
-//   autoSelect: "<i class='far fa-check-circle'></i>",
-// }];
 
 @Component({
   selector: 'app-quick-quotation-car',
@@ -66,6 +51,7 @@ export interface QuickQuoteResultDTO {
 
 export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   @Input() carDetails = new QQCar();
+  LOV = new CarListObject();
   quickQuoteForm: FormGroup;
 
   displayedColumns: string[] = [
@@ -76,31 +62,56 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
     'autoComprePlus',
     'autoLiabilityRegular',
     'autoLiabilitySelect',
-    'autoSelect'];
-  // dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  //list of object - both quick and regular quote
-  LOV = new CarListObject();
-  vehicleValue: any;
-
-  //flag to display product comparison
-  showProductComparison: boolean = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private qq: QuickQuoteService,
-    private carlov: CarLOVServices,
-    private changeDetector: ChangeDetectorRef
-  ) {
-    this.createQuickQuoteForm();
-  }
+    'autoSelect'
+  ];
 
   annualData: Array < QuickQuoteResultDTO > = [];
   plan30Data: Array < QuickQuoteResultDTO > = [];
   plan60Data: Array < QuickQuoteResultDTO > = [];
   plan90Data: Array < QuickQuoteResultDTO > = [];
   coveragelist: Array < QuickQuoteResultDTO > = [];
+  
+  vehicleValue: any;
+  //flag to display product comparison and coverage
+  showProductComparison: boolean = false;
+  //modal reference
+  modalRef: BsModalRef;
 
+  constructor(
+    private fb: FormBuilder,
+    private qq: QuickQuoteService,
+    private carlov: CarLOVServices,
+    private changeDetector: ChangeDetectorRef,
+    private modalService: BsModalService
+  ) {
+    this.createQuickQuoteForm();
+  }
+
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
+  }
+
+  ngOnInit() {
+    var _this = this;
+    this.carlov.getMakeList().then(res => {
+      _this.LOV.makeLOV = res;
+    });
+  }
+
+  createQuickQuoteForm() {
+    this.quickQuoteForm = this.fb.group({
+      make: ['', Validators.required],
+      model: ['', Validators.required],
+      vehicleType: ['', Validators.required],
+      modelYear: ['', Validators.required],
+      subModel: ['', Validators.required],
+      typeOfUse: ['', Validators.required],
+      subline: ['', Validators.required],
+      vehicleValue: ['', Validators.required],
+    });
+  }
+
+  //getting the year difference between the current and selected model year
   getDiff() {
     var today = new Date();
     var currentYear = today.getFullYear();
@@ -110,6 +121,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   createObj(name: String, value: String, installment: String, product: number) {
     var diff = this.getDiff();
 
+    //set value to 0 if conditions meets
     if (product != 1 && name == '2') {
       value = "0";
     } else if ((name == '3' || name == '4') && diff > 8) {
@@ -174,19 +186,19 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
     this.plan30Data.push(this.createQQResultDTO(plan30, '1'));
     this.plan30Data.push(this.createQQResultDTO(plan30, '2'));
+
     this.plan60Data.push(this.createQQResultDTO(plan60, '1'));
     this.plan60Data.push(this.createQQResultDTO(plan60, '2'));
     this.plan60Data.push(this.createQQResultDTO(plan60, '3'));
+
     this.plan90Data.push(this.createQQResultDTO(plan90, '1'));
     this.plan90Data.push(this.createQQResultDTO(plan90, '2'));
     this.plan90Data.push(this.createQQResultDTO(plan90, '3'));
     this.plan90Data.push(this.createQQResultDTO(plan90, '4'));
   }
 
-  createQuickQuoteCoverage(coverage: any[]) {
-    var hasRa = true;
+  createQuickQuoteCoverage(coverage: any[], hasRoadAssist: boolean) {
     var coverages = [];
-
     var diff = this.getDiff();
     coverage.forEach(cov => {
       var coverageName = cov.nomCob;
@@ -200,15 +212,15 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
         if (((product == 3 || product == 4) && diff > 8) || (product == 1 && diff < 8)) {
           isIncluded = "N";
         } else {
-          if (hasRa && (coverageCode == "1040" || coverageCode == "1027" || coverageCode == "1029")) {
+          if (hasRoadAssist && (coverageCode == "1040" || coverageCode == "1027" || coverageCode == "1029")) {
             if (coverageCode == "1040" && (product != 2 && product != 5 && product != 6)) {
-              isIncluded = "ODRA";//optional disabled ra with check
+              isIncluded = "ODRA"; //optional disabled ra with check
             } else {
-              if ((coverageCode == "1040" || coverageCode == "1027" || coverageCode == "1029")
-              && (product == 2 || product == 5 || product == 6)) {
+              if ((coverageCode == "1040" || coverageCode == "1027" || coverageCode == "1029") &&
+                (product == 2 || product == 5 || product == 6)) {
                 isIncluded = "ORA"; //optional ra
               } else {
-                isIncluded = "ORA";//optional disabled ra without check
+                isIncluded = "ORA"; //optional disabled ra without check
               }
             }
           } else {
@@ -273,7 +285,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  setTotalValue(product, value) {
+  setTotalValue(product: any, value: any) {
     if (product === undefined) {
       return value;
     } else {
@@ -285,7 +297,16 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   getInstallmentTotal(arr: any[]) {
     var obj = {} as QuickQuoteResultDTO;
+    // initial values for products
+    obj.compre = "0";
+    obj.ctpl = "0";
+    obj.autoCompre = "0";
+    obj.autoComprePlus = "0";
+    obj.autoLiabilityRegular = "0";
+    obj.autoLiabilitySelect = "0";
+    obj.autoSelect = "0";
     obj.label = "Installment";
+
     arr.forEach((a: any) => {
       var product = a["name"];
       var value = a["value"];
@@ -310,6 +331,14 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   createQQResultDTO(arr: any[], installment: String, isAnnual ? : boolean) {
     var obj = {} as QuickQuoteResultDTO;
+    // initiate values for products
+    obj.compre = "0";
+    obj.ctpl = "0";
+    obj.autoCompre = "0";
+    obj.autoComprePlus = "0";
+    obj.autoLiabilityRegular = "0";
+    obj.autoLiabilitySelect = "0";
+    obj.autoSelect = "0";
 
     if (installment == '1') {
       obj.label = isAnnual ? 'Annual' : '1st Installment';
@@ -343,30 +372,6 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
       }
     });
     return obj;
-  }
-
-  ngAfterViewChecked() {
-    this.changeDetector.detectChanges();
-  }
-
-  ngOnInit() {
-    var _this = this;
-    this.carlov.getMakeList().then(res => {
-      _this.LOV.makeLOV = res;
-    });
-  }
-
-  createQuickQuoteForm() {
-    this.quickQuoteForm = this.fb.group({
-      make: ['', Validators.required],
-      model: ['', Validators.required],
-      vehicleType: ['', Validators.required],
-      modelYear: ['', Validators.required],
-      subModel: ['', Validators.required],
-      typeOfUse: ['', Validators.required],
-      subline: ['', Validators.required],
-      vehicleValue: ['', Validators.required],
-    });
   }
 
   clearRiskDetails(level: number, type ? : boolean) {
@@ -513,7 +518,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
       //effectivity date is based on selected subline
       var selectedIndex = event.target.options.selectedIndex;
       var effectivityDate = event.target.options[selectedIndex].dataset.sublinedate;
-      
+
       //effectivity date change format
       var d = moment(effectivityDate, 'DDMMYYYY').format('MMDDYYYY');
       this.carDetails.effectivityDate = d.toString();
@@ -522,17 +527,25 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   quickQuote(carDetails: QQCar) {
     this.qq.quickQuoteCar(carDetails).then(res => {
-      if (res.status) {
-        var quickQuoteDetails = res.obj["quickQuoteDetails"];
-        var productList = res.obj["productList"];
-        var products = res.obj["products"];
-        var coverage = res.obj["coverage"];
+      if (!Utility.isUndefined(res)) {
+        if (res.status) {
+          var quickQuoteDetails = res.obj["quickQuoteDetails"];
+          var productList = res.obj["productList"];
+          var products = res.obj["products"];
+          var coverage = res.obj["coverage"];
+          var hasRoadAssist = res.obj["hasRoadAssist"];
 
-        this.createQuickQuoteData(quickQuoteDetails, productList, products);
-        this.createQuickQuoteCoverage(coverage);
-        this.showProductComparison = true;
-      } else {
-        alert(res.message);
+          this.createQuickQuoteData(quickQuoteDetails, productList, products);
+          this.createQuickQuoteCoverage(coverage, hasRoadAssist);
+          this.showProductComparison = true;
+
+          setTimeout(() => {
+            var el = document.getElementById('productComparison');
+            Utility.scroll(el);
+          });
+        } else {
+          this.modalRef = Utility.showError(this.modalService, res.message);
+        }
       }
     });
   }

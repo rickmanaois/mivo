@@ -1,15 +1,15 @@
 export class QQHome {
   subline: string;
   cbBuilding: boolean;
-  building: string;
+  building: number = 0;
   cbContent: boolean;
-  content: string;
+  content: number = 0;
   cbImprovements: boolean;
-  improvements: string;
+  improvements: number = 0;
   cbRelatedBuild: boolean;
-  relatedBuild: string;
+  relatedBuild: number = 0;
   cbRelatedContent: boolean;
-  relatedContent: string;
+  relatedContent: number = 0;
 
   constructor() {}
 }

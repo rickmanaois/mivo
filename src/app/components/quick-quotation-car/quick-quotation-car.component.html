@@ -13,16 +13,8 @@
 
         <div id="quickQouteDetails" class="alert alert-info">
           <p><strong>Important Reminder:</strong> All the amounts shown on the product comparison table are only
-            estimates
-            and must not be taken as the actual premiums of the products.
+            estimates and must not be taken as the actual premiums of the products.
           </p>
-          <!-- <label>Fixed Values: </label>
-          <ul>
-            <li>Sum insured per Passenger: Php50,000.00</li>
-            <li>VTPL BI: Php200,000.00</li>
-            <li>VTPL PD: Php200,000.00</li>
-            <li>LGT: 0.75%</li>
-          </ul> -->
         </div>
         <!-- #quickQouteDetails -->
 
@@ -182,7 +174,7 @@
   </div>
   <!-- .col-xl-12 -->
 
-  <div class="col-xl-12">
+  <div class="col-xl-12" id="productComparison">
     <div class="product-comparison" *ngIf="showProductComparison">
       <div class="card shadow mb-3">
         <div class="card-body">
@@ -194,59 +186,62 @@
               <div class="flexitable">
                 <table mat-table [dataSource]="annualData" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Payment Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>Payment</th>
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
+                  <!-- Compre Column -->
                   <ng-container matColumnDef="compre">
                     <th mat-header-cell *matHeaderCellDef class="amount">Compre</th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
+                  <!-- CTPL Column -->
                   <ng-container matColumnDef="ctpl">
                     <th mat-header-cell *matHeaderCellDef class="amount"> CTPL </th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Column -->
                   <ng-container matColumnDef="autoCompre">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.autoCompre == 0 ? 'n/a' : element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Plus Column -->
                   <ng-container matColumnDef="autoComprePlus">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre Plus </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoComprePlus | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoComprePlus == 0 ? 'n/a' : element.autoComprePlus | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liabilty Regular Column -->
                   <ng-container matColumnDef="autoLiabilityRegular">
-                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liabilty Regular </th>
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Regular </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilityRegular == 0 ? 'n/a' : element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Select Column -->
                   <ng-container matColumnDef="autoLiabilitySelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilitySelect == 0 ? 'n/a' : element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Select Column -->
                   <ng-container matColumnDef="autoSelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoSelect == 0 ? 'n/a' : element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -274,7 +269,7 @@
 
                 <table mat-table [dataSource]="plan30Data" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Label Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>
                       <h6>PLAN 30</h6>
@@ -282,53 +277,56 @@
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
+                  <!-- Compre Column -->
                   <ng-container matColumnDef="compre">
                     <th mat-header-cell *matHeaderCellDef class="amount">Compre</th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
+                  <!-- CTPL Column -->
                   <ng-container matColumnDef="ctpl">
                     <th mat-header-cell *matHeaderCellDef class="amount"> CTPL </th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Column -->
                   <ng-container matColumnDef="autoCompre">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.autoCompre == 0 ? 'n/a' : element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Plus Column -->
                   <ng-container matColumnDef="autoComprePlus">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre Plus </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoComprePlus | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoComprePlus == 0 ? 'n/a' : element.autoComprePlus | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Column -->
                   <ng-container matColumnDef="autoLiabilityRegular">
-                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liabilty Regular </th>
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Regular </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilityRegular == 0 ? 'n/a' : element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Select Column -->
                   <ng-container matColumnDef="autoLiabilitySelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilitySelect == 0 ? 'n/a' : element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Select Column -->
                   <ng-container matColumnDef="autoSelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoSelect == 0 ? 'n/a' : element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -344,7 +342,7 @@
 
                 <table mat-table [dataSource]="plan60Data" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Label Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>
                       <h6>PLAN 60</h6>
@@ -352,53 +350,56 @@
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
+                  <!-- Compre Column -->
                   <ng-container matColumnDef="compre">
                     <th mat-header-cell *matHeaderCellDef class="amount">Compre</th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
+                  <!-- CTPL Column -->
                   <ng-container matColumnDef="ctpl">
                     <th mat-header-cell *matHeaderCellDef class="amount"> CTPL </th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Column -->
                   <ng-container matColumnDef="autoCompre">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.autoCompre == 0 ? 'n/a' : element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Plus Column -->
                   <ng-container matColumnDef="autoComprePlus">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre Plus </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoComprePlus | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoComprePlus == 0 ? 'n/a' : element.autoComprePlus | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Regular Column -->
                   <ng-container matColumnDef="autoLiabilityRegular">
-                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liabilty Regular </th>
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Regular </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilityRegular == 0 ? 'n/a' : element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Select Column -->
                   <ng-container matColumnDef="autoLiabilitySelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilitySelect == 0 ? 'n/a' : element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Select Column -->
                   <ng-container matColumnDef="autoSelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoSelect == 0 ? 'n/a' : element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -413,7 +414,7 @@
               <div class="flexitable">
                 <table mat-table [dataSource]="plan90Data" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Label Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>
                       <h6>PLAN 90</h6>
@@ -421,53 +422,56 @@
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
+                  <!-- Compre Column -->
                   <ng-container matColumnDef="compre">
                     <th mat-header-cell *matHeaderCellDef class="amount">Compre</th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
+                  <!-- CTPL Column -->
                   <ng-container matColumnDef="ctpl">
                     <th mat-header-cell *matHeaderCellDef class="amount"> CTPL </th>
                     <td mat-cell *matCellDef="let element" class="amount">
                       {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Column -->
                   <ng-container matColumnDef="autoCompre">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.autoCompre == 0 ? 'n/a' : element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Plus Column -->
                   <ng-container matColumnDef="autoComprePlus">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Compre Plus </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoComprePlus | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoComprePlus == 0 ? 'n/a' : element.autoComprePlus | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Regular Column -->
                   <ng-container matColumnDef="autoLiabilityRegular">
-                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liabilty Regular </th>
+                    <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Regular </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilityRegular == 0 ? 'n/a' : element.autoLiabilityRegular | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Select Column -->
                   <ng-container matColumnDef="autoLiabilitySelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Liability Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoLiabilitySelect == 0 ? 'n/a' : element.autoLiabilitySelect | currency:'PHP': 'symbol-narrow'}}
+                    </td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Select Column -->
                   <ng-container matColumnDef="autoSelect">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Auto Select </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
+                      {{element.autoSelect == 0 ? 'n/a' : element.autoSelect | currency:'PHP': 'symbol-narrow'}} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -492,49 +496,49 @@
               <div class="flexitable">
                 <table mat-table [dataSource]="coveragelist" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Payment Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>Payment</th>
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
+                  <!-- Compre Column -->
                   <ng-container matColumnDef="compre">
                     <th mat-header-cell *matHeaderCellDef>Compre</th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.compre"></td>
                   </ng-container>
 
-                  <!-- Weight Column -->
+                  <!-- CTPL Column -->
                   <ng-container matColumnDef="ctpl">
                     <th mat-header-cell *matHeaderCellDef> CTPL </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.ctpl"></td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Column -->
                   <ng-container matColumnDef="autoCompre">
                     <th mat-header-cell *matHeaderCellDef> Auto Compre </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.autoCompre"></td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Compre Plus Column -->
                   <ng-container matColumnDef="autoComprePlus">
                     <th mat-header-cell *matHeaderCellDef> Auto Compre Plus </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.autoComprePlus"></td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Regular Column -->
                   <ng-container matColumnDef="autoLiabilityRegular">
                     <th mat-header-cell *matHeaderCellDef> Auto Liabilty Regular </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.autoLiabilityRegular"></td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Liability Select Column -->
                   <ng-container matColumnDef="autoLiabilitySelect">
                     <th mat-header-cell *matHeaderCellDef> Auto Liability Select </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.autoLiabilitySelect"></td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
+                  <!-- Auto Select Column -->
                   <ng-container matColumnDef="autoSelect">
                     <th mat-header-cell *matHeaderCellDef> Auto Select </th>
                     <td mat-cell *matCellDef="let element" [innerHTML]="element.autoSelect"></td>
@@ -554,12 +558,10 @@
       </div>
       <!-- .card  -->
 
-
-
     </div>
     <!-- .showProductComparison -->
-
   </div>
   <!-- .col-xl-12 -->
+
 </div>
 <!-- #quickQuotationCar -->

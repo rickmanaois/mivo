@@ -10,6 +10,14 @@
   <div class="col-xl-12">
     <div class="card shadow">
       <div class="card-body">
+
+        <div id="quickQouteDetails" class="alert alert-info">
+          <p><strong>Important Reminder:</strong> All the amounts shown on the product comparison table are only
+            estimates and must not be taken as the actual premiums of the products.
+          </p>
+        </div>
+        <!-- #quickQouteDetails -->
+
         <form [formGroup]="quickQuoteForm" class="quick-quote-form">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6">
@@ -20,7 +28,8 @@
                 <select class="custom-select mr-sm-2 required" formControlName="subline"
                   [(ngModel)]="homeDetails.subline">
                   <option selected></option>
-                  <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.name">{{ subline.value }}</option>
+                  <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.COD_RAMO">{{ subline.NOM_RAMO }}
+                  </option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
@@ -44,7 +53,7 @@
               <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['building'].invalid 
                 && (quickQuoteForm.controls['building'].dirty 
                 || quickQuoteForm.controls['building'].touched)}">
-                <input class="form-control required" [attr.disabled]="homeDetails.cbBuilding ? null : ''" type="text"
+                <input class="form-control required" [attr.disabled]="homeDetails.cbBuilding ? null : ''" type="number"
                   id="building" formControlName="building" [(ngModel)]="homeDetails.building">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['building'].errors?.required">
                   * building is required
@@ -63,7 +72,7 @@
               <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['content'].invalid 
                 && (quickQuoteForm.controls['content'].dirty 
                 || quickQuoteForm.controls['content'].touched)}">
-                <input class="form-control required" [attr.disabled]="homeDetails.cbContent ? null : ''" type="text"
+                <input class="form-control required" [attr.disabled]="homeDetails.cbContent ? null : ''" type="number"
                   id="content" formControlName="content" [(ngModel)]="homeDetails.content">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['content'].errors?.required">
                   * content is required
@@ -89,7 +98,7 @@
                 || quickQuoteForm.controls['improvements'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbImprovements ? null : ''"
-                  type="text" id="improvements" formControlName="improvements" [(ngModel)]="homeDetails.improvements">
+                  type="number" id="improvements" formControlName="improvements" [(ngModel)]="homeDetails.improvements">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['improvements'].errors?.required">
                   * improvements is required
                 </p>
@@ -110,7 +119,7 @@
                 || quickQuoteForm.controls['relatedBuild'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbRelatedBuild ? null : ''"
-                  type="text" id="relatedBuild" formControlName="relatedBuild" [(ngModel)]="homeDetails.relatedBuild">
+                  type="number" id="relatedBuild" formControlName="relatedBuild" [(ngModel)]="homeDetails.relatedBuild">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['relatedBuild'].errors?.required">
                   * related build is required
                 </p>
@@ -131,7 +140,7 @@
                 || quickQuoteForm.controls['relatedContent'].touched)}">
                 <input class="form-control required"
                   [attr.disabled]="(homeDetails.cbBuilding || homeDetails.cbContent) && homeDetails.cbRelatedContent ? null : ''"
-                  type="text" id="relatedContent" formControlName="relatedContent"
+                  type="number" id="relatedContent" formControlName="relatedContent"
                   [(ngModel)]="homeDetails.relatedContent">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['relatedContent'].errors?.required">
                   * related content is required
@@ -142,9 +151,20 @@
           </div>
           <!-- .row -->
 
+          <div id="quickQouteDetails" class="alert alert-warning">
+            <p><strong>Note:</strong> Sum Insured should be higher than 999,999 or lower than 30,000,001. Currently,
+              your sum insured is
+              <strong>
+                {{homeDetails.building--homeDetails.content--homeDetails.improvements--homeDetails.relatedBuild--homeDetails.relatedContent  | currency:'PHP': 'symbol-narrow'}}</strong>
+            </p>
+          </div>
+
           <div class="btn-group" role="group">
-            <button [disabled]="quickQuoteForm.pristine || quickQuoteForm.invalid" type="button" class="btn btn-primary"
-              (click)="quickQuote(homeDetails)">Generate</button>
+            <button
+              [disabled]="quickQuoteForm.pristine || quickQuoteForm.invalid ||
+            homeDetails.building--homeDetails.content--homeDetails.improvements--homeDetails.relatedBuild--homeDetails.relatedContent < 1000000 ||
+            homeDetails.building--homeDetails.content--homeDetails.improvements--homeDetails.relatedBuild--homeDetails.relatedContent > 30000000"
+              type="button" class="btn btn-primary" (click)="quickQuote(homeDetails)">Generate</button>
           </div>
           <!-- .btn-group -->
 
@@ -158,10 +178,8 @@
   </div>
   <!-- .col-xl-12 -->
 
-
-  <div class="col-xl-12">
-    <!-- <div *ngIf="showProductComparison"> -->
-    <div class="product-comparison">
+  <div class="col-xl-12" id="productComparison">
+    <div class="product-comparison" *ngIf="showProductComparison">
       <div class="card shadow mb-3">
         <div class="card-body">
           <div class="row">
@@ -172,31 +190,31 @@
               <div class="flexitable">
                 <table mat-table [dataSource]="annualData" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Payment Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>Payment</th>
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="compre">
+                  <!-- Fire Column -->
+                  <ng-container matColumnDef="fire">
                     <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.fire | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="ctpl">
+                  <!-- Earth Column -->
+                  <ng-container matColumnDef="earth">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.earth | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
-                  <ng-container matColumnDef="autoCompre">
+                  <!-- Water Column -->
+                  <ng-container matColumnDef="water">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.water | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -224,7 +242,7 @@
 
                 <table mat-table [dataSource]="plan30Data" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Label Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>
                       <h6>PLAN 30</h6>
@@ -232,25 +250,25 @@
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="compre">
+                  <!-- Fire Column -->
+                  <ng-container matColumnDef="fire">
                     <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.fire | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="ctpl">
+                  <!-- Earth Column -->
+                  <ng-container matColumnDef="earth">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.earth | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
-                  <ng-container matColumnDef="autoCompre">
+                  <!-- Water Column -->
+                  <ng-container matColumnDef="water">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.water | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -266,7 +284,7 @@
 
                 <table mat-table [dataSource]="plan60Data" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Label Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>
                       <h6>PLAN 60</h6>
@@ -274,25 +292,25 @@
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="compre">
+                  <!-- Fire Column -->
+                  <ng-container matColumnDef="fire">
                     <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.fire | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="ctpl">
+                  <!-- Earth Column -->
+                  <ng-container matColumnDef="earth">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.earth | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
-                  <ng-container matColumnDef="autoCompre">
+                  <!-- Water Column -->
+                  <ng-container matColumnDef="water">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.water | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -307,7 +325,7 @@
               <div class="flexitable">
                 <table mat-table [dataSource]="plan90Data" matSort class="mat-elevation-z8">
 
-                  <!-- Position Column -->
+                  <!-- Label Column -->
                   <ng-container matColumnDef="label">
                     <th mat-header-cell *matHeaderCellDef>
                       <h6>PLAN 90</h6>
@@ -315,25 +333,25 @@
                     <td mat-cell *matCellDef="let element"> {{element.label}} </td>
                   </ng-container>
 
-                  <!-- Name Column -->
-                  <ng-container matColumnDef="compre">
+                  <!-- Fire Column -->
+                  <ng-container matColumnDef="fire">
                     <th mat-header-cell *matHeaderCellDef class="amount">Fire</th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.compre == 0 ? 'n/a' : element.compre | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.fire | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Weight Column -->
-                  <ng-container matColumnDef="ctpl">
+                  <!-- Earth Column -->
+                  <ng-container matColumnDef="earth">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Earth </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.ctpl == 0 ? 'n/a' : element.ctpl | currency:'PHP': 'symbol-narrow'}}</td>
+                      {{element.earth | currency:'PHP': 'symbol-narrow'}}</td>
                   </ng-container>
 
-                  <!-- Symbol Column -->
-                  <ng-container matColumnDef="autoCompre">
+                  <!-- Water Column -->
+                  <ng-container matColumnDef="water">
                     <th mat-header-cell *matHeaderCellDef class="amount"> Water </th>
                     <td mat-cell *matCellDef="let element" class="amount">
-                      {{element.autoCompre | currency:'PHP': 'symbol-narrow' }} </td>
+                      {{element.water | currency:'PHP': 'symbol-narrow' }} </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -346,8 +364,60 @@
           </div>
         </div>
       </div>
+      <!-- .card -->
+
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <img class="product-img-banner" src="./assets/images/product-coverage.png" alt="product-coverage" />
+            </div>
+            <div class="col-lg-12">
+              <div class="flexitable">
+                <table mat-table [dataSource]="coveragelist" matSort class="mat-elevation-z8">
+
+                  <!-- Payment Column -->
+                  <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>Payment</th>
+                    <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                  </ng-container>
+
+                  <!-- Fire Column -->
+                  <ng-container matColumnDef="fire">
+                    <th mat-header-cell *matHeaderCellDef>Fire</th>
+                    <td mat-cell *matCellDef="let element" [innerHTML]="element.fire"></td>
+                  </ng-container>
+
+                  <!-- Earth Column -->
+                  <ng-container matColumnDef="earth">
+                    <th mat-header-cell *matHeaderCellDef>Earth</th>
+                    <td mat-cell *matCellDef="let element" [innerHTML]="element.earth"></td>
+                  </ng-container>
+
+                  <!-- Water Column -->
+                  <ng-container matColumnDef="water">
+                    <th mat-header-cell *matHeaderCellDef>Water </th>
+                    <td mat-cell *matCellDef="let element" [innerHTML]="element.water"></td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+              </div>
+            </div>
+            <!-- .col-xl-12 -->
+          </div>
+          <!-- .row -->
+        </div>
+        <!-- .card-body -->
+      </div>
+      <!-- .card  -->
+
     </div>
-    <!-- .showProductComparison -->
+    <!-- .product-comparison -->
+  </div>
+  <!-- .col-xl-12 -->
 
 </div>
 <!-- #quickQuotationHome -->

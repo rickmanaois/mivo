@@ -1,13 +1,12 @@
 export class QQAccident {
-  subline: string;
+  subline: number;
   occupationalClass: string;
   disablementValue: number;
-  cbPrimaryAge: boolean;
-  primaryInsuredAge: string;
+  primaryInsuredAge: number;
   cbSpouseAge: boolean;
-  spouseAge: string;
-  cbChildAge: boolean;
-  childAge: string;
+  spouseAge: number;
+  cbChildNumber: boolean;
+  childNumber: number;
 
   constructor() {}
 }

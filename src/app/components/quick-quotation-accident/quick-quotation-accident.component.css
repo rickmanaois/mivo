@@ -3,3 +3,8 @@
 .acci-hcbi {
   width: 100%;
 }
+
+.mat-row:hover {
+  background: azure;
+  cursor: pointer;
+}

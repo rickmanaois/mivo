@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-// import { Globals } from '../../utils/global';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this.loadScripts();
@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   loadScripts() {
     const dynamicScripts = [
-     './assets/js/chart.js'
+      './assets/js/chart.js'
     ];
     for (let i = 0; i < dynamicScripts.length; i++) {
       const node = document.createElement('script');

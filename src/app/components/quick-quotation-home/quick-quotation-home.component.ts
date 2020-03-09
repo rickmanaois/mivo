@@ -11,22 +11,30 @@ import {
   Validators
 } from '@angular/forms';
 import {
-  QQHome
-} from '../../objects/QQHome';
+  BsModalService,
+  BsModalRef
+} from 'ngx-bootstrap/modal';
 import {
   Utility
 } from '../../utils/utility';
-import { HomeListObject } from 'src/app/objects/LOV/homeList';
+import {
+  QQHome
+} from '../../objects/QQHome';
+import {
+  HomeListObject
+} from 'src/app/objects/LOV/homeList';
+import {
+  QuickQuoteService
+} from '../../services/quickqoute.service'
+import {
+  HomeLOVServices
+} from '../../services/lov/home.service'
 
 export interface QuickQuoteResultDTO {
   label: string;
-  compre: string;
-  ctpl: string;
-  autoCompre: string;
-  autoComprePlus: string;
-  autoLiabilityRegular: string;
-  autoLiabilitySelect: string;
-  autoSelect: string;
+  fire: string;
+  earth: string;
+  water: string;
 }
 
 @Component({
@@ -34,24 +42,13 @@ export interface QuickQuoteResultDTO {
   templateUrl: './quick-quotation-home.component.html',
   styleUrls: ['./quick-quotation-home.component.css']
 })
+
 export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
   @Input() homeDetails = new QQHome();
-  option: string = '';
+  LOV = new HomeListObject();
   quickQuoteForm: FormGroup;
 
-  displayedColumns: string[] = ['label', 'compre', 'ctpl', 'autoCompre'];
-
-  LOV = new HomeListObject();
-
-  constructor(
-    private fb: FormBuilder,
-    // private qq: QuickQuoteService,
-    // private lov: LovService,
-    private changeDetector: ChangeDetectorRef
-  ) {
-    this.createQuickQuoteForm();
-    this.setValidations();
-  }
+  displayedColumns: string[] = ['label', 'fire', 'earth', 'water'];
 
   annualData: Array < QuickQuoteResultDTO > = [];
   plan30Data: Array < QuickQuoteResultDTO > = [];
@@ -59,12 +56,36 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
   plan90Data: Array < QuickQuoteResultDTO > = [];
   coveragelist: Array < QuickQuoteResultDTO > = [];
 
+  //flag to display product comparison
+  showProductComparison: boolean = false;
+  //modal reference
+  modalRef: BsModalRef;
+
+  constructor(
+    private fb: FormBuilder,
+    private homelov: HomeLOVServices,
+    private changeDetector: ChangeDetectorRef,
+    private qq: QuickQuoteService,
+    private modalService: BsModalService
+  ) {
+    this.createQuickQuoteForm();
+    this.setValidations();
+  }
+
   ngAfterViewChecked() {
     this.changeDetector.detectChanges();
   }
 
   ngOnInit() {
-    this.getSubline();
+    var _this = this;
+    this.homelov.getHomeBusinessLine().then(res => {
+      res.forEach(businessLine => {
+        //display Residential only
+        if (businessLine.COD_RAMO == "200" && businessLine.NOM_RAMO == "RESIDENTIAL") {
+          _this.LOV.sublineLOV = [businessLine];
+        }
+      });
+    });
   }
 
   createQuickQuoteForm() {
@@ -148,15 +169,192 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  getSubline() {
-    this.LOV.sublineLOV = [{
-      value: "test",
-      name: "test"
-    }];
+  createObj(name: String, value: String, installment: String, product: number) {
+    return {
+      'name': name,
+      'value': value,
+      'installment': installment,
+      'product': product
+    };
+  }
+
+  createQuickQuoteData(quickQuoteDetails: any[], products: any[], productList: any[]) {
+    this.annualData = [];
+    this.plan30Data = [];
+    this.plan60Data = [];
+    this.plan90Data = [];
+    var annual = [];
+    var plan30 = [];
+    var plan60 = [];
+    var plan90 = [];
+    productList.forEach(a => {
+      quickQuoteDetails.forEach(b => {
+        products.forEach(c => {
+          if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "1" && b.numSimulacion === c.numSimulacion) {
+            annual.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 1));
+          } else if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "30" && b.numSimulacion === c.numSimulacion) {
+            if (b.numCuota === "1") {
+              plan30.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 30));
+            } else if (b.numCuota === "2") {
+              plan30.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 30));
+            }
+          } else if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "60" && b.numSimulacion === c.numSimulacion) {
+            if (b.numCuota === "1") {
+              plan60.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 60));
+            } else if (b.numCuota === "2") {
+              plan60.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 60));
+            } else if (b.numCuota === "3") {
+              plan60.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 60));
+            }
+          } else if (a.COD_FRACC_PAGO === b.codFraccPago && a.COD_FRACC_PAGO === "90" && b.numSimulacion === c.numSimulacion) {
+            if (b.numCuota === "1") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            } else if (b.numCuota === "2") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            } else if (b.numCuota === "3") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            } else if (b.numCuota === "4") {
+              plan90.push(this.createObj(c.numSimulacion, b.impRecibo, b.numCuota, 90));
+            }
+          }
+        });
+      });
+    });
+
+    this.annualData.push(this.createQQResultDTO(annual, '1', true));
+    this.annualData.push(this.getInstallmentTotal(plan30));
+
+    this.plan30Data.push(this.createQQResultDTO(plan30, '1'));
+    this.plan30Data.push(this.createQQResultDTO(plan30, '2'));
+
+    this.plan60Data.push(this.createQQResultDTO(plan60, '1'));
+    this.plan60Data.push(this.createQQResultDTO(plan60, '2'));
+    this.plan60Data.push(this.createQQResultDTO(plan60, '3'));
+
+    this.plan90Data.push(this.createQQResultDTO(plan90, '1'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '2'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '3'));
+    this.plan90Data.push(this.createQQResultDTO(plan90, '4'));
+  }
+
+  createQuickQuoteCoverage(coverage: any[]) {
+    var coverages = [];
+
+    coverage.forEach(cov => {
+      var coverageName = cov.nomCob;
+      var coverageCode = cov.codCob;
+      var product = cov.numSimulacion;
+      var isIncluded = cov.mcaOligatorio;
+
+      var icon = '';
+      if (isIncluded == "S") {
+        icon = "<i class='far fa-check-circle'></i>"
+      } else if (isIncluded == "N") {
+        icon = "<i class='far fa-times-circle'></i>";
+      }
+
+      if (!coverages.includes(coverageName) && (coverageCode <= '2110' && coverageCode >= '2101')) {
+        coverages.push(coverageName);
+        var obj = {} as QuickQuoteResultDTO;
+        obj.label = coverageName;
+        obj.fire = "<i class='far fa-times-circle'></i>";
+        obj.earth = "<i class='far fa-times-circle'></i>";
+        obj.water = "<i class='far fa-times-circle'></i>";
+        this.coveragelist.push(obj);
+      }
+
+      this.coveragelist.forEach(c => {
+        if (c.label == coverageName) {
+          if (product == 1) {
+            c.fire = icon;
+          } else if (product == 2) {
+            c.earth = icon;
+          } else if (product == 3) {
+            c.water = icon;
+          }
+        }
+      });
+    });
+  }
+
+  setTotalValue(product: any, value: any) {
+    if (product === undefined) {
+      return value;
+    } else {
+      var x = parseFloat(product);
+      var y = parseFloat(value);
+      return (x + y).toString();
+    }
+  }
+
+  getInstallmentTotal(arr: any[]) {
+    var obj = {} as QuickQuoteResultDTO;
+    obj.label = "Installment";
+    arr.forEach((a: any) => {
+      var product = a["name"];
+      var value = a["value"];
+      if (product == 1) {
+        obj.fire = this.setTotalValue(obj.fire, value);
+      } else if (product == 2) {
+        obj.earth = this.setTotalValue(obj.earth, value);
+      } else if (product == 3) {
+        obj.water = this.setTotalValue(obj.water, value);
+      }
+    });
+    return obj;
+  }
+
+  createQQResultDTO(arr: any[], installment: String, isAnnual ? : boolean) {
+    var obj = {} as QuickQuoteResultDTO;
+
+    if (installment == '1') {
+      obj.label = isAnnual ? 'Annual' : '1st Installment';
+    } else if (installment == '2') {
+      obj.label = '2nd Installment';
+    } else if (installment == '3') {
+      obj.label = '3rd Installment';
+    } else if (installment == '4') {
+      obj.label = '4th Installment';
+    }
+
+    arr.forEach((a: any) => {
+      var price = a["value"];
+      var product = a["name"];
+      if (a["installment"] == installment) {
+        if (product == 1) {
+          obj.fire = price;
+        } else if (product == 2) {
+          obj.earth = price;
+        } else if (product == 3) {
+          obj.water = price;
+        }
+      }
+    });
+    return obj;
   }
 
   quickQuote(homeDetails: QQHome) {
-    console.log(homeDetails);
+    this.qq.quickQuoteHome(homeDetails).then(res => {
+      if (res.status) {
+        var quickQuoteDetails = res.obj["quickQuoteDetails"];
+        var productList = res.obj["productList"];
+        var products = res.obj["products"];
+        var coverage = res.obj["coverage"];
+
+        // generates quick quote home details
+        this.createQuickQuoteData(quickQuoteDetails, productList, products);
+        // generates product coverage
+        this.createQuickQuoteCoverage(coverage);
+        // displaying product comparison
+        this.showProductComparison = true;
+        setTimeout(() => {
+          var el = document.getElementById('productComparison');
+          Utility.scroll(el);
+        });
+      } else {
+        this.modalRef = Utility.showError(this.modalService, res.message);
+      }
+    });
   }
 
 }

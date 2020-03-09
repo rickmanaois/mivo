@@ -10,10 +10,17 @@
   <div class="col-xl-12">
     <div class="card shadow">
       <div class="card-body">
-        <div class="clearfix"></div>
+
+        <div id="quickQouteDetails" class="alert alert-info">
+          <p><strong>Important Reminder:</strong> All the amounts shown on the product comparison table are only
+            estimates and must not be taken as the actual premiums of the products.
+          </p>
+        </div>
+        <!-- #quickQouteDetails -->
+        
         <form [formGroup]="quickQuoteForm">
           <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-4 col-md-4 col-sm-6">
               <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['subline'].invalid 
                   && (quickQuoteForm.controls['subline'].dirty 
                   || quickQuoteForm.controls['subline'].touched)}">
@@ -21,7 +28,8 @@
                 <select class="custom-select mr-sm-2 required" formControlName="subline"
                   [(ngModel)]="accidentDetails.subline">
                   <option selected></option>
-                  <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.value">{{ subline.name }}</option>
+                  <option *ngFor="let subline of LOV.sublineLOV" [ngValue]="subline.COD_RAMO">{{ subline.NOM_RAMO }}
+                  </option>
                 </select>
                 <p class="form-error" *ngIf="quickQuoteForm.controls['subline'].errors?.required">
                   * subline is required
@@ -49,8 +57,8 @@
                         [(ngModel)]="accidentDetails.occupationalClass">
                         <option selected></option>
                         <option *ngFor="let occupationalClass of LOV.occupationalClassLOV"
-                          [ngValue]="occupationalClass.name">
-                          {{ occupationalClass.value }}</option>
+                          [ngValue]="occupationalClass.COD_VALOR">
+                          CLASS {{ occupationalClass.COD_VALOR }} - {{ occupationalClass.NOM_VALOR }}</option>
                       </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['occupationalClass'].errors?.required">
                         * occupational class is required
@@ -63,13 +71,8 @@
                         && (quickQuoteForm.controls['disablementValue'].dirty 
                         || quickQuoteForm.controls['disablementValue'].touched)}">
                       <label for="disablementValue">Accidental Death and Disablement Value</label>
-                      <select class="custom-select mr-sm-2 required" formControlName="disablementValue"
+                      <input type="number" formControlName="disablementValue" class="form-control required"
                         [(ngModel)]="accidentDetails.disablementValue">
-                        <option selected></option>
-                        <option *ngFor="let disablementValue of LOV.disablementValueLOV"
-                          [ngValue]="disablementValue.name">
-                          {{ disablementValue.value }}</option>
-                      </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['disablementValue'].errors?.required">
                         * accidental death and disablement value is required
                       </p>
@@ -93,9 +96,8 @@
                       <select class="custom-select mr-sm-2 required" formControlName="primaryInsuredAge"
                         [(ngModel)]="accidentDetails.primaryInsuredAge">
                         <option selected></option>
-                        <option *ngFor="let primaryInsuredAge of LOV.primaryInsuredAgeLOV"
-                          [ngValue]="primaryInsuredAge.name">
-                          {{ primaryInsuredAge.value }}</option>
+                        <option *ngFor="let primaryInsuredAge of LOV.ageLOV" [ngValue]="primaryInsuredAge.value">
+                          {{ primaryInsuredAge.name }}</option>
                       </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['primaryInsuredAge'].errors?.required">
                         * primary insured is required
@@ -118,8 +120,8 @@
                         [attr.disabled]="accidentDetails.cbSpouseAge ? null : ''" formControlName="spouseAge"
                         [(ngModel)]="accidentDetails.spouseAge">
                         <option selected></option>
-                        <option *ngFor="let spouseAge of LOV.spouseAgeLOV" [ngValue]="spouseAge.name">
-                          {{ spouseAge.value }}
+                        <option *ngFor="let spouseAge of LOV.ageLOV" [ngValue]="spouseAge.value">
+                          {{ spouseAge.name }}
                         </option>
                       </select>
                       <p class="form-error" *ngIf="quickQuoteForm.controls['spouseAge'].errors?.required">
@@ -130,23 +132,23 @@
 
                   <div class="col-md-4 col-sm-6">
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="cbChildAge" formControlName="cbChildAge"
-                        [(ngModel)]="accidentDetails.cbChildAge">
-                      <label class="form-check-label" for="cbChildAge">
+                      <input class="form-check-input" type="checkbox" id="cbChildNumber" formControlName="cbChildNumber"
+                        [(ngModel)]="accidentDetails.cbChildNumber">
+                      <label class="form-check-label" for="cbChildNumber">
                         Child/Children
                       </label>
                     </div>
-                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['childAge'].invalid 
-                        && (quickQuoteForm.controls['childAge'].dirty 
-                        || quickQuoteForm.controls['childAge'].touched)}">
+                    <div class="form-group" [ngClass]="{'input-error': quickQuoteForm.controls['childNumber'].invalid 
+                        && (quickQuoteForm.controls['childNumber'].dirty 
+                        || quickQuoteForm.controls['childNumber'].touched)}">
                       <select class="custom-select mr-sm-2 required"
-                        [attr.disabled]="accidentDetails.cbChildAge ? null : ''" formControlName="childAge"
-                        [(ngModel)]="accidentDetails.childAge">
+                        [attr.disabled]="accidentDetails.cbChildNumber ? null : ''" formControlName="childNumber"
+                        [(ngModel)]="accidentDetails.childNumber">
                         <option selected></option>
-                        <option *ngFor="let childAge of LOV.childAgeLOV" [ngValue]="childAge.name">{{ childAge.value }}
+                        <option *ngFor="let childNumber of LOV.childNumberLOV" [ngValue]="childNumber.name">{{ childNumber.value }}
                         </option>
                       </select>
-                      <p class="form-error" *ngIf="quickQuoteForm.controls['childAge'].errors?.required">
+                      <p class="form-error" *ngIf="quickQuoteForm.controls['childNumber'].errors?.required">
                         * child/children is required
                       </p>
                     </div>
@@ -175,5 +177,92 @@
     <!-- .card.shadow -->
   </div>
   <!-- .col-xl-12 -->
+
+  <div class="col-xl-12" id="productComparison">
+    <div class="product-comparison" *ngIf="showProductComparison">
+      <div class="card shadow mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <img class="product-img-banner" src="./assets/images/product-accident.png" alt="product-accident" />
+            </div>
+            <div class="col-lg-12">
+              <div class="flexitable">
+                <table mat-table [dataSource]="accidentData" matSort class="mat-elevation-z8">
+
+                  <!-- Packages Column -->
+                  <ng-container matColumnDef="label">
+                    <th mat-header-cell *matHeaderCellDef>Packages</th>
+                    <td mat-cell *matCellDef="let element"> {{element.label}} </td>
+                  </ng-container>
+
+                  <!-- Premium Column -->
+                  <ng-container matColumnDef="premium">
+                    <th mat-header-cell *matHeaderCellDef class="amount">Premium</th>
+                    <td mat-cell *matCellDef="let element" class="amount">
+                      {{element.premium | currency:'PHP': 'symbol-narrow'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="generateCoverage(row)"
+                    matTooltip="click to show product coverage"></tr>
+
+                </table>
+              </div>
+            </div>
+            <!-- .col-xl-12 -->
+          </div>
+          <!-- .row -->
+        </div>
+        <!-- .card-body -->
+      </div>
+      <!-- .card  -->
+
+      <div id="productCoverage">
+        <div class="card shadow mb-3" *ngIf="showProductCoverage">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <img class="product-img-banner" src="./assets/images/product-coverage.png" alt="product-coverage" />
+              </div>
+              <div class="col-lg-12">
+                <div class="flexitable">
+                  <table mat-table [dataSource]="coverageData" matSort class="mat-elevation-z8">
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="label">
+                      <th mat-header-cell *matHeaderCellDef>Limit</th>
+                      <td mat-cell *matCellDef="let element" [innerHTML]="element.label"></td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="premium">
+                      <th mat-header-cell *matHeaderCellDef class="amount">Premium</th>
+                      <td mat-cell *matCellDef="let element" class="amount">
+                        {{element.isHeader ? '' : element.premium | currency:'PHP': 'symbol-narrow'}}
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                  </table>
+                </div>
+              </div>
+              <!-- .col-xl-12 -->
+            </div>
+            <!-- .row -->
+          </div>
+          <!-- .card-body -->
+        </div>
+        <!-- .card  -->
+      </div>
+      <!-- #productCoverage -->
+
+    </div>
+    <!-- .product-comparison -->
+  </div>
+  <!-- .col-xl-12 -->
+
 </div>
 <!-- #quickQuotationAccident -->

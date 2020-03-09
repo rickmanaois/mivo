@@ -25,18 +25,30 @@ import {
   BsDatepickerModule
 } from 'ngx-bootstrap/datepicker';
 import {
+  ModalModule
+} from 'ngx-bootstrap/modal';
+import {
   NgMultiSelectDropDownModule
 } from 'ng-multiselect-dropdown';
-import { NgSelectModule } from '@ng-select/ng-select';
+import {
+  NgSelectModule
+} from '@ng-select/ng-select';
 import {
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatTooltipModule
 } from '@angular/material';
 import {
   RouterModule,
   Routes
 } from '@angular/router';
+import {
+  TranslateModule
+} from '@ngx-translate/core';
+import {
+  NgHttpLoaderModule
+} from 'ng-http-loader';
 import {
   ServiceModule
 } from './services/service.module';
@@ -107,7 +119,9 @@ import {
 import {
   QuickQuotationAccidentComponent
 } from './components/quick-quotation-accident/quick-quotation-accident.component';
-import { NgHttpLoaderModule } from 'ng-http-loader';
+import {
+  ModalComponent
+} from './components/modal/modal.component';
 
 const appRoutes: Routes = [{
     path: 'login',
@@ -146,7 +160,11 @@ const appRoutes: Routes = [{
     QuickQuotationCarComponent,
     QuickQuotationHomeComponent,
     QuickQuotationTravelComponent,
-    QuickQuotationAccidentComponent
+    QuickQuotationAccidentComponent,
+    ModalComponent
+  ],
+  entryComponents: [
+    ModalComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -158,11 +176,14 @@ const appRoutes: Routes = [{
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTooltipModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     ServiceModule,
     NgSelectModule,
+    TranslateModule.forRoot(),
+    ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
     NgHttpLoaderModule.forRoot()
