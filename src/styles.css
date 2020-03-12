@@ -1,5 +1,5 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+@import url('//fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
 html,
 body {
@@ -10,7 +10,7 @@ body {
 body {
   margin: 0;
   /* font-family: Roboto, "Helvetica Neue", sans-serif; */
-  font-family: 'Source Sans Pro' !important;
+  font-family: 'Source Sans Pro', Roboto, "Helvetica Neue", sans-serif !important;
 }
 
 body, .btn {
