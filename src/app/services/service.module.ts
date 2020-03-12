@@ -18,6 +18,9 @@ import {
   LovService
 } from './lov.service';
 import {
+  GroupPolicyLOVServices
+} from './lov/group-policy.service';
+import {
   CarLOVServices
 } from './lov/car.service';
 import {
@@ -32,8 +35,10 @@ import {
 
 import {
   QuickQuoteService
-}
-from './quickqoute.service';
+} from './quickqoute.service';
+import {
+  CarQuoteServices
+} from './car-quote.service';
 
 @NgModule({
   imports: [
@@ -46,11 +51,13 @@ from './quickqoute.service';
     TranslateService,
     AppService,
     QuickQuoteService,
+    GroupPolicyLOVServices,
     CarLOVServices,
     TravelLOVServices,
     HomeLOVServices,
     AccidentLOVServices,
     LovService,
+    CarQuoteServices,
   ]
 })
 export class ServiceModule {}

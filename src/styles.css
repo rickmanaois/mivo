@@ -1,4 +1,5 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
 html,
 body {
@@ -8,7 +9,12 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+  font-family: 'Source Sans Pro' !important;
+}
+
+body, .btn {
+  font-size: 0.8750em;
 }
 
 .btn-default {
@@ -131,6 +137,11 @@ form .card-header {
 form .card-header.optional {
   background: #fff;
   color: #212529;
+  cursor: pointer;
+}
+
+.dropdown {
+  line-height: unset !important;
 }
 
 .sidebar.toggled {

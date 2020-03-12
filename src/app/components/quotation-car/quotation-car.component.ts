@@ -29,14 +29,17 @@ import {
   Utility
 } from '../../utils/utility';
 import {
-  GroupPolicyLOV as lovUtil
-} from '../../utils/lov/groupPolicy';
-import {
   Validate
 } from '../../validators/validate';
 import {
+  GroupPolicyLOVServices
+} from '../../services/lov/group-policy.service';
+import {
   CarLOVServices
-} from '../../services/lov/car.service'
+} from '../../services/lov/car.service';
+import {
+  CarQuoteServices
+} from '../../services/car-quote.service';
 import {
   CarListObject
 } from 'src/app/objects/LOV/carList';
@@ -62,10 +65,16 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   showQuickQouteDetails: boolean = false;
 
+  showAccessories: boolean = false;
+  showAdditionalInformation: boolean = false;
+  showSubAgent: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private qq: QuickQuoteService,
     private carlov: CarLOVServices,
+    private quote: CarQuoteServices,
+    private gplov: GroupPolicyLOVServices,
     private changeDetector: ChangeDetectorRef
   ) {
     this.createQuoteForm();
@@ -78,37 +87,47 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     var _this = this;
+
     this.carlov.getMakeList().then(res => {
       _this.LOV.makeLOV = res;
     });
 
-    this.getColor();
-    this.getAreaOfUsage();
+    this.carlov.getColor().then(res => {
+      _this.LOV.colorLOV = res;
+    });
 
-    this.getAccessoryList();
+    this.carlov.getClassification().then(res => {
+      _this.LOV.classificationLOV = res;
+    });
 
-    this.GPLOV.groupPolicyLOV = lovUtil.getGroupPolicy();
-    this.GPLOV.contractLOV = lovUtil.getContract();
-    this.GPLOV.subContractLOV = lovUtil.getSubContract();
-    this.GPLOV.commercialStructureLOV = lovUtil.getCommercialStructure();
+    this.carlov.getCoverageArea().then(res => {
+      _this.LOV.coverageAreaLOV = res;
+    });
 
-    this.getPaymentMethod();
-    this.getProductList();
+    this.carlov.getInspectionAssessment().then(res => {
+      _this.LOV.inspectionAssessmentLOV = res;
+    });
 
-    this.getSubagent();
+    this.quote.getSubagents().then(res => {
+      var subAgents = res.obj["subAgents"];
+      subAgents.forEach(subAgent => {
+        subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
+        subAgent.value = subAgent.codDocum;
+      });
+      _this.LOV.subagentLOV = subAgents;
+    });
 
     this.setValue();
   }
 
   setValue() {
-    this.carDetails.color = 'test';
-    this.carDetails.receivedBy = 'MIV01101'
-    this.carDetails.purchaseDate = this.today;
-    this.carDetails.receivedDate = this.today;
-    
-    this.groupPolicy.agentCode = '1101';
-
-    this.carDetails.effectivityDate = this.today;
+    //setting default value
+    this.carDetails.color = 9999; // undeclared
+    this.carDetails.receivedBy = 'MIV01101'; //TODO
+    this.carDetails.purchaseDate = this.today; // current today
+    this.carDetails.receivedDate = this.today; // current today
+    this.groupPolicy.agentCode = '1101'; //TODO
+    this.groupPolicy.effectivityDate = this.today; // current today
   }
 
   createQuoteForm() {
@@ -145,9 +164,23 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       agentCode: ['', Validators.required],
       cbIsRenewal: [null],
       expiringPolicyNumber: [null],
-      //general information
+
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
+      //additional policy information
+      customerRiskName: [null],
+      seatingCapacity: [null],
+      weight: [null],
+      displacement: [null],
+      classification: [null],
+      coverageArea: [null],
+      assuredsCoinsuranceShare: [null],
+      cbWaivedMinPremium: [null],
+      cbPrepaidPremium: [null],
+      cbGlassEtchingEntitled: [null],
+      glassEtchingAvailmentDate: [null],
+      existingDamages: [null],
+      inspectionAssessment: [null],
       //product data
       paymentMethod: ['', Validators.required],
       product: ['', Validators.required],
@@ -191,7 +224,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
 
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
-    Validate.setEffecivityDateValidations(this.quoteForm, this.carDetails, this.expiryDateMinDate);
+    Validate.setEffecivityDateValidations(this.quoteForm, this.groupPolicy, this.expiryDateMinDate);
   }
 
   accessory(): FormArray {
@@ -200,7 +233,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   newAccessory(): FormGroup {
     return this.fb.group({
-      accessoryList: ['', Validators.required],
+      accessory: ['', Validators.required],
       accessoryType: ['', Validators.required],
       price: ['', Validators.required],
       description: ['', Validators.required]
@@ -208,11 +241,36 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   addAccessory() {
+    this.disableAccessory();
     this.accessory().push(this.newAccessory());
   }
 
   removeAccessory(index: number) {
     this.accessory().removeAt(index);
+    this.disableAccessory();
+  }
+
+  disableAccessory() {
+    var accessories = this.quoteForm.get('accessories').value;
+    if (accessories.length > 0) {
+      var temp = [];
+      accessories.forEach(accessory => {
+        temp.push(accessory.accessory);
+      });
+      this.LOV.accessoryListLOV.forEach(accessory => {
+        accessory.disabled = temp.indexOf(accessory.COD_ACCESORIO) !== -1;
+      });
+    }
+  }
+
+  removeAccessories() {
+    // removing all accessories
+    var accessories = this.quoteForm.get('accessories').value;
+    if (accessories.length > 0) {
+      // loop until all accessories removed
+      this.accessory().removeAt(0);
+      this.removeAccessories();
+    }
   }
 
   clearRiskDetails(level: number, type ? : boolean) {
@@ -240,6 +298,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       this.quoteForm.get('typeOfUse').reset();
     }
     if (level <= 5) { //if user changes car sub model or type of use
+      this.removeAccessories();
       if (level == 5) {
         if (type) {
           //if user changes type of use
@@ -290,7 +349,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
 
-    if (this.carDetails.vehicleType != '') {
+    if (this.carDetails.vehicleType > 0) {
       var _this = this;
       this.carlov.getModelYearList(this.carDetails).then(res => {
         _this.LOV.modelYearLOV = res;
@@ -362,24 +421,56 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  validatePlateNumberFormat() {
-    this.qq.validatePlateNumberFormat(this.carDetails).then(res => {
-      alert(res.obj["valid"]);
+  sublineOnchange(event: any) {
+    var options = event.target.options;
+    if (options.length) {
+      //effectivity date is based on selected subline
+      var selectedIndex = event.target.options.selectedIndex;
+      var effectivityDate = event.target.options[selectedIndex].dataset.sublinedate;
+
+      //effectivity date change format
+      var d = moment(effectivityDate, 'DDMMYYYY').format('MMDDYYYY');
+      this.carDetails.sublineEffectivityDate = d.toString();
+    }
+
+    const _this = this;
+    this.carlov.getAreaOfUsage(this.carDetails).then(res => {
+      _this.LOV.areaOfUsageLOV = res;
+    });
+    this.gplov.getCommercialStructure().then(res => {
+      _this.GPLOV.commercialStructureLOV = res;
+    });
+    this.gplov.getGroupPolicy(this.carDetails.subline).then(res => {
+      _this.GPLOV.groupPolicyLOV = res;
+    });
+
+    this.carlov.getAccessoryList(this.carDetails).then(res => {
+      _this.LOV.accessoryListLOV = res;
+    });
+    this.removeAccessories();
+
+    this.carlov.getPaymentPlan(this.carDetails).then(res => {
+      _this.LOV.paymentMethodLOV = res;
+    });
+    this.carlov.getProduct(this.carDetails).then(res => {
+      _this.LOV.productListLOV = res;
     });
   }
 
-  getColor() {
-    this.LOV.colorLOV = [{
-      value: "test",
-      name: "test"
-    }];
+  groupPolicyOnChange() {
+    const _this = this;
+    _this.GPLOV.contractLOV = []
+    this.gplov.getContract(this.carDetails.subline, this.groupPolicy).then(res => {
+      _this.GPLOV.contractLOV = res;
+    });
   }
 
-  getAreaOfUsage() {
-    this.LOV.areaOfUsageLOV = [{
-      value: "test",
-      name: "test"
-    }];
+  contractOnChange() {
+    const _this = this;
+    _this.GPLOV.subContractLOV = []
+    this.gplov.getSubContract(this.carDetails.subline, this.groupPolicy).then(res => {
+      _this.GPLOV.subContractLOV = res;
+    });
   }
 
   getAccessoryList() {
@@ -388,47 +479,29 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       name: "test"
     }];
   }
+  
+  accessoryOnchange(event: any, index) {
+    this.disableAccessory();
+    var options = event.target.options;
+    if (options.length) {
+      var selectedIndex = event.target.options.selectedIndex;
+      var price = event.target.options[selectedIndex].dataset.price;
+      var type = event.target.options[selectedIndex].dataset.type;
 
-  getPaymentMethod() {
-    this.LOV.paymentMethodLOV = [{
-      value: 1,
-      name: "test"
-    }];
+      this.accessory().at(index).get('accessoryType').setValue(type == 'A' ? 'Additional' : type == 'B' ? 'Built-In' : 'Free');
+      this.accessory().at(index).get('price').setValue(price);
+    }
   }
 
-  getProductList() {
-    this.LOV.productListLOV = [{
-      value: 1,
-      name: "test"
-    }];
-  }
-
-  getSubagent() {
-    this.LOV.subagentLOV = [{
-        value: 1,
-        name: 'Subagent1'
-      },
-      {
-        value: 2,
-        name: 'Subagent2'
-      },
-      {
-        value: 3,
-        name: 'Subagent3'
-      },
-      {
-        value: 4,
-        name: 'Subagent4'
-      },
-      {
-        value: 5,
-        name: 'Subagent5'
-      }
-    ];
+  test(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
+    console.log('carDetails', carDetails);
+    console.log('groupPolicy', groupPolicy);
   }
 
   issueQuote(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
-    console.log(carDetails, groupPolicy);
+    this.quote.getCoverageByProduct(carDetails).then(res => {
+      console.log('res', res);
+    });
   }
 
 }

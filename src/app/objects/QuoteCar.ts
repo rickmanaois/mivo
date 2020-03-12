@@ -1,16 +1,24 @@
+import {
+  Accessory
+} from './Accessory';
+import {
+  Beneficiary
+} from './Beneficiary';
+
 export class QuoteCar {
   quotationNumber: string;
   //vehicle information
-  make: string;
-  model: string;
-  vehicleType: string;
+  make: number;
+  model: number;
+  vehicleType: number;
   modelYear: string;
-  subModel: string;
-  typeOfUse: string;
-  vehicleValue: string;
-  subline: string;
-  color: string;
-  areaOfUsage: string;
+  subModel: number;
+  typeOfUse: number;
+  vehicleValue: number;
+  subline: number;
+  sublineEffectivityDate: string;
+  color: number;
+  areaOfUsage: number;
   conductionNumber: string;
   plateNumber: string;
   serialNumber: string;
@@ -21,22 +29,40 @@ export class QuoteCar {
   receivedDate: Date;
 
   //accessories
+  accessories: Array < Accessory > = [];
 
   //policy holder information
   clientName: string;
-  
+
   //general information
   effectivityDate: Date;
   expiryDate: Date;
-  paymentMethod: string;
-  productList: string;
   
   //additional policy information
+  customerRiskName: string;
+  seatingCapacity: number;
+  weight: string;
+  displacement: string;
+  classification: number;
+  coverageArea: number;
+  assuredsCoinsuranceShare: string;
+  cbWaivedMinPremium: boolean;
+  cbPrepaidPremium: boolean;
+  cbGlassEtchingEntitled: boolean;
+  glassEtchingAvailmentDate: Date;
+  existingDamages: string;
+  inspectionAssessment: number;
 
-  //subagent
-  subagent: [];
+  //subagent and policy holder
+  beneficiaries: Array < Beneficiary > = [];
 
-  constructor(init?: Partial<QuoteCar>) {
+  //products
+  paymentMethod: number;
+  productList: number;
+
+  subAgent: any[];
+
+  constructor(init ? : Partial < QuoteCar > ) {
     Object.assign(this, init);
   }
 }

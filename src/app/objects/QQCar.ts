@@ -1,11 +1,11 @@
 export class QQCar {
-  make: string;
-  model: string;
-  vehicleType: string;
+  make: number;
+  model: number;
+  vehicleType: number;
   modelYear: string;
-  subModel: string;
-  typeOfUse: string;
-  subline: string;
+  subModel: number;
+  typeOfUse: number;
+  subline: number;
   effectivityDate: string;
   vehicleValue: string;
 

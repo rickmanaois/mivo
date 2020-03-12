@@ -1,11 +1,15 @@
 export class GroupPolicy {
-  groupPolicy: string;
-  contract: string;
-  subContract: string;
-  commercialStructure: string;
+  groupPolicy: number;
+  contract: number;
+  subContract: number;
+  commercialStructure: number;
   agentCode: string;
   cbIsRenewal: boolean;
   expiringPolicyNumber: string;
+
+  effectivityDate: Date;
+  expiryDate: Date;
+  
   constructor() {
   }
 }

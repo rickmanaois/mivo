@@ -40,7 +40,6 @@ export interface QuickQuoteResultDTO {
   autoLiabilityRegular: string;
   autoLiabilitySelect: string;
   autoSelect: string;
-  isNotAvailable: boolean;
 }
 
 @Component({
@@ -446,7 +445,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.make = _carDetails.make;
     this.carDetails.model = _carDetails.model;
 
-    if (this.carDetails.vehicleType != '') {
+    if (this.carDetails.vehicleType > 0) {
       var _this = this;
       this.carlov.getModelYearList(this.carDetails).then(res => {
         _this.LOV.modelYearLOV = res;

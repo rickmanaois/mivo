@@ -12,9 +12,15 @@ export class CarListObject {
   colorLOV: any[];
   areaOfUsageLOV: any[];
   accessoryListLOV: any[];
+  subagentLOV: any[];
+
+  //additional policy information
+  classificationLOV: any[];
+  coverageAreaLOV: any[];
+  inspectionAssessmentLOV: any[];
+
   paymentMethodLOV: any[];
   productListLOV: any[];
-  subagentLOV: any[];
   constructor() {
   }
 }
