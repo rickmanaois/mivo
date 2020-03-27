@@ -37,8 +37,13 @@ import {
   QuickQuoteService
 } from './quickqoute.service';
 import {
+  CarUtilityServices
+} from './car-utility.service';
+import {
   CarQuoteServices
 } from './car-quote.service';
+
+
 
 @NgModule({
   imports: [
@@ -57,6 +62,7 @@ import {
     HomeLOVServices,
     AccidentLOVServices,
     LovService,
+    CarUtilityServices,
     CarQuoteServices,
   ]
 })

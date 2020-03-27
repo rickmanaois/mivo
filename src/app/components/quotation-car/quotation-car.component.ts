@@ -38,6 +38,9 @@ import {
   CarLOVServices
 } from '../../services/lov/car.service';
 import {
+  CarUtilityServices
+} from '../../services/car-utility.service';
+import {
   CarQuoteServices
 } from '../../services/car-quote.service';
 import {
@@ -71,7 +74,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private fb: FormBuilder,
-    private qq: QuickQuoteService,
+    private cu: CarUtilityServices,
     private carlov: CarLOVServices,
     private quote: CarQuoteServices,
     private gplov: GroupPolicyLOVServices,
@@ -108,7 +111,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       _this.LOV.inspectionAssessmentLOV = res;
     });
 
-    this.quote.getSubagents().then(res => {
+    this.cu.getSubagents().then(res => {
       var subAgents = res.obj["subAgents"];
       subAgents.forEach(subAgent => {
         subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
@@ -185,14 +188,14 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       paymentMethod: ['', Validators.required],
       product: ['', Validators.required],
       //subagent
-      subagent: [null],
+      subAgent: [null],
     });
   }
 
   async validateConductionNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
       this.carDetails.conductionNumber = control.value;
-      return this.qq.validateConductionNumberFormat(this.carDetails).then(res => {
+      return this.cu.validateConductionNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidConductionNumber: true
         };
@@ -203,7 +206,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   async validatePlateNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
       this.carDetails.plateNumber = control.value;
-      return this.qq.validatePlateNumberFormat(this.carDetails).then(res => {
+      return this.cu.validatePlateNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidPlateNumber: true
         };
@@ -406,7 +409,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     qqDetails.model = this.carDetails.model;
     qqDetails.subModel = this.carDetails.subModel;
     qqDetails.modelYear = this.carDetails.modelYear;
-    this.qq.getFMV(qqDetails).then(res => {
+    this.cu.getFMV(qqDetails).then(res => {
       _this.carDetails.vehicleValue = res.obj["fmv"];
     });
   }
@@ -416,7 +419,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     var qqDetails = new QQCar;
     qqDetails.vehicleType = this.carDetails.vehicleType;
     qqDetails.typeOfUse = this.carDetails.typeOfUse;
-    this.qq.getSubline(qqDetails).then(res => {
+    this.cu.getSubline(qqDetails).then(res => {
       _this.LOV.sublineLOV = res.obj["list"];
     });
   }

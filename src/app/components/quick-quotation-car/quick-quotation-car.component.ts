@@ -28,6 +28,9 @@ import {
   QuickQuoteService
 } from '../../services/quickqoute.service';
 import {
+  CarUtilityServices
+} from '../../services/car-utility.service';
+import {
   CarLOVServices
 } from '../../services/lov/car.service';
 
@@ -78,6 +81,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private fb: FormBuilder,
+    private cu: CarUtilityServices,
     private qq: QuickQuoteService,
     private carlov: CarLOVServices,
     private changeDetector: ChangeDetectorRef,
@@ -499,14 +503,14 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   getVehicleValue() {
     const _this = this;
-    this.qq.getFMV(this.carDetails).then(res => {
+    this.cu.getFMV(this.carDetails).then(res => {
       _this.carDetails.vehicleValue = res.obj["fmv"];
     });
   }
 
   getSubline() {
     const _this = this;
-    this.qq.getSubline(this.carDetails).then(res => {
+    this.cu.getSubline(this.carDetails).then(res => {
       _this.LOV.sublineLOV = res.obj["list"];
     });
   }
@@ -548,5 +552,4 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
 }

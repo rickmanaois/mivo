@@ -9,4 +9,4 @@ export const TOKEN_NAME = 'access_token';
 export const AUTH_TOKEN = 'http://localhost:8090/oauth/token';
 
 // localhost
-export const API_URL = 'http://localhost:8090/api';
+export const API_URL = 'http://localhost:8080/api';

@@ -768,13 +768,13 @@
               <div class="row">
                 <div class="col-sm-6">
                   <h6>Subagent List</h6>
-                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subagent'].invalid 
-                      && (quoteForm.controls['subagent'].dirty 
-                      || quoteForm.controls['subagent'].touched)}">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['subAgent'].invalid 
+                      && (quoteForm.controls['subAgent'].dirty 
+                      || quoteForm.controls['subAgent'].touched)}">
                     <ng-select [items]="LOV.subagentLOV" bindLabel="name" placeholder="Select Subagent" appendTo="body"
                       formControlName="subAgent" multiple="true" [(ngModel)]="carDetails.subAgent">
                     </ng-select>
-                    <p class="form-error" *ngIf="quoteForm.controls['subagent'].errors?.required">
+                    <p class="form-error" *ngIf="quoteForm.controls['subAgent'].errors?.required">
                       * subagent is required
                     </p>
                   </div>

@@ -31,10 +31,10 @@ export class LovService {
     return this.parseIntArray(await this.app.doWhatever(dto, '/getOptionList').then(objArr => objArr as any[]), param);
   }
 
-  private parseIntArray(arr: any[], param:string) {
+  private parseIntArray(arr: any[], param: string) {
     arr.forEach(a => {
       a[param] = parseInt(a[param]);
     });
     return arr;
-  } 
+  }
 }
