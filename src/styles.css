@@ -33,9 +33,10 @@ body, .btn {
   border-color: #464646;
 }
 
-.bg-gradient-primary {
+.bg-gradient-primary,
+#login .left-container {
   background: #c31f09;
-  background-image: url(/mivo/assets/images/bg.jpg);
+  background-image: url('./assets/images/bg.jpg');
   background-size: cover;
 }
 
@@ -74,7 +75,7 @@ body, .btn {
 
 app-sidenav {
   background: #c31f09;
-  background-image: url('/mivo/assets/images/bg.jpg');
+  background-image: url('./assets/images/bg.jpg');
   background-size: cover;
 }
 

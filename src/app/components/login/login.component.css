@@ -2,12 +2,6 @@
     height: 100%;
 }
 
-#login .left-container {
-    background: #c31f09 ;
-    background-image: url(/mivo/assets/images/bg.jpg);
-    background-size: cover;
-}
-
 #login .left-container img {
     width: 100%;
 }
