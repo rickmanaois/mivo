@@ -122,7 +122,7 @@ export class QuotationHomeComponent implements OnInit, AfterViewChecked {
 
   setValidations() {
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
-    Validate.setEffecivityDateValidations(this.quoteForm, this.homeDetails, this.expiryDateMinDate);
+    // Validate.setEffecivityDateValidations(this.quoteForm, this.homeDetails, this.expiryDateMinDate);
   }
 
   getSubline() {

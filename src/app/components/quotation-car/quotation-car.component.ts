@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  Input,
   AfterViewChecked,
   ChangeDetectorRef
 } from '@angular/core';
@@ -23,14 +22,8 @@ import {
   GroupPolicy
 } from 'src/app/objects/GroupPolicy';
 import {
-  QuickQuoteService
-} from '../../services/quickqoute.service'
-import {
   Utility
 } from '../../utils/utility';
-import {
-  Validate
-} from '../../validators/validate';
 import {
   GroupPolicyLOVServices
 } from '../../services/lov/group-policy.service';
@@ -57,8 +50,8 @@ import { QQCar } from 'src/app/objects/QQCar';
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
-  @Input() carDetails = new QuoteCar();
-  @Input() groupPolicy = new GroupPolicy();
+  carDetails = new QuoteCar();
+  groupPolicy = new GroupPolicy();
   quoteForm: FormGroup;
   today: Date = new Date();
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
@@ -129,8 +122,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.receivedBy = 'MIV01101'; //TODO
     this.carDetails.purchaseDate = this.today; // current today
     this.carDetails.receivedDate = this.today; // current today
-    this.groupPolicy.agentCode = '1101'; //TODO
-    this.groupPolicy.effectivityDate = this.today; // current today
+    this.carDetails.effectivityDate = this.today; // current today
   }
 
   createQuoteForm() {
@@ -160,13 +152,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       //policy holder information
       clientName: ['', Validators.required],
       //group policy
-      groupPolicy: [null],
-      contract: [null],
-      subContract: [null],
-      commercialStructure: ['', Validators.required],
-      agentCode: ['', Validators.required],
-      cbIsRenewal: [null],
-      expiringPolicyNumber: [null],
+      // groupPolicy: [null],
+      // contract: [null],
+      // subContract: [null],
+      // commercialStructure: ['', Validators.required],
+      // agentCode: ['', Validators.required],
+      // cbIsRenewal: [null],
+      // expiringPolicyNumber: [null],
 
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
@@ -225,9 +217,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     plateNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
       Utility.updateValidator(conductionNumber, !Utility.isUndefined(number) ? null : Validators.required);
     });
-
-    Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
-    Validate.setEffecivityDateValidations(this.quoteForm, this.groupPolicy, this.expiryDateMinDate);
   }
 
   accessory(): FormArray {
@@ -440,12 +429,12 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carlov.getAreaOfUsage(this.carDetails).then(res => {
       _this.LOV.areaOfUsageLOV = res;
     });
-    this.gplov.getCommercialStructure().then(res => {
-      _this.GPLOV.commercialStructureLOV = res;
-    });
-    this.gplov.getGroupPolicy(this.carDetails.subline).then(res => {
-      _this.GPLOV.groupPolicyLOV = res;
-    });
+    // this.gplov.getCommercialStructure().then(res => {
+    //   _this.GPLOV.commercialStructureLOV = res;
+    // });
+    // this.gplov.getGroupPolicy(this.carDetails.subline).then(res => {
+    //   _this.GPLOV.groupPolicyLOV = res;
+    // });
 
     this.carlov.getAccessoryList(this.carDetails).then(res => {
       _this.LOV.accessoryListLOV = res;
@@ -460,27 +449,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  groupPolicyOnChange() {
-    const _this = this;
-    _this.GPLOV.contractLOV = []
-    this.gplov.getContract(this.carDetails.subline, this.groupPolicy).then(res => {
-      _this.GPLOV.contractLOV = res;
-    });
-  }
-
-  contractOnChange() {
-    const _this = this;
-    _this.GPLOV.subContractLOV = []
-    this.gplov.getSubContract(this.carDetails.subline, this.groupPolicy).then(res => {
-      _this.GPLOV.subContractLOV = res;
-    });
-  }
-
-  getAccessoryList() {
-    this.LOV.accessoryListLOV = [{
-      value: "1",
-      name: "test"
-    }];
+  effectivityDateOnChange() {
+    this.carDetails.expiryDate = moment(this.carDetails.effectivityDate).add(1, 'years').toDate();
+    this.expiryDateMinDate = this.carDetails.expiryDate;
   }
   
   accessoryOnchange(event: any, index) {

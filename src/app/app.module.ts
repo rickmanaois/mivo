@@ -122,6 +122,9 @@ import {
 import {
   ModalComponent
 } from './components/modal/modal.component';
+import {
+  GroupPolicyComponent
+} from './components/group-policy/group-policy.component';
 
 const appRoutes: Routes = [{
     path: 'login',
@@ -161,7 +164,8 @@ const appRoutes: Routes = [{
     QuickQuotationHomeComponent,
     QuickQuotationTravelComponent,
     QuickQuotationAccidentComponent,
-    ModalComponent
+    ModalComponent,
+    GroupPolicyComponent
   ],
   entryComponents: [
     ModalComponent

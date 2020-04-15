@@ -137,7 +137,7 @@ export class QuotationAccidentComponent implements OnInit, AfterViewChecked {
     });
 
     Validate.setGroupPolicyValidations(this.quoteForm, this.groupPolicy);
-    Validate.setEffecivityDateValidations(this.quoteForm, this.accidentDetails, this.expiryDateMinDate);
+    // Validate.setEffecivityDateValidations(this.quoteForm, this.accidentDetails, this.expiryDateMinDate);
   }
 
   getSubline() {

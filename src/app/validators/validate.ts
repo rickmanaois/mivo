@@ -42,11 +42,4 @@ export class Validate {
       }
     });
   }
-
-  static setEffecivityDateValidations(form: any, details: any, expiryDateMinDate: Date) {
-    form.get('effectivityDate').valueChanges.subscribe(date => {
-      details.expiryDate = moment(date).add(1, 'years').toDate();
-      expiryDateMinDate = details.expiryDate;
-    });
-  }
 }
