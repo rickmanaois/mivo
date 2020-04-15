@@ -461,9 +461,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   test(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
     var accessories = this.quoteForm.get('accessories').value;
-    if (accessories.length) {
-      carDetails.accessories = accessories;
-    }
+    carDetails.accessories = accessories.length ? accessories : [];
     
     this.quoteForm.get('accessories').value;
     console.log('carDetails', carDetails);
