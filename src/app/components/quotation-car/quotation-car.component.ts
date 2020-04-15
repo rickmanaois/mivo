@@ -151,14 +151,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       accessories: this.fb.array([]),
       //policy holder information
       clientName: ['', Validators.required],
-      //group policy
-      // groupPolicy: [null],
-      // contract: [null],
-      // subContract: [null],
-      // commercialStructure: ['', Validators.required],
-      // agentCode: ['', Validators.required],
-      // cbIsRenewal: [null],
-      // expiringPolicyNumber: [null],
 
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],

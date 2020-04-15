@@ -76,10 +76,7 @@ export class GroupPolicyComponent {
       commercialStructure: ['', Validators.required],
       agentCode: ['', Validators.required],
       cbIsRenewal: [null],
-      expiringPolicyNumber: [null],
-
-      effectivityDate: ['', Validators.required],
-      expiryDate: ['', Validators.required],
+      expiringPolicyNumber: [null]
     });
   }
 
