@@ -26,7 +26,7 @@ import {
 } from 'src/app/objects/LOV/carList';
 import {
   QuickQuoteService
-} from '../../services/quickqoute.service';
+} from '../../services/quickquote.service';
 import {
   CarUtilityServices
 } from '../../services/car-utility.service';

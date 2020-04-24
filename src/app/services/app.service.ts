@@ -4,7 +4,6 @@ import {
 import {
   HttpClient
 } from '@angular/common/http';
-// import { catchError, map, toPromise } from 'rxjs/operators';
 import {
   API_URL
 } from '../constants/app.constant';

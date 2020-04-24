@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {
   AppService
-} from '../services/app.service';
+} from './app.service';
 import {
   QQCar
 } from '../objects/QQCar';

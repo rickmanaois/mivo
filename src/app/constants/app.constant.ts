@@ -1,3 +1,5 @@
+import { environment } from '../../environments/environment';
+
 /*AUTH*/
 // export const TOKEN_AUTH_USERNAME = 'jwtmivoclientid';
 // export const TOKEN_AUTH_PASSWORD = 'jwtpa$$w0rd';
@@ -5,8 +7,8 @@ export const TOKEN_AUTH_USERNAME = 'testjwtclientid';
 export const TOKEN_AUTH_PASSWORD = 'XY7kmzoNzl100';
 export const TOKEN_NAME = 'access_token';
 
-/*BACK END*/
-export const AUTH_TOKEN = 'http://localhost:8090/oauth/token';
+//access authentication token
+export const AUTH_TOKEN = environment.apiUrl + 'oauth/token';
 
-// localhost
-export const API_URL = 'http://localhost:8080/api';
+//access API URL
+export const API_URL = environment.apiUrl + 'api';

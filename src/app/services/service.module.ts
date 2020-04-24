@@ -10,13 +10,28 @@ import {
 import {
   TranslateService
 } from '@ngx-translate/core';
-/*Services*/
+
+/* Services */
 import {
   AppService
 } from './app.service';
 import {
+  AuthenticationService
+} from './authentication.service';
+import {
+  QuickQuoteService
+} from './quickquote.service';
+import {
+  CarUtilityServices
+} from './car-utility.service';
+import {
+  CarQuoteServices
+} from './car-quote.service';
+import {
   LovService
 } from './lov.service';
+
+/* LOV Services */
 import {
   GroupPolicyLOVServices
 } from './lov/group-policy.service';
@@ -33,18 +48,6 @@ import {
   AccidentLOVServices
 } from './lov/accident.service';
 
-import {
-  QuickQuoteService
-} from './quickqoute.service';
-import {
-  CarUtilityServices
-} from './car-utility.service';
-import {
-  CarQuoteServices
-} from './car-quote.service';
-
-
-
 @NgModule({
   imports: [
     CommonModule
@@ -55,15 +58,17 @@ import {
     BsModalRef,
     TranslateService,
     AppService,
+    AuthenticationService,
     QuickQuoteService,
-    GroupPolicyLOVServices,
-    CarLOVServices,
-    TravelLOVServices,
-    HomeLOVServices,
-    AccidentLOVServices,
-    LovService,
     CarUtilityServices,
     CarQuoteServices,
+    LovService,
+
+    GroupPolicyLOVServices,
+    CarLOVServices,
+    HomeLOVServices,
+    TravelLOVServices,
+    AccidentLOVServices
   ]
 })
 export class ServiceModule {}

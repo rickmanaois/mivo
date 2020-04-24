@@ -3,7 +3,8 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  Router
+  Router,
+  ActivatedRoute
 } from '@angular/router';
 import {
   FormGroup,
@@ -17,6 +18,15 @@ import {
   BsModalService,
   BsModalRef
 } from 'ngx-bootstrap/modal';
+import {
+  first
+} from 'rxjs/operators';
+import {
+  AuthenticationService
+} from '../../services/authentication.service';
+import {
+  MIVO_LOGIN
+} from '../../constants/local.storage';
 
 @Component({
   selector: 'app-login',
@@ -26,21 +36,31 @@ import {
 
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  MIVO_LOGIN: "MIVO_login";
-  
+  returnUrl: String;
+  loading = false;
+  message: any;
+  alert: boolean;
+
   //modal reference
   modalRef: BsModalRef;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private authenticationService: AuthenticationService) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
     this.createForm();
   }
 
   ngOnInit() {
     this.modalRef = Utility.modal(this.modalService, "You are about to enter MAPFRE INSURANCE INFORMATION SYSTEM. The access and use of this system is limited to duly authorized personnel and strictly for official use only. MAPFRE INSURANCE informs all of its employees, agents, representatives, service providers, and all natural or juridical persons having official transactions with the company involving similar access to its information system that Information accessed in MAPFRE SYSTEM is considered property of MAPFRE INSURANCE and is subject to obligation of confidentiality and security in accordance with the laws on privacy and protection of personal information.", "MAPFRE INFORMATION USAGE SECURITY NOTICE");
 
-    var mivoLogin = localStorage.getItem(this.MIVO_LOGIN);
+    var mivoLogin = localStorage.getItem(MIVO_LOGIN);
     if (mivoLogin != null) {
       var login = JSON.parse(mivoLogin);
       this.loginForm.markAsDirty();
@@ -50,6 +70,9 @@ export class LoginComponent implements OnInit {
         "rememberMe": login.rememberMe
       });
     }
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   createForm() {
@@ -62,14 +85,28 @@ export class LoginComponent implements OnInit {
 
   rememberMe(): void {
     if (this.loginForm.value.rememberMe) {
-      localStorage.setItem(this.MIVO_LOGIN, JSON.stringify(this.loginForm.value));
+      localStorage.setItem(MIVO_LOGIN, JSON.stringify(this.loginForm.value));
     } else {
-      localStorage.removeItem(this.MIVO_LOGIN);
+      localStorage.removeItem(MIVO_LOGIN);
     }
   }
 
   onSubmit(): void {
     this.rememberMe();
-    this.router.navigateByUrl('/mivo');
+    this.loading = true;
+    this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.router.navigate([this.returnUrl]);
+        },
+        err => {
+          var {
+            error
+          } = err;
+          this.loading = false;
+          this.alert = true;
+          this.message = error.message;
+        });
   }
 }

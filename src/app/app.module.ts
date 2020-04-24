@@ -8,6 +8,9 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
+import {
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
 
 import {
   HttpClientModule
@@ -39,6 +42,7 @@ import {
   MatSortModule,
   MatTooltipModule
 } from '@angular/material';
+
 import {
   RouterModule,
   Routes
@@ -107,6 +111,8 @@ import {
 import {
   QuotationAccidentComponent
 } from './components/quotation-accident/quotation-accident.component';
+
+// quick quotation components
 import {
   QuickQuotationCarComponent
 } from './components/quick-quotation-car/quick-quotation-car.component';
@@ -119,6 +125,7 @@ import {
 import {
   QuickQuotationAccidentComponent
 } from './components/quick-quotation-accident/quick-quotation-accident.component';
+
 import {
   ModalComponent
 } from './components/modal/modal.component';
@@ -126,20 +133,38 @@ import {
   GroupPolicyComponent
 } from './components/group-policy/group-policy.component';
 
-const appRoutes: Routes = [{
+import {
+  AuthGuard
+} from './helpers/auth.guard';
+import {
+  JwtInterceptor
+} from './helpers/jwt.interceptor';
+import {
+  ErrorInterceptor
+} from './helpers/error.interceptor';
+import {
+  fakeBackendProvider
+} from './helpers/fake-backend';
+
+const routes: Routes = [{
+    path: '',
+    component: TemplateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'login',
     component: LoginComponent
   },
   {
-    path: 'mivo',
-    component: TemplateComponent
+    path: '404',
+    component: MissingPageComponent
   },
+
+  // otherwise redirect to home
   {
-    path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },
-  // { path: '**', component: PageNotFoundComponent }
+    path: '**',
+    redirectTo: '404'
+  }
 ];
 
 @NgModule({
@@ -171,11 +196,11 @@ const appRoutes: Routes = [{
     ModalComponent
   ],
   imports: [
+    AppRoutingModule,
     RouterModule.forRoot(
-      appRoutes
+      routes
     ),
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatPaginatorModule,
@@ -191,6 +216,19 @@ const appRoutes: Routes = [{
     BsDatepickerModule.forRoot(),
     NgMultiSelectDropDownModule.forRoot(),
     NgHttpLoaderModule.forRoot()
+  ],
+  providers: [{
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    // provider used to create fake backend
+    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

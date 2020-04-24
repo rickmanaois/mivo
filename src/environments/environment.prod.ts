@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  imgUrl: '/mivo'
+  imgUrl: '/mivo',
+  apiUrl: 'http://localhost:8080/',
 };

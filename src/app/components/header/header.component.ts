@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Globals } from '../../utils/global';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  Globals
+} from '../../utils/global';
 import {
   Router
 } from '@angular/router';
+import {
+  AuthenticationService
+} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -11,17 +19,19 @@ import {
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private router : Router) { }
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setPage(val: String) {
     Globals.setPage(val);
   }
 
   logout() {
-    this.router.navigateByUrl('login');
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 
 }

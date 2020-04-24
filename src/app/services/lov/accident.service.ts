@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {
   LovService
-} from '../../services/lov.service';
+} from '.././lov.service';
 import {
   LOV
 } from '../../objects/LOV';

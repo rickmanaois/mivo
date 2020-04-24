@@ -25,7 +25,7 @@ import {
 } from 'src/app/objects/LOV/accidentList';
 import {
   QuickQuoteService
-} from '../../services/quickqoute.service';
+} from '../../services/quickquote.service';
 import {
   AccidentLOVServices
 } from '../../services/lov/accident.service'
