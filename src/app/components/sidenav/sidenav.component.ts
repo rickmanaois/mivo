@@ -1,5 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Globals } from '../../utils/global';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  Globals
+} from '../../utils/global';
+import {
+  page
+} from '../../constants/page';
+import {
+  MENU
+} from '../../constants/local.storage';
 
 @Component({
   selector: 'app-sidenav',
@@ -7,17 +18,18 @@ import { Globals } from '../../utils/global';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
+  p = page; //constant pages
+  menu = JSON.parse(localStorage.getItem(MENU));
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setPage(val: String) {
     Globals.setPage(val);
   }
 
-  get page(){
+  get page() {
     return Globals.page;
   }
 }

@@ -18,8 +18,12 @@ import {
   User
 } from '../objects/User';
 import {
-  CURRENT_USER
+  CURRENT_USER,
+  MENU
 } from '../constants/local.storage';
+import {
+  Page
+} from '../objects/Page';
 
 @Injectable({
   providedIn: 'root'
@@ -46,13 +50,35 @@ export class AuthenticationService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem(CURRENT_USER, JSON.stringify(user));
         this.currentUserSubject.next(user);
+
+        this.getPages();
+
         return user;
       }));
+  }
+
+  getPages() {
+    // removing unavailable pages for user
+    const unavailablePages = ['commissionsPaid',
+      'estimatedCommissions',
+      'premiumCollection',
+      'client',
+      'news',
+      'requests'
+    ];
+    const page = new Page();
+    for (let p in page) {
+      if (unavailablePages.includes(p)) {
+        page[p] = false;
+      }
+    }
+    localStorage.setItem(MENU, JSON.stringify(page));
   }
 
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem(CURRENT_USER);
+    localStorage.removeItem(MENU);
     this.currentUserSubject.next(null);
   }
 }

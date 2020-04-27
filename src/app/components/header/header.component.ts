@@ -11,6 +11,7 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
+import { page } from '../../constants/page';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,7 @@ import {
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  p = page; //constant pages
 
   constructor(
     private router: Router,

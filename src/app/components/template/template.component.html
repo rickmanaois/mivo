@@ -15,29 +15,27 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <app-dashboard *ngIf="page === 'dashboard'"></app-dashboard>
+          <app-dashboard *ngIf="page === p.DAS.N"></app-dashboard>
 
-          <app-profile *ngIf="page === 'profile'"></app-profile>
+          <app-profile *ngIf="page === p.UTI.CHA"></app-profile>
 
-          <app-outstanding-bills *ngIf="page === 'outstanding-bills'"></app-outstanding-bills>
+          <app-outstanding-bills *ngIf="page === p.ACC.OUT"></app-outstanding-bills>
 
-          <app-quotation-car *ngIf="page === 'quotation-car'"></app-quotation-car>
-          <app-quick-quotation-car *ngIf="page === 'quick-quotation-car'"></app-quick-quotation-car>
+          <app-quick-quotation-car *ngIf="page === p.QUI.CAR"></app-quick-quotation-car>
+          <app-quick-quotation-home *ngIf="page === p.QUI.HOM"></app-quick-quotation-home>
+          <app-quick-quotation-travel *ngIf="page === p.QUI.TRA"></app-quick-quotation-travel>
+          <app-quick-quotation-accident *ngIf="page === p.QUI.ACC"></app-quick-quotation-accident>
 
-          <app-quotation-home *ngIf="page === 'quotation-home'"></app-quotation-home>
-          <app-quick-quotation-home *ngIf="page === 'quick-quotation-home'"></app-quick-quotation-home>
+          <app-quotation-car *ngIf="page === p.QUO.CAR"></app-quotation-car>
+          <app-quotation-home *ngIf="page === p.QUO.HOM"></app-quotation-home>
+          <app-quotation-travel *ngIf="page === p.QUO.TRA"></app-quotation-travel>
+          <app-quotation-accident *ngIf="page === p.QUO.ACC"></app-quotation-accident>
+          
+          <app-query *ngIf="page === p.UTI.QUE"></app-query>
 
-          <app-quotation-travel *ngIf="page === 'quotation-travel'"></app-quotation-travel>
-          <app-quick-quotation-travel *ngIf="page === 'quick-quotation-travel'"></app-quick-quotation-travel>
+          <app-missing-page *ngIf="page === p.NEW.N"></app-missing-page>
 
-          <app-quotation-accident *ngIf="page === 'quotation-accident'"></app-quotation-accident>
-          <app-quick-quotation-accident *ngIf="page === 'quick-quotation-accident'"></app-quick-quotation-accident>
-
-          <app-query *ngIf="page === 'query'"></app-query>
-
-          <app-missing-page *ngIf="page === 'news'"></app-missing-page>
-
-          <app-faq *ngIf="page === 'faq'"></app-faq>
+          <app-faq *ngIf="page === p.FAQ.N"></app-faq>
         </div>
         <!-- End Page Content -->
 
