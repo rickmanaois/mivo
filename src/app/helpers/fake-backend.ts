@@ -20,6 +20,7 @@ import {
   materialize,
   dematerialize
 } from 'rxjs/operators';
+import { Page } from '../objects/Page';
 
 // array in local storage for registered users
 let users = JSON.parse(localStorage.getItem('users')) || [];

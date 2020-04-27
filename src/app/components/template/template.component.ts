@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Globals } from '../../utils/global';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  Globals
+} from '../../utils/global';
+import {
+  page
+} from '../../constants/page';
 
 @Component({
   selector: 'app-template',
@@ -7,13 +15,13 @@ import { Globals } from '../../utils/global';
   styleUrls: ['./template.component.css']
 })
 export class TemplateComponent implements OnInit {
+  p = page; //constant pages
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  get page(){
+  get page() {
     return Globals.page;
   }
 }

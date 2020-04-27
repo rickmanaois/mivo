@@ -1,7 +1,7 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" (click)="setPage('dashboard')">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" (click)="setPage(p.DAS.N)">
     <img src="./assets/images/new_mivo_logo.png" alt="brand-logo" />
   </a>
 
@@ -9,7 +9,7 @@
   <hr class="sidebar-divider my-0">
 
   <!-- Nav Item - Dashboard -->
-  <li [ngClass]="{'active': page=='dashboard'}" class="nav-item" (click)="setPage('dashboard')">
+  <li *ngIf="menu.dash" [ngClass]="{'active': page==p.DAS.N}" class="nav-item" (click)="setPage(p.DAS.N)">
     <a class="nav-link">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a>
@@ -19,7 +19,7 @@
   <hr class="sidebar-divider">
 
   <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
+  <li *ngIf="menu.account" class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#myAccount" aria-expanded="true"
       aria-controls="myAccount">
       <i class="fas fa-fw fa-user"></i>
@@ -27,17 +27,19 @@
     </a>
     <div id="myAccount" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='outstanding-bills'}"
-          (click)="setPage('outstanding-bills')"><i class="fas fa-fw fa-star"></i> Outstanding Bills</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-money-bill-wave"></i> Commissions Paid</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-calculator"></i> Estimated Commissions</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-award"></i> Premium Collection</a>
+        <a *ngIf="menu.outstanding" class="collapse-item" [ngClass]="{'active': page==p.ACC.OUT}"
+          (click)="setPage(p.ACC.OUT)"><i class="fas fa-fw fa-star"></i> Outstanding Bills</a>
+        <a *ngIf="menu.commissionsPaid" class="collapse-item"><i class="fas fa-fw fa-money-bill-wave"></i> Commissions
+          Paid</a>
+        <a *ngIf="menu.estimatedCommissions" class="collapse-item"><i class="fas fa-fw fa-calculator"></i> Estimated
+          Commissions</a>
+        <a *ngIf="menu.premiumCollection" class="collapse-item"><i class="fas fa-fw fa-award"></i> Premium
+          Collection</a>
       </div>
     </div>
   </li>
 
-  <li class="nav-item">
+  <li *ngIf="menu.client" class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#myClient" aria-expanded="true"
       aria-controls="myClient">
       <i class="fas fa-fw fa-handshake"></i>
@@ -63,7 +65,7 @@
     </div>
   </li>
 
-  <li class="nav-item">
+  <li *ngIf="menu.quick" class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#quickQuotation" aria-expanded="true"
       aria-controls="quickQuotation">
       <i class="fas fa-fw fa-play"></i>
@@ -71,23 +73,19 @@
     </a>
     <div id="quickQuotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" 
-          [ngClass]="{'active': page=='quick-quotation-car'}"
-          (click)="setPage('quick-quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='quick-quotation-home'}"
-          (click)="setPage('quick-quotation-home')"><i class="fas fa-fw fa-home"></i> Home</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='quick-quotation-travel'}"
-          (click)="setPage('quick-quotation-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='quick-quotation-accident'}"
-          (click)="setPage('quick-quotation-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUI.CAR}" (click)="setPage(p.QUI.CAR)"><i
+            class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUI.HOM}" (click)="setPage(p.QUI.HOM)"><i
+            class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUI.TRA}" (click)="setPage(p.QUI.TRA)"><i
+            class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUI.ACC}" (click)="setPage(p.QUI.ACC)"><i
+            class="fas fa-fw fa-shield-alt"></i> Accident</a>
       </div>
     </div>
   </li>
 
-  <li class="nav-item">
+  <li *ngIf="menu.quotation" class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#quotation" aria-expanded="true"
       aria-controls="quotation">
       <i class="fas fa-fw fa-play"></i>
@@ -95,23 +93,19 @@
     </a>
     <div id="quotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" 
-          [ngClass]="{'active': page=='quotation-car'}"
-          (click)="setPage('quotation-car')"><i class="fas fa-fw fa-car"></i> Car</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='quotation-home'}"
-          (click)="setPage('quotation-home')"><i class="fas fa-fw fa-home"></i> Home</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='quotation-travel'}"
-          (click)="setPage('quotation-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='quotation-accident'}"
-          (click)="setPage('quotation-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUO.CAR}" (click)="setPage(p.QUO.CAR)"><i
+            class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUO.HOM}" (click)="setPage(p.QUO.HOM)"><i
+            class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUO.TRA}" (click)="setPage(p.QUO.TRA)"><i
+            class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.QUO.ACC}" (click)="setPage(p.QUO.ACC)"><i
+            class="fas fa-fw fa-shield-alt"></i> Accident</a>
       </div>
     </div>
   </li>
 
-  <li class="nav-item">
+  <li *ngIf="menu.issuance" class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#policyIssuance" aria-expanded="true"
       aria-controls="policyIssuance">
       <i class="fas fa-fw fa-play"></i>
@@ -119,30 +113,26 @@
     </a>
     <div id="policyIssuance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" 
-          [ngClass]="{'active': page=='policy-issuance-car'}"
-          (click)="setPage('policy-issuance-car')"><i class="fas fa-fw fa-car"></i> Car</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='policy-issuance-home'}"
-          (click)="setPage('policy-issuance-home')"><i class="fas fa-fw fa-home"></i> Home</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='policy-issuance-travel'}"
-          (click)="setPage('policy-issuance-travel')"><i class="fas fa-fw fa-plane"></i> Travel</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='policy-issuance-accident'}"
-          (click)="setPage('policy-issuance-accident')"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.ISS.CAR}"
+          (click)="setPage(p.ISS.CAR)"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.ISS.HOM}"
+          (click)="setPage(p.ISS.HOM)"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.ISS.TRA}"
+          (click)="setPage(p.ISS.TRA)"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a class="collapse-item" [ngClass]="{'active': page==p.ISS.ACC}"
+          (click)="setPage(p.ISS.ACC)"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
       </div>
     </div>
   </li>
 
-  <li class="nav-item">
+  <li *ngIf="menu.requests" class="nav-item">
     <a class="nav-link">
       <i class="fas fa-fw fa-bell"></i>
       <span>Requests</span>
     </a>
   </li>
 
-  <li class="nav-item">
+  <li *ngIf="menu.utilities" class="nav-item">
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#utilities" aria-expanded="true"
       aria-controls="utilities">
       <i class="fas fa-fw fa-tools"></i>
@@ -150,25 +140,23 @@
     </a>
     <div id="utilities" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='query'}"
-          (click)="setPage('query')"><i class="fas fa-fw fa-clipboard-list"></i> Query</a>
-        <a class="collapse-item"><i class="fas fa-fw fa-print"></i> Document Printing</a>
-        <a class="collapse-item"
-          [ngClass]="{'active': page=='profile'}"
-          (click)="setPage('profile')"><i class="fas fa-fw fa-key"></i> Change Password</a>
+        <a *ngIf="menu.query" class="collapse-item" [ngClass]="{'active': page==p.UTI.QUE}"
+          (click)="setPage(p.UTI.QUE)"><i class="fas fa-fw fa-clipboard-list"></i> Query</a>
+        <a *ngIf="menu.documentPrinting" class="collapse-item"><i class="fas fa-fw fa-print"></i> Document Printing</a>
+        <a *ngIf="menu.changePassword" class="collapse-item" [ngClass]="{'active': page==p.UTI.CHA}"
+          (click)="setPage(p.UTI.CHA)"><i class="fas fa-fw fa-key"></i> Change Password</a>
       </div>
     </div>
   </li>
 
-  <li [ngClass]="{'active': page=='news'}"class="nav-item" (click)="setPage('news')">
+  <li *ngIf="menu.news" [ngClass]="{'active': page==p.NEW.N}" class="nav-item" (click)="setPage(p.NEW.N)">
     <a class="nav-link">
       <i class="fas fa-fw fa-newspaper"></i>
       <span>News</span>
     </a>
   </li>
 
-  <li [ngClass]="{'active': page=='faq'}" class="nav-item" (click)="setPage('faq')">
+  <li *ngIf="menu.faq" [ngClass]="{'active': page==p.FAQ.N}" class="nav-item" (click)="setPage(p.FAQ.N)">
     <a class="nav-link">
       <i class="fas fa-fw fa-question"></i>
       <span>FAQ</span>
