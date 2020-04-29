@@ -6,9 +6,6 @@ export class GroupPolicy {
   agentCode: string;
   cbIsRenewal: boolean;
   expiringPolicyNumber: string;
-
-  effectivityDate: Date;
-  expiryDate: Date;
   
   constructor() {
   }

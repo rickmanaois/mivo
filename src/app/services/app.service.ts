@@ -2,7 +2,8 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  HttpClient
+  HttpClient,
+  HttpHeaders
 } from '@angular/common/http';
 import {
   API_URL
@@ -24,6 +25,16 @@ export class AppService {
   constructor(
     private http: HttpClient,
     private modalService: BsModalService) {}
+
+    // httpOptions = {
+    //   headers: new HttpHeaders({ 
+    //     'Access-Control-Allow-Origin':'*',
+    //     'Access-Control-Allow-Method':'*',
+    //     'Access-Control-Allow-Headers' : "Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization",
+    //     'Accept': '*/*',
+    //     'Content-Type' : 'application/json'
+    //   })
+    // };
 
   async doWhatever(param: any, endpoint: string): Promise < any > {
     return this.http.post(API_URL + endpoint, param)

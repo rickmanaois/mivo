@@ -34,7 +34,8 @@ body, .btn {
 }
 
 .bg-gradient-primary,
-#login .left-container {
+#login .left-container,
+#chooseAgent {
   background: #c31f09;
   background-image: url('./assets/images/bg.jpg');
   background-size: cover;

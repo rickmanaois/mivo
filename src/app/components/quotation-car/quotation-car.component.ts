@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   AfterViewChecked,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Input
 } from '@angular/core';
 import {
   FormGroup,
@@ -24,9 +25,6 @@ import {
 import {
   Utility
 } from '../../utils/utility';
-import {
-  GroupPolicyLOVServices
-} from '../../services/lov/group-policy.service';
 import {
   CarLOVServices
 } from '../../services/lov/car.service';
@@ -50,6 +48,9 @@ import { QQCar } from 'src/app/objects/QQCar';
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
+  @Input() isIssuance : boolean = false;
+  pageLabel : String = 'Quotation';
+
   carDetails = new QuoteCar();
   groupPolicy = new GroupPolicy();
   quoteForm: FormGroup;
@@ -70,11 +71,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private cu: CarUtilityServices,
     private carlov: CarLOVServices,
     private quote: CarQuoteServices,
-    private gplov: GroupPolicyLOVServices,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.createQuoteForm();
-    this.setValidations();
+    // this.createQuoteForm();
+    // this.setValidations();
   }
 
   ngAfterViewChecked() {
@@ -82,6 +82,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
+    this.createQuoteForm();
+    this.setValidations();
+
+    if (this.isIssuance) {
+      this.pageLabel = 'Issuance';
+    }
+
     var _this = this;
 
     this.carlov.getMakeList().then(res => {
@@ -196,6 +203,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
         };
       });
     }
+  }
+
+  loadQuotation() {
+
   }
 
   setValidations() {
@@ -421,12 +432,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carlov.getAreaOfUsage(this.carDetails).then(res => {
       _this.LOV.areaOfUsageLOV = res;
     });
-    // this.gplov.getCommercialStructure().then(res => {
-    //   _this.GPLOV.commercialStructureLOV = res;
-    // });
-    // this.gplov.getGroupPolicy(this.carDetails.subline).then(res => {
-    //   _this.GPLOV.groupPolicyLOV = res;
-    // });
 
     this.carlov.getAccessoryList(this.carDetails).then(res => {
       _this.LOV.accessoryListLOV = res;

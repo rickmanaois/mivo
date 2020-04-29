@@ -20,10 +20,31 @@ import {
   materialize,
   dematerialize
 } from 'rxjs/operators';
-import { Page } from '../objects/Page';
+import {
+  User
+} from '../objects/User';
 
 // array in local storage for registered users
-let users = JSON.parse(localStorage.getItem('users')) || [];
+// let users = JSON.parse(localStorage.getItem('users')) || [];
+const users = [{
+  code: 1,
+  role: 1,
+  username: 'np',
+  password: 'np',
+  firstName: 'Nathalie',
+  lastName: 'Domingo',
+  fullName: 'Nathalie Domingo',
+  token: 'faketoken'
+},{
+  code: 2,
+  role: 2,
+  username: 'jb',
+  password: 'jb',
+  firstName: 'Jethru',
+  lastName: 'Balarbar',
+  fullName: 'Jethru Balarbar',
+  token: 'faketoken'
+}]
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -64,17 +85,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         username,
         password
       } = body;
-
-      const authorized = (username === 'test' && password == 'test');
-      // const user = users.find(x => x.username === username && x.password === password);
-      if (!authorized) return error('Username or password is incorrect');
-      return ok({
-        id: 1,
-        username: 'test',
-        firstName: 'jethru',
-        lastName: 'balarbar',
-        token: 'fake-jwt-token'
-      })
+      const user = users.find(x => x.username === username && x.password === password);
+      if (!user) return error('Username or password is incorrect');
+      return ok(new User(user))
     }
 
     function register() {
@@ -84,7 +97,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return error('Username "' + user.username + '" is already taken')
       }
 
-      user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
+      user.id = users.length ? Math.max(...users.map(x => x.code)) + 1 : 1;
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
 
@@ -99,8 +112,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function deleteUser() {
       if (!isLoggedIn()) return unauthorized();
 
-      users = users.filter(x => x.id !== idFromUrl());
-      localStorage.setItem('users', JSON.stringify(users));
+      const userss = users.filter(x => x.code !== idFromUrl());
+      localStorage.setItem('users', JSON.stringify(userss));
       return ok();
     }
 

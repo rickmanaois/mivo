@@ -30,6 +30,11 @@
           <app-quotation-home *ngIf="page === p.QUO.HOM"></app-quotation-home>
           <app-quotation-travel *ngIf="page === p.QUO.TRA"></app-quotation-travel>
           <app-quotation-accident *ngIf="page === p.QUO.ACC"></app-quotation-accident>
+
+          <app-quotation-car *ngIf="page === p.ISS.CAR" [isIssuance]=true></app-quotation-car>
+          <app-quotation-home *ngIf="page === p.ISS.HOM"></app-quotation-home>
+          <app-quotation-travel *ngIf="page === p.ISS.TRA"></app-quotation-travel>
+          <app-quotation-accident *ngIf="page === p.ISS.ACC"></app-quotation-accident>
           
           <app-query *ngIf="page === p.UTI.QUE"></app-query>
 

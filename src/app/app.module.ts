@@ -145,21 +145,31 @@ import {
 import {
   fakeBackendProvider
 } from './helpers/fake-backend';
+import {
+  IndividualPolicyComponent
+} from './components/individual-policy/individual-policy.component';
+import {
+  ChooseAgentComponent
+} from './components/choose-agent/choose-agent.component';
 
 const routes: Routes = [{
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'agent',
+    component: ChooseAgentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: '',
     component: TemplateComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
     path: '404',
     component: MissingPageComponent
   },
-
   // otherwise redirect to home
   {
     path: '**',
@@ -190,7 +200,9 @@ const routes: Routes = [{
     QuickQuotationTravelComponent,
     QuickQuotationAccidentComponent,
     ModalComponent,
-    GroupPolicyComponent
+    GroupPolicyComponent,
+    IndividualPolicyComponent,
+    ChooseAgentComponent
   ],
   entryComponents: [
     ModalComponent
