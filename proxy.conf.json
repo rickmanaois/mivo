@@ -1,0 +1,10 @@
+{
+  "/api/*": {
+    "target": "https://ctpl.mapfreinsular.com/travelonline",
+    "secure": false,
+    "pathRewrite": {
+    "^/api/*": ""
+  },
+    "changeOrigin": true
+  }
+}

@@ -48,6 +48,7 @@ export class AuthenticationService {
       })
       .pipe(map(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
+        delete user.password;
         localStorage.setItem(CURRENT_USER, JSON.stringify(user));
         this.currentUserSubject.next(user);
 
@@ -62,6 +63,15 @@ export class AuthenticationService {
     const unavailablePages = ['commissionsPaid',
       'estimatedCommissions',
       'premiumCollection',
+      'quickHome',
+      'quickTravel',
+      'quickAccident',
+      'quotationHome',
+      'quotationTravel',
+      'quotationAccident',
+      'issuanceHome',
+      'issuanceTravel',
+      'issuanceAccident',
       'client',
       'news',
       'requests'

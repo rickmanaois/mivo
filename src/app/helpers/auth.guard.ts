@@ -7,6 +7,9 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from '@angular/router';
+import {
+  Utility
+} from '../utils/utility';
 
 import {
   AuthenticationService
@@ -22,12 +25,21 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    const isAgentPage = route.routeConfig.path == 'agent';
     const currentUser = this.authenticationService.currentUserValue;
+    const noAgentCode = Utility.isUndefined(currentUser.agentCode);
+
     if (currentUser) {
+      if (currentUser.role === 1 && isAgentPage) {
+        // user cannot choose agent
+        this.router.navigate(['']);
+      } else if (currentUser.role === 2 && !isAgentPage && noAgentCode) {
+        // user cannot navigate if no selected agent
+        this.router.navigate(['/agent']);
+      }
       // authorised so return true
       return true;
     }
-
     // not logged in so redirect to login page with the return url
     this.router.navigate(['/login'], {
       queryParams: {

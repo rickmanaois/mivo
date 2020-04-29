@@ -1,0 +1,33 @@
+<div class="card shadow mb-3">
+  <div class="card-header">
+    <strong>Individual Policy</strong>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="requestType">Quotation/Policy</label>
+          <select class="custom-select mr-sm-2 required" formControlName="requestType"
+            [(ngModel)]="details.requestType">
+            <option value="q">Quotation</option>
+            <option value="i">Issuance</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="number">Number</label>
+          <input type="text" formControlName="requestType" class="form-control required" [(ngModel)]="details.requestNumber">
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="btn-group" role="group">
+          <button [disabled]="true" type="button" class="btn btn-primary">Load</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

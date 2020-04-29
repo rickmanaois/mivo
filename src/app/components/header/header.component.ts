@@ -11,7 +11,12 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
-import { page } from '../../constants/page';
+import {
+  page
+} from '../../constants/page';
+import {
+  User
+} from 'src/app/objects/User';
 
 @Component({
   selector: 'app-header',
@@ -20,15 +25,24 @@ import { page } from '../../constants/page';
 })
 export class HeaderComponent implements OnInit {
   p = page; //constant pages
+  canChooseAgent: boolean = false;
+  currentUser = new User();
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentUser = this.authenticationService.currentUserValue;
+    this.canChooseAgent = this.currentUser.role === 2;
+  }
 
   setPage(val: String) {
     Globals.setPage(val);
+  }
+
+  chooseAgent() {
+    this.router.navigate(['/agent']);
   }
 
   logout() {

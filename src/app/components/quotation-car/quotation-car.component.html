@@ -1,7 +1,7 @@
 <div class="row" id="quotationCar">
   <div class="col-xl-12">
     <div class="page-header">
-      <h4>Quotation - Car</h4>
+      <h4>{{pageLabel}} - Car</h4>
     </div>
     <!-- .page-header -->
   </div>
@@ -11,6 +11,9 @@
     <div class="card shadow">
       <div class="card-body">
         <form [formGroup]="quoteForm" class="regular-quote-form">
+          
+          <app-individual-policy *ngIf='isIssuance'></app-individual-policy>
+
           <div class="card shadow mb-3">
             <div class="card-header">
               <strong>Vehicle Information</strong>

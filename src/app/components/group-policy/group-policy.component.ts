@@ -32,7 +32,7 @@ export class GroupPolicyComponent {
   @Input() groupPolicy: GroupPolicy;
   @Input() details: any;
   _details: any;
-  
+
   gpForm: FormGroup;
   GPLOV = new GroupPolicyListObject();
 
@@ -48,7 +48,6 @@ export class GroupPolicyComponent {
   ngOnInit(): void {
     setTimeout(() => {
       this.groupPolicy.agentCode = '1101'; //TODO
-      this.groupPolicy.effectivityDate = this.today; // current today
 
       const _this = this;
       this.gplov.getCommercialStructure().then(res => {
