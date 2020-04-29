@@ -27,9 +27,9 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const isAgentPage = route.routeConfig.path == 'agent';
     const currentUser = this.authenticationService.currentUserValue;
-    const noAgentCode = Utility.isUndefined(currentUser.agentCode);
-
+    
     if (currentUser) {
+      const noAgentCode = Utility.isUndefined(currentUser.agentCode);
       if (currentUser.role === 1 && isAgentPage) {
         // user cannot choose agent
         this.router.navigate(['']);
