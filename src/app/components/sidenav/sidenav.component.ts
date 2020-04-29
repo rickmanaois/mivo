@@ -11,6 +11,9 @@ import {
 import {
   MENU
 } from '../../constants/local.storage';
+import {
+  AuthenticationService
+} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -18,10 +21,11 @@ import {
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
+  currentUser = this.authenticationService.currentUserValue;
   p = page; //constant pages
   menu = JSON.parse(localStorage.getItem(MENU));
 
-  constructor() {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit() {}
 

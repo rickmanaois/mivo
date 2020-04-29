@@ -27,22 +27,26 @@ import {
 // array in local storage for registered users
 // let users = JSON.parse(localStorage.getItem('users')) || [];
 const users = [{
-  code: 1,
+  userId: 1,
   role: 1,
   username: 'np',
   password: 'np',
   firstName: 'Nathalie',
   lastName: 'Domingo',
   fullName: 'Nathalie Domingo',
+  address: 'Sta. Rita, Olonggapo City, Zambales, Philippines',
+  expiryDay: 4,
   token: 'faketoken'
 },{
-  code: 2,
+  userId: 2,
   role: 2,
   username: 'jb',
   password: 'jb',
   firstName: 'Jethru',
   lastName: 'Balarbar',
   fullName: 'Jethru Balarbar',
+  address: 'Sagud Bahley, San Fabian, Pangasinan, Philippines',
+  expiryDay: 11,
   token: 'faketoken'
 }]
 
@@ -97,7 +101,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return error('Username "' + user.username + '" is already taken')
       }
 
-      user.id = users.length ? Math.max(...users.map(x => x.code)) + 1 : 1;
+      user.id = users.length ? Math.max(...users.map(x => x.userId)) + 1 : 1;
       users.push(user);
       localStorage.setItem('users', JSON.stringify(users));
 
@@ -112,7 +116,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function deleteUser() {
       if (!isLoggedIn()) return unauthorized();
 
-      const userss = users.filter(x => x.code !== idFromUrl());
+      const userss = users.filter(x => x.userId !== idFromUrl());
       localStorage.setItem('users', JSON.stringify(userss));
       return ok();
     }
