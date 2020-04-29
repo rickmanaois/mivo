@@ -175,13 +175,13 @@
   <li class="nav-item">
     <div class="nav-link">
       <i class="fas fa-fw fa-map-marked-alt"></i>
-      <span>Acacia Ave., Madrigal Business Park, Ayala Alabang, Muntinlupa City</span></div>
+      <span>{{currentUser.address}}</span></div>
   </li>
 
   <li class="nav-item">
     <div class="nav-link">
       <i class="fas fa-fw fa-key"></i>
-      <span>Your password will expire in <strong>60 days</strong></span></div>
+      <span>Your password will expire in <strong>{{currentUser.expiryDay}} {{currentUser.expiryDay <= 1 ? 'day' : 'days' }}</strong></span></div>
   </li>
 
 
