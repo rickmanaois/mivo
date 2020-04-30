@@ -14,9 +14,10 @@
                 && (chooseAgentForm.controls['commercialStructure'].dirty 
                 || chooseAgentForm.controls['commercialStructure'].touched)}">
                   <label for="commercialStructure">Commercial Structure</label>
-                  <select class="custom-select mr-sm-2 required" formControlName="commercialStructure" (change)="comStructureChange()"
-                    >
-                    <option *ngFor="let commerialStructure of commercialStructureLOV" [ngValue]="commerialStructure.COD_MARCA">{{ commerialStructure.NOM_MARCA }}</option>
+                  <select class="custom-select mr-sm-2 required" formControlName="commercialStructure"
+                    (change)="comStructureChange()">
+                    <option *ngFor="let commerialStructure of commercialStructureLOV"
+                      [ngValue]="commerialStructure.codNivel3">{{ commerialStructure.nomNivel3 }}</option>
                   </select>
                   <p class="form-error" *ngIf="chooseAgentForm.controls['commercialStructure'].errors?.required">
                     * commercial structure is required
@@ -27,9 +28,9 @@
                 && (chooseAgentForm.controls['agent'].dirty 
                 || chooseAgentForm.controls['agent'].touched)}">
                   <label for="agent">Agent</label>
-                  <select class="custom-select mr-sm-2 required" formControlName="agent"
-                    >
-                    <option *ngFor="let agentDetail of agentLOV" [ngValue]="agentDetail.COD_MARCA">{{ agentDetail.NOM_MARCA }}</option>
+                  <select class="custom-select mr-sm-2 required" formControlName="agent">
+                    <option *ngFor="let agentDetail of agentLOV" [ngValue]="agentDetail.COD_AGT">
+                      {{ agentDetail.NOM_COMPLETO }}</option>
                   </select>
                   <p class="form-error" *ngIf="chooseAgentForm.controls['agent'].errors?.required">
                     * agent is required
@@ -37,8 +38,7 @@
                 </div>
 
                 <div class="btn-group" role="group">
-                  <button type="button"
-                    class="btn btn-primary" (click)="next()">Next</button>
+                  <button type="button" class="btn btn-primary" (click)="next()">Next</button>
                   <!-- <button [disabled]="chooseAgentForm.pristine || chooseAgentForm.invalid" type="button"
                     class="btn btn-primary" (click)="next()">Next</button> -->
                 </div>

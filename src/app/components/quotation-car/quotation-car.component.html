@@ -206,7 +206,8 @@
                     <label for="conductionNumber">Conduction Number</label>
                     <input type="text" formControlName="conductionNumber" class="form-control" [ngClass]="{'required' : carDetails.plateNumber === undefined
                       || carDetails.plateNumber === null
-                      || carDetails.plateNumber === ''}" [(ngModel)]="carDetails.conductionNumber">
+                      || carDetails.plateNumber === ''}" [(ngModel)]="carDetails.conductionNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                     <p class="form-error" *ngIf="quoteForm.controls['conductionNumber'].errors?.required">
                       * conduction number is required
                     </p>
@@ -225,7 +226,8 @@
                     <input type="text" formControlName="plateNumber" class="form-control"
                       [attr.disabled]=" (LOV.sublineLOV?.length && LOV.modelYearLOV?.length) ? null : true" [ngClass]="{'required' : carDetails.conductionNumber === undefined
                       || carDetails.conductionNumber === null
-                      || carDetails.conductionNumber === ''}" [(ngModel)]="carDetails.plateNumber">
+                      || carDetails.conductionNumber === ''}" [(ngModel)]="carDetails.plateNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                     <p class="form-error" *ngIf="quoteForm.controls['plateNumber'].errors?.required">
                       * plate number is required
                     </p>

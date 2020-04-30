@@ -40,7 +40,12 @@ import {
 import {
   GroupPolicyListObject
 } from 'src/app/objects/LOV/groupPolicyList';
-import { QQCar } from 'src/app/objects/QQCar';
+import {
+  QQCar
+} from 'src/app/objects/QQCar';
+import {
+  AuthenticationService
+} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-quotation-car',
@@ -48,8 +53,9 @@ import { QQCar } from 'src/app/objects/QQCar';
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
-  @Input() isIssuance : boolean = false;
-  pageLabel : String = 'Quotation';
+  currentUser = this.authenticationService.currentUserValue;
+  @Input() isIssuance: boolean = false;
+  pageLabel: String = 'Quotation';
 
   carDetails = new QuoteCar();
   groupPolicy = new GroupPolicy();
@@ -71,7 +77,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private cu: CarUtilityServices,
     private carlov: CarLOVServices,
     private quote: CarQuoteServices,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private authenticationService: AuthenticationService
   ) {
     // this.createQuoteForm();
     // this.setValidations();
@@ -126,7 +133,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   setValue() {
     //setting default value
     this.carDetails.color = 9999; // undeclared
-    this.carDetails.receivedBy = 'MIV01101'; //TODO
+    this.carDetails.receivedBy = this.currentUser.username; //TODO
     this.carDetails.purchaseDate = this.today; // current today
     this.carDetails.receivedDate = this.today; // current today
     this.carDetails.effectivityDate = this.today; // current today
@@ -185,7 +192,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   async validateConductionNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
-      this.carDetails.conductionNumber = control.value;
       return this.cu.validateConductionNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidConductionNumber: true
@@ -450,7 +456,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.expiryDate = moment(this.carDetails.effectivityDate).add(1, 'years').toDate();
     this.expiryDateMinDate = this.carDetails.expiryDate;
   }
-  
+
   accessoryOnchange(event: any, index) {
     this.disableAccessory();
     var options = event.target.options;
@@ -467,7 +473,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   test(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
     var accessories = this.quoteForm.get('accessories').value;
     carDetails.accessories = accessories.length ? accessories : [];
-    
+
     this.quoteForm.get('accessories').value;
     console.log('carDetails', carDetails);
     console.log('groupPolicy', groupPolicy);

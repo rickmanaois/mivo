@@ -14,6 +14,9 @@ import {
   AuthenticationService
 } from '../../services/authentication.service';
 import {
+  AgentService
+} from '../../services/agent.service';
+import {
   CURRENT_USER
 } from '../../constants/local.storage';
 
@@ -24,16 +27,22 @@ import {
 })
 export class ChooseAgentComponent implements OnInit {
   chooseAgentForm: FormGroup;
-  commercialStructureLOV : [];
-  agentLOV: [];
+  commercialStructureLOV: any[];
+  agentLOV: any[];
 
   constructor(private router: Router,
     private authenticationService: AuthenticationService,
+    private agentService: AgentService,
     private fb: FormBuilder) {
-      this.createForm();
-    }
+    this.createForm();
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const _this = this;
+    this.agentService.getCommercialStructure().then(res => {
+      _this.commercialStructureLOV = res;
+    });
+  }
 
   createForm() {
     this.chooseAgentForm = this.fb.group({
@@ -43,7 +52,11 @@ export class ChooseAgentComponent implements OnInit {
   }
 
   comStructureChange() {
-    console.log('test');
+    const _this = this;
+    const commercialStructure = this.chooseAgentForm.get('commercialStructure').value; 
+    this.agentService.getAgentList(commercialStructure).then(res => {
+      _this.commercialStructureLOV = res;
+    });
   }
 
   next() {
