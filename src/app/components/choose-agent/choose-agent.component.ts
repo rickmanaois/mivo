@@ -53,8 +53,7 @@ export class ChooseAgentComponent implements OnInit {
 
   comStructureChange() {
     const _this = this;
-    let commercialStructure : number;
-    commercialStructure = parseInt(this.chooseAgentForm.get('commercialStructure').value); 
+    const commercialStructure : number = parseInt(this.chooseAgentForm.get('commercialStructure').value); 
     this.agentService.getAgentList(commercialStructure).then(res => {
       _this.agentLOV = res;
     });
@@ -62,10 +61,17 @@ export class ChooseAgentComponent implements OnInit {
 
   next() {
     const currentUser = this.authenticationService.currentUserValue;
-    currentUser.agentCode = 3;
+    const agentCode : number = parseInt(this.chooseAgentForm.get('agent').value); 
+    currentUser.agentCode = agentCode;
     //adds chosen agent to current user detail
     localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser));
-    this.router.navigate(['']);
+
+    const param = {agentCode: agentCode, userCode: agentCode};
+
+    this.agentService.getProductionAgentProfile(JSON.stringify(param)).then(res => {
+      console.log(res);
+      this.router.navigate(['']);
+    });
   }
 
 }

@@ -5,6 +5,7 @@ import {
   AppService
 } from './app.service';
 import { HttpParams } from '@angular/common/http';
+import { ReturnDTO } from '../objects/ReturnDTO';
 
 @Injectable()
 export class AgentService {
@@ -19,6 +20,10 @@ export class AgentService {
   }
 
   async getEAAgentList(agentCode: number): Promise < any[] > {
-    return this.app.doWhatever({agentCode}, '/agent/getEAAgentList').then(objArr => objArr as any[]);
+    return this.app.doWhatever(agentCode, '/agent/getEAAgentList').then(objArr => objArr as any[]);
+  }
+
+  async getProductionAgentProfile(param: String): Promise < ReturnDTO > {
+    return this.app.doWhatever(param, '/agent/getProductionAgentProfile').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 }
