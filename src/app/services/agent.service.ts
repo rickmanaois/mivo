@@ -15,7 +15,7 @@ export class AgentService {
   }
 
   async getAgentList(commercialStructure: number): Promise < any[] > {
-    return this.app.doWhatever({commercialStructure}, '/agent/getAgentList').then(objArr => objArr as any[]);
+    return this.app.doWhatever(commercialStructure, '/agent/getAgentList').then(objArr => objArr as any[]);
   }
 
   async getEAAgentList(agentCode: number): Promise < any[] > {
