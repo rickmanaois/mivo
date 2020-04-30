@@ -29,8 +29,8 @@
                 || chooseAgentForm.controls['agent'].touched)}">
                   <label for="agent">Agent</label>
                   <select class="custom-select mr-sm-2 required" formControlName="agent">
-                    <option *ngFor="let agentDetail of agentLOV" [ngValue]="agentDetail.COD_AGT">
-                      {{ agentDetail.NOM_COMPLETO }}</option>
+                    <option *ngFor="let agentDetail of agentLOV" [ngValue]="agentDetail.codAgt">
+                      {{ agentDetail.nomCompleto }}</option>
                   </select>
                   <p class="form-error" *ngIf="chooseAgentForm.controls['agent'].errors?.required">
                     * agent is required
