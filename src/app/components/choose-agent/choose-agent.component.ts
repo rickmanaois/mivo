@@ -56,7 +56,7 @@ export class ChooseAgentComponent implements OnInit {
     let commercialStructure : number;
     commercialStructure = parseInt(this.chooseAgentForm.get('commercialStructure').value); 
     this.agentService.getAgentList(commercialStructure).then(res => {
-      _this.commercialStructureLOV = res;
+      _this.agentLOV = res;
     });
   }
 
