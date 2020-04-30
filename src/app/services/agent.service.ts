@@ -4,12 +4,7 @@ import {
 import {
   AppService
 } from './app.service';
-import {
-  LOV
-} from '../objects/LOV';
-import {
-  OptionList
-} from '../objects/OptionList';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class AgentService {
@@ -19,8 +14,11 @@ export class AgentService {
     return this.app.doWhatever(null, '/agent/getCommercialStructure').then(objArr => objArr as any[]);
   }
 
-  async getAgentList(commercialStructure: number): Promise < any[] > {
-    return this.app.doWhatever({commercialStructure}, '/agent/getAgentList').then(objArr => objArr as any[]);
+  async getAgentList(commercialStructure: any): Promise < any[] > {
+    const params = new HttpParams()
+    .set('commercialStructure', commercialStructure);
+
+    return this.app.doWhatever({params}, '/agent/getAgentList').then(objArr => objArr as any[]);
   }ß
 
   async getEAAgentList(agentCode: number): Promise < any[] > {
