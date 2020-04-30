@@ -53,7 +53,7 @@ export class ChooseAgentComponent implements OnInit {
 
   comStructureChange() {
     const _this = this;
-    const commercialStructure : number = parseInt(this.chooseAgentForm.get('commercialStructure').value); 
+    const commercialStructure: number = parseInt(this.chooseAgentForm.get('commercialStructure').value);
     this.agentService.getAgentList(commercialStructure).then(res => {
       _this.agentLOV = res;
     });
@@ -61,16 +61,28 @@ export class ChooseAgentComponent implements OnInit {
 
   next() {
     const currentUser = this.authenticationService.currentUserValue;
-    const agentCode : number = parseInt(this.chooseAgentForm.get('agent').value); 
+    const agentCode: number = parseInt(this.chooseAgentForm.get('agent').value);
     currentUser.agentCode = agentCode;
     //adds chosen agent to current user detail
     localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser));
 
-    const param = {agentCode: agentCode, userCode: agentCode};
+    const param = {
+      agentCode: agentCode,
+      userCode: agentCode
+    };
 
     this.agentService.getProductionAgentProfile(JSON.stringify(param)).then(res => {
       if (res.status) {
-        alert(res.obj);
+        currentUser.selectedAgent.agentCode = res.obj["codAgente"];
+        currentUser.selectedAgent.agentName = res.obj["nomAgente"];
+        currentUser.selectedAgent.documentCode = res.obj["codDocumento"];
+        currentUser.selectedAgent.documentType = res.obj["tipoDocumento"];
+        currentUser.selectedAgent.documentName = res.obj["nomTipoDocumento"];
+        currentUser.selectedAgent.agentType = res.obj["tipoAgente"];
+        currentUser.selectedAgent.agentTypeName = res.obj["nomTipoAgente"];
+        currentUser.selectedAgent.agentAddress = res.obj["dirAgente"];
+        //adds chosen agent to current user detail
+        localStorage.setItem(CURRENT_USER, JSON.stringify(currentUser));
       }
       this.router.navigate(['']);
     });
