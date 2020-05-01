@@ -50,4 +50,11 @@ export class Utility {
   static scroll(el: HTMLElement) {
     el.scrollIntoView({behavior: 'smooth'});
   }
+
+  static parseIntArray(arr: any[], param: string) {
+    arr.forEach(a => {
+      a[param] = parseInt(a[param]);
+    });
+    return arr;
+  }
 }
