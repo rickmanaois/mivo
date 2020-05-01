@@ -1,4 +1,6 @@
-﻿export class User {
+﻿import { SelectedAgent } from './SelectedAgent';
+
+export class User {
   userId: number;
   role: number;
   agentCode: number;
@@ -8,6 +10,7 @@
   fullName: string;
   address: string;
   expiryDay: number;
+  selectedAgent: SelectedAgent;
 
   token: string;
   constructor(init ? : Partial < User > ) {

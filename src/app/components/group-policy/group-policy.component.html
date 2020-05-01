@@ -87,7 +87,7 @@
             && (gpForm.controls['agentCode'].dirty 
             || gpForm.controls['agentCode'].touched)}">
             <label for="agentCode">Agent Code</label>
-            <input type="text" formControlName="agentCode" class="form-control required"
+            <input type="number" formControlName="agentCode" class="form-control required"
               [(ngModel)]="groupPolicy.agentCode">
             <p class="form-error" *ngIf="gpForm.controls['agentCode'].errors?.required">
               * agent code is required

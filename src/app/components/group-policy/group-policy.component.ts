@@ -20,6 +20,9 @@ import {
 import {
   GroupPolicy
 } from 'src/app/objects/GroupPolicy';
+import {
+  AuthenticationService
+} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-group-policy',
@@ -28,6 +31,7 @@ import {
 })
 
 export class GroupPolicyComponent {
+  currentUser = this.authenticationService.currentUserValue;
   @Input() subline: String;
   @Input() groupPolicy: GroupPolicy;
   @Input() details: any;
@@ -41,13 +45,14 @@ export class GroupPolicyComponent {
 
   constructor(
     private gplov: GroupPolicyLOVServices,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private authenticationService: AuthenticationService) {
     this.createForm();
   }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.groupPolicy.agentCode = '1101'; //TODO
+      this.groupPolicy.agentCode = this.currentUser.agentCode; //TODO
 
       const _this = this;
       this.gplov.getCommercialStructure().then(res => {

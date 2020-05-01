@@ -3,7 +3,7 @@ export class GroupPolicy {
   contract: number;
   subContract: number;
   commercialStructure: number;
-  agentCode: string;
+  agentCode: number;
   cbIsRenewal: boolean;
   expiringPolicyNumber: string;
   

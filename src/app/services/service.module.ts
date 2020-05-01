@@ -28,10 +28,13 @@ import {
   CarQuoteServices
 } from './car-quote.service';
 import {
-  LovService
-} from './lov.service';
+  AgentService
+} from './agent.service';
 
 /* LOV Services */
+import {
+  LovService
+} from './lov.service';
 import {
   GroupPolicyLOVServices
 } from './lov/group-policy.service';
@@ -62,8 +65,9 @@ import {
     QuickQuoteService,
     CarUtilityServices,
     CarQuoteServices,
+    AgentService,
+    
     LovService,
-
     GroupPolicyLOVServices,
     CarLOVServices,
     HomeLOVServices,
