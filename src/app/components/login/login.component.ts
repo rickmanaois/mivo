@@ -27,6 +27,9 @@ import {
 import {
   MIVO_LOGIN
 } from '../../constants/local.storage';
+import {
+  VER
+} from '../../constants/app.constant';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +43,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   message: any;
   alert: boolean;
+  version = VER;
 
   //modal reference
   modalRef: BsModalRef;

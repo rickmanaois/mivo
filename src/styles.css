@@ -201,3 +201,8 @@ form .card-header.optional {
 #quickQouteDetails p {
   margin-bottom: 0px;
 }
+
+/* modal */
+.modal-body {
+  overflow-wrap: break-word;
+}
