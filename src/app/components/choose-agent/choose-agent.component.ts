@@ -57,7 +57,6 @@ export class ChooseAgentComponent implements OnInit {
     this.agentService.getCommercialStructure().then(res => {
       _this.commercialStructureLOV = res;
     });
-
   }
 
   createForm() {
@@ -96,7 +95,7 @@ export class ChooseAgentComponent implements OnInit {
     this.agentService.getProductionAgentProfile(JSON.stringify(param)).then(res => {
       if (res.status) {
         var sa = new SelectedAgent();
-        sa.agentCode = res.obj["codAgente"];
+        sa.agentCode = parseInt(res.obj["codAgente"]);
         sa.agentName = res.obj["nomAgente"];
         sa.documentCode = res.obj["codDocumento"];
         sa.documentType = res.obj["tipoDocumento"];
