@@ -39,7 +39,7 @@
 
                 <div class="btn-group" role="group">
                   <button type="button" class="btn btn-primary" (click)="next()">Next - for dev</button>
-                  <button [disabled]="chooseAgentForm.pristine || chooseAgentForm.invalid" type="button"
+                  <button [disabled]="(chooseAgentForm.pristine || chooseAgentForm.invalid)" type="button"
                     class="btn btn-primary" (click)="next()">Next</button>
                 </div>
                 <!-- .btn-group -->

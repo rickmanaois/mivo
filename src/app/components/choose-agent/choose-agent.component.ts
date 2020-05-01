@@ -60,8 +60,8 @@ export class ChooseAgentComponent implements OnInit {
   }
 
   createForm() {
-    let comval = 0;
-    let agentval = 0;
+    let comval = null;
+    let agentval = null;
     if (this.hasSelectedAgent) {
       comval = this.currentUser.selectedAgent.commStructure;
       agentval = this.currentUser.selectedAgent.agentCode;
