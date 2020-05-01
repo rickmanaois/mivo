@@ -47,10 +47,12 @@ export class Utility {
     });
   }
 
+  //smooth scroll to preferred html element
   static scroll(el: HTMLElement) {
     el.scrollIntoView({behavior: 'smooth'});
   }
 
+  //converts string value to integer
   static parseIntArray(arr: any[], param: string) {
     arr.forEach(a => {
       a[param] = parseInt(a[param]);

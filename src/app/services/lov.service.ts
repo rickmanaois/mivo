@@ -10,6 +10,9 @@ import {
 import {
   OptionList
 } from '../objects/OptionList';
+import {
+  Utility
+} from '../utils/utility';
 
 @Injectable()
 export class LovService {
@@ -20,7 +23,7 @@ export class LovService {
   }
 
   async getIntLOV(dto: LOV, param: string): Promise < any[] > {
-    return this.parseIntArray(await this.app.doWhatever(dto, '/getLOV').then(objArr => objArr as any[]), param);
+    return Utility.parseIntArray(await this.app.doWhatever(dto, '/getLOV').then(objArr => objArr as any[]), param);
   }
 
   async getOptionList(dto: OptionList): Promise < any[] > {
@@ -28,13 +31,6 @@ export class LovService {
   }
 
   async getIntOptionList(dto: OptionList, param: string): Promise < any[] > {
-    return this.parseIntArray(await this.app.doWhatever(dto, '/getOptionList').then(objArr => objArr as any[]), param);
-  }
-
-  private parseIntArray(arr: any[], param: string) {
-    arr.forEach(a => {
-      a[param] = parseInt(a[param]);
-    });
-    return arr;
+    return Utility.parseIntArray(await this.app.doWhatever(dto, '/getOptionList').then(objArr => objArr as any[]), param);
   }
 }
