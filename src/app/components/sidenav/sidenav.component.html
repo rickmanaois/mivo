@@ -73,14 +73,14 @@
     </a>
     <div id="quickQuotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a *ngIf="menu.quickCar" class="collapse-item" [ngClass]="{'active': page==p.QUI.CAR}" (click)="setPage(p.QUI.CAR)"><i
-            class="fas fa-fw fa-car"></i> Car</a>
-        <a *ngIf="menu.quickHome" class="collapse-item" [ngClass]="{'active': page==p.QUI.HOM}" (click)="setPage(p.QUI.HOM)"><i
-            class="fas fa-fw fa-home"></i> Home</a>
-        <a *ngIf="menu.quickTravel" class="collapse-item" [ngClass]="{'active': page==p.QUI.TRA}" (click)="setPage(p.QUI.TRA)"><i
-            class="fas fa-fw fa-plane"></i> Travel</a>
-        <a *ngIf="menu.quickAccident" class="collapse-item" [ngClass]="{'active': page==p.QUI.ACC}" (click)="setPage(p.QUI.ACC)"><i
-            class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <a *ngIf="menu.quickCar" class="collapse-item" [ngClass]="{'active': page==p.QUI.CAR}"
+          (click)="setPage(p.QUI.CAR)"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a *ngIf="menu.quickHome" class="collapse-item" [ngClass]="{'active': page==p.QUI.HOM}"
+          (click)="setPage(p.QUI.HOM)"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a *ngIf="menu.quickTravel" class="collapse-item" [ngClass]="{'active': page==p.QUI.TRA}"
+          (click)="setPage(p.QUI.TRA)"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a *ngIf="menu.quickAccident" class="collapse-item" [ngClass]="{'active': page==p.QUI.ACC}"
+          (click)="setPage(p.QUI.ACC)"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
       </div>
     </div>
   </li>
@@ -93,14 +93,14 @@
     </a>
     <div id="quotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
-        <a *ngIf="menu.quotationCar" class="collapse-item" [ngClass]="{'active': page==p.QUO.CAR}" (click)="setPage(p.QUO.CAR)"><i
-            class="fas fa-fw fa-car"></i> Car</a>
-        <a *ngIf="menu.quotationHome" class="collapse-item" [ngClass]="{'active': page==p.QUO.HOM}" (click)="setPage(p.QUO.HOM)"><i
-            class="fas fa-fw fa-home"></i> Home</a>
-        <a *ngIf="menu.quotationTravel" class="collapse-item" [ngClass]="{'active': page==p.QUO.TRA}" (click)="setPage(p.QUO.TRA)"><i
-            class="fas fa-fw fa-plane"></i> Travel</a>
-        <a *ngIf="menu.quotationAccident" class="collapse-item" [ngClass]="{'active': page==p.QUO.ACC}" (click)="setPage(p.QUO.ACC)"><i
-            class="fas fa-fw fa-shield-alt"></i> Accident</a>
+        <a *ngIf="menu.quotationCar" class="collapse-item" [ngClass]="{'active': page==p.QUO.CAR}"
+          (click)="setPage(p.QUO.CAR)"><i class="fas fa-fw fa-car"></i> Car</a>
+        <a *ngIf="menu.quotationHome" class="collapse-item" [ngClass]="{'active': page==p.QUO.HOM}"
+          (click)="setPage(p.QUO.HOM)"><i class="fas fa-fw fa-home"></i> Home</a>
+        <a *ngIf="menu.quotationTravel" class="collapse-item" [ngClass]="{'active': page==p.QUO.TRA}"
+          (click)="setPage(p.QUO.TRA)"><i class="fas fa-fw fa-plane"></i> Travel</a>
+        <a *ngIf="menu.quotationAccident" class="collapse-item" [ngClass]="{'active': page==p.QUO.ACC}"
+          (click)="setPage(p.QUO.ACC)"><i class="fas fa-fw fa-shield-alt"></i> Accident</a>
       </div>
     </div>
   </li>
@@ -168,7 +168,7 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    Agent Information
+    User Information
   </div>
 
   <!-- Nav Item - Charts -->
@@ -181,16 +181,42 @@
   <li class="nav-item">
     <div class="nav-link">
       <i class="fas fa-fw fa-key"></i>
-      <span>Your password will expire in <strong>{{currentUser.expiryDay}} {{currentUser.expiryDay <= 1 ? 'day' : 'days' }}</strong></span></div>
+      <span>Your password will expire in <strong>{{currentUser.expiryDay}}
+          {{currentUser.expiryDay <= 1 ? 'day' : 'days' }}</strong></span></div>
   </li>
 
+  <div *ngIf="hasSelectedAgent">
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
 
-  <!-- Divider -->
-  <hr class="sidebar-divider d-none d-md-block">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      Agent Information
+    </div>
+
+    <!-- Nav Item - Charts -->
+
+    <li class="nav-item">
+      <div class="nav-link">
+        <label>Name</label>
+        <br>
+        <i class="fas fa-fw fa-caret-right"></i>
+        <span>{{currentUser.selectedAgent.agentName}}</span></div>
+    </li>
+
+    <li class="nav-item">
+      <div class="nav-link">
+        <label>Address</label>
+        <br>
+        <i class="fas fa-fw fa-caret-right"></i>
+        <span>{{currentUser.selectedAgent.agentAddress}}</span></div>
+    </li>
+  </div>
+
 
   <!-- Sidebar Toggler (Sidebar) -->
-  <div class="text-center d-none d-md-inline">
+  <!-- <div class="text-center d-none d-md-inline">
     <button class="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
+  </div> -->
 
 </ul>

@@ -12,3 +12,6 @@ export const AUTH_TOKEN = environment.apiUrl + 'oauth/token';
 
 //access API URL
 export const API_URL = environment.apiUrl + 'api';
+
+//deployment version
+export const VER = 'v1.20200501';

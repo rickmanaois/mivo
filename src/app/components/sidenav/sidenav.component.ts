@@ -14,6 +14,9 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
+import {
+  Utility
+} from 'src/app/utils/utility';
 
 @Component({
   selector: 'app-sidenav',
@@ -22,6 +25,7 @@ import {
 })
 export class SidenavComponent implements OnInit {
   currentUser = this.authenticationService.currentUserValue;
+  hasSelectedAgent = !Utility.isUndefined(this.currentUser.selectedAgent);
   p = page; //constant pages
   menu = JSON.parse(localStorage.getItem(MENU));
 
