@@ -7,6 +7,7 @@
   agentType: number;
   agentTypeName: string;
   agentAddress: string;
+  commStructure: number;
 
   token: string;
   constructor(init ? : Partial < SelectedAgent > ) {
