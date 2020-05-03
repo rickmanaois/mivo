@@ -16,18 +16,18 @@ export class AgentService {
   constructor(private app: AppService) {}
 
   async getCommercialStructure(): Promise < any[] > {
-    return Utility.parseIntArray(await this.app.doWhatever(null, '/agent/getCommercialStructure').then(objArr => objArr as any[]), 'codNivel3');
+    return Utility.parseIntArray(await this.app.post(null, '/agent/getCommercialStructure').then(objArr => objArr as any[]), 'codNivel3');
   }
 
   async getAgentList(commercialStructure: number): Promise < any[] > {
-    return Utility.parseIntArray(await this.app.doWhatever(commercialStructure, '/agent/getAgentList').then(objArr => objArr as any[]), 'codAgt')
+    return Utility.parseIntArray(await this.app.post(commercialStructure, '/agent/getAgentList').then(objArr => objArr as any[]), 'codAgt')
   }
 
   async getEAAgentList(agentCode: number): Promise < any[] > {
-    return this.app.doWhatever(agentCode, '/agent/getEAAgentList').then(objArr => objArr as any[]);
+    return this.app.post(agentCode, '/agent/getEAAgentList').then(objArr => objArr as any[]);
   }
 
   async getProductionAgentProfile(param: String): Promise < ReturnDTO > {
-    return this.app.doWhatever(param, '/agent/getProductionAgentProfile').then(ReturnDTO => ReturnDTO as ReturnDTO);
+    return this.app.post(param, '/agent/getProductionAgentProfile').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 }

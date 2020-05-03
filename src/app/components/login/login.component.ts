@@ -30,6 +30,12 @@ import {
 import {
   VER
 } from '../../constants/app.constant';
+import {
+  Globals
+} from '../../utils/global';
+import {
+  page
+} from '../../constants/page';
 
 @Component({
   selector: 'app-login',
@@ -102,6 +108,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          Globals.setPage(page.DAS.N);
           if (data.role === 1) {
             this.router.navigate([this.returnUrl]);
           } else {

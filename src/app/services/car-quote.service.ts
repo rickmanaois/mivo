@@ -16,6 +16,6 @@ export class CarQuoteServices {
   constructor(private app: AppService) {}
 
   async getCoverageByProduct(carDetails: QuoteCar): Promise < ReturnDTO > {
-    return this.app.doWhatever(carDetails, '/quote/getCoverageByProduct').then(ReturnDTO => ReturnDTO as ReturnDTO);
+    return this.app.post(carDetails, '/quote/getCoverageByProduct').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 }

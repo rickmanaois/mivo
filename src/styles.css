@@ -13,7 +13,8 @@ body {
   font-family: 'Source Sans Pro', Roboto, "Helvetica Neue", sans-serif !important;
 }
 
-body, .btn {
+body,
+.btn {
   font-size: 0.8750em;
 }
 
@@ -151,37 +152,38 @@ form .card-header.optional {
 }
 
 /* product comparison styles */
-.product-comparison  .card,
-.product-comparison  h6 {
+.product-comparison .card,
+.product-comparison h6 {
   margin-top: 10px;
 }
 
-.product-comparison  .mat-table {
+.product-comparison .mat-table {
   width: 100%;
 }
 
-.product-comparison  table {
+.product-comparison table {
   text-align: center !important;
   width: 100%;
 }
 
-.product-comparison  table .amount {
+.product-comparison table .amount {
   text-align: right !important;
 }
 
-.product-comparison  table h6 {
+.product-comparison table h6 {
   margin: 0 !important;
 }
 
-.product-comparison  tr.mat-header-row {
+.product-comparison tr.mat-header-row {
   background: #f7f7f7;
 }
 
-.product-comparison  .mat-header-cell {
+.product-comparison .mat-header-cell {
   text-align: center;
 }
 
-.product-img-banner, .payment-img-banner {
+.product-img-banner,
+.payment-img-banner {
   width: 100%;
 }
 
@@ -205,4 +207,11 @@ form .card-header.optional {
 /* modal */
 .modal-body {
   overflow-wrap: break-word;
+}
+
+/* utilities */
+/* Add the blur effect */
+.blur {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
 }
