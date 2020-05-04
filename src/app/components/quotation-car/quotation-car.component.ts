@@ -133,7 +133,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   setValue() {
     //setting default value
     this.carDetails.color = 9999; // undeclared
-    this.carDetails.receivedBy = this.currentUser.username; //TODO
+    this.carDetails.receivedBy = this.currentUser.userName; //TODO
     this.carDetails.purchaseDate = this.today; // current today
     this.carDetails.receivedDate = this.today; // current today
     this.carDetails.effectivityDate = this.today; // current today
