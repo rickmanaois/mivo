@@ -80,6 +80,10 @@ export class ChooseAgentComponent implements OnInit {
     });
   }
 
+  cancel() {
+    this.router.navigate(['']);
+  };
+
   next() {
     const currentUser = this.authenticationService.currentUserValue;
     const agentCode: number = parseInt(this.chooseAgentForm.get('agent').value);
