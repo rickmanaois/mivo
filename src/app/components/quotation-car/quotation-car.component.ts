@@ -453,6 +453,11 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
 
     this.cu.getPreFields(this.carDetails).then(res => {
+      if (res.status) {
+        _this.carDetails.seatingCapacity = res.obj["seatingCapacity"];
+        _this.carDetails.weight = res.obj["weight"];
+        _this.carDetails.displacement = res.obj["displacement"];
+      }
       console.log(res)
     });
   }
