@@ -39,7 +39,7 @@ export class QuoteCar {
   expiryDate: Date;
   
   //additional policy information
-  customerRiskName: string;
+  customRiskName: string;
   seatingCapacity: number;
   weight: string;
   displacement: string;

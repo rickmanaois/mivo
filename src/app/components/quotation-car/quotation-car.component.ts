@@ -169,7 +169,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
       //additional policy information
-      customerRiskName: [null],
+      customRiskName: [null],
       seatingCapacity: [null],
       weight: [null],
       displacement: [null],
@@ -452,13 +452,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       _this.LOV.productListLOV = res;
     });
 
-    this.cu.getPreFields(this.carDetails).then(res => {
+    this.cu.getPreAdditionalInfo(this.carDetails).then(res => {
       if (res.status) {
         _this.carDetails.seatingCapacity = res.obj["seatingCapacity"];
         _this.carDetails.weight = res.obj["weight"];
         _this.carDetails.displacement = res.obj["displacement"];
+        _this.carDetails.customRiskName = res.obj["customRiskName"];
       }
-      console.log(res)
     });
   }
 
