@@ -38,4 +38,12 @@ export class CarUtilityServices {
     return this.app.post(null, '/car/getSubagents').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 
+  async getCustomerRiskName(): Promise < ReturnDTO > {
+    return this.app.post(null, '/car/getCustomerRiskName').then(ReturnDTO => ReturnDTO as ReturnDTO);
+  }
+
+  async getPreFields(carDetails: QuoteCar): Promise < ReturnDTO > {
+    return this.app.post(carDetails, '/car/getPreFields').then(ReturnDTO => ReturnDTO as ReturnDTO);
+  }
+
 }

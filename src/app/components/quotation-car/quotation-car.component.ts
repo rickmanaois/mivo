@@ -451,6 +451,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carlov.getProduct(this.carDetails).then(res => {
       _this.LOV.productListLOV = res;
     });
+
+    this.cu.getPreFields(this.carDetails).then(res => {
+      console.log(res)
+    });
   }
 
   effectivityDateOnChange() {
