@@ -37,6 +37,7 @@ export class ChooseAgentComponent implements OnInit {
   agentLOV: any[];
   currentUser = this.authenticationService.currentUserValue;
   hasSelectedAgent = !Utility.isUndefined(this.currentUser.selectedAgent);
+  showCancelBtn: boolean = false;
 
   constructor(private router: Router,
     private authenticationService: AuthenticationService,
@@ -49,6 +50,7 @@ export class ChooseAgentComponent implements OnInit {
   ngOnInit(): void {
     const _this = this;
     if (this.hasSelectedAgent) {
+      this.showCancelBtn = true;
       this.agentService.getAgentList(this.currentUser.selectedAgent.commStructure).then(res => {
         _this.agentLOV = res;
       });
