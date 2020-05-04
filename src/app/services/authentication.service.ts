@@ -72,7 +72,10 @@ export class AuthenticationService {
       'issuanceHome',
       'issuanceTravel',
       'issuanceAccident',
+      'account',
       'client',
+      'issuance',
+      'utilities',
       'news',
       'requests'
     ];

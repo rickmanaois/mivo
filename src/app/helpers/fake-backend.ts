@@ -29,7 +29,7 @@ import {
 const users = [{
   userId: 1,
   role: 1,
-  username: 'np',
+  userName: 'np',
   password: 'np',
   firstName: 'Nathalie',
   lastName: 'Domingo',
@@ -40,7 +40,7 @@ const users = [{
 },{
   userId: 2,
   role: 2,
-  username: 'jb',
+  userName: 'jb',
   password: 'jb',
   firstName: 'Jethru',
   lastName: 'Balarbar',
@@ -89,7 +89,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         username,
         password
       } = body;
-      const user = users.find(x => x.username === username && x.password === password);
+      const user = users.find(x => x.userName === username && x.password === password);
       if (!user) return error('Username or password is incorrect');
       return ok(new User(user))
     }
@@ -97,7 +97,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     function register() {
       const user = body
 
-      if (users.find(x => x.username === user.username)) {
+      if (users.find(x => x.userName === user.username)) {
         return error('Username "' + user.username + '" is already taken')
       }
 

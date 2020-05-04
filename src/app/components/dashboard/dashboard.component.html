@@ -10,12 +10,14 @@
             <div class="row">
               <div class="col-md-6">
                 <span class="fe-rate">
-                  <strong><i class="fas fa-dollar-sign"></i> DOLLAR</strong>: PHP50.765
+                  <strong><i class="fas fa-dollar-sign"></i> DOLLAR</strong>:
+                  {{forex.dollar | currency:'PHP': 'symbol-narrow'}}
                 </span>
               </div>
               <div class="col-md-6">
                 <span class="fe-rate">
-                  <strong><i class="fas fa-euro-sign"></i> EURO</strong>: PHP56.734
+                  <strong><i class="fas fa-euro-sign"></i> EURO</strong>:
+                  {{forex.euro | currency:'PHP': 'symbol-narrow'}}
                 </span>
               </div>
             </div>
@@ -31,7 +33,7 @@
   <!-- Total Collected Premium -->
   <div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
+      <div class="card-body blur">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Collected Premium
@@ -49,7 +51,7 @@
   <!-- Active Policies -->
   <div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-info shadow h-100 py-2">
-      <div class="card-body">
+      <div class="card-body blur">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Active Policies</div>
@@ -73,7 +75,7 @@
     <div class="card shadow mb-4">
       <!-- Card Header - Dropdown -->
       <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Agent Production 2019</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Agent Production</h6>
         <div class="dropdown no-arrow">
           <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
@@ -91,7 +93,7 @@
       <!-- Card Body -->
       <div class="card-body">
         <div class="chart-area">
-          <canvas id="myBarChart"></canvas>
+          <canvas class="blur" id="myBarChart"></canvas>
         </div>
       </div>
     </div>

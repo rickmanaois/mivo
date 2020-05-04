@@ -19,18 +19,18 @@ export class LovService {
   constructor(private app: AppService) {}
 
   async getLOV(dto: LOV): Promise < any[] > {
-    return this.app.doWhatever(dto, '/getLOV').then(objArr => objArr as any[]);
+    return this.app.post(dto, '/getLOV').then(objArr => objArr as any[]);
   }
 
   async getIntLOV(dto: LOV, param: string): Promise < any[] > {
-    return Utility.parseIntArray(await this.app.doWhatever(dto, '/getLOV').then(objArr => objArr as any[]), param);
+    return Utility.parseIntArray(await this.app.post(dto, '/getLOV').then(objArr => objArr as any[]), param);
   }
 
   async getOptionList(dto: OptionList): Promise < any[] > {
-    return this.app.doWhatever(dto, '/getOptionList').then(objArr => objArr as any[]);
+    return this.app.post(dto, '/getOptionList').then(objArr => objArr as any[]);
   }
 
   async getIntOptionList(dto: OptionList, param: string): Promise < any[] > {
-    return Utility.parseIntArray(await this.app.doWhatever(dto, '/getOptionList').then(objArr => objArr as any[]), param);
+    return Utility.parseIntArray(await this.app.post(dto, '/getOptionList').then(objArr => objArr as any[]), param);
   }
 }

@@ -4,7 +4,7 @@ export class User {
   userId: number;
   role: number;
   agentCode: number;
-  username: string;
+  userName: string;
   firstName: string;
   lastName: string;
   fullName: string;

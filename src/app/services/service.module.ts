@@ -30,6 +30,9 @@ import {
 import {
   AgentService
 } from './agent.service';
+import {
+  DashboardService
+} from './dashboard.service';
 
 /* LOV Services */
 import {
@@ -66,6 +69,7 @@ import {
     CarUtilityServices,
     CarQuoteServices,
     AgentService,
+    DashboardService,
     
     LovService,
     GroupPolicyLOVServices,

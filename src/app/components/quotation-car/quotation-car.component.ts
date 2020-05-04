@@ -133,7 +133,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   setValue() {
     //setting default value
     this.carDetails.color = 9999; // undeclared
-    this.carDetails.receivedBy = this.currentUser.username; //TODO
+    this.carDetails.receivedBy = this.currentUser.userName; //TODO
     this.carDetails.purchaseDate = this.today; // current today
     this.carDetails.receivedDate = this.today; // current today
     this.carDetails.effectivityDate = this.today; // current today
@@ -169,7 +169,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
       //additional policy information
-      customerRiskName: [null],
+      customRiskName: [null],
       seatingCapacity: [null],
       weight: [null],
       displacement: [null],
@@ -192,6 +192,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   async validateConductionNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
+      this.carDetails.conductionNumber = control.value;
       return this.cu.validateConductionNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidConductionNumber: true
@@ -449,6 +450,15 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
     this.carlov.getProduct(this.carDetails).then(res => {
       _this.LOV.productListLOV = res;
+    });
+
+    this.cu.getPreAdditionalInfo(this.carDetails).then(res => {
+      if (res.status) {
+        _this.carDetails.seatingCapacity = res.obj["seatingCapacity"];
+        _this.carDetails.weight = res.obj["weight"];
+        _this.carDetails.displacement = res.obj["displacement"];
+        _this.carDetails.customRiskName = res.obj["customRiskName"];
+      }
     });
   }
 
