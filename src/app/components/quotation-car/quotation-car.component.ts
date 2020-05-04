@@ -192,6 +192,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   async validateConductionNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
+      this.carDetails.conductionNumber = control.value;
       return this.cu.validateConductionNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidConductionNumber: true
