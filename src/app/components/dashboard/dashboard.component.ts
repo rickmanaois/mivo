@@ -22,8 +22,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     const _this = this;
     this.ds.getForexExchange().then((res)=>{
-      console.log(res);
-      
+      if (res.status) {
+        _this.forex.dollar = res.obj["dollar"];
+        _this.forex.euro = res.obj["euro"];
+      }
     });
     this.loadScripts();
   }
