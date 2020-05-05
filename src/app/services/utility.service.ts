@@ -1,6 +1,7 @@
 import {
   Injectable
 } from '@angular/core';
+import 'rxjs/add/operator/map';
 import {
   HttpClient
 } from '@angular/common/http';
@@ -19,7 +20,7 @@ export class UtilityService {
     return this.http.post(
       API_URL + '/utility/documentPrinting',
       documentPritingDetails, 
-      { responseType: 'blob' }).subscribe((res: Blob) => {
+      { responseType: 'blob' }).map((res: Blob) => {
         var data = new Blob([res], {
           type: 'application/pdf'
         });
