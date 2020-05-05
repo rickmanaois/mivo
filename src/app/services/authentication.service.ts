@@ -75,7 +75,8 @@ export class AuthenticationService {
       'account',
       'client',
       'issuance',
-      'utilities',
+      'query',
+      'changePassword',
       'news',
       'requests'
     ];
