@@ -1,0 +1,163 @@
+<div class="row" id="documentPrinting">
+  <div class="col-xl-12">
+    <div class="page-header">
+      <h4>Document Printing</h4>
+    </div>
+    <!-- .page-header -->
+  </div>
+  <!-- .col-xl-12 -->
+
+  <div class="col-xl-12">
+    <div class="card shadow">
+      <div class="card-body">
+
+        <form [formGroup]="documentPrintingForm">
+          <div class="row">
+            <div class="col-xl-5 col-md-5 col-sm-12">
+              <div class="form-group input-group mb-3" [ngClass]="{'input-error': documentPrintingForm.controls['documentType'].invalid 
+                && (documentPrintingForm.controls['documentType'].dirty 
+                || documentPrintingForm.controls['documentType'].touched)}">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="inputGroupSelect01">Document Type</label>
+                </div>
+
+                <select class="custom-select mr-sm-2" formControlName="documentType"
+                  [(ngModel)]="documentPrintingDetails.documentType">
+                  <option selected>
+                    <p *ngIf="documentPrintingForm.controls['documentType'].errors?.required">
+                      Select Document Type
+                    </p>
+                  </option>
+                  <option value="P">Policy</option>
+                  <option value="Q">Quotation</option>
+                  <option value="C">Commission Statement</option>
+                  <option value="S">Statement of Account</option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-md-7 col-sm-6" *ngIf="showPolicyDetails">
+              <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['policyNumber'].invalid 
+                    && (documentPrintingForm.controls['policyNumber'].dirty 
+                    || documentPrintingForm.controls['policyNumber'].touched)}">
+                <label for="policyNumber">Policy Number</label>
+                <input type="text" formControlName="policyNumber" class="form-control"
+                  [(ngModel)]="documentPrintingDetails.policyNumber">
+                <p class="form-error" *ngIf="documentPrintingForm.controls['policyNumber'].errors?.required">
+                  * policy number is required
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-7 col-sm-6" *ngIf="showQuotationDetails">
+              <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['quotationNumber'].invalid 
+                    && (documentPrintingForm.controls['quotationNumber'].dirty 
+                    || documentPrintingForm.controls['quotationNumber'].touched)}">
+                <label for="quotationNumber">Quotation Number</label>
+                <input type="text" formControlName="quotationNumber" class="form-control"
+                  [(ngModel)]="documentPrintingDetails.quotationNumber">
+                <p class="form-error" *ngIf="documentPrintingForm.controls['quotationNumber'].errors?.required">
+                  * quotation number is required
+                </p>
+              </div>
+            </div>
+
+            <div class="col-md-7 col-sm-6" *ngIf="showCommissionStatementDetails">
+              <div id="quickQouteDetails" class="alert alert-info">
+                <p>No generated COMMISSION STATEMENT for the past 3 months
+                </p>
+              </div>
+              <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['commissionStatementDate'].invalid 
+                && (documentPrintingForm.controls['commissionStatementDate'].dirty 
+                || documentPrintingForm.controls['commissionStatementDate'].touched)}">
+                <label for="commissionStatementDate">Select Date</label>
+                <select class="custom-select mr-sm-2 required" formControlName="commissionStatementDate"
+                  [(ngModel)]="documentPrintingDetails.commissionStatementDate">
+                  <option selected></option>
+                  <option *ngFor="let commissionStatementDate of commissionStatementDateLOV"
+                    [ngValue]="commissionStatementDate.COD_RAMO">{{ commissionStatementDate.NOM_RAMO }}
+                  </option>
+                </select>
+                <p class="form-error" *ngIf="documentPrintingForm.controls['commissionStatementDate'].errors?.required">
+                  * please select a date
+                </p>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="dp-policy col-lg-12" *ngIf="showPolicyDetails">
+              <div class="row">
+
+                <div class="form-divider"></div>
+                <div class="col-xl-12">
+                  <h6>Policy Details</h6>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['endorsementNumber'].invalid 
+                    && (documentPrintingForm.controls['endorsementNumber'].dirty 
+                    || documentPrintingForm.controls['endorsementNumber'].touched)}">
+                    <label for="endorsementNumber">Endorsement Number</label>
+                    <input type="text" formControlName="endorsementNumber" class="form-control"
+                      [(ngModel)]="documentPrintingDetails.endorsementNumber">
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['endorsementNumber'].errors?.required">
+                      * endorsement number is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="policyPPRF" formControlName="policyPPRF"
+                      [(ngModel)]="documentPrintingDetails.policyPPRF">
+                    <label class="form-check-label" for="policyPPRF">
+                      Print Policy Receipt Form (North Luzon Policy)
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="policyPAC" formControlName="policyPAC"
+                      [(ngModel)]="documentPrintingDetails.policyPAC">
+                    <label class="form-check-label" for="policyPAC">
+                      Print Agent's Copy
+                    </label>
+                  </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="policyPV" formControlName="policyPV"
+                      [(ngModel)]="documentPrintingDetails.policyPV">
+                    <label class="form-check-label" for="policyPV">
+                      Print Voucher
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+              <!-- .row -->
+            </div>
+            <!-- dp-policy col-lg-12 -->
+
+          </div>
+          <!-- .row -->
+
+          <div class="btn-group" role="group">
+            <button [disabled]="documentPrintingForm.pristine || documentPrintingForm.invalid" type="button"
+              class="btn btn-primary" (click)="print(documentPrintingDetails)">Print</button>
+          </div>
+          <!-- .btn-group -->
+
+        </form>
+
+      </div>
+      <!-- .card-body -->
+    </div>
+    <!-- .card.shadow -->
+  </div>
+  <!-- .col-xl-12 -->
+</div>
+<!-- #documentPrinting -->

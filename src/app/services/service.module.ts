@@ -33,6 +33,9 @@ import {
 import {
   DashboardService
 } from './dashboard.service';
+import {
+  UtilityService
+} from './utility.service';
 
 /* LOV Services */
 import {
@@ -70,6 +73,7 @@ import {
     CarQuoteServices,
     AgentService,
     DashboardService,
+    UtilityService,
     
     LovService,
     GroupPolicyLOVServices,
