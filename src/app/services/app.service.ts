@@ -43,8 +43,8 @@ export class AppService {
       .catch(err => this.modalRef = Utility.showError(this.modalService, err.message));
   }
 
-  async get(param: any, endpoint: string): Promise < any > {
-    return this.http.get(API_URL + endpoint, param)
+  async get(endpoint: string): Promise < any > {
+    return this.http.get(API_URL + endpoint)
       .toPromise()
       .then(response => response)
       .catch(err => this.modalRef = Utility.showError(this.modalService, err.message));

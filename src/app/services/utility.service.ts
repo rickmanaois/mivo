@@ -41,6 +41,6 @@ export class UtilityService {
   }
 
   async getDateRecords(): Promise < ReturnDTO > {
-    return this.app.get(null, '/utility/getDateRecords').then(ReturnDTO => ReturnDTO as ReturnDTO);
+    return this.app.get('/utility/getDateRecords').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 }
