@@ -16,6 +16,10 @@ import {
 import {
   Utility
 } from '../../utils/utility';
+import {
+  BsModalRef,
+  BsModalService
+} from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-document-printing',
@@ -31,9 +35,13 @@ export class DocumentPrintingComponent implements OnInit {
   showQuotationDetails: boolean = false;
   showCommissionStatementDetails: boolean = false;
 
+  //modal reference
+  modalRef: BsModalRef;
+
   constructor(
     private fb: FormBuilder,
-    private util: UtilityService) {
+    private util: UtilityService,
+    private modalService: BsModalService) {
     this.createForm();
     this.setValidations();
   }
@@ -83,6 +91,7 @@ export class DocumentPrintingComponent implements OnInit {
 
   print(documentPrintingDetails: DocumentPrinting) {
     this.util.validatePrinting(documentPrintingDetails).then((res) => {
+      this.modalRef = Utility.showError(this.modalService, res.message);
       console.log(res);
     });
 

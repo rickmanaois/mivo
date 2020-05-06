@@ -37,6 +37,6 @@ export class UtilityService {
   }
 
   async validatePrinting(documentPritingDetails: DocumentPrinting): Promise < ReturnDTO > {
-    return this.app.post(documentPritingDetails, '/utility/documentPrinting').then(ReturnDTO => ReturnDTO as ReturnDTO);
+    return this.app.post(documentPritingDetails, '/utility/validatePrinting').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 }
