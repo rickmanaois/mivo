@@ -91,14 +91,16 @@ export class DocumentPrintingComponent implements OnInit {
 
   print(documentPrintingDetails: DocumentPrinting) {
     this.util.validatePrinting(documentPrintingDetails).then((res) => {
-      this.modalRef = Utility.showError(this.modalService, res.message);
-      console.log(res);
+      if (res.status) {
+        var ext = res.obj;
+        this.util.printDocument(ext.toString()).subscribe(data => {
+          if (data != null) {
+            window.open(URL.createObjectURL(data));
+          }
+        });
+      } else {
+        this.modalRef = Utility.showError(this.modalService, res.message);
+      }
     });
-
-    // this.util.printDocument(documentPrintingDetails).subscribe(data => {
-    //   if (data != null) {
-    //     window.open(URL.createObjectURL(data));
-    //   }
-    // });
   }
 }

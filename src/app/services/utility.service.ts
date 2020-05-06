@@ -24,10 +24,10 @@ export class UtilityService {
     private app: AppService,
     private http: HttpClient) {}
 
-  printDocument(documentPritingDetails: DocumentPrinting) {
+  printDocument(extension: String) {
     return this.http.post(
-      API_URL + '/utility/documentPrinting',
-      documentPritingDetails, {
+      API_URL + '/utility/downloadFile',
+      {extension}, {
         responseType: 'blob'
       }).map((res: Blob) => {
       return new Blob([res], {
