@@ -82,6 +82,8 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   print(documentPrintingDetails: DocumentPrinting) {
-    this.util.printDocument(documentPrintingDetails);
+    this.util.validatePrinting(documentPrintingDetails).then((res) => {
+      console.log(res);
+    });
   }
 }
