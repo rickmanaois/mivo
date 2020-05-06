@@ -51,7 +51,7 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.util.getDateRecords().then((res)=> {
+    this.util.getDateRecord().then((res)=> {
       this.modalRef = Utility.showError(this.modalService, res.message);
     });
   }
