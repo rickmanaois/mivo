@@ -76,8 +76,8 @@
                     <select class="custom-select mr-sm-2 required" formControlName="csProcessDate"
                       [(ngModel)]="documentPrintingDetails.csProcessDate">
                       <option selected></option>
-                      <option *ngFor="let csProcessDate of csProcessDateLOV"
-                        [ngValue]="csProcessDate.COD_RAMO">{{ csProcessDate.NOM_RAMO }}
+                      <option *ngFor="let csProcessDate of csProssesDateLOV"
+                        [ngValue]="csProcessDate.value">{{ csProcessDate.date }}
                       </option>
                     </select>
                     <p class="form-error"

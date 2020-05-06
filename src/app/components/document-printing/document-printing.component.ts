@@ -20,6 +20,7 @@ import {
   BsModalRef,
   BsModalService
 } from 'ngx-bootstrap/modal';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-document-printing',
@@ -29,7 +30,33 @@ import {
 export class DocumentPrintingComponent implements OnInit {
   documentPrintingDetails = new DocumentPrinting();
   documentPrintingForm: FormGroup;
-  commissionStatementDateLOV: any[];
+  csProcessDateLOV: any[];
+  
+  // csProssesDateLOV = [{
+  //   "fec_PROCESO": "2020-04-26T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-04-19T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-04-12T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-04-05T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-03-29T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-03-22T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-03-15T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-03-08T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-03-01T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-02-23T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-02-16T16:00:00.000+0000"
+  // }, {
+  //   "fec_PROCESO": "2020-02-09T16:00:00.000+0000"
+  // }];
 
   showPolicyDetails: boolean = false;
 
@@ -37,7 +64,7 @@ export class DocumentPrintingComponent implements OnInit {
 
   showCommissionStatementDetails: boolean = false;
   //flag if there is no generated dates for the agent
-  shoCsDate: boolean = false;
+  showCsDate: boolean = false;
 
   //modal reference
   modalRef: BsModalRef;
@@ -51,8 +78,24 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.util.getDateRecord().then((res)=> {
-      this.modalRef = Utility.showError(this.modalService, res.message);
+    this.showCsDate = true;
+    this.util.getDateRecord().then((res) => {
+      if (res.status) {
+        const arr: any[] = JSON.parse(res.obj.toString());
+        this.csProcessDateLOV = arr;
+        this.formatDate(this.csProcessDateLOV)
+      } else {
+        this.modalRef = Utility.showError(this.modalService, res.message);
+      }
+    });
+    this.formatDate(this.csProcessDateLOV);
+  }
+
+  formatDate(lov: any[]) {
+    lov.forEach(el => {
+      var date = new Date(el.fec_PROCESO)
+      el.date = moment(date).format('MMM DD YYYY');
+      el.value = moment(date).format('DDMMYYYY');
     });
   }
 
