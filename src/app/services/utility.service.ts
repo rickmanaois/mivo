@@ -25,17 +25,14 @@ export class UtilityService {
     private http: HttpClient) {}
 
   printDocument(documentPritingDetails: DocumentPrinting) {
-    this.http.post(
+    return this.http.post(
       API_URL + '/utility/documentPrinting',
       documentPritingDetails, {
         responseType: 'blob'
       }).map((res: Blob) => {
-      var data = new Blob([res], {
+      return new Blob([res], {
         type: 'application/pdf'
       });
-      if (data != null) {
-        window.open(URL.createObjectURL(data));
-      }
     });
   }
 

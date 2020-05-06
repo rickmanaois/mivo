@@ -85,5 +85,11 @@ export class DocumentPrintingComponent implements OnInit {
     this.util.validatePrinting(documentPrintingDetails).then((res) => {
       console.log(res);
     });
+
+    // this.util.printDocument(documentPrintingDetails).subscribe(data => {
+    //   if (data != null) {
+    //     window.open(URL.createObjectURL(data));
+    //   }
+    // });
   }
 }
