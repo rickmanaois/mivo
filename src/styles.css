@@ -195,12 +195,12 @@ form .card-header.optional {
   color: indianred !important;
 }
 
-/* quick quote details note/reminder */
-#quickQouteDetails {
+/* alert note */
+.alert.note {
   font-size: 13px;
 }
 
-#quickQouteDetails p {
+.alert.note p {
   margin-bottom: 0px;
 }
 

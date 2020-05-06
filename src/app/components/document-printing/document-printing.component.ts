@@ -57,6 +57,7 @@ export class DocumentPrintingComponent implements OnInit {
       if (res.status) {
         this.csProcessDateLOV = res.obj as [];
         if (this.csProcessDateLOV.length) {
+          console.log(this.csProcessDateLOV);
           this.formatDate(this.csProcessDateLOV);
           this.showCsDate = true;
         }
@@ -68,6 +69,7 @@ export class DocumentPrintingComponent implements OnInit {
 
   formatDate(lov: any[]) {
     lov.forEach(el => {
+      console.log(el);
       var date = new Date(el.fec_PROCESO)
       el.date = moment(date).format('MMM DD YYYY');
       el.value = moment(date).format('DDMMYYYY');
