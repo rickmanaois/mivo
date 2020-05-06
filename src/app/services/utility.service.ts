@@ -27,7 +27,7 @@ export class UtilityService {
   printDocument(extension: String) {
     return this.http.post(
       API_URL + '/utility/downloadFile',
-      {extension}, {
+      extension, {
         responseType: 'blob'
       }).map((res: Blob) => {
       return new Blob([res], {
