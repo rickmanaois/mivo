@@ -31,32 +31,6 @@ export class DocumentPrintingComponent implements OnInit {
   documentPrintingDetails = new DocumentPrinting();
   documentPrintingForm: FormGroup;
   csProcessDateLOV: any[];
-  
-  // csProssesDateLOV = [{
-  //   "fec_PROCESO": "2020-04-26T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-04-19T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-04-12T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-04-05T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-03-29T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-03-22T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-03-15T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-03-08T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-03-01T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-02-23T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-02-16T16:00:00.000+0000"
-  // }, {
-  //   "fec_PROCESO": "2020-02-09T16:00:00.000+0000"
-  // }];
 
   showPolicyDetails: boolean = false;
 
@@ -78,17 +52,18 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showCsDate = true;
     this.util.getDateRecord().then((res) => {
+      // date records for commission statement dates
       if (res.status) {
-        const arr: any[] = JSON.parse(res.obj.toString());
-        this.csProcessDateLOV = arr;
-        this.formatDate(this.csProcessDateLOV)
+        this.csProcessDateLOV = res.obj as [];
+        if (this.csProcessDateLOV.length) {
+          this.formatDate(this.csProcessDateLOV);
+          this.showCsDate = true;
+        }
       } else {
         this.modalRef = Utility.showError(this.modalService, res.message);
       }
     });
-    this.formatDate(this.csProcessDateLOV);
   }
 
   formatDate(lov: any[]) {
@@ -130,13 +105,13 @@ export class DocumentPrintingComponent implements OnInit {
       Utility.updateValidator(csProcessDate, null);
       Utility.updateValidator(csPass, null);
 
-      if (documentType == "P") { //standard personal accident
+      if (documentType == "P") { //policy
         this.showPolicyDetails = true;
         Utility.updateValidator(policyNumber, [Validators.required]);
-      } else if (documentType == "Q") { //hospital cash benefit
+      } else if (documentType == "Q") { //quotation
         this.showQuotationDetails = true;
         Utility.updateValidator(quotationNumber, [Validators.required]);
-      } else if (documentType == "C") {
+      } else if (documentType == "C") { //commission statement
         this.showCommissionStatementDetails = true;
         Utility.updateValidator(csProcessDate, [Validators.required]);
         Utility.updateValidator(csPass, [Validators.required]);
