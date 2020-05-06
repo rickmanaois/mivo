@@ -32,8 +32,12 @@ export class DocumentPrintingComponent implements OnInit {
   commissionStatementDateLOV: any[];
 
   showPolicyDetails: boolean = false;
+
   showQuotationDetails: boolean = false;
+
   showCommissionStatementDetails: boolean = false;
+  //flag if there is no generated dates for the agent
+  shoCsDate: boolean = false;
 
   //modal reference
   modalRef: BsModalRef;
@@ -46,7 +50,11 @@ export class DocumentPrintingComponent implements OnInit {
     this.setValidations();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.util.getDateRecords().then((res)=> {
+      this.modalRef = Utility.showError(this.modalService, res.message);
+    });
+  }
 
   createForm() {
     this.documentPrintingForm = this.fb.group({
@@ -57,14 +65,16 @@ export class DocumentPrintingComponent implements OnInit {
       policyPAC: [null],
       policyPV: [null],
       quotationNumber: ['', Validators.required],
-      commissionStatementDate: ['', Validators.required]
+      csProcessDate: ['', Validators.required],
+      csPass: ['', Validators.required]
     });
   }
 
   setValidations() {
     var policyNumber = this.documentPrintingForm.get('policyNumber');
     var quotationNumber = this.documentPrintingForm.get('quotationNumber');
-    var commissionStatementDate = this.documentPrintingForm.get('commissionStatementDate');
+    var csProcessDate = this.documentPrintingForm.get('csProcessDate');
+    var csPass = this.documentPrintingForm.get('csPass');
 
     this.documentPrintingForm.get('documentType').valueChanges.subscribe(documentType => {
       this.showPolicyDetails = false;
@@ -74,7 +84,8 @@ export class DocumentPrintingComponent implements OnInit {
       //removing required validation
       Utility.updateValidator(policyNumber, null);
       Utility.updateValidator(quotationNumber, null);
-      Utility.updateValidator(commissionStatementDate, null);
+      Utility.updateValidator(csProcessDate, null);
+      Utility.updateValidator(csPass, null);
 
       if (documentType == "P") { //standard personal accident
         this.showPolicyDetails = true;
@@ -84,7 +95,8 @@ export class DocumentPrintingComponent implements OnInit {
         Utility.updateValidator(quotationNumber, [Validators.required]);
       } else if (documentType == "C") {
         this.showCommissionStatementDetails = true;
-        Utility.updateValidator(commissionStatementDate, [Validators.required]);
+        Utility.updateValidator(csProcessDate, [Validators.required]);
+        Utility.updateValidator(csPass, [Validators.required]);
       }
     });
   }
