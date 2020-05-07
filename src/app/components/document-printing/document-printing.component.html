@@ -68,6 +68,11 @@
                 </p>
               </div>
               <div *ngIf="showCsDate" class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-info note">
+                        <p>Generate COMMISSION STATEMENT for the past 3 months</p>
+                      </div>
+                </div>
                 <div class="col-md-6 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['csProcessDate'].invalid 
                     && (documentPrintingForm.controls['csProcessDate'].dirty 
@@ -76,12 +81,11 @@
                     <select class="custom-select mr-sm-2 required" formControlName="csProcessDate"
                       [(ngModel)]="documentPrintingDetails.csProcessDate">
                       <option selected></option>
-                      <option *ngFor="let csProcessDate of csProcessDateLOV"
-                        [ngValue]="csProcessDate.value">{{ csProcessDate.date }}
+                      <option *ngFor="let csProcessDate of csProcessDateLOV" [ngValue]="csProcessDate.value">
+                        {{ csProcessDate.date }}
                       </option>
                     </select>
-                    <p class="form-error"
-                      *ngIf="documentPrintingForm.controls['csProcessDate'].errors?.required">
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['csProcessDate'].errors?.required">
                       * please select a date
                     </p>
                   </div>
@@ -94,6 +98,43 @@
                     <input type="password" formControlName="csPass" class="form-control"
                       [(ngModel)]="documentPrintingDetails.csPass">
                     <p class="form-error" *ngIf="documentPrintingForm.controls['csPass'].errors?.required">
+                      * password is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-7 col-sm-6" *ngIf="showSOADetails">
+              <div class="alert alert-info note">
+                <p>Generate STATEMENT OF ACCOUNT for the past 3 months</p>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['soaProcessDate'].invalid 
+                      && (documentPrintingForm.controls['soaProcessDate'].dirty 
+                      || documentPrintingForm.controls['soaProcessDate'].touched)}">
+                    <label for="soaProcessDate">Select Date</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="soaProcessDate"
+                      [(ngModel)]="documentPrintingDetails.soaProcessDate">
+                      <option selected></option>
+                      <option *ngFor="let soaProcessDate of soaProcessDateLOV" [ngValue]="soaProcessDate.value">
+                        {{ soaProcessDate.name }}
+                      </option>
+                    </select>
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['soaProcessDate'].errors?.required">
+                      * please select a date
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['soaPass'].invalid 
+                      && (documentPrintingForm.controls['soaPass'].dirty 
+                      || documentPrintingForm.controls['soaPass'].touched)}">
+                    <label for="soaPass">Password</label>
+                    <input type="password" formControlName="soaPass" class="form-control"
+                      [(ngModel)]="documentPrintingDetails.soaPass">
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['soaPass'].errors?.required">
                       * password is required
                     </p>
                   </div>

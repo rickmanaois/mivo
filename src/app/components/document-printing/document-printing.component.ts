@@ -31,17 +31,21 @@ export class DocumentPrintingComponent implements OnInit {
   documentPrintingDetails = new DocumentPrinting();
   documentPrintingForm: FormGroup;
   csProcessDateLOV: any[];
+  soaProcessDateLOV: any[];
 
   showPolicyDetails: boolean = false;
-
   showQuotationDetails: boolean = false;
-
   showCommissionStatementDetails: boolean = false;
-  //flag if there is no generated dates for the agent
+  //flag if there is no generated commission statement dates for the agent
   showCsDate: boolean = false;
+
+  showSOADetails: boolean = false;
 
   //modal reference
   modalRef: BsModalRef;
+
+  dateNameFormat: string = 'MMM DD YYYY';
+  dateValueFormat: string = 'DDMMYYYY';
 
   constructor(
     private fb: FormBuilder,
@@ -52,12 +56,12 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getSOADates();
     this.util.getDateRecord().then((res) => {
       // date records for commission statement dates
       if (res.status) {
         this.csProcessDateLOV = res.obj as [];
         if (this.csProcessDateLOV.length) {
-          console.log(this.csProcessDateLOV);
           this.formatDate(this.csProcessDateLOV);
           this.showCsDate = true;
         }
@@ -69,11 +73,24 @@ export class DocumentPrintingComponent implements OnInit {
 
   formatDate(lov: any[]) {
     lov.forEach(el => {
-      console.log(el);
-      var date = new Date(el.fec_PROCESO)
-      el.date = moment(date).format('MMM DD YYYY');
-      el.value = moment(date).format('DDMMYYYY');
+      var date = new Date(el.fec_PROCESO);
+      el.date = moment(date).format(this.dateNameFormat);
+      el.value = moment(date).format(this.dateValueFormat);
     });
+  }
+
+  getSOADates() {
+    const number = 3;
+    let today = new Date();
+    var arr = [];
+   
+    for (var i = 1; i <= number; i++) {
+      var name = moment(today).subtract(1,'months').endOf('month').format(this.dateNameFormat);
+      var value = moment(today).subtract(1,'months').endOf('month').format(this.dateValueFormat);
+      today = new Date(name);
+      arr.push({ name, value });
+      this.soaProcessDateLOV = arr;
+    }
   }
 
   createForm() {
@@ -86,7 +103,9 @@ export class DocumentPrintingComponent implements OnInit {
       policyPV: [null],
       quotationNumber: ['', Validators.required],
       csProcessDate: ['', Validators.required],
-      csPass: ['', Validators.required]
+      csPass: ['', Validators.required],
+      soaProcessDate: ['', Validators.required],
+      soaPass: ['', Validators.required]
     });
   }
 
@@ -95,17 +114,22 @@ export class DocumentPrintingComponent implements OnInit {
     var quotationNumber = this.documentPrintingForm.get('quotationNumber');
     var csProcessDate = this.documentPrintingForm.get('csProcessDate');
     var csPass = this.documentPrintingForm.get('csPass');
+    var soaProcessDate = this.documentPrintingForm.get('soaProcessDate');
+    var soaPass = this.documentPrintingForm.get('soaPass');
 
     this.documentPrintingForm.get('documentType').valueChanges.subscribe(documentType => {
       this.showPolicyDetails = false;
       this.showQuotationDetails = false;
       this.showCommissionStatementDetails = false;
+      this.showSOADetails = false;
 
       //removing required validation
       Utility.updateValidator(policyNumber, null);
       Utility.updateValidator(quotationNumber, null);
       Utility.updateValidator(csProcessDate, null);
       Utility.updateValidator(csPass, null);
+      Utility.updateValidator(soaProcessDate, null);
+      Utility.updateValidator(soaPass, null);
 
       if (documentType == "P") { //policy
         this.showPolicyDetails = true;
@@ -117,6 +141,10 @@ export class DocumentPrintingComponent implements OnInit {
         this.showCommissionStatementDetails = true;
         Utility.updateValidator(csProcessDate, [Validators.required]);
         Utility.updateValidator(csPass, [Validators.required]);
+      } else if (documentType == "S") { //commission statement
+        this.showSOADetails = true;
+        Utility.updateValidator(soaProcessDate, [Validators.required]);
+        Utility.updateValidator(soaPass, [Validators.required]);
       }
     });
   }
