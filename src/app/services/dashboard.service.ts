@@ -7,9 +7,6 @@ import {
 import {
   ReturnDTO
 } from '../objects/ReturnDTO';
-import {
-  Utility
-} from '../utils/utility';
 
 @Injectable()
 export class DashboardService {
