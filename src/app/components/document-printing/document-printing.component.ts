@@ -152,6 +152,14 @@ export class DocumentPrintingComponent implements OnInit {
     });
   }
 
+  policyNumberOnChange() {
+    this.util.getEndorsementNumber(this.documentPrintingDetails).then((res) => {
+      if (res.status) {
+        this.documentPrintingDetails.endorsementNumber = res.obj as String;
+      }
+    });
+  }
+
   print(documentPrintingDetails: DocumentPrinting) {
     this.util.validatePrinting(documentPrintingDetails).then((res) => {
       if (res.status) {

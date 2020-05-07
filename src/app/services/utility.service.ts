@@ -43,4 +43,8 @@ export class UtilityService {
   async getDateRecord(): Promise < ReturnDTO > {
     return this.app.get('/utility/getDateRecord').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
+
+  async getEndorsementNumber(documentPritingDetails: DocumentPrinting): Promise < ReturnDTO > {
+    return this.app.post(documentPritingDetails, '/utility/getEndorsementNumber').then(ReturnDTO => ReturnDTO as ReturnDTO);
+  }
 }

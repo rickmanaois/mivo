@@ -42,6 +42,7 @@
                     || documentPrintingForm.controls['policyNumber'].touched)}">
                 <label for="policyNumber">Policy Number</label>
                 <input type="text" formControlName="policyNumber" class="form-control"
+                  (change)="policyNumberOnChange()"
                   [(ngModel)]="documentPrintingDetails.policyNumber">
                 <p class="form-error" *ngIf="documentPrintingForm.controls['policyNumber'].errors?.required">
                   * policy number is required
