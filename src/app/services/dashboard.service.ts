@@ -15,7 +15,7 @@ import {
 export class DashboardService {
   constructor(private app: AppService) {}
 
-  async getForexExchange(): Promise < ReturnDTO > {
-    return this.app.post(null, '/dashboard/getForexExchange').then(ReturnDTO => ReturnDTO as ReturnDTO);
+  async getForeignExchange(): Promise < ReturnDTO > {
+    return this.app.get('/dashboard/getForeignExchange').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 }
