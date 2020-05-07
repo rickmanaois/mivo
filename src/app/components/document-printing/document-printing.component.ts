@@ -44,7 +44,7 @@ export class DocumentPrintingComponent implements OnInit {
   //modal reference
   modalRef: BsModalRef;
 
-  dateNameFormat: string = 'MMM DD YYYY';
+  dateNameFormat: string = 'MMM DD, YYYY';
   dateValueFormat: string = 'DDMMYYYY';
 
   constructor(
@@ -60,7 +60,7 @@ export class DocumentPrintingComponent implements OnInit {
     this.util.getDateRecord().then((res) => {
       // date records for commission statement dates
       if (res.status) {
-        this.csProcessDateLOV = res.obj as [];
+        this.csProcessDateLOV = res.obj as[];
         if (this.csProcessDateLOV.length) {
           this.formatDate(this.csProcessDateLOV);
           this.showCsDate = true;
@@ -83,14 +83,17 @@ export class DocumentPrintingComponent implements OnInit {
     const number = 3;
     let today = new Date();
     var arr = [];
-   
+
     for (var i = 1; i <= number; i++) {
-      var name = moment(today).subtract(1,'months').endOf('month').format(this.dateNameFormat);
-      var value = moment(today).subtract(1,'months').endOf('month').format(this.dateValueFormat);
+      var name = moment(today).subtract(1, 'months').endOf('month').format(this.dateNameFormat);
+      var value = moment(today).subtract(1, 'months').endOf('month').format(this.dateValueFormat);
       today = new Date(name);
-      arr.push({ name, value });
-      this.soaProcessDateLOV = arr;
+      arr.push({
+        name,
+        value
+      });
     }
+    this.soaProcessDateLOV = arr;
   }
 
   createForm() {
