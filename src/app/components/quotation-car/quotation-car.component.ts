@@ -492,6 +492,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   issueQuote(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
     this.quote.getCoverageByProduct(carDetails).then(res => {
       console.log('res', res);
+      this.quote.issueQuote(carDetails).then(res1 => {
+        console.log(res1);
+      });
     });
   }
 
