@@ -16,7 +16,7 @@ export class AgentService {
   constructor(private app: AppService) {}
 
   async getCommercialStructure(): Promise < any[] > {
-    return Utility.parseIntArray(await this.app.post(null, '/agent/getCommercialStructure').then(objArr => objArr as any[]), 'codNivel3');
+    return Utility.parseIntArray(await this.app.get('/agent/getCommercialStructure').then(objArr => objArr as any[]), 'codNivel3');
   }
 
   async getAgentList(commercialStructure: number): Promise < any[] > {

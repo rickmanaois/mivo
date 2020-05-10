@@ -4,6 +4,12 @@ import {
 import {
   Beneficiary
 } from './Beneficiary';
+import {
+  GroupPolicy
+} from './GroupPolicy';
+import {
+  PolicyHolder
+} from './PolicyHolder';
 
 export class QuoteCar {
   quotationNumber: string;
@@ -34,10 +40,15 @@ export class QuoteCar {
   //policy holder information
   clientName: string;
 
+  policyHolder: PolicyHolder;
+
+  //groupPolicy
+  groupPolicy: GroupPolicy;
+
   //general information
   effectivityDate: Date;
   expiryDate: Date;
-  
+
   //additional policy information
   customRiskName: string;
   seatingCapacity: number;

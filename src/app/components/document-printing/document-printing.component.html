@@ -42,6 +42,7 @@
                     || documentPrintingForm.controls['policyNumber'].touched)}">
                 <label for="policyNumber">Policy Number</label>
                 <input type="text" formControlName="policyNumber" class="form-control"
+                  (change)="policyNumberOnChange()"
                   [(ngModel)]="documentPrintingDetails.policyNumber">
                 <p class="form-error" *ngIf="documentPrintingForm.controls['policyNumber'].errors?.required">
                   * policy number is required
@@ -63,24 +64,82 @@
             </div>
 
             <div class="col-md-7 col-sm-6" *ngIf="showCommissionStatementDetails">
-              <div id="quickQouteDetails" class="alert alert-info">
+              <div *ngIf="!showCsDate" class="alert alert-info note">
                 <p>No generated COMMISSION STATEMENT for the past 3 months
                 </p>
               </div>
-              <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['commissionStatementDate'].invalid 
-                && (documentPrintingForm.controls['commissionStatementDate'].dirty 
-                || documentPrintingForm.controls['commissionStatementDate'].touched)}">
-                <label for="commissionStatementDate">Select Date</label>
-                <select class="custom-select mr-sm-2 required" formControlName="commissionStatementDate"
-                  [(ngModel)]="documentPrintingDetails.commissionStatementDate">
-                  <option selected></option>
-                  <option *ngFor="let commissionStatementDate of commissionStatementDateLOV"
-                    [ngValue]="commissionStatementDate.COD_RAMO">{{ commissionStatementDate.NOM_RAMO }}
-                  </option>
-                </select>
-                <p class="form-error" *ngIf="documentPrintingForm.controls['commissionStatementDate'].errors?.required">
-                  * please select a date
-                </p>
+              <div *ngIf="showCsDate" class="row">
+                <div class="col-md-12">
+                  <div class="alert alert-info note">
+                    <p>Print your COMMISSION STATEMENT for the past 3 months</p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['csProcessDate'].invalid 
+                    && (documentPrintingForm.controls['csProcessDate'].dirty 
+                    || documentPrintingForm.controls['csProcessDate'].touched)}">
+                    <label for="csProcessDate">Select Date</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="csProcessDate"
+                      [(ngModel)]="documentPrintingDetails.csProcessDate">
+                      <option selected></option>
+                      <option *ngFor="let csProcessDate of csProcessDateLOV" [ngValue]="csProcessDate.value">
+                        {{ csProcessDate.date }}
+                      </option>
+                    </select>
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['csProcessDate'].errors?.required">
+                      * please select a date
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['csPass'].invalid 
+                    && (documentPrintingForm.controls['csPass'].dirty 
+                    || documentPrintingForm.controls['csPass'].touched)}">
+                    <label for="csPass">Password</label>
+                    <input type="password" formControlName="csPass" class="form-control"
+                      [(ngModel)]="documentPrintingDetails.csPass">
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['csPass'].errors?.required">
+                      * password is required
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-7 col-sm-6" *ngIf="showSOADetails">
+              <div class="alert alert-info note">
+                <p>Print your STATEMENT OF ACCOUNT for the past 3 months</p>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['soaProcessDate'].invalid 
+                      && (documentPrintingForm.controls['soaProcessDate'].dirty 
+                      || documentPrintingForm.controls['soaProcessDate'].touched)}">
+                    <label for="soaProcessDate">Select Date</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="soaProcessDate"
+                      [(ngModel)]="documentPrintingDetails.soaProcessDate">
+                      <option selected></option>
+                      <option *ngFor="let soaProcessDate of soaProcessDateLOV" [ngValue]="soaProcessDate.value">
+                        {{ soaProcessDate.name }}
+                      </option>
+                    </select>
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['soaProcessDate'].errors?.required">
+                      * please select a date
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': documentPrintingForm.controls['soaPass'].invalid 
+                      && (documentPrintingForm.controls['soaPass'].dirty 
+                      || documentPrintingForm.controls['soaPass'].touched)}">
+                    <label for="soaPass">Password</label>
+                    <input type="password" formControlName="soaPass" class="form-control"
+                      [(ngModel)]="documentPrintingDetails.soaPass">
+                    <p class="form-error" *ngIf="documentPrintingForm.controls['soaPass'].errors?.required">
+                      * password is required
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 

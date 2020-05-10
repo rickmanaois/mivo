@@ -35,7 +35,7 @@ export class CarUtilityServices {
   }
 
   async getSubagents(): Promise < ReturnDTO > {
-    return this.app.post(null, '/car/getSubagents').then(ReturnDTO => ReturnDTO as ReturnDTO);
+    return this.app.get('/car/getSubagents').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 
   async getPreAdditionalInfo(carDetails: QuoteCar): Promise < ReturnDTO > {

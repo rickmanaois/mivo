@@ -16,6 +16,11 @@ import {
 import {
   Utility
 } from '../../utils/utility';
+import {
+  BsModalRef,
+  BsModalService
+} from 'ngx-bootstrap/modal';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-document-printing',
@@ -25,20 +30,71 @@ import {
 export class DocumentPrintingComponent implements OnInit {
   documentPrintingDetails = new DocumentPrinting();
   documentPrintingForm: FormGroup;
-  commissionStatementDateLOV: any[];
+  csProcessDateLOV: any[];
+  soaProcessDateLOV: any[];
 
   showPolicyDetails: boolean = false;
   showQuotationDetails: boolean = false;
   showCommissionStatementDetails: boolean = false;
+  //flag if there is no generated commission statement dates for the agent
+  showCsDate: boolean = false;
+
+  showSOADetails: boolean = false;
+
+  //modal reference
+  modalRef: BsModalRef;
+
+  dateNameFormat: string = 'MMM DD, YYYY';
+  dateValueFormat: string = 'DDMMYYYY';
 
   constructor(
     private fb: FormBuilder,
-    private util: UtilityService) {
+    private util: UtilityService,
+    private modalService: BsModalService) {
     this.createForm();
     this.setValidations();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSOADates();
+    this.util.getDateRecord().then((res) => {
+      // date records for commission statement dates
+      if (res.status) {
+        this.csProcessDateLOV = res.obj as[];
+        if (this.csProcessDateLOV.length) {
+          this.formatDate(this.csProcessDateLOV);
+          this.showCsDate = true;
+        }
+      } else {
+        this.modalRef = Utility.showError(this.modalService, res.message);
+      }
+    });
+  }
+
+  formatDate(lov: any[]) {
+    lov.forEach(el => {
+      var date = new Date(el.fec_PROCESO);
+      el.date = moment(date).format(this.dateNameFormat);
+      el.value = moment(date).format(this.dateValueFormat);
+    });
+  }
+
+  getSOADates() {
+    const number = 3;
+    let today = new Date();
+    var arr = [];
+
+    for (var i = 1; i <= number; i++) {
+      var name = moment(today).subtract(1, 'months').endOf('month').format(this.dateNameFormat);
+      var value = moment(today).subtract(1, 'months').endOf('month').format(this.dateValueFormat);
+      today = new Date(name);
+      arr.push({
+        name,
+        value
+      });
+    }
+    this.soaProcessDateLOV = arr;
+  }
 
   createForm() {
     this.documentPrintingForm = this.fb.group({
@@ -49,39 +105,73 @@ export class DocumentPrintingComponent implements OnInit {
       policyPAC: [null],
       policyPV: [null],
       quotationNumber: ['', Validators.required],
-      commissionStatementDate: ['', Validators.required]
+      csProcessDate: ['', Validators.required],
+      csPass: ['', Validators.required],
+      soaProcessDate: ['', Validators.required],
+      soaPass: ['', Validators.required]
     });
   }
 
   setValidations() {
     var policyNumber = this.documentPrintingForm.get('policyNumber');
     var quotationNumber = this.documentPrintingForm.get('quotationNumber');
-    var commissionStatementDate = this.documentPrintingForm.get('commissionStatementDate');
+    var csProcessDate = this.documentPrintingForm.get('csProcessDate');
+    var csPass = this.documentPrintingForm.get('csPass');
+    var soaProcessDate = this.documentPrintingForm.get('soaProcessDate');
+    var soaPass = this.documentPrintingForm.get('soaPass');
 
     this.documentPrintingForm.get('documentType').valueChanges.subscribe(documentType => {
       this.showPolicyDetails = false;
       this.showQuotationDetails = false;
       this.showCommissionStatementDetails = false;
+      this.showSOADetails = false;
 
       //removing required validation
       Utility.updateValidator(policyNumber, null);
       Utility.updateValidator(quotationNumber, null);
-      Utility.updateValidator(commissionStatementDate, null);
+      Utility.updateValidator(csProcessDate, null);
+      Utility.updateValidator(csPass, null);
+      Utility.updateValidator(soaProcessDate, null);
+      Utility.updateValidator(soaPass, null);
 
-      if (documentType == "P") { //standard personal accident
+      if (documentType == "P") { //policy
         this.showPolicyDetails = true;
         Utility.updateValidator(policyNumber, [Validators.required]);
-      } else if (documentType == "Q") { //hospital cash benefit
+      } else if (documentType == "Q") { //quotation
         this.showQuotationDetails = true;
         Utility.updateValidator(quotationNumber, [Validators.required]);
-      } else if (documentType == "C") {
+      } else if (documentType == "C") { //commission statement
         this.showCommissionStatementDetails = true;
-        Utility.updateValidator(commissionStatementDate, [Validators.required]);
+        Utility.updateValidator(csProcessDate, [Validators.required]);
+        Utility.updateValidator(csPass, [Validators.required]);
+      } else if (documentType == "S") { //commission statement
+        this.showSOADetails = true;
+        Utility.updateValidator(soaProcessDate, [Validators.required]);
+        Utility.updateValidator(soaPass, [Validators.required]);
+      }
+    });
+  }
+
+  policyNumberOnChange() {
+    this.util.getEndorsementNumber(this.documentPrintingDetails).then((res) => {
+      if (res.status) {
+        this.documentPrintingDetails.endorsementNumber = res.obj as String;
       }
     });
   }
 
   print(documentPrintingDetails: DocumentPrinting) {
-    this.util.printDocument(documentPrintingDetails);
+    this.util.validatePrinting(documentPrintingDetails).then((res) => {
+      if (res.status) {
+        var ext = res.obj;
+        this.util.printDocument(ext.toString()).subscribe(data => {
+          if (data != null) {
+            window.open(URL.createObjectURL(data));
+          }
+        });
+      } else {
+        this.modalRef = Utility.showError(this.modalService, res.message);
+      }
+    });
   }
 }

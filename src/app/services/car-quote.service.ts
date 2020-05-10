@@ -18,4 +18,8 @@ export class CarQuoteServices {
   async getCoverageByProduct(carDetails: QuoteCar): Promise < ReturnDTO > {
     return this.app.post(carDetails, '/quote/getCoverageByProduct').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
+
+  async issueQuote(carDetails: QuoteCar): Promise < ReturnDTO > {
+    return this.app.post(carDetails, '/quote/issueQuote').then(ReturnDTO => ReturnDTO as ReturnDTO);
+  }
 }
