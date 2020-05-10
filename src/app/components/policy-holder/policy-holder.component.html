@@ -1,0 +1,26 @@
+<div class="card shadow mb-3">
+  <div class="card-header">
+    <strong>Policy Holder Information</strong>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="phForm">
+      <div class="row">
+        <div class="col-xl-12">
+          <h6>Policy Holder</h6>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group" [ngClass]="{'input-error': phForm.controls['name'].invalid 
+                  && (phForm.controls['name'].dirty 
+                  || phForm.controls['name'].touched)}">
+            <label for="name">Client's Name</label>
+            <input type="text" formControlName="name" class="form-control required" [(ngModel)]="policyHolder.name">
+            <p class="form-error" *ngIf="phForm.controls['name'].errors?.required">
+              * client's name is required
+            </p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

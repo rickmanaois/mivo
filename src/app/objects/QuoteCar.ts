@@ -7,6 +7,9 @@ import {
 import {
   GroupPolicy
 } from './GroupPolicy';
+import {
+  PolicyHolder
+} from './PolicyHolder';
 
 export class QuoteCar {
   quotationNumber: string;
@@ -36,6 +39,8 @@ export class QuoteCar {
 
   //policy holder information
   clientName: string;
+
+  policyHolder: PolicyHolder;
 
   //groupPolicy
   groupPolicy: GroupPolicy;

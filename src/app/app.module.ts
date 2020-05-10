@@ -151,7 +151,12 @@ import {
 import {
   ChooseAgentComponent
 } from './components/choose-agent/choose-agent.component';
-import { DocumentPrintingComponent } from './components/document-printing/document-printing.component';
+import {
+  DocumentPrintingComponent
+} from './components/document-printing/document-printing.component';
+import {
+  PolicyHolderComponent
+} from './components/policy-holder/policy-holder.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -204,7 +209,8 @@ const routes: Routes = [{
     GroupPolicyComponent,
     IndividualPolicyComponent,
     ChooseAgentComponent,
-    DocumentPrintingComponent
+    DocumentPrintingComponent,
+    PolicyHolderComponent
   ],
   entryComponents: [
     ModalComponent

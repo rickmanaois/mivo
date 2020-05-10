@@ -46,6 +46,9 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
+import {
+  PolicyHolder
+} from 'src/app/objects/PolicyHolder';
 
 @Component({
   selector: 'app-quotation-car',
@@ -59,6 +62,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   carDetails = new QuoteCar();
   groupPolicy = new GroupPolicy();
+  policyHolder = new PolicyHolder();
   quoteForm: FormGroup;
   today: Date = new Date();
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
@@ -164,7 +168,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       //travellers
       accessories: this.fb.array([]),
       //policy holder information
-      clientName: ['', Validators.required],
+      // clientName: ['', Validators.required],
 
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
@@ -480,17 +484,19 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  test(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
+  test(carDetails: QuoteCar) {
     var accessories = this.quoteForm.get('accessories').value;
-    carDetails.accessories = accessories.length ? accessories : [];
+    this.carDetails.accessories = accessories.length ? accessories : [];
+    this.carDetails.groupPolicy = this.groupPolicy;
+    this.carDetails.policyHolder = this.policyHolder;
 
-    this.quoteForm.get('accessories').value;
     console.log('carDetails', carDetails);
-    console.log('groupPolicy', groupPolicy);
   }
 
   issueQuote(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
     this.carDetails.groupPolicy = groupPolicy;
+    var accessories = this.quoteForm.get('accessories').value;
+    this.carDetails.accessories = accessories.length ? accessories : [];
     this.quote.getCoverageByProduct(carDetails).then(res => {
       console.log('res', res);
       this.quote.issueQuote(carDetails).then(res1 => {
