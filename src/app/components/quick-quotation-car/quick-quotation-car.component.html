@@ -148,7 +148,7 @@
               || quickQuoteForm.controls['vehicleValue'].touched)}">
                 <label for="vehicleValue">Vehicle Value</label>
                 <input type="text" formControlName="vehicleValue" class="form-control"
-                  [(ngModel)]="carDetails.vehicleValue" readonly>
+                  [(ngModel)]="carDetails.vehicleValue">
                 <p class="form-error" *ngIf="quickQuoteForm.controls['vehicleValue'].errors?.required">
                   * vehicle value is required
                 </p>

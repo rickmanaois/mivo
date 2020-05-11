@@ -154,7 +154,7 @@
                   || quoteForm.controls['vehicleValue'].touched)}">
                     <label for="vehicleValue">Vehicle Value</label>
                     <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue" readonly>
+                      [(ngModel)]="carDetails.vehicleValue">
                     <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
                       * vehicle value is required
                     </p>
@@ -721,9 +721,7 @@
             </div>
           </div>
 
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary" (click)="test(carDetails)">Test</button>
-            <button [disabled]="quoteForm.pristine || quoteForm.invalid ||
+          <div class="btn-group" role="group"><button [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
               appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid" type="button" class="btn btn-primary"
               (click)="issueQuote(carDetails, groupPolicy)">Issue

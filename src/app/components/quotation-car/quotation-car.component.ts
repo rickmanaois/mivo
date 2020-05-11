@@ -452,8 +452,16 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carlov.getPaymentPlan(this.carDetails).then(res => {
       _this.LOV.paymentMethodLOV = res;
     });
+
     this.carlov.getProduct(this.carDetails).then(res => {
-      _this.LOV.productListLOV = res;
+      let avalidableProducts = [];
+      res.forEach((e) => {
+        //removing not MSO products
+        if (e.COD_MODALIDAD != 10011 || e.COD_MODALIDAD != 10010) {
+          avalidableProducts.push(e);
+        }
+      });
+      _this.LOV.productListLOV = avalidableProducts;
     });
 
     this.cu.getPreAdditionalInfo(this.carDetails).then(res => {
@@ -482,15 +490,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       this.accessory().at(index).get('accessoryType').setValue(type == 'A' ? 'Additional' : type == 'B' ? 'Built-In' : 'Free');
       this.accessory().at(index).get('price').setValue(price);
     }
-  }
-
-  test(carDetails: QuoteCar) {
-    var accessories = this.quoteForm.get('accessories').value;
-    this.carDetails.accessories = accessories.length ? accessories : [];
-    this.carDetails.groupPolicy = this.groupPolicy;
-    this.carDetails.policyHolder = this.policyHolder;
-
-    console.log('carDetails', carDetails);
   }
 
   issueQuote(carDetails: QuoteCar, groupPolicy: GroupPolicy) {
