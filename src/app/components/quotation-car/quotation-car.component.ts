@@ -457,7 +457,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       let avalidableProducts = [];
       res.forEach((e) => {
         //removing not MSO products
-        if (e.COD_MODALIDAD != '10011' || e.COD_MODALIDAD != '10010') {
+        if (e.COD_MODALIDAD != 10011 && e.COD_MODALIDAD != 10010) {
           avalidableProducts.push(e);
         }
       });
