@@ -17,6 +17,10 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators';
 import {
+  BsModalService,
+  BsModalRef
+} from 'ngx-bootstrap/modal';
+import {
   QuoteCar
 } from '../../objects/QuoteCar';
 import {
@@ -50,6 +54,7 @@ import {
   PolicyHolder
 } from 'src/app/objects/PolicyHolder';
 
+
 @Component({
   selector: 'app-quotation-car',
   templateUrl: './quotation-car.component.html',
@@ -76,13 +81,16 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   showAdditionalInformation: boolean = false;
   showSubAgent: boolean = false;
 
+  //modal reference
+  modalRef: BsModalRef;
   constructor(
     private fb: FormBuilder,
     private cu: CarUtilityServices,
     private carlov: CarLOVServices,
     private quote: CarQuoteServices,
     private changeDetector: ChangeDetectorRef,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private modalService: BsModalService
   ) {
     // this.createQuoteForm();
     // this.setValidations();
@@ -499,7 +507,25 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.quote.getCoverageByProduct(carDetails).then(res => {
       console.log('res', res);
       this.quote.issueQuote(carDetails).then(res1 => {
-        console.log(res1);
+        if (res1.status) {
+          const error = res1.obj["error"];
+          const errorCode = res1.obj["errorCode"];
+          const status = res1.obj["status"];
+          console.log("status " + status);
+          if (status) {
+            if (errorCode == "W") { //TODO if warning- still dont no the code 
+              this.modalRef = Utility.showWarning(this.modalService, error);
+            } else {
+              const policyNumber = res1.obj["policyNumber"];
+              const message = "Congratulations! You have successfully issued a quotation - " + policyNumber;
+              this.modalRef = Utility.showInfo(this.modalService, message);
+            }
+          } else {
+            this.modalRef = Utility.showError(this.modalService, error);
+          }
+        } else {
+          this.modalRef = Utility.showError(this.modalService, res1.message);
+        }
       });
     });
   }
