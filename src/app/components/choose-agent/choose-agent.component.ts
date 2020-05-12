@@ -43,17 +43,19 @@ export class ChooseAgentComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private agentService: AgentService,
     private fb: FormBuilder) {
-
-    this.createForm();
   }
 
   ngOnInit(): void {
+    this.createForm();
     const _this = this;
     if (this.hasSelectedAgent) {
       this.showCancelBtn = true;
       this.agentService.getAgentList(this.currentUser.selectedAgent.commStructure).then(res => {
         _this.agentLOV = res;
       });
+
+      this.chooseAgentForm.get('commercialStructure').markAsTouched();
+      this.chooseAgentForm.get('agent').markAsTouched();
     }
 
     this.agentService.getCommercialStructure().then(res => {
