@@ -23,6 +23,7 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
+import { Utility } from 'src/app/utils/utility';
 
 @Component({
   selector: 'app-group-policy',
@@ -58,6 +59,9 @@ export class GroupPolicyComponent {
       this.groupPolicy.commercialStructure = this.user.selectedAgent != null ? 
         this.user.selectedAgent.commStructure :
         this.user.commStructure;
+      if (!Utility.isUndefined(this.groupPolicy.commercialStructure)) {
+        this.gpForm.get('commercialStructure').markAsPristine()
+      }
 
       const _this = this;
       this.gplov.getCommercialStructure().then(res => {
