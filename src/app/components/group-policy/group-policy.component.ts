@@ -31,7 +31,7 @@ import {
 })
 
 export class GroupPolicyComponent {
-  currentUser = this.authenticationService.currentUserValue;
+  user = this.authenticationService.currentUserValue;
   @Input() subline: String;
   @Input() groupPolicy: GroupPolicy;
   @Input() details: any;
@@ -52,7 +52,12 @@ export class GroupPolicyComponent {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.groupPolicy.agentCode = this.currentUser.agentCode; //TODO
+      const hasSelectedAgent = this.user.selectedAgent != null;
+      this.groupPolicy.agentCode = hasSelectedAgent ? this.user.userId : this.user.agentCode; //TODO
+      
+      this.groupPolicy.commercialStructure = this.user.selectedAgent != null ? 
+        this.user.selectedAgent.commStructure :
+        this.user.commStructure;
 
       const _this = this;
       this.gplov.getCommercialStructure().then(res => {

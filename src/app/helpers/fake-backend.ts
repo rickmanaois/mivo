@@ -35,6 +35,7 @@ const users = [{
   lastName: 'Domingo',
   fullName: 'Nathalie Domingo',
   address: 'Sta. Rita, Olonggapo City, Zambales, Philippines',
+  commStructure: 4001,
   expiryDay: 4,
   token: 'faketoken'
 },{
@@ -46,6 +47,7 @@ const users = [{
   lastName: 'Balarbar',
   fullName: 'Jethru Balarbar',
   address: 'Sagud Bahley, San Fabian, Pangasinan, Philippines',
+  commStructure: 4001,
   expiryDay: 11,
   token: 'faketoken'
 }]
