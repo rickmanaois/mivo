@@ -23,7 +23,9 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
-import { Utility } from 'src/app/utils/utility';
+import {
+  Utility
+} from 'src/app/utils/utility';
 
 @Component({
   selector: 'app-group-policy',
@@ -47,20 +49,19 @@ export class GroupPolicyComponent {
   constructor(
     private gplov: GroupPolicyLOVServices,
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService) {
-    this.createForm();
-  }
+    private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.createForm();
     setTimeout(() => {
       const hasSelectedAgent = this.user.selectedAgent != null;
       this.groupPolicy.agentCode = hasSelectedAgent ? this.user.userId : this.user.agentCode; //TODO
-      
-      this.groupPolicy.commercialStructure = this.user.selectedAgent != null ? 
+
+      this.groupPolicy.commercialStructure = this.user.selectedAgent != null ?
         this.user.selectedAgent.commStructure :
         this.user.commStructure;
       if (!Utility.isUndefined(this.groupPolicy.commercialStructure)) {
-        this.gpForm.get('commercialStructure').markAsPristine()
+        this.gpForm.get('commercialStructure').markAsDirty()
       }
 
       const _this = this;

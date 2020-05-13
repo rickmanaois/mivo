@@ -54,8 +54,8 @@ export class ChooseAgentComponent implements OnInit {
         _this.agentLOV = res;
       });
 
-      this.chooseAgentForm.get('commercialStructure').markAsTouched();
-      this.chooseAgentForm.get('agent').markAsTouched();
+      this.chooseAgentForm.get('commercialStructure').markAsDirty();
+      this.chooseAgentForm.get('agent').markAsDirty();
     }
 
     this.agentService.getCommercialStructure().then(res => {
