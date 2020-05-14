@@ -60,7 +60,7 @@ import {
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
-  currentUser = this.as.currentUserValue;
+  currentUser = this.auths.currentUserValue;
   @Input() isIssuance: boolean = false;
   pageLabel: String = 'Quotation';
 
@@ -90,7 +90,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private cls: CarLOVServices,
     private cqs: CarQuoteServices,
     private changeDetector: ChangeDetectorRef,
-    private as: AuthenticationService,
+    private auths: AuthenticationService,
     private bms: BsModalService
   ) {
     // this.createQuoteForm();
@@ -176,8 +176,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       receivedDate: ['', Validators.required],
       //travellers
       accessories: this.fb.array([]),
-      //policy holder information
-      // clientName: ['', Validators.required],
 
       effectivityDate: ['', Validators.required],
       expiryDate: ['', Validators.required],
@@ -508,12 +506,15 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   issueQuote(carDetails: QuoteCar) {
+    // inscludes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
+    // inscludes policy holder to car details DTO
     this.carDetails.policyHolder = this.policyHolder;
+    // inscludes accessories to car details DTO
     var accessories = this.quoteForm.get('accessories').value;
     this.carDetails.accessories = accessories.length ? accessories : [];
+
     this.cqs.getCoverageByProduct(carDetails).then(res => {
-      console.log('res', res);
       this.cqs.issueQuote(carDetails).then(res1 => {
         if (res1.status) {
           const error = res1.obj["error"];
@@ -540,5 +541,4 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       });
     });
   }
-
 }

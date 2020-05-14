@@ -49,7 +49,8 @@ export class Utility {
   }
 
   //smooth scroll to preferred html element
-  static scroll(el: HTMLElement) {
+  static scroll(id: string) {
+    var el = document.getElementById(id);
     el.scrollIntoView({behavior: 'smooth'});
   }
 

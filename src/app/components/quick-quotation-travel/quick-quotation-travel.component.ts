@@ -71,10 +71,10 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private fb: FormBuilder,
-    private qq: QuickQuoteService,
-    private travellov: TravelLOVServices,
+    private qqs: QuickQuoteService,
+    private tls: TravelLOVServices,
     private changeDetector: ChangeDetectorRef,
-    private modalService: BsModalService
+    private bms: BsModalService
   ) {
     this.createQuickQuoteForm();
     this.setValidations();
@@ -86,19 +86,19 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     var _this = this;
-    this.travellov.getCurrencyList().then(res => {
+    this.tls.getCurrencyList().then(res => {
       _this.LOV.currencyLOV = res;
     });
-    this.travellov.getTravelPackage().then(res => {
+    this.tls.getTravelPackage().then(res => {
       _this.LOV.packageLOV = res;
     });
-    this.travellov.getTypeOfCoverage().then(res => {
+    this.tls.getTypeOfCoverage().then(res => {
       _this.LOV.coverageLOV = res;
     });
-    this.travellov.getPurposeOfTrip().then(res => {
+    this.tls.getPurposeOfTrip().then(res => {
       _this.LOV.purposeOfTripLOV = res;
     });
-    this.travellov.getAgeRange().then(res => {
+    this.tls.getAgeRange().then(res => {
       _this.LOV.ageRangeLOV = res;
     });
   }
@@ -142,7 +142,7 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
       "P" :
       null;
 
-    this.travellov.getCountryList(this.travelDetails).then(res => {
+    this.tls.getCountryList(this.travelDetails).then(res => {
       res.forEach(country => {
         country.name = country.NOM_PAIS;
         country.value = country.COD_PAIS;
@@ -214,13 +214,12 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
     // display product coverage
     this.showProductCoverage = true;
     setTimeout(() => {
-      var el = document.getElementById('productCoverage');
-      Utility.scroll(el);
+      Utility.scroll('productCoverage');
     }, 500);
   }
 
   quickQuote(travelDetails: QQTravel) {
-    this.qq.quickQuoteTravel(travelDetails).then(res => {
+    this.qqs.quickQuoteTravel(travelDetails).then(res => {
       if (res.status) {
         this.travelData = [];
         this.coverageData = [];
@@ -241,11 +240,10 @@ export class QuickQuotationTravelComponent implements OnInit, AfterViewChecked {
         // displaying product comparison
         this.showProductComparison = true;
         setTimeout(() => {
-          var el = document.getElementById('productComparison');
-          Utility.scroll(el);
+          Utility.scroll('productComparison');
         });
       } else {
-        this.modalRef = Utility.showError(this.modalService, res.message);
+        this.modalRef = Utility.showError(this.bms, res.message);
       }
     });
   }

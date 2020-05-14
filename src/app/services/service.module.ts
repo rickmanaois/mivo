@@ -64,23 +64,23 @@ import {
   declarations: [],
   exports: [],
   providers: [
-    BsModalRef,
-    TranslateService,
-    AppService,
-    AuthenticationService,
-    QuickQuoteService,
-    CarUtilityServices,
-    CarQuoteServices,
-    AgentService,
-    DashboardService,
-    UtilityService,
-    
-    LovService,
-    GroupPolicyLOVServices,
-    CarLOVServices,
-    HomeLOVServices,
-    TravelLOVServices,
-    AccidentLOVServices
+    BsModalRef, //bmr
+    TranslateService, //ts
+    AppService, //apps
+    AuthenticationService, //auths
+    QuickQuoteService, //qqs
+    CarUtilityServices, //cus
+    CarQuoteServices, //cqs
+    AgentService, //as
+    DashboardService, //ds
+    UtilityService, //us
+
+    LovService, //ls
+    GroupPolicyLOVServices, //gpls
+    CarLOVServices, //cls
+    HomeLOVServices, //hls
+    TravelLOVServices, //tls
+    AccidentLOVServices //als
   ]
 })
 export class ServiceModule {}

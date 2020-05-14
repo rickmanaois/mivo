@@ -35,13 +35,13 @@ export class ChooseAgentComponent implements OnInit {
   chooseAgentForm: FormGroup;
   commercialStructureLOV: any[];
   agentLOV: any[];
-  currentUser = this.authenticationService.currentUserValue;
+  currentUser = this.auths.currentUserValue;
   hasSelectedAgent = !Utility.isUndefined(this.currentUser.selectedAgent);
   showCancelBtn: boolean = false;
 
   constructor(private router: Router,
-    private authenticationService: AuthenticationService,
-    private agentService: AgentService,
+    private auths: AuthenticationService,
+    private as: AgentService,
     private fb: FormBuilder) {
   }
 
@@ -50,7 +50,7 @@ export class ChooseAgentComponent implements OnInit {
     const _this = this;
     if (this.hasSelectedAgent) {
       this.showCancelBtn = true;
-      this.agentService.getAgentList(this.currentUser.selectedAgent.commStructure).then(res => {
+      this.as.getAgentList(this.currentUser.selectedAgent.commStructure).then(res => {
         _this.agentLOV = res;
       });
 
@@ -58,7 +58,7 @@ export class ChooseAgentComponent implements OnInit {
       this.chooseAgentForm.get('agent').markAsDirty();
     }
 
-    this.agentService.getCommercialStructure().then(res => {
+    this.as.getCommercialStructure().then(res => {
       _this.commercialStructureLOV = res;
     });
   }
@@ -79,7 +79,7 @@ export class ChooseAgentComponent implements OnInit {
   comStructureChange() {
     const _this = this;
     const commercialStructure: number = parseInt(this.chooseAgentForm.get('commercialStructure').value);
-    this.agentService.getAgentList(commercialStructure).then(res => {
+    this.as.getAgentList(commercialStructure).then(res => {
       _this.agentLOV = res;
     });
   }
@@ -89,7 +89,7 @@ export class ChooseAgentComponent implements OnInit {
   };
 
   next() {
-    const currentUser = this.authenticationService.currentUserValue;
+    const currentUser = this.auths.currentUserValue;
     const agentCode: number = parseInt(this.chooseAgentForm.get('agent').value);
     currentUser.agentCode = agentCode;
     //adds chosen agent to current user detail
@@ -100,7 +100,7 @@ export class ChooseAgentComponent implements OnInit {
       userCode: agentCode
     };
 
-    this.agentService.getProductionAgentProfile(JSON.stringify(param)).then(res => {
+    this.as.getProductionAgentProfile(JSON.stringify(param)).then(res => {
       if (res.status) {
         var sa = new SelectedAgent();
         sa.agentCode = parseInt(res.obj["codAgente"]);

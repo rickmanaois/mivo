@@ -49,15 +49,15 @@ export class DocumentPrintingComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private util: UtilityService,
-    private modalService: BsModalService) {
+    private us: UtilityService,
+    private bms: BsModalService) {
     this.createForm();
     this.setValidations();
   }
 
   ngOnInit(): void {
     this.getSOADates();
-    this.util.getDateRecord().then((res) => {
+    this.us.getDateRecord().then((res) => {
       // date records for commission statement dates
       if (res.status) {
         this.csProcessDateLOV = res.obj as[];
@@ -66,7 +66,7 @@ export class DocumentPrintingComponent implements OnInit {
           this.showCsDate = true;
         }
       } else {
-        this.modalRef = Utility.showError(this.modalService, res.message);
+        this.modalRef = Utility.showError(this.bms, res.message);
       }
     });
   }
@@ -153,7 +153,7 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   policyNumberOnChange() {
-    this.util.getEndorsementNumber(this.documentPrintingDetails).then((res) => {
+    this.us.getEndorsementNumber(this.documentPrintingDetails).then((res) => {
       if (res.status) {
         this.documentPrintingDetails.endorsementNumber = res.obj as String;
       }
@@ -161,16 +161,16 @@ export class DocumentPrintingComponent implements OnInit {
   }
 
   print(documentPrintingDetails: DocumentPrinting) {
-    this.util.validatePrinting(documentPrintingDetails).then((res) => {
+    this.us.validatePrinting(documentPrintingDetails).then((res) => {
       if (res.status) {
         var ext = res.obj;
-        this.util.printDocument(ext.toString()).subscribe(data => {
+        this.us.printDocument(ext.toString()).subscribe(data => {
           if (data != null) {
             window.open(URL.createObjectURL(data));
           }
         });
       } else {
-        this.modalRef = Utility.showError(this.modalService, res.message);
+        this.modalRef = Utility.showError(this.bms, res.message);
       }
     });
   }

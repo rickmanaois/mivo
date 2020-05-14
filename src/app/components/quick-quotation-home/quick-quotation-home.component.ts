@@ -63,10 +63,10 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private fb: FormBuilder,
-    private homelov: HomeLOVServices,
+    private hls: HomeLOVServices,
     private changeDetector: ChangeDetectorRef,
-    private qq: QuickQuoteService,
-    private modalService: BsModalService
+    private qqs: QuickQuoteService,
+    private bms: BsModalService
   ) {
     this.createQuickQuoteForm();
     this.setValidations();
@@ -78,7 +78,7 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     var _this = this;
-    this.homelov.getHomeBusinessLine().then(res => {
+    this.hls.getHomeBusinessLine().then(res => {
       res.forEach(businessLine => {
         //display Residential only
         if (businessLine.COD_RAMO == "200" && businessLine.NOM_RAMO == "RESIDENTIAL") {
@@ -334,7 +334,7 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
   }
 
   quickQuote(homeDetails: QQHome) {
-    this.qq.quickQuoteHome(homeDetails).then(res => {
+    this.qqs.quickQuoteHome(homeDetails).then(res => {
       if (res.status) {
         var quickQuoteDetails = res.obj["quickQuoteDetails"];
         var productList = res.obj["productList"];
@@ -348,11 +348,10 @@ export class QuickQuotationHomeComponent implements OnInit, AfterViewChecked {
         // displaying product comparison
         this.showProductComparison = true;
         setTimeout(() => {
-          var el = document.getElementById('productComparison');
-          Utility.scroll(el);
+          Utility.scroll('productComparison');
         });
       } else {
-        this.modalRef = Utility.showError(this.modalService, res.message);
+        this.modalRef = Utility.showError(this.bms, res.message);
       }
     });
   }
