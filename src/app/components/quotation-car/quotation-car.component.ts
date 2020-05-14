@@ -507,7 +507,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.paymentReceipt = receipt;
   }
 
-  issueQuote(carDetails: QuoteCar) {
+  generate(carDetails: QuoteCar) {
     // inscludes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
     // inscludes policy holder to car details DTO
