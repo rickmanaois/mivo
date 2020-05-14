@@ -59,16 +59,10 @@
       </div>
       
       <div *ngFor="let item of paymentBreakdown;" class="row justify-content-center">
-        <div *ngIf="item.abrEco == 'TOTLP'" class="col-4">
-          <h6>{{item.nomEco}}</h6>
-        </div>
-        <div *ngIf="item.abrEco != 'TOTLP'" class="col-4">
+        <div class="col-4{{item.abrEco == 'TOTLP' ? ' emphasize' : ''}}">
           {{item.nomEco}}
         </div>
-        <div *ngIf="item.abrEco == 'TOTLP'" class="col-4 right">
-          <h6>{{item.impEco | currency: currencyCode : 'symbol-narrow'}}</h6>
-        </div>
-        <div *ngIf="item.abrEco != 'TOTLP'" class="col-4 right">
+        <div *ngIf="item.abrEco != 'TOTLP'" class="col-4 right{{item.abrEco == 'TOTLP' ? ' emphasize' : ''}}">
           {{item.impEco | currency: currencyCode : 'symbol-narrow'}}
         </div>
         <div class="clearfix divider"></div>

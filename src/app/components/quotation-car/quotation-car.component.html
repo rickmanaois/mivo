@@ -730,13 +730,13 @@
           </app-payment-breakdown>
 
           <div class="btn-group" role="group">
-            <button type="button" (click)="test()" class="btn btn-primary">test</button>
             <button [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
               appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid" type="button" class="btn btn-primary"
-              (click)="issueQuote(carDetails)">Issue Qoute</button>
-            <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
-            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button>
+              (click)="generate(carDetails)">Generate</button>
+            <button type="button" class="btn btn-primary" [disabled]="disableIssueQuoteBtn">Issue Qoute</button>
+            <!-- <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
+            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button> -->
           </div>
 
         </form>

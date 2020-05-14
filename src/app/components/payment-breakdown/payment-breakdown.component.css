@@ -34,3 +34,8 @@ th.mat-sort-header-sorted {
 .show-more:hover {
   background: #e7e7e7;
 }
+
+.emphasize {
+  font-size: 16px;
+  font-weight: 600;
+}

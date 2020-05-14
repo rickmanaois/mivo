@@ -82,6 +82,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   paymentBreakdown: any[];
   paymentReceipt: {};
 
+  disableIssueQuoteBtn: boolean = true;
+
   //modal reference
   modalRef: BsModalRef;
   constructor(
