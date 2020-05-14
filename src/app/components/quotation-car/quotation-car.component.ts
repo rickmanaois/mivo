@@ -54,14 +54,13 @@ import {
   PolicyHolder
 } from 'src/app/objects/PolicyHolder';
 
-
 @Component({
   selector: 'app-quotation-car',
   templateUrl: './quotation-car.component.html',
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
-  currentUser = this.authenticationService.currentUserValue;
+  currentUser = this.as.currentUserValue;
   @Input() isIssuance: boolean = false;
   pageLabel: String = 'Quotation';
 
@@ -75,8 +74,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   LOV = new CarListObject();
   GPLOV = new GroupPolicyListObject();
 
-  showQuickQouteDetails: boolean = false;
-
   showAccessories: boolean = false;
   showAdditionalInformation: boolean = false;
   showSubAgent: boolean = false;
@@ -89,12 +86,12 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   modalRef: BsModalRef;
   constructor(
     private fb: FormBuilder,
-    private cu: CarUtilityServices,
-    private carlov: CarLOVServices,
-    private quote: CarQuoteServices,
+    private cus: CarUtilityServices,
+    private cls: CarLOVServices,
+    private cqs: CarQuoteServices,
     private changeDetector: ChangeDetectorRef,
-    private authenticationService: AuthenticationService,
-    private modalService: BsModalService
+    private as: AuthenticationService,
+    private bms: BsModalService
   ) {
     // this.createQuoteForm();
     // this.setValidations();
@@ -114,27 +111,27 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     var _this = this;
 
-    this.carlov.getMakeList().then(res => {
+    this.cls.getMakeList().then(res => {
       _this.LOV.makeLOV = res;
     });
 
-    this.carlov.getColor().then(res => {
+    this.cls.getColor().then(res => {
       _this.LOV.colorLOV = res;
     });
 
-    this.carlov.getClassification().then(res => {
+    this.cls.getClassification().then(res => {
       _this.LOV.classificationLOV = res;
     });
 
-    this.carlov.getCoverageArea().then(res => {
+    this.cls.getCoverageArea().then(res => {
       _this.LOV.coverageAreaLOV = res;
     });
 
-    this.carlov.getInspectionAssessment().then(res => {
+    this.cls.getInspectionAssessment().then(res => {
       _this.LOV.inspectionAssessmentLOV = res;
     });
 
-    this.cu.getSubagents().then(res => {
+    this.cus.getSubagents().then(res => {
       var subAgents = res.obj["subAgents"];
       subAgents.forEach(subAgent => {
         subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
@@ -209,7 +206,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   async validateConductionNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
       this.carDetails.conductionNumber = control.value;
-      return this.cu.validateConductionNumberFormat(this.carDetails).then(res => {
+      return this.cus.validateConductionNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidConductionNumber: true
         };
@@ -220,7 +217,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   async validatePlateNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
       this.carDetails.plateNumber = control.value;
-      return this.cu.validatePlateNumberFormat(this.carDetails).then(res => {
+      return this.cus.validatePlateNumberFormat(this.carDetails).then(res => {
         return res.status && res.obj["valid"] ? null : {
           invalidPlateNumber: true
         };
@@ -345,7 +342,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.make = _carDetails.make;
 
     var _this = this;
-    this.carlov.getModelList(this.carDetails).then(res => {
+    this.cls.getModelList(this.carDetails).then(res => {
       _this.LOV.modelLOV = res;
     });
   }
@@ -356,7 +353,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.make = _carDetails.make;
 
     var _this = this;
-    this.carlov.getVehicleTypeList(this.carDetails).then(res => {
+    this.cls.getVehicleTypeList(this.carDetails).then(res => {
       _this.LOV.vehicleTypeLOV = res;
     });
   }
@@ -369,7 +366,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     if (this.carDetails.vehicleType > 0) {
       var _this = this;
-      this.carlov.getModelYearList(this.carDetails).then(res => {
+      this.cls.getModelYearList(this.carDetails).then(res => {
         _this.LOV.modelYearLOV = res;
       });
     }
@@ -384,10 +381,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     if (this.carDetails.modelYear != '') {
       var _this = this;
-      this.carlov.getSubModelList(this.carDetails).then(res => {
+      this.cls.getSubModelList(this.carDetails).then(res => {
         _this.LOV.subModelLOV = res;
       });
-      this.carlov.getTypeOfUseList(this.carDetails).then(res => {
+      this.cls.getTypeOfUseList(this.carDetails).then(res => {
         _this.LOV.typeOfUseLOV = res;
       });
     }
@@ -424,7 +421,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     qqDetails.model = this.carDetails.model;
     qqDetails.subModel = this.carDetails.subModel;
     qqDetails.modelYear = this.carDetails.modelYear;
-    this.cu.getFMV(qqDetails).then(res => {
+    this.cus.getFMV(qqDetails).then(res => {
       _this.carDetails.vehicleValue = res.obj["fmv"];
     });
   }
@@ -434,7 +431,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     var qqDetails = new QQCar;
     qqDetails.vehicleType = this.carDetails.vehicleType;
     qqDetails.typeOfUse = this.carDetails.typeOfUse;
-    this.cu.getSubline(qqDetails).then(res => {
+    this.cus.getSubline(qqDetails).then(res => {
       _this.LOV.sublineLOV = res.obj["list"];
     });
   }
@@ -452,20 +449,20 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
 
     const _this = this;
-    this.carlov.getAreaOfUsage(this.carDetails).then(res => {
+    this.cls.getAreaOfUsage(this.carDetails).then(res => {
       _this.LOV.areaOfUsageLOV = res;
     });
 
-    this.carlov.getAccessoryList(this.carDetails).then(res => {
+    this.cls.getAccessoryList(this.carDetails).then(res => {
       _this.LOV.accessoryListLOV = res;
     });
     this.removeAccessories();
 
-    this.carlov.getPaymentPlan(this.carDetails).then(res => {
+    this.cls.getPaymentPlan(this.carDetails).then(res => {
       _this.LOV.paymentMethodLOV = res;
     });
 
-    this.carlov.getProduct(this.carDetails).then(res => {
+    this.cls.getProduct(this.carDetails).then(res => {
       let avalidableProducts = [];
       res.forEach((e) => {
         //removing not MSO products
@@ -476,7 +473,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       _this.LOV.productListLOV = avalidableProducts;
     });
 
-    this.cu.getPreAdditionalInfo(this.carDetails).then(res => {
+    this.cus.getPreAdditionalInfo(this.carDetails).then(res => {
       if (res.status) {
         _this.carDetails.seatingCapacity = res.obj["seatingCapacity"];
         _this.carDetails.weight = res.obj["weight"];
@@ -491,7 +488,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.expiryDateMinDate = this.carDetails.expiryDate;
   }
 
-  accessoryOnchange(event: any, index) {
+  accessoryOnchange(event: any, index: number) {
     this.disableAccessory();
     var options = event.target.options;
     if (options.length) {
@@ -504,145 +501,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
   }
 
-
-  breakdown = [{
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "PREMIUM",
-    "abrEco": "NETP",
-    "codEco": "1",
-    "impEco": "16987.5"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "MANAGEMENT FEE",
-    "abrEco": "HF",
-    "codEco": "19",
-    "impEco": "0"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "VALUE ADDED TAX",
-    "abrEco": "VAT",
-    "codEco": "10",
-    "impEco": "2038.5"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "MANAGEMENT FEE VAT",
-    "abrEco": "HFVAT",
-    "codEco": "49",
-    "impEco": "0"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "LOCAL GOVT. TAX",
-    "abrEco": "LGT",
-    "codEco": "11",
-    "impEco": "84.94"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "DOCUMENTARY STAMPS TAX",
-    "abrEco": "DST",
-    "codEco": "12",
-    "impEco": "2123.44"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "INTEREST",
-    "abrEco": "INT",
-    "codEco": "20",
-    "impEco": "0"
-  }, {
-    "codCia": "1",
-    "codRamo": "100",
-    "numPoliza": "9990000308290",
-    "numApli": "0",
-    "numSptoApli": "0",
-    "numCuota": "1",
-    "nomEco": "TOTAL PREMIUM",
-    "abrEco": "TOTLP",
-    "codEco": "999",
-    "impEco": "21234.38"
-  }];
-
-  receipt = {
-    "codCia": 1,
-    "numPoliza": "9990000308290",
-    "numSpto": 0,
-    "numApli": 0,
-    "numSptoApli": 0,
-    "numCuota": 1,
-    "mcaCa": "N",
-    "mcaCv": "N",
-    "numRecibo": -1,
-    "tipRecibo": null,
-    "fecEfecRecibo": "2020-05-13 00:00:00.0",
-    "fecVctoRecibo": "2021-05-13 00:00:00.0",
-    "tipGestor": "AG",
-    "codGestor": "1101",
-    "fecEmisionSpto": "2020-05-31 00:00:00.0",
-    "tipSituacion": "EP",
-    "tipRemesa": "1",
-    "fecRemesa": null,
-    "fecCtable": null,
-    "fecValor": null,
-    "codMon": 3,
-    "valCambio": 60,
-    "impRecibo": 21234.38, //premium
-    "impNeta": 16987.5, //netPremium
-    "impRecargo": 0,
-    "impImptos": 4246.88, //tax
-    "impBoni": 0,
-    "impComis": 0,
-    "tipCoaseguro": 0,
-    "codNivel3": 4001,
-    "codAgt": 1101,
-    "numImpresion": null,
-    "ctrlMoroso": null,
-    "txtAux1": null,
-    "txtAux2": null,
-    "fecActu": "2020-05-13 00:00:00.0",
-    "impTotalComis": 0,
-    "numAviso": null,
-    "tipDocumPago": null,
-    "codDocumPago": null,
-    "impInteres": 0,
-    "impImptosInteres": 0,
-    "numMvtoCv": null,
-    "mcaDctoComis": null,
-    "fecVctoPago": null
-  };
-
   populatePaymentBreakdown(breakdown: any[], receipt: {}) {
     this.showPaymentBreakdown = true;
     this.paymentBreakdown = breakdown;
@@ -654,30 +512,30 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.policyHolder = this.policyHolder;
     var accessories = this.quoteForm.get('accessories').value;
     this.carDetails.accessories = accessories.length ? accessories : [];
-    this.quote.getCoverageByProduct(carDetails).then(res => {
+    this.cqs.getCoverageByProduct(carDetails).then(res => {
       console.log('res', res);
-      this.quote.issueQuote(carDetails).then(res1 => {
+      this.cqs.issueQuote(carDetails).then(res1 => {
         if (res1.status) {
           const error = res1.obj["error"];
           const errorCode = res1.obj["errorCode"];
           const status = res1.obj["status"];
           if (status) {
             if (errorCode == "W") { //TODO if warning- still dont no the code 
-              this.modalRef = Utility.showWarning(this.modalService, error);
+              this.modalRef = Utility.showWarning(this.bms, error);
             } else {
               const policyNumber = res1.obj["policyNumber"];
-              const message = "Congratulations! You have successfully issued a quotation - " + policyNumber;
-              this.modalRef = Utility.showInfo(this.modalService, message);
+              const message = "You have successfully created a quotation - " + policyNumber;
+              this.modalRef = Utility.showInfo(this.bms, message);
 
               const breakdown = res1.obj["breakdown"];
               const receipt = res1.obj["receipt"];
               this.populatePaymentBreakdown(breakdown, receipt);
             }
           } else {
-            this.modalRef = Utility.showError(this.modalService, error);
+            this.modalRef = Utility.showError(this.bms, error);
           }
         } else {
-          this.modalRef = Utility.showError(this.modalService, res1.message);
+          this.modalRef = Utility.showError(this.bms, res1.message);
         }
       });
     });
