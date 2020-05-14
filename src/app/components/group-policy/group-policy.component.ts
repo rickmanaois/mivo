@@ -61,7 +61,7 @@ export class GroupPolicyComponent {
         this.user.selectedAgent.commStructure :
         this.user.commStructure;
       if (!Utility.isUndefined(this.groupPolicy.commercialStructure)) {
-        this.gpForm.get('commercialStructure').markAsDirty()
+        this.gpForm.get('commercialStructure').markAsDirty();
       }
 
       const _this = this;
