@@ -157,6 +157,9 @@ import {
 import {
   PolicyHolderComponent
 } from './components/policy-holder/policy-holder.component';
+import {
+  PaymentBreakdownComponent
+} from './components/payment-breakdown/payment-breakdown.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -210,7 +213,8 @@ const routes: Routes = [{
     IndividualPolicyComponent,
     ChooseAgentComponent,
     DocumentPrintingComponent,
-    PolicyHolderComponent
+    PolicyHolderComponent,
+    PaymentBreakdownComponent
   ],
   entryComponents: [
     ModalComponent

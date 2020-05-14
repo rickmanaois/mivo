@@ -4,6 +4,7 @@ import {
 import {
   ModalComponent
 } from '../components/modal/modal.component';
+import * as moment from 'moment';
 
 export class Utility {
 
@@ -58,5 +59,11 @@ export class Utility {
       a[param] = parseInt(a[param]);
     });
     return arr;
+  }
+
+  //format date string
+  static formatDate(d : Date, f ?: string) {
+    const format = !this.isUndefined(f) ? f : "MM/DD/YYYY";
+    return moment(d).format(format);
   }
 }

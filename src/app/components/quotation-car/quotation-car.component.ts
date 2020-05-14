@@ -80,6 +80,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   showAccessories: boolean = false;
   showAdditionalInformation: boolean = false;
   showSubAgent: boolean = false;
+  showPaymentBreakdown: boolean = false;
+
+  paymentBreakdown: any[];
+  paymentReceipt: {};
 
   //modal reference
   modalRef: BsModalRef;
@@ -500,6 +504,151 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
   }
 
+
+  breakdown = [{
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "PREMIUM",
+    "abrEco": "NETP",
+    "codEco": "1",
+    "impEco": "16987.5"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "MANAGEMENT FEE",
+    "abrEco": "HF",
+    "codEco": "19",
+    "impEco": "0"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "VALUE ADDED TAX",
+    "abrEco": "VAT",
+    "codEco": "10",
+    "impEco": "2038.5"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "MANAGEMENT FEE VAT",
+    "abrEco": "HFVAT",
+    "codEco": "49",
+    "impEco": "0"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "LOCAL GOVT. TAX",
+    "abrEco": "LGT",
+    "codEco": "11",
+    "impEco": "84.94"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "DOCUMENTARY STAMPS TAX",
+    "abrEco": "DST",
+    "codEco": "12",
+    "impEco": "2123.44"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "INTEREST",
+    "abrEco": "INT",
+    "codEco": "20",
+    "impEco": "0"
+  }, {
+    "codCia": "1",
+    "codRamo": "100",
+    "numPoliza": "9990000308290",
+    "numApli": "0",
+    "numSptoApli": "0",
+    "numCuota": "1",
+    "nomEco": "TOTAL PREMIUM",
+    "abrEco": "TOTLP",
+    "codEco": "999",
+    "impEco": "21234.38"
+  }];
+
+  receipt = {
+    "codCia": 1,
+    "numPoliza": "9990000308290",
+    "numSpto": 0,
+    "numApli": 0,
+    "numSptoApli": 0,
+    "numCuota": 1,
+    "mcaCa": "N",
+    "mcaCv": "N",
+    "numRecibo": -1,
+    "tipRecibo": null,
+    "fecEfecRecibo": "2020-05-13 00:00:00.0",
+    "fecVctoRecibo": "2021-05-13 00:00:00.0",
+    "tipGestor": "AG",
+    "codGestor": "1101",
+    "fecEmisionSpto": "2020-05-31 00:00:00.0",
+    "tipSituacion": "EP",
+    "tipRemesa": "1",
+    "fecRemesa": null,
+    "fecCtable": null,
+    "fecValor": null,
+    "codMon": 3,
+    "valCambio": 60,
+    "impRecibo": 21234.38, //premium
+    "impNeta": 16987.5, //netPremium
+    "impRecargo": 0,
+    "impImptos": 4246.88, //tax
+    "impBoni": 0,
+    "impComis": 0,
+    "tipCoaseguro": 0,
+    "codNivel3": 4001,
+    "codAgt": 1101,
+    "numImpresion": null,
+    "ctrlMoroso": null,
+    "txtAux1": null,
+    "txtAux2": null,
+    "fecActu": "2020-05-13 00:00:00.0",
+    "impTotalComis": 0,
+    "numAviso": null,
+    "tipDocumPago": null,
+    "codDocumPago": null,
+    "impInteres": 0,
+    "impImptosInteres": 0,
+    "numMvtoCv": null,
+    "mcaDctoComis": null,
+    "fecVctoPago": null
+  };
+
+  populatePaymentBreakdown(breakdown: any[], receipt: {}) {
+    this.showPaymentBreakdown = true;
+    this.paymentBreakdown = breakdown;
+    this.paymentReceipt = receipt;
+  }
+
   issueQuote(carDetails: QuoteCar) {
     this.carDetails.groupPolicy = this.groupPolicy;
     this.carDetails.policyHolder = this.policyHolder;
@@ -512,7 +661,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
           const error = res1.obj["error"];
           const errorCode = res1.obj["errorCode"];
           const status = res1.obj["status"];
-          console.log("status " + status);
           if (status) {
             if (errorCode == "W") { //TODO if warning- still dont no the code 
               this.modalRef = Utility.showWarning(this.modalService, error);
@@ -520,6 +668,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const policyNumber = res1.obj["policyNumber"];
               const message = "Congratulations! You have successfully issued a quotation - " + policyNumber;
               this.modalRef = Utility.showInfo(this.modalService, message);
+
+              const breakdown = res1.obj["breakdown"];
+              const receipt = res1.obj["receipt"];
+              this.populatePaymentBreakdown(breakdown, receipt);
             }
           } else {
             this.modalRef = Utility.showError(this.modalService, error);
