@@ -1,9 +1,9 @@
 <div mat-dialog-content>
   <mat-form-field>
-    <label>Coverage</label>
-    <input class="form-control" [(ngModel)]="data.coverage">
+    <label>Coverage:</label>
+    <h4>{{data.coverage}}</h4>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="!data.isSelect">
     <label>Sum Insured</label>
     <input type="number" class="form-control" [(ngModel)]="data.sumInsured">
   </mat-form-field>
@@ -14,7 +14,11 @@
 </div>
 <div mat-dialog-actions align="end">
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-primary" (click)="onNoClick()">Cancel</button>
-    <button type="button" class="btn btn-primary" [mat-dialog-close]="data" cdkFocusInitial>Update</button>
+    <button type="button" class="btn btn-primary" (click)="close(false)">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="close(true)" [mat-dialog-close]="data" cdkFocusInitial>
+      Update
+    </button>
   </div>
 </div>

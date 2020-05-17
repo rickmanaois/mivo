@@ -1385,13 +1385,14 @@ const coverageVariable: any[] = [{
 }];
 
 export interface TablesDTO {
+  isMandatory: boolean;
+  included: boolean;
   coverage: string;
-  vehicleValue: number;
+  options: [];
+  sumInsured: number;
   netPremium: number;
-  checkbox: boolean;
-  select: boolean;
-  selectOption: boolean;
-  showValue: boolean;
+  isRoadAssist: boolean;
+  isSelect: boolean;
 }
 
 @Component({
@@ -1407,58 +1408,52 @@ export class CoveragesComponent implements OnInit {
   @Input() premiumAmount: any[];
   @Input() coverageAmount: any[];
 
-  displayedColumns: string[] = ['included', 'coverage', 'sumInsured', 'netPremium', 'action'];
-  dataSource: any[];
-  newSource: any[];
-  data: any[];
-
   cForm: FormGroup;
+  displayedColumns: string[] = ['included', 'coverage', 'sumInsured', 'netPremium', 'action'];
+  source: any[];
+  dataSource = new MatTableDataSource < TablesDTO > (this.source);
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialog: MatDialog,
-    private cDRef: ChangeDetectorRef) {}
+    public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.dataSource = this.getData();
-    this.setForm(this.dataSource);
+    this.source = this.getData();
+    this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
+    this.setForm(this.dataSource.filteredData);
   }
 
-  updateSource() {
-    this.dataSource = this.newSource;
-  }
-
-  editCoverage(coverage) {
+  editCoverage(coverage: TablesDTO) {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '500px',
       data: coverage
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.data = coverage;
-      this.updateRow(coverage);
+      // if update button is clicked
+      if (result) {
+        this.updateRow(coverage);
+      }
     });
   }
 
-  updateRow(row) {
-    let updateItem = this.dataSource.find(this.findIndexToUpdate, row.coverage);
-    console.log(updateItem);
-    let index = this.dataSource.indexOf(updateItem);
-    console.log(index);
-    var d = this.dataSource;
-    this.dataSource = [];
-    d[index] = row;
-    console.log(this.dataSource);
-    this.newSource = d;
-    this.updateSource();
-   
+  updateRow(row: TablesDTO) {
+    let updateItem = this.source.find(this.findIndexToUpdate, row.coverage);
+    let index = this.source.indexOf(updateItem);
+    this.source[index] = row;
+
+    // updating source
+    this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
+    this.dataSource._updateChangeSubscription();
+    this.dataSource._renderChangesSubscription;
+    this.setForm(this.dataSource.filteredData);
   }
 
-  findIndexToUpdate(row) {
+  findIndexToUpdate(row: any) {
     return row.coverage === this;
   }
 
-  private setForm(d) {
+  private setForm(d: any[]) {
     this.cForm = this.formBuilder.group({
       coverages: this.formBuilder.array([])
     });
@@ -1604,10 +1599,6 @@ export class CoveragesComponent implements OnInit {
 
     return returnData;
   };
-
-  test() {
-    console.log(this.cForm);
-  }
 }
 
 @Component({
@@ -1617,12 +1608,10 @@ export class CoveragesComponent implements OnInit {
 export class DialogOverviewExampleDialog {
   constructor(
     public dialogRef: MatDialogRef < DialogOverviewExampleDialog > ,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
+  close(b: boolean): void {
+    this.dialogRef.close(b);
   }
 }
 // function generateCoverageAmountByProduct(obj, quoteDetail, isLoadQuotation) {

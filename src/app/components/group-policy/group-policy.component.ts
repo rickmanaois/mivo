@@ -60,14 +60,14 @@ export class GroupPolicyComponent {
       this.groupPolicy.commercialStructure = this.user.selectedAgent != null ?
         this.user.selectedAgent.commStructure :
         this.user.commStructure;
-      // if (!Utility.isUndefined(this.groupPolicy.commercialStructure)) {
-      //   this.gpForm.get('commercialStructure').markAsDirty();
-      // }
+      if (!Utility.isUndefined(this.groupPolicy.commercialStructure)) {
+        this.gpForm.get('commercialStructure').markAsDirty();
+      }
 
-      // const _this = this;
-      // this.gpls.getCommercialStructure().then(res => {
-      //   _this.GPLOV.commercialStructureLOV = res;
-      // });
+      const _this = this;
+      this.gpls.getCommercialStructure().then(res => {
+        _this.GPLOV.commercialStructureLOV = res;
+      });
 
       Validate.setGroupPolicyValidations(this.gpForm, this.groupPolicy);
     });

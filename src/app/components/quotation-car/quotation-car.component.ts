@@ -67,7 +67,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   carDetails = new QuoteCar();
   groupPolicy = new GroupPolicy();
   policyHolder = new PolicyHolder();
+
   quoteForm: FormGroup;
+  cForm: FormGroup;
+
   today: Date = new Date();
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
@@ -78,9 +81,18 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   showAdditionalInformation: boolean = false;
   showSubAgent: boolean = false;
   showPaymentBreakdown: boolean = false;
+  showCoverage: boolean = false;
 
+  //for payment breakdown
   paymentBreakdown: any[];
   paymentReceipt: {};
+
+  //for coverage
+  coverage: any[];
+  amountList: any[];
+  coverageVariable: any[];
+  premiumAmount: any[];
+  coverageAmount: any[];
 
   disableIssueQuoteBtn: boolean = true;
 
@@ -113,34 +125,34 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     var _this = this;
 
-    // this.cls.getMakeList().then(res => {
-    //   _this.LOV.makeLOV = res;
-    // });
+    this.cls.getMakeList().then(res => {
+      _this.LOV.makeLOV = res;
+    });
 
-    // this.cls.getColor().then(res => {
-    //   _this.LOV.colorLOV = res;
-    // });
+    this.cls.getColor().then(res => {
+      _this.LOV.colorLOV = res;
+    });
 
-    // this.cls.getClassification().then(res => {
-    //   _this.LOV.classificationLOV = res;
-    // });
+    this.cls.getClassification().then(res => {
+      _this.LOV.classificationLOV = res;
+    });
 
-    // this.cls.getCoverageArea().then(res => {
-    //   _this.LOV.coverageAreaLOV = res;
-    // });
+    this.cls.getCoverageArea().then(res => {
+      _this.LOV.coverageAreaLOV = res;
+    });
 
-    // this.cls.getInspectionAssessment().then(res => {
-    //   _this.LOV.inspectionAssessmentLOV = res;
-    // });
+    this.cls.getInspectionAssessment().then(res => {
+      _this.LOV.inspectionAssessmentLOV = res;
+    });
 
-    // this.cus.getSubagents().then(res => {
-    //   var subAgents = res.obj["subAgents"];
-    //   subAgents.forEach(subAgent => {
-    //     subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
-    //     subAgent.value = subAgent.codDocum;
-    //   });
-    //   _this.LOV.subagentLOV = subAgents;
-    // });
+    this.cus.getSubagents().then(res => {
+      var subAgents = res.obj["subAgents"];
+      subAgents.forEach(subAgent => {
+        subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
+        subAgent.value = subAgent.codDocum;
+      });
+      _this.LOV.subagentLOV = subAgents;
+    });
 
     this.setValue();
   }
@@ -501,11 +513,26 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  populateCoverage(coverage: any[], amountList: any[], coverageVariable: any[], premiumAmount: any[], coverageAmount: any[]) {
+    this.showCoverage = true;
+    this.coverage = coverage;
+    this.amountList = amountList;
+    this.coverageVariable = coverageVariable;
+    this.premiumAmount = premiumAmount;
+    this.coverageAmount = coverageAmount;
+  }
+
   populatePaymentBreakdown(breakdown: any[], receipt: {}) {
     this.showPaymentBreakdown = true;
     this.paymentBreakdown = breakdown;
     this.paymentReceipt = receipt;
     Utility.scroll('paymentBreakdown');
+  }
+
+  test(form) {
+    console.log(form);
+    var coverages = form.get('coverages').value;
+    console.log(coverages);
   }
 
   generate(carDetails: QuoteCar) {
@@ -530,6 +557,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const policyNumber = res1.obj["policyNumber"];
               const message = "You have successfully created a quotation - " + policyNumber;
               this.modalRef = Utility.showInfo(this.bms, message);
+
+              const coverage = res1.obj["coverage"];
+              const amountList = res1.obj["amountList"];;
+              const coverageVariable = res1.obj["coverageVariable"];;
+              const premiumAmount = res1.obj["premiumAmount"];;
+              const coverageAmount = res1.obj["coverageAmount"];;
+              this.populateCoverage(coverage, amountList, coverageVariable, premiumAmount, coverageAmount);
 
               const breakdown = res1.obj["breakdown"];
               const receipt = res1.obj["receipt"];
