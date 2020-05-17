@@ -13,7 +13,7 @@ import {
   Utility
 } from 'src/app/utils/utility';
 
-export interface OutstandingBillsDTO {
+export interface TablesDTO {
   effectivityDate: string;
   dueDate: string;
   premium: number;
@@ -21,15 +21,6 @@ export interface OutstandingBillsDTO {
   tax: number;
   commission: number;
 }
-
-let ELEMENT_DATA: OutstandingBillsDTO[] = [{
-  effectivityDate: "05/14/2020",
-  dueDate: "04/20/2020",
-  premium: 21234.38,
-  netPremium: 16987.50,
-  tax: 4246.88,
-  commission: 0.00
-}];
 
 @Component({
   selector: 'app-payment-breakdown',
@@ -65,7 +56,7 @@ export class PaymentBreakdownComponent implements OnInit {
     const efectivityDate = new Date(this.paymentReceipt["fecEfecRecibo"]);
     const dueDate = new Date(this.paymentReceipt["fecVctoRecibo"]);
 
-    const data: OutstandingBillsDTO[] = [{
+    const data: TablesDTO[] = [{
       effectivityDate: Utility.formatDate(efectivityDate),
       dueDate: Utility.formatDate(dueDate),
       premium: this.paymentReceipt["impRecibo"],

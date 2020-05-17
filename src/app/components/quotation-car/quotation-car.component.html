@@ -729,6 +729,11 @@
             [showExchangeRate]="false">
           </app-payment-breakdown>
 
+          <app-coverages
+            #appCoverages
+            [carDetails]="carDetails">
+          </app-coverages>
+
           <div class="btn-group" role="group">
             <button [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||

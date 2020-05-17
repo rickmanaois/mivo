@@ -1,0 +1,20 @@
+<div mat-dialog-content>
+  <mat-form-field>
+    <label>Coverage</label>
+    <input class="form-control" [(ngModel)]="data.coverage">
+  </mat-form-field>
+  <mat-form-field>
+    <label>Sum Insured</label>
+    <input type="number" class="form-control" [(ngModel)]="data.sumInsured">
+  </mat-form-field>
+  <mat-form-field>
+    <label>Net Premium</label>
+    <input type="number" class="form-control" [(ngModel)]="data.netPremium">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary" (click)="onNoClick()">Cancel</button>
+    <button type="button" class="btn btn-primary" [mat-dialog-close]="data" cdkFocusInitial>Update</button>
+  </div>
+</div>

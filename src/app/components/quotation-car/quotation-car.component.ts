@@ -113,34 +113,34 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     var _this = this;
 
-    this.cls.getMakeList().then(res => {
-      _this.LOV.makeLOV = res;
-    });
+    // this.cls.getMakeList().then(res => {
+    //   _this.LOV.makeLOV = res;
+    // });
 
-    this.cls.getColor().then(res => {
-      _this.LOV.colorLOV = res;
-    });
+    // this.cls.getColor().then(res => {
+    //   _this.LOV.colorLOV = res;
+    // });
 
-    this.cls.getClassification().then(res => {
-      _this.LOV.classificationLOV = res;
-    });
+    // this.cls.getClassification().then(res => {
+    //   _this.LOV.classificationLOV = res;
+    // });
 
-    this.cls.getCoverageArea().then(res => {
-      _this.LOV.coverageAreaLOV = res;
-    });
+    // this.cls.getCoverageArea().then(res => {
+    //   _this.LOV.coverageAreaLOV = res;
+    // });
 
-    this.cls.getInspectionAssessment().then(res => {
-      _this.LOV.inspectionAssessmentLOV = res;
-    });
+    // this.cls.getInspectionAssessment().then(res => {
+    //   _this.LOV.inspectionAssessmentLOV = res;
+    // });
 
-    this.cus.getSubagents().then(res => {
-      var subAgents = res.obj["subAgents"];
-      subAgents.forEach(subAgent => {
-        subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
-        subAgent.value = subAgent.codDocum;
-      });
-      _this.LOV.subagentLOV = subAgents;
-    });
+    // this.cus.getSubagents().then(res => {
+    //   var subAgents = res.obj["subAgents"];
+    //   subAgents.forEach(subAgent => {
+    //     subAgent.name = subAgent.nomCompleto + "(" + subAgent.tipDocum + ")";
+    //     subAgent.value = subAgent.codDocum;
+    //   });
+    //   _this.LOV.subagentLOV = subAgents;
+    // });
 
     this.setValue();
   }
@@ -505,6 +505,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.showPaymentBreakdown = true;
     this.paymentBreakdown = breakdown;
     this.paymentReceipt = receipt;
+    Utility.scroll('paymentBreakdown');
   }
 
   generate(carDetails: QuoteCar) {

@@ -62,7 +62,7 @@
         <div class="col-4{{item.abrEco == 'TOTLP' ? ' emphasize' : ''}}">
           {{item.nomEco}}
         </div>
-        <div *ngIf="item.abrEco != 'TOTLP'" class="col-4 right{{item.abrEco == 'TOTLP' ? ' emphasize' : ''}}">
+        <div class="col-4 right{{item.abrEco == 'TOTLP' ? ' emphasize' : ''}}">
           {{item.impEco | currency: currencyCode : 'symbol-narrow'}}
         </div>
         <div class="clearfix divider"></div>

@@ -40,7 +40,8 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule
 } from '@angular/material';
 
 import {
@@ -160,6 +161,7 @@ import {
 import {
   PaymentBreakdownComponent
 } from './components/payment-breakdown/payment-breakdown.component';
+import { CoveragesComponent, DialogOverviewExampleDialog } from './components/coverages/coverages.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -214,7 +216,9 @@ const routes: Routes = [{
     ChooseAgentComponent,
     DocumentPrintingComponent,
     PolicyHolderComponent,
-    PaymentBreakdownComponent
+    PaymentBreakdownComponent,
+    CoveragesComponent,
+    DialogOverviewExampleDialog
   ],
   entryComponents: [
     ModalComponent
@@ -230,6 +234,7 @@ const routes: Routes = [{
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
