@@ -543,9 +543,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.accessories = accessories.length ? accessories : [];
 
     // includes coverages to car details DTO
+    this.carDetails.coverages = [];
     if (!Utility.isUndefined(appCoverage)) {
       var coverages = appCoverage.cForm.get('coverages').value;
-      this.carDetails.coverages = coverages;
+      this.carDetails.coverages = coverages.length ? coverages : [];
     }
 
     // S for generation and N for issue quotation
@@ -579,6 +580,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
                 const breakdown = res1.obj["breakdown"];
                 const receipt = res1.obj["receipt"];
                 this.populatePaymentBreakdown(breakdown, receipt);
+
+                this.disableIssueQuoteBtn = false;
               }
             }
           } else {
