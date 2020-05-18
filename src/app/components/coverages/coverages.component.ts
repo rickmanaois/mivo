@@ -1404,7 +1404,7 @@ export class CoveragesComponent implements OnInit {
   @Input() carDetails: QuoteCar;
   @Input() coverage: any[];
   @Input() amountList: any[];
-  @Input() coverageVariable: any[];
+  // @Input() coverageVariable: any[];
   @Input() premiumAmount: any[];
   @Input() coverageAmount: any[];
 
@@ -1482,10 +1482,10 @@ export class CoveragesComponent implements OnInit {
   }
 
   private getData() {
-    this.coverage = coverageList;
-    this.amountList = amountList;
-    this.premiumAmount = premiumAmount;
-    this.coverageAmount = coverageAmount;
+    // this.coverage;
+    // this.amountList = amountList;
+    // this.premiumAmount = premiumAmount;
+    // this.coverageAmount = coverageAmount;
 
     var returnData: any[] = [];
 

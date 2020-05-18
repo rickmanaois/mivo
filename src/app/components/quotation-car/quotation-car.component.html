@@ -371,7 +371,7 @@
           <div class="card shadow mb-3">
             <div class="card-header d-flex justify-content-between optional"
               (click)="showAccessories = !showAccessories" matTooltip="click to show/hide accessories">
-              <strong>Accessories</strong>
+              <strong>Accessories (Optional)</strong>
               <div class="dropdown no-arrow">
                 <i class="fas fa-angle-double-down fa-sm fa-fw text-gray-400"></i>
               </div>
@@ -473,7 +473,7 @@
             <div class="card-header d-flex justify-content-between optional"
               (click)="showAdditionalInformation = !showAdditionalInformation"
               matTooltip="click to show/hide additional policy information">
-              <strong>Additional Policy Information</strong>
+              <strong>Additional Policy Information (Optional)</strong>
               <div class="dropdown no-arrow">
                 <i class="fas fa-angle-double-down fa-sm fa-fw text-gray-400"></i>
               </div>
@@ -638,7 +638,7 @@
           <div class="card shadow mb-3">
             <div class="card-header d-flex justify-content-between optional" (click)="showSubAgent = !showSubAgent"
               matTooltip="click to show/hide subagents">
-              <strong>Subagent</strong>
+              <strong>Subagent (Optional)</strong>
               <div class="dropdown no-arrow">
                 <i class="fas fa-angle-double-down fa-sm fa-fw text-gray-400"></i>
               </div>
@@ -735,7 +735,6 @@
             [carDetails]="carDetails"
             [coverage] = "coverage"
             [amountList] = "amountList"
-            [coverageVariable] = "coverageVariable"
             [premiumAmount] = "premiumAmount"
             [coverageAmount] = "coverageAmount">
           </app-coverages>
