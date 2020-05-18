@@ -50,8 +50,13 @@ export class Utility {
 
   //smooth scroll to preferred html element
   static scroll(id: string) {
-    var el = document.getElementById(id);
-    el.scrollIntoView({behavior: 'smooth'});
+    //buffer if id is hidden
+    setTimeout(()=> {
+      var el = document.getElementById(id);
+      if (!this.isUndefined(el)) {
+        el.scrollIntoView({behavior: 'smooth'});
+      }
+    }, 500);
   }
 
   //converts string value to integer
