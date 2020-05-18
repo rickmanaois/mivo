@@ -1402,7 +1402,7 @@ export interface TablesDTO {
 })
 export class CoveragesComponent implements OnInit {
   @Input() carDetails: QuoteCar;
-  @Input() coverage: any[];
+  @Input() coverageList: any[];
   @Input() amountList: any[];
   // @Input() coverageVariable: any[];
   @Input() premiumAmount: any[];
@@ -1486,10 +1486,9 @@ export class CoveragesComponent implements OnInit {
     // this.amountList = amountList;
     // this.premiumAmount = premiumAmount;
     // this.coverageAmount = coverageAmount;
-
     var returnData: any[] = [];
 
-    this.coverage.forEach((cov) => {
+    this.coverageList.forEach((cov) => {
       var code = cov.COD_COB;
       // var vehicleValue = this.carDetails.vehicleValue;
       // var product = this.carDetails.productList;

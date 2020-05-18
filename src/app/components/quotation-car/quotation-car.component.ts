@@ -88,9 +88,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   paymentReceipt: {};
 
   //for coverage
-  coverage: any[];
+  coverageList: any[];
   amountList: any[];
-  coverageVariable: any[];
   premiumAmount: any[];
   coverageAmount: any[];
 
@@ -513,9 +512,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  populateCoverage(coverage: any[], amountList: any[], premiumAmount: any[], coverageAmount: any[]) {
+  populateCoverage(coverageList: any[], amountList: any[], premiumAmount: any[], coverageAmount: any[]) {
     this.showCoverage = true;
-    this.coverage = coverage;
+    this.coverageList = coverageList;
     this.amountList = amountList;
     this.premiumAmount = premiumAmount;
     this.coverageAmount = coverageAmount;
@@ -557,11 +556,11 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const message = "You have successfully created a quotation - " + policyNumber;
               this.modalRef = Utility.showInfo(this.bms, message);
 
-              const coverage = res.obj["coverage"];
+              const coverageList = res.obj["coverageList"];
               const amountList = res.obj["amountList"];;
               const premiumAmount = res1.obj["premiumAmount"];;
               const coverageAmount = res1.obj["coverageAmount"];;
-              this.populateCoverage(coverage, amountList, premiumAmount, coverageAmount);
+              this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
 
               const breakdown = res1.obj["breakdown"];
               const receipt = res1.obj["receipt"];
