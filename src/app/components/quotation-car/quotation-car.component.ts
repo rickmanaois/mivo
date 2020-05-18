@@ -533,7 +533,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     console.log(coverages);
   }
 
-  issueQuote(cForm: FormGroup, mcaTmpPptoMph: string) {
+  issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
     // includes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
     // includes policy holder to car details DTO
@@ -543,8 +543,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.accessories = accessories.length ? accessories : [];
 
     // includes coverages to car details DTO
-    if (!Utility.isUndefined(cForm)) {
-      var coverages = cForm.get('coverages').value;
+    if (!Utility.isUndefined(appCoverage)) {
+      var coverages = appCoverage.cForm.get('coverages').value;
       this.carDetails.coverages = coverages;
     }
 

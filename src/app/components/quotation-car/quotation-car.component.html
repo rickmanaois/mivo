@@ -751,11 +751,11 @@
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
               appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
               type="button" class="btn btn-primary"
-              (click)="issueQuote(appCoverages.cForm, 'S')">Generate</button>
+              (click)="issueQuote(appCoverages, 'S')">Generate</button>
             <button 
               [disabled]="disableIssueQuoteBtn"
               type="button" class="btn btn-primary"
-              (click)="issueQuote(appCoverages.cForm, 'N')">Issue Qoute</button>
+              (click)="issueQuote(appCoverages, 'N')">Issue Qoute</button>
             <!-- <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
             <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button> -->
           </div>
