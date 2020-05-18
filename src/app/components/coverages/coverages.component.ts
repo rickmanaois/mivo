@@ -1472,6 +1472,7 @@ export class CoveragesComponent implements OnInit {
     return this.formBuilder.group({
       isMandatory: [coverage.isMandatory],
       included: [coverage.included],
+      code: [coverage.code],
       coverage: [coverage.coverage],
       options: [coverage.options],
       sumInsured: [coverage.sumInsured],
@@ -1583,6 +1584,7 @@ export class CoveragesComponent implements OnInit {
       var returnObj = {
         isMandatory: isMandatory,
         included: isMandatory,
+        code: code,
         coverage: name,
         options: options,
         sumInsured: isMandatory ? vehicleValue : isSelect ? selectedOpt : 0,

@@ -533,17 +533,23 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     console.log(coverages);
   }
 
-  generate(carDetails: QuoteCar) {
-    // inscludes group policy to car details DTO
+  issueQuote(cForm: FormGroup, mcaTmpPptoMph: string) {
+    // includes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
-    // inscludes policy holder to car details DTO
+    // includes policy holder to car details DTO
     this.carDetails.policyHolder = this.policyHolder;
-    // inscludes accessories to car details DTO
+    // includes accessories to car details DTO
     var accessories = this.quoteForm.get('accessories').value;
     this.carDetails.accessories = accessories.length ? accessories : [];
+    // includes coverages to car details DTO
+    var coverages = cForm.get('coverages').value;
+    this.carDetails.coverages = coverages;
 
-    this.cqs.getCoverageByProduct(carDetails).then(res => {
-      this.cqs.issueQuote(carDetails).then(res1 => {
+    // S for generation and N for issue quotation
+    this.carDetails.mcaTmpPptoMph = mcaTmpPptoMph;
+
+    this.cqs.getCoverageByProduct(this.carDetails).then(res => {
+      this.cqs.issueQuote(this.carDetails).then(res1 => {
         if (res1.status) {
           const error = res1.obj["error"];
           const errorCode = res1.obj["errorCode"];
@@ -553,18 +559,24 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               this.modalRef = Utility.showWarning(this.bms, error);
             } else {
               const policyNumber = res1.obj["policyNumber"];
-              const message = "You have successfully created a quotation - " + policyNumber;
+              const message = ("S" == mcaTmpPptoMph) ?
+                "You have successfully generated a quotation - " + policyNumber :
+                "You have successfully issued a quotation - " + policyNumber;
+
+              this.carDetails.quotationNumber = policyNumber;
               this.modalRef = Utility.showInfo(this.bms, message);
 
-              const coverageList = res.obj["coverageList"];
-              const amountList = res.obj["amountList"];;
-              const premiumAmount = res1.obj["premiumAmount"];;
-              const coverageAmount = res1.obj["coverageAmount"];;
-              this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
+              if ("S" == mcaTmpPptoMph) {
+                const coverageList = res.obj["coverageList"];
+                const amountList = res.obj["amountList"];;
+                const premiumAmount = res1.obj["premiumAmount"];;
+                const coverageAmount = res1.obj["coverageAmount"];;
+                this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
 
-              const breakdown = res1.obj["breakdown"];
-              const receipt = res1.obj["receipt"];
-              this.populatePaymentBreakdown(breakdown, receipt);
+                const breakdown = res1.obj["breakdown"];
+                const receipt = res1.obj["receipt"];
+                this.populatePaymentBreakdown(breakdown, receipt);
+              }
             }
           } else {
             this.modalRef = Utility.showError(this.bms, error);
@@ -575,4 +587,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       });
     });
   }
+
+
 }

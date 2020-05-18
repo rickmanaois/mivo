@@ -11,8 +11,10 @@
     <div class="card shadow">
       <div class="card-body">
         <form [formGroup]="quoteForm" class="regular-quote-form">
-          
-          <app-individual-policy *ngIf='isIssuance'></app-individual-policy>
+
+          <app-individual-policy
+            *ngIf='isIssuance'>
+          </app-individual-policy>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -317,13 +319,15 @@
           <app-policy-holder
             #appPolicyHolder
             [details]="carDetails"
-            [policyHolder]="policyHolder"> </app-policy-holder>
+            [policyHolder]="policyHolder">
+          </app-policy-holder>
 
-          <app-group-policy 
+          <app-group-policy
             #appGroupPolicy
             [subline]="carDetails.subline"
             [details]="carDetails"
-            [groupPolicy]="groupPolicy"> </app-group-policy>
+            [groupPolicy]="groupPolicy">
+          </app-group-policy>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -505,7 +509,8 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="weight">Weight</label>
-                    <input type="text" class="form-control" [(ngModel)]="carDetails.weight" formControlName="weight" readonly>
+                    <input type="text" class="form-control" [(ngModel)]="carDetails.weight" formControlName="weight"
+                      readonly>
                   </div>
                 </div>
 
@@ -741,11 +746,16 @@
 
           <div class="btn-group" role="group">
             <button type="button" (click)="test(appCoverages.cForm)" class="btn btn-primary">test</button>
-            <button [disabled]="quoteForm.pristine || quoteForm.invalid ||
+            <button
+              [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
-              appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid" type="button" class="btn btn-primary"
-              (click)="generate(carDetails)">Generate</button>
-            <button type="button" class="btn btn-primary" [disabled]="disableIssueQuoteBtn">Issue Qoute</button>
+              appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
+              type="button" class="btn btn-primary"
+              (click)="issueQuote(appCoverages.cForm, 'S')">Generate</button>
+            <button 
+              [disabled]="disableIssueQuoteBtn"
+              type="button" class="btn btn-primary"
+              (click)="issueQuote(appCoverages.cForm, 'N')">Issue Qoute</button>
             <!-- <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
             <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button> -->
           </div>
