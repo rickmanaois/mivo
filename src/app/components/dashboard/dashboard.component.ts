@@ -5,7 +5,6 @@ import {
 import {
   DashboardService
 } from '../../services/dashboard.service';
-import { Utility } from 'src/app/utils/utility';
 
 @Component({
   selector: 'app-dashboard',

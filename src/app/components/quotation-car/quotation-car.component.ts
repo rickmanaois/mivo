@@ -541,9 +541,12 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     // includes accessories to car details DTO
     var accessories = this.quoteForm.get('accessories').value;
     this.carDetails.accessories = accessories.length ? accessories : [];
+
     // includes coverages to car details DTO
-    var coverages = cForm.get('coverages').value;
-    this.carDetails.coverages = coverages;
+    if (!Utility.isUndefined(cForm)) {
+      var coverages = cForm.get('coverages').value;
+      this.carDetails.coverages = coverages;
+    }
 
     // S for generation and N for issue quotation
     this.carDetails.mcaTmpPptoMph = mcaTmpPptoMph;
