@@ -4,10 +4,19 @@ import {
 
 export class Globals {
   public static page: String = 'dashboard';
+  public static loadNumber: String = '';
   public static isLoadQuotation: boolean = false;
 
   static setPage(val: String) {
     this.page = val;
+  }
+
+  static setLoadNumber(val: String) {
+    this.loadNumber = val;
+  }
+
+  static setLoadQuotation(val: boolean) {
+    this.isLoadQuotation = val;
   }
 
   static getAppType() {
@@ -17,9 +26,5 @@ export class Globals {
       return "I";
     }
     return "";
-  }
-
-  static setLoadQuotation(val: boolean) {
-    this.isLoadQuotation = val;
   }
 }

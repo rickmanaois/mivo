@@ -621,11 +621,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     Utility.scroll('topDiv');
     setTimeout(() => {
       Globals.setPage(page.ISS.CAR);
+      Globals.setLoadNumber(this.carDetails.quotationNumber);
       Globals.setLoadQuotation(true);
       this.router.navigate(['/reload']);
     }, 500);
   }
 
+  //generate and issue quote button
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
     // includes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
