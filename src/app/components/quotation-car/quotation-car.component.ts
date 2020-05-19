@@ -657,11 +657,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
             if (errArr.length) {
               let isFirstError = true;
               errArr.forEach((err: string) => {
-                if (isFirstError) {
-                  isFirstError = false;
-                  errMessage += err;
-                } else {
-                  errMessage += ', ' + err;
+                if (!Utility.isEmpty(err)) {
+                  if (isFirstError) {
+                    isFirstError = false;
+                    errMessage += err;
+                  } else {
+                    errMessage += ', ' + err;
+                  }
                 }
               });
             }
@@ -673,7 +675,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
           if (status && coverageAmount.length) {
             if (errorCode == "S") { //if quotation has warning
               if ("N" == mcaTmpPptoMph) {
-                errMessage += "Routed for approval due to following reason/s: ";
+                errMessage = "Routed for approval due to following reason/s: " + errMessage;
               }
               this.modalRef = Utility.showWarning(this.bms, errMessage);
             }
