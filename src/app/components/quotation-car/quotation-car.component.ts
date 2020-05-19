@@ -583,18 +583,20 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       this.cqs.issueQuote(this.carDetails).then(res1 => {
         if (res1.status) {
           const error = res1.obj["error"];
-          const errArr = error.split("~");
           let errMessage = "";
-          if (errArr.length) {
-            let isFirstError = true;
-            errArr.forEach((err: string)=> {
-              if (isFirstError) {
-                isFirstError = false;
-                errMessage += err;
-              } else {
-                errMessage += ', ' + err;
-              }
-            });
+          if (error != null) {
+            const errArr = error.split("~");
+            if (errArr.length) {
+              let isFirstError = true;
+              errArr.forEach((err: string)=> {
+                if (isFirstError) {
+                  isFirstError = false;
+                  errMessage += err;
+                } else {
+                  errMessage += ', ' + err;
+                }
+              });
+            }
           }
 
           const errorCode = res1.obj["errorCode"];
