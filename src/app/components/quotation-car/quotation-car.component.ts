@@ -62,7 +62,18 @@ import {
 import {
   PaymentBreakdownModalComponent
 } from '../payment-breakdown-modal/payment-breakdown-modal.component';
-import { DocumentPrinting } from 'src/app/objects/DocumentPrinting';
+import {
+  DocumentPrinting
+} from 'src/app/objects/DocumentPrinting';
+import {
+  Router
+} from '@angular/router';
+import {
+  page
+} from 'src/app/constants/page';
+import {
+  Globals
+} from 'src/app/utils/global';
 
 @Component({
   selector: 'app-quotation-car',
@@ -71,7 +82,8 @@ import { DocumentPrinting } from 'src/app/objects/DocumentPrinting';
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
   currentUser = this.auths.currentUserValue;
-  @Input() isIssuance: boolean = false;
+  isIssuance: boolean = Globals.getAppType() == "I";
+  isLoadQuotation: boolean = Globals.isLoadQuotation;
   pageLabel: String = 'Quotation';
 
   carDetails = new QuoteCar();
@@ -120,7 +132,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private auths: AuthenticationService,
     private bms: BsModalService,
     private us: UtilityService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) {
     // this.createQuoteForm();
     // this.setValidations();
@@ -133,13 +146,21 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.createQuoteForm();
     this.setValidations();
-
     if (this.isIssuance) {
       this.pageLabel = 'Issuance';
+      if (this.isLoadQuotation) {
+        alert(this.isLoadQuotation);
+        this.init();
+      } else {
+        this.init();
+      }
+    } else {
+      this.init();
     }
+  }
 
+  init() {
     var _this = this;
-
     this.cls.getMakeList().then(res => {
       _this.LOV.makeLOV = res;
     });
@@ -569,10 +590,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  // newQuote() {
-  //   Globals.setPage(page.QUO.CAR);
-  //   this.router.navigate(['/']);
-  // }
+  newQuote() {
+    Utility.scroll('topDiv');
+    setTimeout(() => {
+      Globals.setPage(page.QUO.CAR);
+      this.router.navigate(['/reload']);
+    }, 500);
+  }
 
   printQuote() {
     const documentPrintingDetails = new DocumentPrinting();
@@ -591,6 +615,15 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
         this.modalRef = Utility.showError(this.bms, res.message);
       }
     });
+  }
+
+  proceedToIssuance() {
+    Utility.scroll('topDiv');
+    setTimeout(() => {
+      Globals.setPage(page.ISS.CAR);
+      Globals.setLoadQuotation(true);
+      this.router.navigate(['/reload']);
+    }, 500);
   }
 
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
@@ -621,7 +654,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
             const errArr = error.split("~");
             if (errArr.length) {
               let isFirstError = true;
-              errArr.forEach((err: string)=> {
+              errArr.forEach((err: string) => {
                 if (isFirstError) {
                   isFirstError = false;
                   errMessage += err;

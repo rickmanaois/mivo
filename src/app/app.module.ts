@@ -168,6 +168,9 @@ import {
 import {
   PaymentBreakdownModalComponent
 } from './components/payment-breakdown-modal/payment-breakdown-modal.component';
+import {
+  ReloadComponent
+} from './components/reload/reload.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -181,6 +184,11 @@ const routes: Routes = [{
   {
     path: '',
     component: TemplateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reload',
+    component: ReloadComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -225,7 +233,8 @@ const routes: Routes = [{
     PaymentBreakdownComponent,
     CoveragesComponent,
     DialogOverviewExampleDialog,
-    PaymentBreakdownModalComponent
+    PaymentBreakdownModalComponent,
+    ReloadComponent
   ],
   entryComponents: [
     ModalComponent

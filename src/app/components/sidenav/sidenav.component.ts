@@ -37,7 +37,16 @@ export class SidenavComponent implements OnInit {
     Globals.setPage(val);
   }
 
+  setAppPage(val: String, t: String) {
+    Globals.setPage(val);
+    Globals.setLoadQuotation(false);
+  }
+
   get page() {
     return Globals.page;
+  }
+
+  get appType() {
+    return Globals.getAppType();
   }
 }

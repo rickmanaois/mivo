@@ -745,8 +745,7 @@
           </app-coverages>
 
           <div *ngIf="!hasIssuedQuote" class="btn-group" role="group">
-            
-            <button type="button" (click)="copyToClipboard('asdfadsf')" class="btn btn-primary">test</button>
+            <!-- <button type="button" (click)="newQuote()" class="btn btn-primary">test</button> -->
             <button
               [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
@@ -764,9 +763,9 @@
           </div>
 
           <div *ngIf="hasIssuedQuote" class="btn-group" role="group">
-            <!-- <button type="button" (click)="newQuote()" class="btn btn-primary">New Quote</button> -->
+            <button type="button" (click)="newQuote()" class="btn btn-primary">New Quote</button>
             <button type="button" (click)="printQuote()" class="btn btn-primary">Print Qoute</button>
-            <button type="button" (click)="proceedToIssuance(carDetails.quotationNumber)" class="btn btn-primary">Proceed to Issuance</button>
+            <button type="button" (click)="proceedToIssuance()" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 
         </form>
