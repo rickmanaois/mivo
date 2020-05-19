@@ -36,6 +36,9 @@ import {
   CarUtilityServices
 } from '../../services/car-utility.service';
 import {
+  UtilityService
+} from '../../services/utility.service';
+import {
   CarQuoteServices
 } from '../../services/car-quote.service';
 import {
@@ -59,6 +62,7 @@ import {
 import {
   PaymentBreakdownModalComponent
 } from '../payment-breakdown-modal/payment-breakdown-modal.component';
+import { DocumentPrinting } from 'src/app/objects/DocumentPrinting';
 
 @Component({
   selector: 'app-quotation-car',
@@ -115,6 +119,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private auths: AuthenticationService,
     private bms: BsModalService,
+    private us: UtilityService,
     public dialog: MatDialog
   ) {
     // this.createQuoteForm();
@@ -543,6 +548,15 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   //   this.openPaymentBreakdownModal(receipt, breakdown);
   // }
 
+  copyToClipboard(item) {
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      e.clipboardData.setData('text/plain', (item));
+      e.preventDefault();
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
+  }
+
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
     const modalData = {
       receipt: receipt,
@@ -559,6 +573,25 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   //   Globals.setPage(page.QUO.CAR);
   //   this.router.navigate(['/']);
   // }
+
+  printQuote() {
+    const documentPrintingDetails = new DocumentPrinting();
+    documentPrintingDetails.quotationNumber = this.carDetails.quotationNumber;
+    documentPrintingDetails.documentType = "Q";
+
+    this.us.validatePrinting(documentPrintingDetails).then((res) => {
+      if (res.status) {
+        var ext = res.obj;
+        this.us.printDocument(ext.toString()).subscribe(data => {
+          if (data != null) {
+            window.open(URL.createObjectURL(data));
+          }
+        });
+      } else {
+        this.modalRef = Utility.showError(this.bms, res.message);
+      }
+    });
+  }
 
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
     // includes group policy to car details DTO
