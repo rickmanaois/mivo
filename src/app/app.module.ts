@@ -161,7 +161,13 @@ import {
 import {
   PaymentBreakdownComponent
 } from './components/payment-breakdown/payment-breakdown.component';
-import { CoveragesComponent, DialogOverviewExampleDialog } from './components/coverages/coverages.component';
+import {
+  CoveragesComponent,
+  DialogOverviewExampleDialog
+} from './components/coverages/coverages.component';
+import {
+  PaymentBreakdownModalComponent
+} from './components/payment-breakdown-modal/payment-breakdown-modal.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -218,7 +224,8 @@ const routes: Routes = [{
     PolicyHolderComponent,
     PaymentBreakdownComponent,
     CoveragesComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    PaymentBreakdownModalComponent
   ],
   entryComponents: [
     ModalComponent

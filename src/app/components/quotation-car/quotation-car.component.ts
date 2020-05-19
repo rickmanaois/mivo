@@ -53,6 +53,12 @@ import {
 import {
   PolicyHolder
 } from 'src/app/objects/PolicyHolder';
+import {
+  MatDialog
+} from '@angular/material';
+import {
+  PaymentBreakdownModalComponent
+} from '../payment-breakdown-modal/payment-breakdown-modal.component';
 
 @Component({
   selector: 'app-quotation-car',
@@ -93,7 +99,11 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   premiumAmount: any[];
   coverageAmount: any[];
 
+  //disabling issue button
   disableIssueQuoteBtn: boolean = true;
+
+  //flag to show generate/issue button & print quote/proceed to issuance
+  hasIssuedQuote: boolean = false;
 
   //modal reference
   modalRef: BsModalRef;
@@ -104,7 +114,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private cqs: CarQuoteServices,
     private changeDetector: ChangeDetectorRef,
     private auths: AuthenticationService,
-    private bms: BsModalService
+    private bms: BsModalService,
+    public dialog: MatDialog
   ) {
     // this.createQuoteForm();
     // this.setValidations();
@@ -527,11 +538,27 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     Utility.scroll('paymentBreakdown');
   }
 
-  test(form) {
-    console.log(form);
-    var coverages = form.get('coverages').value;
-    console.log(coverages);
+  // test() {
+  //   this.hasIssuedQuote = true;
+  //   this.openPaymentBreakdownModal(receipt, breakdown);
+  // }
+  
+  openPaymentBreakdownModal(receipt: any, breakdown: any) {
+    const modalData = {
+      receipt: receipt,
+      breakdown: breakdown
+    };
+
+    this.dialog.open(PaymentBreakdownModalComponent, {
+      width: '1000px',
+      data: modalData
+    });
   }
+
+  // newQuote() {
+  //   Globals.setPage(page.QUO.CAR);
+  //   this.router.navigate(['/']);
+  // }
 
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
     // includes group policy to car details DTO
@@ -563,25 +590,26 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               this.modalRef = Utility.showWarning(this.bms, error);
             } else {
               const policyNumber = res1.obj["policyNumber"];
-              const message = ("S" == mcaTmpPptoMph) ?
-                "You have successfully generated a quotation - " + policyNumber :
-                "You have successfully issued a quotation - " + policyNumber;
-
               this.carDetails.quotationNumber = policyNumber;
-              this.modalRef = Utility.showInfo(this.bms, message);
+
+              const breakdown = res1.obj["breakdown"];
+              const receipt = res1.obj["receipt"];
 
               if ("S" == mcaTmpPptoMph) {
+                const message = "You have successfully generated a quotation - " + policyNumber;
+                this.modalRef = Utility.showInfo(this.bms, message);
+
                 const coverageList = res.obj["coverageList"];
                 const amountList = res.obj["amountList"];;
                 const premiumAmount = res1.obj["premiumAmount"];;
                 const coverageAmount = res1.obj["coverageAmount"];;
                 this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
 
-                const breakdown = res1.obj["breakdown"];
-                const receipt = res1.obj["receipt"];
                 this.populatePaymentBreakdown(breakdown, receipt);
-
                 this.disableIssueQuoteBtn = false;
+              } else {
+                this.hasIssuedQuote = true;
+                this.openPaymentBreakdownModal(receipt, breakdown);
               }
             }
           } else {
@@ -593,6 +621,4 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       });
     });
   }
-
-
 }

@@ -9,7 +9,7 @@
 
   <div class="col-xl-12">
     <div class="card shadow">
-      <div class="card-body">
+      <div class="card-body" id="topDiv">
         <form [formGroup]="quoteForm" class="regular-quote-form">
 
           <app-individual-policy
@@ -744,8 +744,8 @@
             [coverageAmount]="coverageAmount">
           </app-coverages>
 
-          <div class="btn-group" role="group">
-            <button type="button" (click)="test(appCoverages.cForm)" class="btn btn-primary">test</button>
+          <div *ngIf="!hasIssuedQuote" class="btn-group" role="group">
+            <button type="button" (click)="test()" class="btn btn-primary">test</button>
             <button
               [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
@@ -756,8 +756,12 @@
               [disabled]="disableIssueQuoteBtn"
               type="button" class="btn btn-primary"
               (click)="issueQuote(appCoverages, 'N')">Issue Qoute</button>
-            <!-- <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
-            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button> -->
+          </div>
+
+          <div *ngIf="hasIssuedQuote" class="btn-group" role="group">
+            <!-- <button type="button" (click)="newQuote()" class="btn btn-primary">New Quote</button> -->
+            <button type="button" (click)="printQuote(carDetails.quotationNumber)" class="btn btn-primary">Print Qoute</button>
+            <button type="button" (click)="proceedToIssuance(carDetails.quotationNumber)" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 
         </form>
