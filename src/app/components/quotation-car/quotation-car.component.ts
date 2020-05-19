@@ -542,7 +542,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   //   this.hasIssuedQuote = true;
   //   this.openPaymentBreakdownModal(receipt, breakdown);
   // }
-  
+
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
     const modalData = {
       receipt: receipt,
@@ -583,34 +583,51 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       this.cqs.issueQuote(this.carDetails).then(res1 => {
         if (res1.status) {
           const error = res1.obj["error"];
+          const errArr = error.split("~");
+          let errMessage = "";
+          if (errArr.length) {
+            let isFirstError = true;
+            errArr.forEach((err: string)=> {
+              if (isFirstError) {
+                isFirstError = false;
+                errMessage += err;
+              } else {
+                errMessage += ', ' + err;
+              }
+            });
+          }
+
           const errorCode = res1.obj["errorCode"];
           const status = res1.obj["status"];
-          if (status) {
-            if (errorCode == "W") { //TODO if warning- still dont no the code 
-              this.modalRef = Utility.showWarning(this.bms, error);
-            } else {
-              const policyNumber = res1.obj["policyNumber"];
-              this.carDetails.quotationNumber = policyNumber;
-
-              const breakdown = res1.obj["breakdown"];
-              const receipt = res1.obj["receipt"];
-
-              if ("S" == mcaTmpPptoMph) {
-                const message = "You have successfully generated a quotation - " + policyNumber;
-                this.modalRef = Utility.showInfo(this.bms, message);
-
-                const coverageList = res.obj["coverageList"];
-                const amountList = res.obj["amountList"];;
-                const premiumAmount = res1.obj["premiumAmount"];;
-                const coverageAmount = res1.obj["coverageAmount"];;
-                this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
-
-                this.populatePaymentBreakdown(breakdown, receipt);
-                this.disableIssueQuoteBtn = false;
-              } else {
-                this.hasIssuedQuote = true;
-                this.openPaymentBreakdownModal(receipt, breakdown);
+          const coverageAmount = res1.obj["coverageAmount"];;
+          if (status && coverageAmount.length) {
+            if (errorCode == "S") { //if quotation has warning
+              if ("N" == mcaTmpPptoMph) {
+                errMessage += "Routed for approval due to following reason/s: ";
               }
+              this.modalRef = Utility.showWarning(this.bms, errMessage);
+            }
+
+            const policyNumber = res1.obj["policyNumber"];
+            this.carDetails.quotationNumber = policyNumber;
+
+            const breakdown = res1.obj["breakdown"];
+            const receipt = res1.obj["receipt"];
+
+            if ("S" == mcaTmpPptoMph) { //for generation of quote
+              const message = "You have successfully generated a quotation - " + policyNumber;
+              this.modalRef = Utility.showInfo(this.bms, message);
+
+              const coverageList = res.obj["coverageList"];
+              const amountList = res.obj["amountList"];;
+              const premiumAmount = res1.obj["premiumAmount"];;
+              this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
+
+              this.populatePaymentBreakdown(breakdown, receipt);
+              this.disableIssueQuoteBtn = false;
+            } else { // for issuing the quote
+              this.hasIssuedQuote = true;
+              this.openPaymentBreakdownModal(receipt, breakdown);
             }
           } else {
             this.modalRef = Utility.showError(this.bms, error);
