@@ -57,7 +57,7 @@
 
         <div *ngIf="payment.showExchangeRate" class="alert alert-info note">
           Exchange rate: <strong>PHP to {{payment.currencyCode}} is
-            {{payment.exchangeRate | payment.currency: 'PHP' : 'symbol-narrow'}}</strong>
+            {{payment.exchangeRate | currency: 'PHP' : 'symbol-narrow'}}</strong>
         </div>
 
         <div *ngFor="let item of payment.paymentBreakdown;" class="row justify-content-center">
