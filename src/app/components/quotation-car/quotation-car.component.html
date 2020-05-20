@@ -745,7 +745,7 @@
           </app-coverages>
 
           <div *ngIf="!hasIssuedQuote" class="btn-group" role="group">
-            <!-- <button type="button" (click)="newQuote()" class="btn btn-primary">test</button> -->
+            <button type="button" (click)="test()" class="btn btn-primary">test</button>
             <button
               [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||

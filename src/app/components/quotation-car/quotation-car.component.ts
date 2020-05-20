@@ -582,7 +582,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
     const modalData = {
       receipt: receipt,
-      breakdown: breakdown
+      breakdown: breakdown,
+      showExchangeRate: true
     };
 
     this.dialog.open(PaymentBreakdownModalComponent, {

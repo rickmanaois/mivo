@@ -30,46 +30,65 @@ export interface TablesDTO {
 })
 export class PaymentBreakdownComponent implements OnInit {
   @Input() paymentBreakdown: any[];
-  @Input() paymentReceipt: any;
+  @Input() paymentReceipt: any[];
   @Input() showExchangeRate: boolean;
 
-  displayedColumns: string[] = ['effectivityDate', 'dueDate', 'premium', 'netPremium', 'tax', 'commission'];
-  dataSource = new MatTableDataSource();
-
-  currencyCode = 'PHP';
-  animationState = 'out';
-  toggleLabel = 'Show Economic Values';
-
-  exchangeRate : String;
+  payments: any[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.exchangeRate = this.paymentReceipt["valCambio"];
-    const currency = this.paymentReceipt["codMon"];
-    if (currency == "2") {
-      this.currencyCode = "USD";
-    } else if (currency == "3") {
-      this.currencyCode = "EUR"
-    }
+    this.paymentReceipt.forEach((receipt)=>{
+      var exchangeRate = receipt["valCambio"];
+      var currency = receipt["codMon"];
+      var paymentNumber = receipt["numCuota"];
 
-    const efectivityDate = new Date(this.paymentReceipt["fecEfecRecibo"]);
-    const dueDate = new Date(this.paymentReceipt["fecVctoRecibo"]);
+      var paymentBreakdown = [];
+      this.paymentBreakdown.forEach((breakdown)=>{
+        var breakdownNumber = breakdown["numCuota"];
+        if (breakdownNumber == paymentNumber) {
+          paymentBreakdown.push(breakdown);
+        }
+      });
 
-    const data: TablesDTO[] = [{
-      effectivityDate: Utility.formatDate(efectivityDate),
-      dueDate: Utility.formatDate(dueDate),
-      premium: this.paymentReceipt["impRecibo"],
-      netPremium: this.paymentReceipt["impNeta"],
-      tax: this.paymentReceipt["impImptos"],
-      commission: this.paymentReceipt["impComis"], //TODO di ko sure if yan yung commission
-    }];
-    this.dataSource = new MatTableDataSource(data);
+      var currencyCode = "PHP";
+      if (currency == "2") {
+        currencyCode = "USD";
+      } else if (currency == "3") {
+        currencyCode = "EUR"
+      }
+  
+      var efectivityDate = new Date(receipt["fecEfecRecibo"].substr(0, 10));
+      var dueDate = new Date(receipt["fecVctoRecibo"].substr(0, 10));
+  
+      const data: TablesDTO[] = [{
+        effectivityDate: Utility.formatDate(efectivityDate),
+        dueDate: Utility.formatDate(dueDate),
+        premium: receipt["impRecibo"],
+        netPremium: receipt["impNeta"],
+        tax: receipt["impImptos"],
+        commission: receipt["impComis"],
+      }];
+      var dataSource = new MatTableDataSource(data);
+      const obj = {
+        exchangeRate: exchangeRate,
+        currency: currency,
+        paymentNumber: paymentNumber,
+        currencyCode: currencyCode,
+        dataSource: dataSource,
+        displayedColumns: ['effectivityDate', 'dueDate', 'premium', 'netPremium', 'tax', 'commission'],
+        animationState: 'out',
+        showExchangeRate: this.showExchangeRate,
+        toggleLabel: 'Show Economic Values',
+        paymentBreakdown: paymentBreakdown
+      };
+      this.payments.push(obj);
+    });
   }
 
-  toggle() {
-    this.animationState = this.animationState === 'out' ? 'in' : 'out';
-    this.toggleLabel = (this.animationState === 'out' ? 'Show' : 'Hide') + ' Economic Values';
+  toggle(index: number) {
+    this.payments[index].animationState = this.payments[index].animationState === 'out' ? 'in' : 'out';
+    this.payments[index].toggleLabel = (this.payments[index].animationState === 'out' ? 'Show' : 'Hide') + ' Economic Values';
   }
 
 }
