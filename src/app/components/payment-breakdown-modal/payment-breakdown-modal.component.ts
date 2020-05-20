@@ -14,6 +14,7 @@ import {
 import {
   Utility
 } from 'src/app/utils/utility';
+import { CarQuoteServices } from 'src/app/services/car-quote.service';
 
 export interface TablesDTO {
   effectivityDate: string;
@@ -33,10 +34,14 @@ export interface TablesDTO {
 export class PaymentBreakdownModalComponent implements OnInit {
 
   constructor(
+    private cqs: CarQuoteServices,
     public dialogRef: MatDialogRef < PaymentBreakdownModalComponent > ,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   payments: any[] = [];
+  number = this.data.number;
+  product = this.data.product;
+  payment = this.data.payment;
 
   ngOnInit(): void {
     this.data.receipt.forEach((receipt)=>{
@@ -94,6 +99,14 @@ export class PaymentBreakdownModalComponent implements OnInit {
 
   close(b: boolean): void {
     this.dialogRef.close(b);
+  }
+
+  printQuote() {
+    this.cqs.printQuote(this.data.number);
+  }
+
+  proceedToIssuance() {
+    this.cqs.proceedToIssuance(this.data.number);
   }
 
 }

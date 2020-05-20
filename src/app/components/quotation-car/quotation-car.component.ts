@@ -567,7 +567,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   test() {
     // this.modalRef = Utility.showHTMLError(this.bms, items);
     // this.hasIssuedQuote = true;
-    // this.openPaymentBreakdownModal(receipt, breakdown);
+    this.openPaymentBreakdownModal([], []);
   }
 
   copyToClipboard(item) {
@@ -580,8 +580,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
-    let number = this.carDetails.quotationNumber;
-    
     let product = "";
     this.LOV.productListLOV.forEach((product)=> {
       if (product.COD_MODALIDAD == this.carDetails.productList) {
@@ -597,12 +595,12 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
 
     const modalData = {
-      number: number,
+      number: this.carDetails.quotationNumber,
       product: product,
       payment: payment,
       receipt: receipt,
       breakdown: breakdown,
-      showExchangeRate: true
+      showExchangeRate: true,
     };
 
     this.dialog.open(PaymentBreakdownModalComponent, {
@@ -620,32 +618,34 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   printQuote() {
-    const documentPrintingDetails = new DocumentPrinting();
-    documentPrintingDetails.quotationNumber = this.carDetails.quotationNumber;
-    documentPrintingDetails.documentType = "Q";
+    this.cqs.printQuote(this.carDetails.quotationNumber);
+    // const documentPrintingDetails = new DocumentPrinting();
+    // documentPrintingDetails.quotationNumber = this.carDetails.quotationNumber;
+    // documentPrintingDetails.documentType = "Q";
 
-    this.us.validatePrinting(documentPrintingDetails).then((res) => {
-      if (res.status) {
-        var ext = res.obj;
-        this.us.printDocument(ext.toString()).subscribe(data => {
-          if (data != null) {
-            window.open(URL.createObjectURL(data));
-          }
-        });
-      } else {
-        this.modalRef = Utility.showError(this.bms, res.message);
-      }
-    });
+    // this.us.validatePrinting(documentPrintingDetails).then((res) => {
+    //   if (res.status) {
+    //     var ext = res.obj;
+    //     this.us.printDocument(ext.toString()).subscribe(data => {
+    //       if (data != null) {
+    //         window.open(URL.createObjectURL(data));
+    //       }
+    //     });
+    //   } else {
+    //     this.modalRef = Utility.showError(this.bms, res.message);
+    //   }
+    // });
   }
 
   proceedToIssuance() {
-    Utility.scroll('topDiv');
-    setTimeout(() => {
-      Globals.setPage(page.ISS.CAR);
-      Globals.setLoadNumber(this.carDetails.quotationNumber);
-      Globals.setLoadQuotation(true);
-      this.router.navigate(['/reload']);
-    }, 500);
+    this.cqs.proceedToIssuance(this.carDetails.quotationNumber);
+    // Utility.scroll('topDiv');
+    // setTimeout(() => {
+    //   Globals.setPage(page.ISS.CAR);
+    //   Globals.setLoadNumber(this.carDetails.quotationNumber);
+    //   Globals.setLoadQuotation(true);
+    //   this.router.navigate(['/reload']);
+    // }, 500);
   }
 
   //generate and issue quote button
