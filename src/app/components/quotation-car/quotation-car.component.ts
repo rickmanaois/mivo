@@ -580,7 +580,26 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
+    let number = this.carDetails.quotationNumber;
+    
+    let product = "";
+    this.LOV.productListLOV.forEach((product)=> {
+      if (product.COD_MODALIDAD == this.carDetails.productList) {
+        product = product.NOM_MODALIDAD;
+      }
+    });
+
+    let payment = "";
+    this.LOV.paymentMethodLOV.forEach((payment)=> {
+      if (payment.COD_FRACC_PAGO == this.carDetails.paymentMethod) {
+        payment = payment.NOM_FRACC_PAGO;
+      }
+    });
+
     const modalData = {
+      number: number,
+      product: product,
+      payment: payment,
       receipt: receipt,
       breakdown: breakdown,
       showExchangeRate: true
