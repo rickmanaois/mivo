@@ -209,6 +209,25 @@ form .card-header.optional {
   overflow-wrap: break-word;
 }
 
+.modal-header .close {
+  color: #fff !important;
+}
+
+.modal-header.modal-error {
+  background: #b82c2c;
+  color: #fff;
+}
+
+.modal-header.modal-warning {
+  background: #b8662c;
+  color: #fff;
+}
+
+.modal-header.modal-info {
+  background: #2c5eb8;
+  color: #fff;
+}
+
 /* utilities */
 /* Add the blur effect */
 .blur {

@@ -40,6 +40,7 @@ export class Utility {
   static modal(modalService: any, message: String, title: String) {
     const initialState = {
       message: message,
+      className: "modal-" + title.toLowerCase(),
       title: title,
       isClose: true,
       isHtml: false
@@ -64,6 +65,7 @@ export class Utility {
   static modalHTML(modalService: any, items: String[], title: String) {
     const initialState = {
       items: items,
+      className: "modal-" + title.toLowerCase(),
       title: title,
       isClose: true,
       isHtml: true

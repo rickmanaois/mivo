@@ -16,16 +16,8 @@ import {
 })
 export class ModalComponent implements OnInit {
 
-  title: String;
-  message: String;
-  isConfirm: boolean;
-  isOkay: boolean;
-  isClose: boolean;
-  isCancel: boolean;
-
   constructor(
-    private bsModalRef: BsModalRef,
-    private translateService: TranslateService) {}
+    private bsModalRef: BsModalRef,) {}
 
   ngOnInit(): void {}
 
