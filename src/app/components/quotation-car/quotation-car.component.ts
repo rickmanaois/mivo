@@ -564,10 +564,11 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     Utility.scroll('paymentBreakdown');
   }
 
-  // test() {
-  //   this.hasIssuedQuote = true;
-  //   this.openPaymentBreakdownModal(receipt, breakdown);
-  // }
+  test() {
+    // this.modalRef = Utility.showHTMLError(this.bms, items);
+    // this.hasIssuedQuote = true;
+    // this.openPaymentBreakdownModal(receipt, breakdown);
+  }
 
   copyToClipboard(item) {
     document.addEventListener('copy', (e: ClipboardEvent) => {
@@ -650,34 +651,30 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.cqs.getCoverageByProduct(this.carDetails).then(res => {
       this.cqs.issueQuote(this.carDetails).then(res1 => {
         if (res1.status) {
+          const errorCode = res1.obj["errorCode"];
           const error = res1.obj["error"];
-          let errMessage = "";
-          if (error != null) {
+          let items : any[] = ["Error code is " + errorCode + " but does not return any error message. Please contact administration."];
+          if (!Utility.isUndefined(error)) {
             const errArr = error.split("~");
             if (errArr.length) {
-              let isFirstError = true;
+              var arr = [];
               errArr.forEach((err: string) => {
                 if (!Utility.isEmpty(err)) {
-                  if (isFirstError) {
-                    isFirstError = false;
-                    errMessage += err;
-                  } else {
-                    errMessage += ', ' + err;
-                  }
+                  arr.push(err);
                 }
               });
+              
+              if (arr.length) {
+                items = ("N" == mcaTmpPptoMph) ? ["Routed for approval due to following reason/s:"].concat(arr) : arr;
+              }
             }
           }
-
-          const errorCode = res1.obj["errorCode"];
+          
           const status = res1.obj["status"];
           const coverageAmount = res1.obj["coverageAmount"];;
           if (status && coverageAmount.length) {
             if (errorCode == "S") { //if quotation has warning
-              if ("N" == mcaTmpPptoMph) {
-                errMessage = "Routed for approval due to following reason/s: " + errMessage;
-              }
-              this.modalRef = Utility.showWarning(this.bms, errMessage);
+              this.modalRef = Utility.showHTMLWarning(this.bms, items);
             }
 
             const policyNumber = res1.obj["policyNumber"];
@@ -702,7 +699,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               this.openPaymentBreakdownModal(receipt, breakdown);
             }
           } else {
-            this.modalRef = Utility.showError(this.bms, error);
+            this.modalRef = Utility.showHTMLError(this.bms, items);
           }
         } else {
           this.modalRef = Utility.showError(this.bms, res1.message);

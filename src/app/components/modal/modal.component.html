@@ -7,8 +7,13 @@
 
 <div class="modal-body">
   <div class="row">
-    <div class="col-12">
+    <div *ngIf="!isHtml" class="col-12">
       {{message}}
+    </div>
+    <div *ngIf="isHtml" class="col-12">
+      <p *ngFor="let item of items">
+        {{item}}
+      </p>
     </div>
   </div>
 </div>

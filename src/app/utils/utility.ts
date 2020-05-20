@@ -41,7 +41,32 @@ export class Utility {
     const initialState = {
       message: message,
       title: title,
-      isClose: true
+      isClose: true,
+      isHtml: false
+    };
+    return modalService.show(ModalComponent, {
+      initialState
+    });
+  }
+
+  static showHTMLError(modalService: any, items: String[]) {
+    return this.modalHTML(modalService, items, "Error");
+  }
+
+  static showHTMLWarning(modalService: any, items: String[]) {
+    return this.modalHTML(modalService, items, "Warning");
+  }
+
+  static showHTMLInfo(modalService: any, items: String[]) {
+    return this.modalHTML(modalService, items, "Info");
+  }
+
+  static modalHTML(modalService: any, items: String[], title: String) {
+    const initialState = {
+      items: items,
+      title: title,
+      isClose: true,
+      isHtml: true
     };
     return modalService.show(ModalComponent, {
       initialState
