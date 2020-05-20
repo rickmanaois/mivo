@@ -25,7 +25,7 @@ import {
 import {
   BsModalService,
   BsModalRef
-} from 'ngx-bootstrap/modal/public_api';
+} from 'ngx-bootstrap/modal';
 import {
   page
 } from '../constants/page';
