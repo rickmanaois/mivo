@@ -581,16 +581,16 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
     let product = "";
-    this.LOV.productListLOV.forEach((product)=> {
-      if (product.COD_MODALIDAD == this.carDetails.productList) {
-        product = product.NOM_MODALIDAD;
+    this.LOV.productListLOV.forEach((p)=> {
+      if (p.COD_MODALIDAD == this.carDetails.productList) {
+        product = p.NOM_MODALIDAD;
       }
     });
 
-    let payment = "";
-    this.LOV.paymentMethodLOV.forEach((payment)=> {
-      if (payment.COD_FRACC_PAGO == this.carDetails.paymentMethod) {
-        payment = payment.NOM_FRACC_PAGO;
+    let payment = "";    
+    this.LOV.paymentMethodLOV.forEach((p)=> {
+      if (p.COD_FRACC_PAGO == this.carDetails.paymentMethod) {
+        payment = p.NOM_FRACC_PAGO;
       }
     });
 
@@ -619,37 +619,18 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   printQuote() {
     this.cqs.printQuote(this.carDetails.quotationNumber);
-    // const documentPrintingDetails = new DocumentPrinting();
-    // documentPrintingDetails.quotationNumber = this.carDetails.quotationNumber;
-    // documentPrintingDetails.documentType = "Q";
-
-    // this.us.validatePrinting(documentPrintingDetails).then((res) => {
-    //   if (res.status) {
-    //     var ext = res.obj;
-    //     this.us.printDocument(ext.toString()).subscribe(data => {
-    //       if (data != null) {
-    //         window.open(URL.createObjectURL(data));
-    //       }
-    //     });
-    //   } else {
-    //     this.modalRef = Utility.showError(this.bms, res.message);
-    //   }
-    // });
   }
 
   proceedToIssuance() {
     this.cqs.proceedToIssuance(this.carDetails.quotationNumber);
-    // Utility.scroll('topDiv');
-    // setTimeout(() => {
-    //   Globals.setPage(page.ISS.CAR);
-    //   Globals.setLoadNumber(this.carDetails.quotationNumber);
-    //   Globals.setLoadQuotation(true);
-    //   this.router.navigate(['/reload']);
-    // }, 500);
   }
 
   //generate and issue quote button
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
+    // to trigger changes when regenerating quotation
+    this.showCoverage = false;
+    this.showPaymentBreakdown = false;
+
     // includes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
     // includes policy holder to car details DTO

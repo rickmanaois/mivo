@@ -48,31 +48,25 @@ const coverageList: any[] = [{
   "NOM_COB": "THEFT"
 }, {
   "MCA_TIP_CAPITAL": "4",
-  "MCA_OBLIGATORIO": "N",
+  "MCA_OBLIGATORIO": "S",
   "COD_COB": "1004",
   "IMP_CALCULO": "0",
   "NOM_COB": "VTPL-BODILY INJURY"
 }, {
   "MCA_TIP_CAPITAL": "4",
-  "MCA_OBLIGATORIO": "N",
+  "MCA_OBLIGATORIO": "S",
   "COD_COB": "1005",
   "IMP_CALCULO": "0",
   "NOM_COB": "VTPL-PROPERTY DAMAGE"
 }, {
   "MCA_TIP_CAPITAL": "5",
-  "MCA_OBLIGATORIO": "N",
+  "MCA_OBLIGATORIO": "S",
   "COD_COB": "1007",
   "IMP_CALCULO": "0",
   "NOM_COB": "UNNAMED PASS. P.A."
 }, {
   "MCA_TIP_CAPITAL": "5",
-  "MCA_OBLIGATORIO": "N",
-  "COD_COB": "1018",
-  "IMP_CALCULO": "0",
-  "NOM_COB": "UPPA - MR"
-}, {
-  "MCA_TIP_CAPITAL": "5",
-  "MCA_OBLIGATORIO": "N",
+  "MCA_OBLIGATORIO": "S",
   "COD_COB": "1008",
   "IMP_CALCULO": "0",
   "NOM_COB": "ACTS OF NATURE"
@@ -88,12 +82,6 @@ const coverageList: any[] = [{
   "COD_COB": "1026",
   "IMP_CALCULO": "0",
   "NOM_COB": "ACCD'L DEATH/DISABL."
-}, {
-  "MCA_TIP_CAPITAL": "4",
-  "MCA_OBLIGATORIO": "N",
-  "COD_COB": "1006",
-  "IMP_CALCULO": "0",
-  "NOM_COB": "CSL-BI/PD"
 }, {
   "MCA_TIP_CAPITAL": "",
   "MCA_OBLIGATORIO": "N",
@@ -114,16 +102,10 @@ const coverageList: any[] = [{
   "NOM_COB": "MAPFRE ROAD ASSIST"
 }, {
   "MCA_TIP_CAPITAL": "4",
-  "MCA_OBLIGATORIO": "N",
+  "MCA_OBLIGATORIO": "S",
   "COD_COB": "1036",
   "IMP_CALCULO": "1",
   "NOM_COB": "PERSONAL PROPERTY COVER"
-}, {
-  "MCA_TIP_CAPITAL": "",
-  "MCA_OBLIGATORIO": "N",
-  "COD_COB": "1037",
-  "IMP_CALCULO": "150",
-  "NOM_COB": "ALTERNATIVE TRANSPORT BENEFIT"
 }];
 
 const amountList: any[] = [{
@@ -868,20 +850,40 @@ const configList: any[] = [{
   "codModalidad": "99999",
   "codCob": "1008",
   "mcaTipCapitalF": "F"
-}];
+}]
 
 const premiumAmount: any[] = [{
   "codCob": 9998,
   "numRiesgo": 0,
-  "impSpto": 4246.88
+  "impSpto": 5602.5
+}, {
+  "codCob": 1007,
+  "numRiesgo": 1,
+  "impSpto": 900
+}, {
+  "codCob": 1005,
+  "numRiesgo": 1,
+  "impSpto": 1245
+}, {
+  "codCob": 1036,
+  "numRiesgo": 1,
+  "impSpto": 0
+}, {
+  "codCob": 1004,
+  "numRiesgo": 1,
+  "impSpto": 420
 }, {
   "codCob": 1002,
   "numRiesgo": 1,
-  "impSpto": 10192.5
+  "impSpto": 9477
 }, {
   "codCob": 1003,
   "numRiesgo": 1,
-  "impSpto": 6795
+  "impSpto": 6318
+}, {
+  "codCob": 1008,
+  "numRiesgo": 1,
+  "impSpto": 4050
 }, {
   "codCob": 1040,
   "numRiesgo": 1,
@@ -890,7 +892,7 @@ const premiumAmount: any[] = [{
 
 const coverageAmount: any[] = [{
   "codCia": 1,
-  "numPoliza": "9990000308290",
+  "numPoliza": "9990000308905",
   "numSpto": 0,
   "numApli": 0,
   "numSptoApli": 0,
@@ -899,12 +901,12 @@ const coverageAmount: any[] = [{
   "codCob": 1002,
   "codRamo": 100,
   "numSecu": 3,
-  "sumaAseg": 755000,
+  "sumaAseg": 810000,
   "impUnidad": null,
   "pctParticipacion": null,
   "codMonCapital": 1,
   "sumaAsegBajaStro": null,
-  "sumaAsegSpto": 755000,
+  "sumaAsegSpto": 810000,
   "tasaCob": 13,
   "codFranquicia": 2,
   "codLimite": null,
@@ -929,7 +931,7 @@ const coverageAmount: any[] = [{
   "sumaAsegBajaStroAcc": null
 }, {
   "codCia": 1,
-  "numPoliza": "9990000308290",
+  "numPoliza": "9990000308905",
   "numSpto": 0,
   "numApli": 0,
   "numSptoApli": 0,
@@ -938,12 +940,12 @@ const coverageAmount: any[] = [{
   "codCob": 1003,
   "codRamo": 100,
   "numSecu": 4,
-  "sumaAseg": 755000,
+  "sumaAseg": 810000,
   "impUnidad": null,
   "pctParticipacion": null,
   "codMonCapital": 1,
   "sumaAsegBajaStro": null,
-  "sumaAsegSpto": 755000,
+  "sumaAsegSpto": 810000,
   "tasaCob": 9,
   "codFranquicia": 2,
   "codLimite": null,
@@ -968,7 +970,202 @@ const coverageAmount: any[] = [{
   "sumaAsegBajaStroAcc": null
 }, {
   "codCia": 1,
-  "numPoliza": "9990000308290",
+  "numPoliza": "9990000308905",
+  "numSpto": 0,
+  "numApli": 0,
+  "numSptoApli": 0,
+  "numRiesgo": 1,
+  "numPeriodo": 1,
+  "codCob": 1004,
+  "codRamo": 100,
+  "numSecu": 5,
+  "sumaAseg": 200000,
+  "impUnidad": null,
+  "pctParticipacion": null,
+  "codMonCapital": 1,
+  "sumaAsegBajaStro": null,
+  "sumaAsegSpto": 200000,
+  "tasaCob": 2,
+  "codFranquicia": null,
+  "codLimite": 5,
+  "sumaAsegSup": null,
+  "mcaBajaRiesgo": "N",
+  "mcaVigente": "S",
+  "mcaVigenteApli": "S",
+  "mcaBajaCob": "N",
+  "codSeccReas": 101,
+  "impAgr": 0,
+  "impAgrRel": null,
+  "impAgrSpto": 0,
+  "impAgrRelSpto": 0,
+  "mesBaseRegulariza": null,
+  "anioBaseRegulariza": null,
+  "pctEnfermedad": null,
+  "duracionProfesion": null,
+  "pctProfesion": null,
+  "duracionEnfermedad": null,
+  "valFranquiciaMin": null,
+  "valFranquiciaMax": null,
+  "sumaAsegBajaStroAcc": null
+}, {
+  "codCia": 1,
+  "numPoliza": "9990000308905",
+  "numSpto": 0,
+  "numApli": 0,
+  "numSptoApli": 0,
+  "numRiesgo": 1,
+  "numPeriodo": 1,
+  "codCob": 1005,
+  "codRamo": 100,
+  "numSecu": 6,
+  "sumaAseg": 200000,
+  "impUnidad": null,
+  "pctParticipacion": null,
+  "codMonCapital": 1,
+  "sumaAsegBajaStro": null,
+  "sumaAsegSpto": 200000,
+  "tasaCob": 6,
+  "codFranquicia": null,
+  "codLimite": 5,
+  "sumaAsegSup": null,
+  "mcaBajaRiesgo": "N",
+  "mcaVigente": "S",
+  "mcaVigenteApli": "S",
+  "mcaBajaCob": "N",
+  "codSeccReas": 101,
+  "impAgr": 0,
+  "impAgrRel": null,
+  "impAgrSpto": 0,
+  "impAgrRelSpto": 0,
+  "mesBaseRegulariza": null,
+  "anioBaseRegulariza": null,
+  "pctEnfermedad": null,
+  "duracionProfesion": null,
+  "pctProfesion": null,
+  "duracionEnfermedad": null,
+  "valFranquiciaMin": null,
+  "valFranquiciaMax": null,
+  "sumaAsegBajaStroAcc": null
+}, {
+  "codCia": 1,
+  "numPoliza": "9990000308905",
+  "numSpto": 0,
+  "numApli": 0,
+  "numSptoApli": 0,
+  "numRiesgo": 1,
+  "numPeriodo": 1,
+  "codCob": 1007,
+  "codRamo": 100,
+  "numSecu": 7,
+  "sumaAseg": 450000,
+  "impUnidad": null,
+  "pctParticipacion": null,
+  "codMonCapital": 1,
+  "sumaAsegBajaStro": null,
+  "sumaAsegSpto": 450000,
+  "tasaCob": 2,
+  "codFranquicia": null,
+  "codLimite": null,
+  "sumaAsegSup": null,
+  "mcaBajaRiesgo": "N",
+  "mcaVigente": "S",
+  "mcaVigenteApli": "S",
+  "mcaBajaCob": "N",
+  "codSeccReas": 101,
+  "impAgr": 0,
+  "impAgrRel": null,
+  "impAgrSpto": 0,
+  "impAgrRelSpto": 0,
+  "mesBaseRegulariza": null,
+  "anioBaseRegulariza": null,
+  "pctEnfermedad": null,
+  "duracionProfesion": null,
+  "pctProfesion": null,
+  "duracionEnfermedad": null,
+  "valFranquiciaMin": null,
+  "valFranquiciaMax": null,
+  "sumaAsegBajaStroAcc": null
+}, {
+  "codCia": 1,
+  "numPoliza": "9990000308905",
+  "numSpto": 0,
+  "numApli": 0,
+  "numSptoApli": 0,
+  "numRiesgo": 1,
+  "numPeriodo": 1,
+  "codCob": 1008,
+  "codRamo": 100,
+  "numSecu": 9,
+  "sumaAseg": 810000,
+  "impUnidad": null,
+  "pctParticipacion": null,
+  "codMonCapital": 1,
+  "sumaAsegBajaStro": null,
+  "sumaAsegSpto": 810000,
+  "tasaCob": 5,
+  "codFranquicia": 2,
+  "codLimite": null,
+  "sumaAsegSup": null,
+  "mcaBajaRiesgo": "N",
+  "mcaVigente": "S",
+  "mcaVigenteApli": "S",
+  "mcaBajaCob": "N",
+  "codSeccReas": 101,
+  "impAgr": 0,
+  "impAgrRel": null,
+  "impAgrSpto": 0,
+  "impAgrRelSpto": 0,
+  "mesBaseRegulariza": null,
+  "anioBaseRegulariza": null,
+  "pctEnfermedad": null,
+  "duracionProfesion": null,
+  "pctProfesion": null,
+  "duracionEnfermedad": null,
+  "valFranquiciaMin": 2000,
+  "valFranquiciaMax": null,
+  "sumaAsegBajaStroAcc": null
+}, {
+  "codCia": 1,
+  "numPoliza": "9990000308905",
+  "numSpto": 0,
+  "numApli": 0,
+  "numSptoApli": 0,
+  "numRiesgo": 1,
+  "numPeriodo": 1,
+  "codCob": 1036,
+  "codRamo": 100,
+  "numSecu": 20,
+  "sumaAseg": 2000,
+  "impUnidad": null,
+  "pctParticipacion": null,
+  "codMonCapital": 1,
+  "sumaAsegBajaStro": null,
+  "sumaAsegSpto": 2000,
+  "tasaCob": 0,
+  "codFranquicia": null,
+  "codLimite": 1,
+  "sumaAsegSup": null,
+  "mcaBajaRiesgo": "N",
+  "mcaVigente": "S",
+  "mcaVigenteApli": "S",
+  "mcaBajaCob": "N",
+  "codSeccReas": 0,
+  "impAgr": 0,
+  "impAgrRel": null,
+  "impAgrSpto": 0,
+  "impAgrRelSpto": 0,
+  "mesBaseRegulariza": null,
+  "anioBaseRegulariza": null,
+  "pctEnfermedad": null,
+  "duracionProfesion": null,
+  "pctProfesion": null,
+  "duracionEnfermedad": null,
+  "valFranquiciaMin": null,
+  "valFranquiciaMax": null,
+  "sumaAsegBajaStroAcc": null
+}, {
+  "codCia": 1,
+  "numPoliza": "9990000308905",
   "numSpto": 0,
   "numApli": 0,
   "numSptoApli": 0,
@@ -1007,7 +1204,7 @@ const coverageAmount: any[] = [{
   "sumaAsegBajaStroAcc": null
 }, {
   "codCia": 1,
-  "numPoliza": "9990000308290",
+  "numPoliza": "9990000308905",
   "numSpto": 0,
   "numApli": 0,
   "numSptoApli": 0,
@@ -1016,12 +1213,12 @@ const coverageAmount: any[] = [{
   "codCob": 1100,
   "codRamo": 100,
   "numSecu": 2,
-  "sumaAseg": 755000,
+  "sumaAseg": 810000,
   "impUnidad": null,
   "pctParticipacion": null,
   "codMonCapital": 1,
   "sumaAsegBajaStro": null,
-  "sumaAsegSpto": 755000,
+  "sumaAsegSpto": 810000,
   "tasaCob": 0,
   "codFranquicia": null,
   "codLimite": null,
@@ -1044,344 +1241,6 @@ const coverageAmount: any[] = [{
   "valFranquiciaMin": null,
   "valFranquiciaMax": null,
   "sumaAsegBajaStroAcc": null
-}];
-
-const coverageVariable: any[] = [{
-  "codCob": 1001,
-  "numSecu": 1,
-  "codCampo": "MCA_AUTO_REGISTRO",
-  "nomCampo": "AUTOMATIC AUTHENTICATION",
-  "valCampo": null
-}, {
-  "codCob": 1001,
-  "numSecu": 2,
-  "codCampo": "TIP_COCAF_REGISTRATION",
-  "nomCampo": "REGISTRATION TYPE",
-  "valCampo": null
-}, {
-  "codCob": 1001,
-  "numSecu": 3,
-  "codCampo": "TIP_COCAF_MV",
-  "nomCampo": "MV TYPE",
-  "valCampo": null
-}, {
-  "codCob": 1001,
-  "numSecu": 4,
-  "codCampo": "NUM_COC",
-  "nomCampo": "COC NUMBER",
-  "valCampo": null
-}, {
-  "codCob": 1001,
-  "numSecu": 5,
-  "codCampo": "NUM_COC_AUTH",
-  "nomCampo": "AUTHENTICATION NUMBER",
-  "valCampo": null
-}, {
-  "codCob": 1002,
-  "numSecu": 1,
-  "codCampo": "VAL_OD_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "OWN DAMAGE SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1002,
-  "numSecu": 2,
-  "codCampo": "IMP_OD_DEDUCTIBLE",
-  "nomCampo": "OWN DAMAGE DEDUCTIBLE",
-  "valCampo": "3775"
-}, {
-  "codCob": 1002,
-  "numSecu": 3,
-  "codCampo": "NUM_OD_TOWING_LIMIT",
-  "nomCampo": "OWN DAMAGE TOWING LIMIT",
-  "valCampo": "500"
-}, {
-  "codCob": 1002,
-  "numSecu": 4,
-  "codCampo": "NUM_OD_REPAIR_LIMIT",
-  "nomCampo": "OWN DAMAGE REPAIR LIMIT",
-  "valCampo": "4275"
-}, {
-  "codCob": 1003,
-  "numSecu": 1,
-  "codCampo": "VAL_TH_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "THEFT SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1003,
-  "numSecu": 2,
-  "codCampo": "IMP_TH_DEDUCTIBLE",
-  "nomCampo": "THEFT DEDUCTIBLE",
-  "valCampo": "3775"
-}, {
-  "codCob": 1003,
-  "numSecu": 3,
-  "codCampo": "NUM_TH_TOWING_LIMIT",
-  "nomCampo": "THEFT TOWING LIMIT",
-  "valCampo": "500"
-}, {
-  "codCob": 1003,
-  "numSecu": 4,
-  "codCampo": "NUM_TH_REPAIR_LIMIT",
-  "nomCampo": "THEFT REPAIR LIMIT",
-  "valCampo": "4275"
-}, {
-  "codCob": 1007,
-  "numSecu": 1,
-  "codCampo": "PCT_UPPA_FINAL_RATE",
-  "nomCampo": "UPPA FINAL RATE",
-  "valCampo": null
-}, {
-  "codCob": 1007,
-  "numSecu": 2,
-  "codCampo": "TIP_UPPA_DISCOUNT",
-  "nomCampo": "UPPA DISCOUNT TYPE",
-  "valCampo": null
-}, {
-  "codCob": 1007,
-  "numSecu": 3,
-  "codCampo": "IMP_UPPA_DISCOUNT",
-  "nomCampo": "UPPA DISCOUNT AMOUNT",
-  "valCampo": null
-}, {
-  "codCob": 1007,
-  "numSecu": 4,
-  "codCampo": "PCT_UPPA_COMMN_ADJ",
-  "nomCampo": "UPPA COMMISSION ADJUSTMENT",
-  "valCampo": null
-}, {
-  "codCob": 1008,
-  "numSecu": 2,
-  "codCampo": "PCT_AON_FINAL_RATE",
-  "nomCampo": "AON FINAL RATE",
-  "valCampo": null
-}, {
-  "codCob": 1008,
-  "numSecu": 3,
-  "codCampo": "VAL_AON_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "AON SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1008,
-  "numSecu": 4,
-  "codCampo": "IMP_AON_DEDUCTIBLE",
-  "nomCampo": "AON DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1008,
-  "numSecu": 5,
-  "codCampo": "NUM_AON_TOWING_LIMIT",
-  "nomCampo": "AON TOWING LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1008,
-  "numSecu": 6,
-  "codCampo": "NUM_AON_REPAIR_LIMIT",
-  "nomCampo": "AON REPAIR LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1008,
-  "numSecu": 7,
-  "codCampo": "PCT_AON_COMMN_ADJ",
-  "nomCampo": "AON COMMISSION ADJUSTMENT",
-  "valCampo": null
-}, {
-  "codCob": 1020,
-  "numSecu": 2,
-  "codCampo": "PCT_SRCC_FINAL_RATE",
-  "nomCampo": "SRCC FINAL RATE",
-  "valCampo": null
-}, {
-  "codCob": 1020,
-  "numSecu": 3,
-  "codCampo": "VAL_SRCC_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "SRCC SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1020,
-  "numSecu": 4,
-  "codCampo": "IMP_SRCC_DEDUCTIBLE",
-  "nomCampo": "SRCC DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1020,
-  "numSecu": 5,
-  "codCampo": "NUM_SRCC_TOWING_LIMIT",
-  "nomCampo": "SRCC TOWING LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1020,
-  "numSecu": 6,
-  "codCampo": "NUM_SRCC_REPAIR_LIMIT",
-  "nomCampo": "SRCC REPAIR LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1020,
-  "numSecu": 7,
-  "codCampo": "PCT_SRCC_COMMN_ADJ",
-  "nomCampo": "SRCC COMMISSION ADJUSTMENT",
-  "valCampo": null
-}, {
-  "codCob": 1029,
-  "numSecu": 1,
-  "codCampo": "VAL_RA100_DISC",
-  "nomCampo": "RA100  DISCOUNT",
-  "valCampo": null
-}, {
-  "codCob": 1038,
-  "numSecu": 1,
-  "codCampo": "VAL_PREM_PER_PAX_AL",
-  "nomCampo": "AMOUNT PER PASSENGER (AL)",
-  "valCampo": null
-}, {
-  "codCob": 1040,
-  "numSecu": 1,
-  "codCampo": "VAL_RA_DISC",
-  "nomCampo": "ROAD ASSIST DISCOUNT",
-  "valCampo": "250"
-}, {
-  "codCob": 1100,
-  "numSecu": 1,
-  "codCampo": "TIP_LOSS_DAMAGE",
-  "nomCampo": "LOSS AND DAMAGE TYPE",
-  "valCampo": "1"
-}, {
-  "codCob": 1100,
-  "numSecu": 3,
-  "codCampo": "PCT_FINAL_RATE",
-  "nomCampo": "FINAL RATE",
-  "valCampo": "2.25"
-}, {
-  "codCob": 1100,
-  "numSecu": 6,
-  "codCampo": "PCT_ADJ_COMM_RATE",
-  "nomCampo": "ADJUSTED COMMISSION RATE",
-  "valCampo": "20"
-}, {
-  "codCob": 1100,
-  "numSecu": 7,
-  "codCampo": "PCT_NO_CLAIM_BONUS",
-  "nomCampo": "NO CLAIM BONUS RATE",
-  "valCampo": null
-}, {
-  "codCob": 1100,
-  "numSecu": 8,
-  "codCampo": "PCT_LOSS_RATIO",
-  "nomCampo": "LOSS RATIO RATE",
-  "valCampo": null
-}, {
-  "codCob": 1102,
-  "numSecu": 1,
-  "codCampo": "COD_LIMIT_AUTO_LIABILITY",
-  "nomCampo": "AUTO LIABILITY LIMIT CODE",
-  "valCampo": null
-}, {
-  "codCob": 1201,
-  "numSecu": 2,
-  "codCampo": "PCT_OD_SA_FINAL_RATE",
-  "nomCampo": "OD FINAL RATE",
-  "valCampo": null
-}, {
-  "codCob": 1201,
-  "numSecu": 3,
-  "codCampo": "VAL_OD_SA_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "OD SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1201,
-  "numSecu": 4,
-  "codCampo": "IMP_OD_SA_DEDUCTIBLE",
-  "nomCampo": "OD DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1201,
-  "numSecu": 5,
-  "codCampo": "NUM_OD_SA_TOWING_LIMIT",
-  "nomCampo": "OD TOWING LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1201,
-  "numSecu": 6,
-  "codCampo": "NUM_OD_SA_REPAIR_LIMIT",
-  "nomCampo": "OD REPAIR LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1201,
-  "numSecu": 7,
-  "codCampo": "PCT_OD_SA_COMMN_ADJ",
-  "nomCampo": "OD COMMISSION ADJUSTMENT",
-  "valCampo": null
-}, {
-  "codCob": 1202,
-  "numSecu": 2,
-  "codCampo": "PCT_TH_SA_FINAL_RATE",
-  "nomCampo": "TH FINAL RATE",
-  "valCampo": null
-}, {
-  "codCob": 1202,
-  "numSecu": 3,
-  "codCampo": "VAL_TH_SA_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "TH SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1202,
-  "numSecu": 4,
-  "codCampo": "IMP_TH_SA_DEDUCTIBLE",
-  "nomCampo": "TH DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1202,
-  "numSecu": 5,
-  "codCampo": "NUM_TH_SA_TOWING_LIMIT",
-  "nomCampo": "TH TOWING LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1202,
-  "numSecu": 6,
-  "codCampo": "NUM_TH_SA_REPAIR_LIMIT",
-  "nomCampo": "TH REPAIR LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1202,
-  "numSecu": 7,
-  "codCampo": "PCT_TH_SA_COMMN_ADJ",
-  "nomCampo": "TH COMMISSION ADJUSTMENT",
-  "valCampo": null
-}, {
-  "codCob": 1203,
-  "numSecu": 2,
-  "codCampo": "PCT_FIRE_SA_FINAL_RATE",
-  "nomCampo": "FIRE FINAL RATE",
-  "valCampo": null
-}, {
-  "codCob": 1203,
-  "numSecu": 3,
-  "codCampo": "VAL_FIRE_SA_SPECIAL_DEDUCTIBLE",
-  "nomCampo": "FIRE SPECIAL DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1203,
-  "numSecu": 4,
-  "codCampo": "IMP_FIRE_SA_DEDUCTIBLE",
-  "nomCampo": "FIRE DEDUCTIBLE",
-  "valCampo": null
-}, {
-  "codCob": 1203,
-  "numSecu": 5,
-  "codCampo": "NUM_FIRE_SA_TOWING_LIMIT",
-  "nomCampo": "FIRE TOWING LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1203,
-  "numSecu": 6,
-  "codCampo": "NUM_FIRE_SA_REPAIR_LIMIT",
-  "nomCampo": "FIRE REPAIR LIMIT",
-  "valCampo": null
-}, {
-  "codCob": 1203,
-  "numSecu": 7,
-  "codCampo": "PCT_FIRE_SA_COMMN_ADJ",
-  "nomCampo": "FIRE COMMISSION ADJUSTMENT",
-  "valCampo": null
 }];
 
 export interface TablesDTO {
@@ -1418,6 +1277,11 @@ export class CoveragesComponent implements OnInit {
     public dialog: MatDialog) {}
 
   ngOnInit() {
+    this.coverageList = coverageList;
+    this.amountList = amountList;
+    this.premiumAmount = premiumAmount;
+    this.coverageAmount = coverageAmount;
+
     this.source = this.getData();
     this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
     this.setForm(this.dataSource.filteredData);
@@ -1581,13 +1445,29 @@ export class CoveragesComponent implements OnInit {
         vehicleValue = sumaAsegA;
       }
 
+      var sumInsured = isMandatory ? vehicleValue : isSelect ? selectedOpt : 0;
+      var hasCounterpart = false;
+      if (isSelect) {
+        options.forEach((o)=> {
+          if (o == sumInsured) {
+            hasCounterpart = true;
+          }
+        });
+        //if has no counterpart to sum insured select options, adds the sumInsured value
+        if (!hasCounterpart) {
+          options.push({
+            value: sumInsured
+          });
+        }
+      }
+
       var returnObj = {
         isMandatory: isMandatory,
         included: isMandatory,
         code: code,
         coverage: name,
         options: options,
-        sumInsured: isMandatory ? vehicleValue : isSelect ? selectedOpt : 0,
+        sumInsured: sumInsured,
         netPremium: netPremium,
         isRoadAssist: (code == '1027' || code == '1029' || code == '1040'),
         isSelect: isSelect
