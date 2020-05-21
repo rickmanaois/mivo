@@ -1277,10 +1277,11 @@ export class CoveragesComponent implements OnInit {
     public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.coverageList = coverageList;
-    this.amountList = amountList;
-    this.premiumAmount = premiumAmount;
-    this.coverageAmount = coverageAmount;
+    // for testing purposes
+    // this.coverageList = coverageList;
+    // this.amountList = amountList;
+    // this.premiumAmount = premiumAmount;
+    // this.coverageAmount = coverageAmount;
 
     this.source = this.getData();
     this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
