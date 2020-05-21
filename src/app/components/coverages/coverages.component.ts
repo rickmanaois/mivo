@@ -1356,10 +1356,10 @@ export class CoveragesComponent implements OnInit {
 
     this.coverageList.forEach((cov) => {
       var code = cov.COD_COB;
-      // var vehicleValue = this.carDetails.vehicleValue;
-      // var product = this.carDetails.productList;
-      var vehicleValue = 775000;
-      var product = 10001;
+      var vehicleValue = this.carDetails.vehicleValue;
+      var product = this.carDetails.productList;
+      // var vehicleValue = 775000;
+      // var product = 10001;
       var name = cov.NOM_COB;
       var type = cov.MCA_TIP_CAPITAL;
       var isMandatory = cov.MCA_OBLIGATORIO == "S";
