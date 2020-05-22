@@ -18,6 +18,7 @@
                   {{row.isMandatory ? 'Included' : 'Optional'}}
                 </label>
               </div>
+
             </mat-cell>
           </ng-container>
 
@@ -25,6 +26,7 @@
             <mat-header-cell *matHeaderCellDef> Coverage </mat-header-cell>
             <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
               {{row.coverage}}
+              <!-- <input type="text" size="7" formControlName="coverage"> -->
             </mat-cell>
           </ng-container>
 
@@ -34,9 +36,10 @@
               <span *ngIf="!row.isSelect">{{row.sumInsured | currency: 'PHP' : 'symbol-narrow'}}</span>
               <select *ngIf="row.isSelect" class="custom-select mr-sm-2 required" formControlName="sumInsured"
                 [(ngModel)]="row.sumInsured"
-                [attr.disabled]="row.included ? null : ''" >
+                [attr.disabled]="!row.isMandatory && row.included ? null : ''" >
                 <option *ngFor="let opt of row.options" [ngValue]="opt.value">{{ opt.value }}</option>
               </select>
+              <!-- <input type="text" size="3" formControlName="sumInsured"> -->
             </mat-cell>
           </ng-container>
 
@@ -44,13 +47,14 @@
             <mat-header-cell *matHeaderCellDef [ngClass]="'amount-header'"> Net Premium </mat-header-cell>
             <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex" [ngClass]="'amount'">
               <span>{{row.netPremium | currency: 'PHP' : 'symbol-narrow'}}</span>
+              <!-- <input type="text" size="2" formControlName="netPremium"> -->
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let row" [ngClass]="'amount'">
-              <i *ngIf="row.included && row.hasVariableData" class="fa fa-edit" (click)="editCoverage(row)"></i>
+              <i *ngIf="!row.isMandatory && row.included" class="fa fa-edit" (click)="editCoverage(row)"></i>
             </mat-cell>
           </ng-container>
 
