@@ -1,9 +1,7 @@
 import {
   Component,
   OnInit,
-  Input,
-  Inject,
-  Output
+  Input
 } from '@angular/core';
 import {
   MatTableDataSource
@@ -17,8 +15,6 @@ import {
   QuoteCar
 } from 'src/app/objects/QuoteCar';
 import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
   MatDialog
 } from '@angular/material';
 import {
@@ -30,9 +26,6 @@ import {
 import {
   Utility
 } from 'src/app/utils/utility';
-import {
-  EventEmitter
-} from 'protractor';
 
 const coverageList: any[] = [{
   "MCA_TIP_CAPITAL": "4",
