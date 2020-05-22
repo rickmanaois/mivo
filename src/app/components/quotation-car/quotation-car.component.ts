@@ -619,9 +619,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   manageBtn(opt: number) {
-    this.showGenerateBtnGrp = (opt == 1);
-    if (opt == 1) {
-      this.showCoverage = false;
+    this.showGenerateBtnGrp = (opt == 1 || opt == 4);
+    if (opt == 1 || opt == 4) {
+      this.showCoverage = opt == 4;
       this.showPaymentBreakdown = false;
     }
 

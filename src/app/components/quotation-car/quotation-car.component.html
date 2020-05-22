@@ -761,8 +761,11 @@
             <button type="button" class="btn btn-primary"
               (click)="manageBtn(1)">Change Product</button>
             <button type="button" class="btn btn-primary"
-              (click)="issueQuote(appCoverages, 'S')">Edit Coverage</button>
+              (click)="manageBtn(4)">Edit Coverage</button>
             <button
+              [disabled]="quoteForm.pristine || quoteForm.invalid ||
+              appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
+              appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
               type="button" class="btn btn-primary"
               (click)="issueQuote(appCoverages, 'N')">Issue Qoute</button>
           </div>
