@@ -2,8 +2,7 @@ import {
   Component,
   OnInit,
   AfterViewChecked,
-  ChangeDetectorRef,
-  Input
+  ChangeDetectorRef
 } from '@angular/core';
 import {
   FormGroup,
@@ -63,9 +62,6 @@ import {
   PaymentBreakdownModalComponent
 } from '../payment-breakdown-modal/payment-breakdown-modal.component';
 import {
-  DocumentPrinting
-} from 'src/app/objects/DocumentPrinting';
-import {
   Router
 } from '@angular/router';
 import {
@@ -74,6 +70,7 @@ import {
 import {
   Globals
 } from 'src/app/utils/global';
+import { CoverageVariableData } from 'src/app/objects/CoverageVariableData';
 
 @Component({
   selector: 'app-quotation-car',
@@ -89,6 +86,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   carDetails = new QuoteCar();
   groupPolicy = new GroupPolicy();
   policyHolder = new PolicyHolder();
+  coverageVariableData = new CoverageVariableData();
 
   quoteForm: FormGroup;
   cForm: FormGroup;
@@ -569,7 +567,12 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   test() {
     // this.modalRef = Utility.showHTMLError(this.bms, items);
     // this.hasIssuedQuote = true;
-    this.openPaymentBreakdownModal([], []);
+    // this.openPaymentBreakdownModal([], []);
+    // this.dialog.open(CoverageVariableDataComponent, {
+    //   width: '1000px',
+    //   data: 'modalData'
+    // });
+    console.log(this.coverageVariableData);
   }
 
   copyToClipboard(item) {

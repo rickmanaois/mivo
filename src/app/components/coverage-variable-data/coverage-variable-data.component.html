@@ -1,0 +1,200 @@
+<form [formGroup]="variableForm">
+  <div mat-dialog-content>
+    <div class="container">
+      <div class="header row">
+        <div class="col-md-12">
+          <h4>{{coverage}}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div *ngIf="code == '1100'">
+            <div class="form-group">
+              <label for="lossAndDamageType">Loss and Damage Type</label>
+              <input type="number" formControlName="lossAndDamageType" class="form-control"
+                [(ngModel)]="data.cvd.lossAndDamageType">
+            </div>
+
+            <div class="form-group">
+              <label for="finalRate">Final Rate (%)</label>
+              <input type="number" formControlName="finalRate" class="form-control" [(ngModel)]="data.cvd.finalRate">
+            </div>
+
+            <div class="form-group">
+              <label for="adjustedCommissionRate">Adjusted Commission Rate (%)</label>
+              <input type="number" formControlName="adjustedCommissionRate" class="form-control"
+                [(ngModel)]="data.cvd.adjustedCommissionRate">
+            </div>
+
+            <div class="form-group">
+              <label for="lossRatioRate">Loss Ratio Rate (%)</label>
+              <input type="number" formControlName="lossRatioRate" class="form-control"
+                [(ngModel)]="data.cvd.lossRatioRate">
+            </div>
+          </div>
+
+          <div *ngIf="code == '1002'">
+            <div class="form-group">
+              <label for="ownDamageTowingLimit">Own Damage Towing Limit</label>
+              <input type="number" formControlName="ownDamageTowingLimit" class="form-control"
+                [(ngModel)]="data.cvd.ownDamageTowingLimit">
+            </div>
+
+            <div class="form-group">
+              <label for="ownDamageRepairLimit">Own Damage Repair Limit</label>
+              <input type="number" formControlName="ownDamageRepairLimit" class="form-control"
+                [(ngModel)]="data.cvd.ownDamageRepairLimit">
+            </div>
+
+            <div class="form-group">
+              <label for="ownDamageSpecialDeductible">Own Damage Special Deductible</label>
+              <input type="number" formControlName="ownDamageSpecialDeductible" class="form-control"
+                [(ngModel)]="data.cvd.ownDamageSpecialDeductible">
+            </div>
+          </div>
+
+          <div *ngIf="code == '1003'">
+            <div class="form-group">
+              <label for="theftTowingLimit">Theft Towing Limit</label>
+              <input type="number" formControlName="theftTowingLimit" class="form-control"
+                [(ngModel)]="data.cvd.theftTowingLimit" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="theftRepairLimit">Theft Repair Limit</label>
+              <input type="number" formControlName="theftRepairLimit" class="form-control"
+                [(ngModel)]="data.cvd.theftRepairLimit" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="theftSpecialDeductible">Theft Special Deductible</label>
+              <input type="number" formControlName="theftSpecialDeductible" class="form-control"
+                [(ngModel)]="data.cvd.theftSpecialDeductible" disabled>
+            </div>
+          </div>
+
+          <div *ngIf="code == '1007'">
+            <div class="form-group">
+              <label for="uppaDiscountType">UPPA Discount Type</label>
+              <input type="number" formControlName="uppaDiscountType" class="form-control"
+                [(ngModel)]="data.cvd.uppaDiscountType">
+            </div>
+
+            <div class="form-group">
+              <label for="uppaDiscountAmount">UPPA Discount Amount</label>
+              <input type="number" formControlName="uppaDiscountAmount" class="form-control"
+                [(ngModel)]="data.cvd.uppaDiscountAmount">
+            </div>
+
+            <div class="form-group">
+              <label for="uppaCommissionAdjustment">UPPA Commission Adjustment (%)</label>
+              <input type="number" formControlName="uppaCommissionAdjustment" class="form-control"
+                (change)="percentage($event, 'uppaCommissionAdjustment')"
+                [(ngModel)]="data.cvd.uppaCommissionAdjustment">
+            </div>
+
+            <div class="form-group">
+              <label for="sumInsuredPerPassenger">Sum Insured per Passenger</label>
+              <input type="number" formControlName="sumInsuredPerPassenger" class="form-control"
+                [(ngModel)]="data.cvd.sumInsuredPerPassenger">
+            </div>
+          </div>
+
+          <div *ngIf="code == '1008'">
+            <div class="form-group">
+              <label for="aonFinalRate">AON Final Rate</label>
+              <input type="number" formControlName="aonFinalRate" class="form-control"
+                (change)="percentage($event, 'aonFinalRate')" [(ngModel)]="data.cvd.aonFinalRate">
+            </div>
+
+            <div class="form-group">
+              <label for="aonTowingLimit">AON Towing Limit</label>
+              <input type="number" formControlName="aonTowingLimit" class="form-control"
+                [(ngModel)]="data.cvd.aonTowingLimit" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="aonRepairLimit">AON Repair Limit</label>
+              <input type="number" formControlName="aonRepairLimit" class="form-control"
+                [(ngModel)]="data.cvd.aonRepairLimit" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="aonSpecialDeductible">AON Special Deductible</label>
+              <input type="number" formControlName="aonSpecialDeductible" class="form-control"
+                [(ngModel)]="data.cvd.aonSpecialDeductible" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="aonCommissionAdjustment">AON Commission Adjustment (%)</label>
+              <input type="number" formControlName="aonCommissionAdjustment" class="form-control"
+                (change)="percentage($event, 'aonCommissionAdjustment')" [(ngModel)]="data.cvd.aonCommissionAdjustment">
+            </div>
+          </div>
+
+          <div *ngIf="code == '1020'">
+            <div class="form-group">
+              <label for="srccFinalRate">SRCC Final Rate</label>
+              <input type="number" formControlName="srccFinalRate" class="form-control"
+                (change)="percentage($event, 'srccFinalRate')" [(ngModel)]="data.cvd.srccFinalRate">
+            </div>
+
+            <div class="form-group">
+              <label for="srccTowingLimit">SRCC Towing Limit</label>
+              <input type="number" formControlName="srccTowingLimit" class="form-control"
+                [(ngModel)]="data.cvd.srccTowingLimit">
+            </div>
+
+            <div class="form-group">
+              <label for="srccRepairLimit">SRCC Repair Limit</label>
+              <input type="number" formControlName="srccRepairLimit" class="form-control"
+                [(ngModel)]="data.cvd.srccRepairLimit">
+            </div>
+
+            <div class="form-group">
+              <label for="srccSpecialDeductible">SRCC Special Deductible</label>
+              <input type="number" formControlName="srccSpecialDeductible" class="form-control"
+                [(ngModel)]="data.cvd.srccSpecialDeductible">
+            </div>
+
+            <div class="form-group">
+              <label for="srccCommissionAdjustment">SRCC Commission Adjustment (%)</label>
+              <input type="number" formControlName="srccCommissionAdjustment" class="form-control"
+                (change)="percentage($event, 'srccCommissionAdjustment')"
+                [(ngModel)]="data.cvd.srccCommissionAdjustment">
+            </div>
+          </div>
+
+          <div *ngIf="code == '1040'">
+            <div class="form-group">
+              <label for="roadAssistDiscount">Road Assist Discount</label>
+              <input type="number" formControlName="roadAssistDiscount" class="form-control"
+                [(ngModel)]="data.cvd.roadAssistDiscount">
+            </div>
+          </div>
+
+          <div *ngIf="code == '1029'">
+            <div class="form-group">
+              <label for="ra100Discount">RA 100 Discount</label>
+              <input type="number" formControlName="ra100Discount" class="form-control"
+                [(ngModel)]="data.cvd.ra100Discount">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-primary" (click)="cancel()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary" (click)="update()">
+        Update
+      </button>
+    </div>
+  </div>
+</form>

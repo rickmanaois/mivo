@@ -726,14 +726,6 @@
             </div>
           </div>
 
-          <app-payment-breakdown
-            *ngIf="showPaymentBreakdown"
-            #appPaymentBreakdown
-            [paymentReceipt]="paymentReceipt"
-            [paymentBreakdown]="paymentBreakdown"
-            [showExchangeRate]="false">
-          </app-payment-breakdown>
-
           <app-coverages
             *ngIf="showCoverage"
             #appCoverages
@@ -741,8 +733,17 @@
             [coverageList]="coverageList"
             [amountList]="amountList"
             [premiumAmount]="premiumAmount"
-            [coverageAmount]="coverageAmount">
+            [coverageAmount]="coverageAmount"
+            [coverageVariableData]="coverageVariableData">
           </app-coverages>
+
+          <app-payment-breakdown
+            *ngIf="showPaymentBreakdown"
+            #appPaymentBreakdown
+            [paymentReceipt]="paymentReceipt"
+            [paymentBreakdown]="paymentBreakdown"
+            [showExchangeRate]="false">
+          </app-payment-breakdown>
 
           <div *ngIf="!hasIssuedQuote" class="btn-group" role="group">
             <button type="button" (click)="test()" class="btn btn-primary">test</button>

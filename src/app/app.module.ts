@@ -162,8 +162,7 @@ import {
   PaymentBreakdownComponent
 } from './components/payment-breakdown/payment-breakdown.component';
 import {
-  CoveragesComponent,
-  DialogOverviewExampleDialog
+  CoveragesComponent
 } from './components/coverages/coverages.component';
 import {
   PaymentBreakdownModalComponent
@@ -171,6 +170,9 @@ import {
 import {
   ReloadComponent
 } from './components/reload/reload.component';
+import {
+  CoverageVariableDataComponent
+} from './components/coverage-variable-data/coverage-variable-data.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -232,9 +234,9 @@ const routes: Routes = [{
     PolicyHolderComponent,
     PaymentBreakdownComponent,
     CoveragesComponent,
-    DialogOverviewExampleDialog,
     PaymentBreakdownModalComponent,
-    ReloadComponent
+    ReloadComponent,
+    CoverageVariableDataComponent
   ],
   entryComponents: [
     ModalComponent
