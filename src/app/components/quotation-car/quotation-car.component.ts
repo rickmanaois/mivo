@@ -652,7 +652,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   //generate and issue quote button
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
     // to trigger changes when regenerating quotation
-    this.showCoverage = false;
+    this.showCoverage = this.isModifiedCoverage;
     this.showPaymentBreakdown = false;
 
     // includes group policy to car details DTO
