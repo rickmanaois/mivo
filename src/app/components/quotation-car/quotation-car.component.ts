@@ -112,6 +112,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   amountList: any[];
   premiumAmount: any[];
   coverageAmount: any[];
+  coverageVariable: any[];
 
   //disabling issue button
   disableIssueQuoteBtn: boolean = true;
@@ -547,12 +548,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  populateCoverage(coverageList: any[], amountList: any[], premiumAmount: any[], coverageAmount: any[]) {
+  populateCoverage(coverageList: any[], amountList: any[], premiumAmount: any[], coverageAmount: any[], coverageVariable: any[]) {
     this.showCoverage = true;
     this.coverageList = coverageList;
     this.amountList = amountList;
     this.premiumAmount = premiumAmount;
     this.coverageAmount = coverageAmount;
+    this.coverageVariable = coverageVariable;
   }
 
   populatePaymentBreakdown(breakdown: any[], receipt: {}) {
@@ -694,7 +696,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const coverageList = res.obj["coverageList"];
               const amountList = res.obj["amountList"];;
               const premiumAmount = res1.obj["premiumAmount"];;
-              this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount);
+              const coverageVariable = res1.obj["coverageVariable"];;
+              this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount, coverageVariable);
 
               this.populatePaymentBreakdown(breakdown, receipt);
               this.disableIssueQuoteBtn = false;
