@@ -716,7 +716,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const amountList = res.obj["amountList"];;
               const premiumAmount = res1.obj["premiumAmount"];;
               const coverageVariable = res1.obj["coverageVariable"];
-              if (!this.isModifiedCoverage) {
+              if (this.isModifiedCoverage) {
+                this.showCoverage = true;
+              } else {
                 this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount, coverageVariable);
               }
 
