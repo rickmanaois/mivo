@@ -117,6 +117,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   //disable change product input
   disableProductSelect = false;
 
+  //disable change product input
+  isModifiedCoverage = false;
+
   //flag to show generate btn
   showGenerateBtnGrp: boolean = true;
   //flag to show issue btn
@@ -620,8 +623,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   manageBtn(opt: number) {
     this.showGenerateBtnGrp = (opt == 1 || opt == 4);
+    this.isModifiedCoverage = opt == 4;
     if (opt == 1 || opt == 4) {
-      this.showCoverage = opt == 4;
+      this.showCoverage = false;
       this.showPaymentBreakdown = false;
     }
 
@@ -711,9 +715,12 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const coverageList = res.obj["coverageList"];
               const amountList = res.obj["amountList"];;
               const premiumAmount = res1.obj["premiumAmount"];;
-              const coverageVariable = res1.obj["coverageVariable"];;
-              this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount, coverageVariable);
-
+              const coverageVariable = res1.obj["coverageVariable"];
+              if (!this.isModifiedCoverage) {
+                this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount, coverageVariable);
+              }
+              
+              this.isModifiedCoverage = false;
               this.populatePaymentBreakdown(breakdown, receipt);
               this.manageBtn(2);
             } else { // for issuing the quote
