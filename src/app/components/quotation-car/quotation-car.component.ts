@@ -114,11 +114,15 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   coverageAmount: any[];
   coverageVariable: any[];
 
-  //disabling issue button
-  disableIssueQuoteBtn: boolean = true;
+  //disable change product input
+  disableProductSelect = false;
 
-  //flag to show generate/issue button & print quote/proceed to issuance
-  hasIssuedQuote: boolean = false;
+  //flag to show generate btn
+  showGenerateBtnGrp: boolean = true;
+  //flag to show issue btn
+  showIssueQuoteBtnGrp: boolean = false;
+  //flag to show print quote/proceed to issuance
+  showProceedToIssuanceBtnGrp: boolean = false;
 
   //modal reference
   modalRef: BsModalRef;
@@ -561,7 +565,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.showPaymentBreakdown = true;
     this.paymentBreakdown = breakdown;
     this.paymentReceipt = receipt;
-    Utility.scroll('paymentBreakdown');
+    Utility.scroll('coverages');
   }
 
   test() {
@@ -575,14 +579,14 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     console.log(this.coverageVariableData);
   }
 
-  copyToClipboard(item) {
-    document.addEventListener('copy', (e: ClipboardEvent) => {
-      e.clipboardData.setData('text/plain', (item));
-      e.preventDefault();
-      document.removeEventListener('copy', null);
-    });
-    document.execCommand('copy');
-  }
+  // copyToClipboard(item) {
+  //   document.addEventListener('copy', (e: ClipboardEvent) => {
+  //     e.clipboardData.setData('text/plain', (item));
+  //     e.preventDefault();
+  //     document.removeEventListener('copy', null);
+  //   });
+  //   document.execCommand('copy');
+  // }
 
   openPaymentBreakdownModal(receipt: any, breakdown: any) {
     let product = "";
@@ -612,6 +616,17 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       width: '1000px',
       data: modalData
     });
+  }
+
+  manageBtn(opt: number) {
+    this.showGenerateBtnGrp = (opt == 1);
+    if (opt == 1) {
+      this.showCoverage = false;
+      this.showPaymentBreakdown = false;
+    }
+
+    this.showIssueQuoteBtnGrp = (opt == 2);
+    this.showProceedToIssuanceBtnGrp = (opt == 3);
   }
 
   newQuote() {
@@ -700,10 +715,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               this.populateCoverage(coverageList, amountList, premiumAmount, coverageAmount, coverageVariable);
 
               this.populatePaymentBreakdown(breakdown, receipt);
-              this.disableIssueQuoteBtn = false;
+              this.manageBtn(2);
             } else { // for issuing the quote
-              this.hasIssuedQuote = true;
               this.openPaymentBreakdownModal(receipt, breakdown);
+              this.manageBtn(3);
             }
           } else {
             this.modalRef = Utility.showHTMLError(this.bms, items);

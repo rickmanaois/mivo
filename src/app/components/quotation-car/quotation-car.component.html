@@ -667,6 +667,26 @@
             </div>
           </div>
 
+          <app-coverages
+            *ngIf="showCoverage"
+            #appCoverages
+            [carDetails]="carDetails"
+            [coverageList]="coverageList"
+            [coverageVariable]="coverageVariable"
+            [amountList]="amountList"
+            [premiumAmount]="premiumAmount"
+            [coverageAmount]="coverageAmount"
+            [coverageVariableData]="coverageVariableData">
+          </app-coverages>
+
+          <app-payment-breakdown
+            *ngIf="showPaymentBreakdown"
+            #appPaymentBreakdown
+            [paymentReceipt]="paymentReceipt"
+            [paymentBreakdown]="paymentBreakdown"
+            [showExchangeRate]="false">
+          </app-payment-breakdown>
+
           <div class="card shadow mb-3">
             <div class="card-header">
               <strong>Product</strong>
@@ -701,6 +721,7 @@
                         || quoteForm.controls['product'].touched)}">
                     <label for="product">Product List</label>
                     <select class="custom-select mr-sm-2 required" formControlName="product"
+                      [attr.disabled]="showGenerateBtnGrp ? null : true"
                       [(ngModel)]="carDetails.productList" [attr.disabled]=" LOV.productListLOV?.length ? null : true">
                       <option selected></option>
                       <option *ngFor="let product of LOV.productListLOV" [ngValue]="product.COD_MODALIDAD">
@@ -726,27 +747,7 @@
             </div>
           </div>
 
-          <app-coverages
-            *ngIf="showCoverage"
-            #appCoverages
-            [carDetails]="carDetails"
-            [coverageList]="coverageList"
-            [coverageVariable]="coverageVariable"
-            [amountList]="amountList"
-            [premiumAmount]="premiumAmount"
-            [coverageAmount]="coverageAmount"
-            [coverageVariableData]="coverageVariableData">
-          </app-coverages>
-
-          <app-payment-breakdown
-            *ngIf="showPaymentBreakdown"
-            #appPaymentBreakdown
-            [paymentReceipt]="paymentReceipt"
-            [paymentBreakdown]="paymentBreakdown"
-            [showExchangeRate]="false">
-          </app-payment-breakdown>
-
-          <div *ngIf="!hasIssuedQuote" class="btn-group" role="group">
+          <div *ngIf="showGenerateBtnGrp" class="btn-group" role="group">
             <button type="button" (click)="test()" class="btn btn-primary">test</button>
             <button
               [disabled]="quoteForm.pristine || quoteForm.invalid ||
@@ -754,17 +755,22 @@
               appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
               type="button" class="btn btn-primary"
               (click)="issueQuote(appCoverages, 'S')">Generate</button>
-            <button 
-              [disabled]="disableIssueQuoteBtn"
+          </div>
+
+          <div *ngIf="showIssueQuoteBtnGrp" class="btn-group" role="group">
+            <button type="button" class="btn btn-primary"
+              (click)="manageBtn(1)">Change Product</button>
+            <button type="button" class="btn btn-primary"
+              (click)="issueQuote(appCoverages, 'S')">Edit Coverage</button>
+            <button
               type="button" class="btn btn-primary"
               (click)="issueQuote(appCoverages, 'N')">Issue Qoute</button>
           </div>
 
-          <div *ngIf="hasIssuedQuote" class="text-right">
+          <div *ngIf="showProceedToIssuanceBtnGrp" class="text-right">
             <h5><small>Your quotation number:</small> {{carDetails.quotationNumber}}</h5>
           </div>
-
-          <div *ngIf="hasIssuedQuote" class="btn-group" role="group">
+          <div *ngIf="showProceedToIssuanceBtnGrp" class="btn-group" role="group">
             <button type="button" (click)="newQuote()" class="btn btn-primary">New Quote</button>
             <button type="button" (click)="printQuote()" class="btn btn-primary">Print Qoute</button>
             <button type="button" (click)="proceedToIssuance()" class="btn btn-primary">Proceed to Issuance</button>
