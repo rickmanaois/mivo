@@ -3,7 +3,7 @@ import {
   OnInit,
   Input,
   Inject,
-  ChangeDetectorRef
+  Output
 } from '@angular/core';
 import {
   MatTableDataSource
@@ -21,6 +21,18 @@ import {
   MAT_DIALOG_DATA,
   MatDialog
 } from '@angular/material';
+import {
+  CoverageVariableDataComponent
+} from '../coverage-variable-data/coverage-variable-data.component';
+import {
+  CoverageVariableData
+} from 'src/app/objects/CoverageVariableData';
+import {
+  Utility
+} from 'src/app/utils/utility';
+import {
+  EventEmitter
+} from 'protractor';
 
 const coverageList: any[] = [{
   "MCA_TIP_CAPITAL": "4",
@@ -1243,6 +1255,344 @@ const coverageAmount: any[] = [{
   "sumaAsegBajaStroAcc": null
 }];
 
+const coverageVariable = [{
+  "codCob": 1001,
+  "numSecu": 1,
+  "codCampo": "MCA_AUTO_REGISTRO",
+  "nomCampo": "AUTOMATIC AUTHENTICATION",
+  "valCampo": null
+}, {
+  "codCob": 1001,
+  "numSecu": 2,
+  "codCampo": "TIP_COCAF_REGISTRATION",
+  "nomCampo": "REGISTRATION TYPE",
+  "valCampo": null
+}, {
+  "codCob": 1001,
+  "numSecu": 3,
+  "codCampo": "TIP_COCAF_MV",
+  "nomCampo": "MV TYPE",
+  "valCampo": null
+}, {
+  "codCob": 1001,
+  "numSecu": 4,
+  "codCampo": "NUM_COC",
+  "nomCampo": "COC NUMBER",
+  "valCampo": null
+}, {
+  "codCob": 1001,
+  "numSecu": 5,
+  "codCampo": "NUM_COC_AUTH",
+  "nomCampo": "AUTHENTICATION NUMBER",
+  "valCampo": null
+}, {
+  "codCob": 1002,
+  "numSecu": 1,
+  "codCampo": "VAL_OD_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "OWN DAMAGE SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1002,
+  "numSecu": 2,
+  "codCampo": "IMP_OD_DEDUCTIBLE",
+  "nomCampo": "OWN DAMAGE DEDUCTIBLE",
+  "valCampo": "2000"
+}, {
+  "codCob": 1002,
+  "numSecu": 3,
+  "codCampo": "NUM_OD_TOWING_LIMIT",
+  "nomCampo": "OWN DAMAGE TOWING LIMIT",
+  "valCampo": "2000"
+}, {
+  "codCob": 1002,
+  "numSecu": 4,
+  "codCampo": "NUM_OD_REPAIR_LIMIT",
+  "nomCampo": "OWN DAMAGE REPAIR LIMIT",
+  "valCampo": "4000"
+}, {
+  "codCob": 1003,
+  "numSecu": 1,
+  "codCampo": "VAL_TH_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "THEFT SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1003,
+  "numSecu": 2,
+  "codCampo": "IMP_TH_DEDUCTIBLE",
+  "nomCampo": "THEFT DEDUCTIBLE",
+  "valCampo": "2000"
+}, {
+  "codCob": 1003,
+  "numSecu": 3,
+  "codCampo": "NUM_TH_TOWING_LIMIT",
+  "nomCampo": "THEFT TOWING LIMIT",
+  "valCampo": "2000"
+}, {
+  "codCob": 1003,
+  "numSecu": 4,
+  "codCampo": "NUM_TH_REPAIR_LIMIT",
+  "nomCampo": "THEFT REPAIR LIMIT",
+  "valCampo": "4000"
+}, {
+  "codCob": 1007,
+  "numSecu": 1,
+  "codCampo": "PCT_UPPA_FINAL_RATE",
+  "nomCampo": "UPPA FINAL RATE",
+  "valCampo": ".2"
+}, {
+  "codCob": 1007,
+  "numSecu": 2,
+  "codCampo": "TIP_UPPA_DISCOUNT",
+  "nomCampo": "UPPA DISCOUNT TYPE",
+  "valCampo": null
+}, {
+  "codCob": 1007,
+  "numSecu": 3,
+  "codCampo": "IMP_UPPA_DISCOUNT",
+  "nomCampo": "UPPA DISCOUNT AMOUNT",
+  "valCampo": "0"
+}, {
+  "codCob": 1007,
+  "numSecu": 4,
+  "codCampo": "PCT_UPPA_COMMN_ADJ",
+  "nomCampo": "UPPA COMMISSION ADJUSTMENT",
+  "valCampo": "20"
+}, {
+  "codCob": 1008,
+  "numSecu": 2,
+  "codCampo": "PCT_AON_FINAL_RATE",
+  "nomCampo": "AON FINAL RATE",
+  "valCampo": ".5"
+}, {
+  "codCob": 1008,
+  "numSecu": 3,
+  "codCampo": "VAL_AON_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "AON SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1008,
+  "numSecu": 4,
+  "codCampo": "IMP_AON_DEDUCTIBLE",
+  "nomCampo": "AON DEDUCTIBLE",
+  "valCampo": "2000"
+}, {
+  "codCob": 1008,
+  "numSecu": 5,
+  "codCampo": "NUM_AON_TOWING_LIMIT",
+  "nomCampo": "AON TOWING LIMIT",
+  "valCampo": "2000"
+}, {
+  "codCob": 1008,
+  "numSecu": 6,
+  "codCampo": "NUM_AON_REPAIR_LIMIT",
+  "nomCampo": "AON REPAIR LIMIT",
+  "valCampo": "4000"
+}, {
+  "codCob": 1008,
+  "numSecu": 7,
+  "codCampo": "PCT_AON_COMMN_ADJ",
+  "nomCampo": "AON COMMISSION ADJUSTMENT",
+  "valCampo": "20"
+}, {
+  "codCob": 1020,
+  "numSecu": 2,
+  "codCampo": "PCT_SRCC_FINAL_RATE",
+  "nomCampo": "SRCC FINAL RATE",
+  "valCampo": null
+}, {
+  "codCob": 1020,
+  "numSecu": 3,
+  "codCampo": "VAL_SRCC_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "SRCC SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1020,
+  "numSecu": 4,
+  "codCampo": "IMP_SRCC_DEDUCTIBLE",
+  "nomCampo": "SRCC DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1020,
+  "numSecu": 5,
+  "codCampo": "NUM_SRCC_TOWING_LIMIT",
+  "nomCampo": "SRCC TOWING LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1020,
+  "numSecu": 6,
+  "codCampo": "NUM_SRCC_REPAIR_LIMIT",
+  "nomCampo": "SRCC REPAIR LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1020,
+  "numSecu": 7,
+  "codCampo": "PCT_SRCC_COMMN_ADJ",
+  "nomCampo": "SRCC COMMISSION ADJUSTMENT",
+  "valCampo": null
+}, {
+  "codCob": 1029,
+  "numSecu": 1,
+  "codCampo": "VAL_RA100_DISC",
+  "nomCampo": "RA100  DISCOUNT",
+  "valCampo": null
+}, {
+  "codCob": 1038,
+  "numSecu": 1,
+  "codCampo": "VAL_PREM_PER_PAX_AL",
+  "nomCampo": "AMOUNT PER PASSENGER (AL)",
+  "valCampo": null
+}, {
+  "codCob": 1040,
+  "numSecu": 1,
+  "codCampo": "VAL_RA_DISC",
+  "nomCampo": "ROAD ASSIST DISCOUNT",
+  "valCampo": null
+}, {
+  "codCob": 1100,
+  "numSecu": 1,
+  "codCampo": "TIP_LOSS_DAMAGE",
+  "nomCampo": "LOSS AND DAMAGE TYPE",
+  "valCampo": "1"
+}, {
+  "codCob": 1100,
+  "numSecu": 3,
+  "codCampo": "PCT_FINAL_RATE",
+  "nomCampo": "FINAL RATE",
+  "valCampo": "1.95"
+}, {
+  "codCob": 1100,
+  "numSecu": 6,
+  "codCampo": "PCT_ADJ_COMM_RATE",
+  "nomCampo": "ADJUSTED COMMISSION RATE",
+  "valCampo": "20"
+}, {
+  "codCob": 1100,
+  "numSecu": 7,
+  "codCampo": "PCT_NO_CLAIM_BONUS",
+  "nomCampo": "NO CLAIM BONUS RATE",
+  "valCampo": null
+}, {
+  "codCob": 1100,
+  "numSecu": 8,
+  "codCampo": "PCT_LOSS_RATIO",
+  "nomCampo": "LOSS RATIO RATE",
+  "valCampo": null
+}, {
+  "codCob": 1102,
+  "numSecu": 1,
+  "codCampo": "COD_LIMIT_AUTO_LIABILITY",
+  "nomCampo": "AUTO LIABILITY LIMIT CODE",
+  "valCampo": null
+}, {
+  "codCob": 1201,
+  "numSecu": 2,
+  "codCampo": "PCT_OD_SA_FINAL_RATE",
+  "nomCampo": "OD FINAL RATE",
+  "valCampo": null
+}, {
+  "codCob": 1201,
+  "numSecu": 3,
+  "codCampo": "VAL_OD_SA_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "OD SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1201,
+  "numSecu": 4,
+  "codCampo": "IMP_OD_SA_DEDUCTIBLE",
+  "nomCampo": "OD DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1201,
+  "numSecu": 5,
+  "codCampo": "NUM_OD_SA_TOWING_LIMIT",
+  "nomCampo": "OD TOWING LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1201,
+  "numSecu": 6,
+  "codCampo": "NUM_OD_SA_REPAIR_LIMIT",
+  "nomCampo": "OD REPAIR LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1201,
+  "numSecu": 7,
+  "codCampo": "PCT_OD_SA_COMMN_ADJ",
+  "nomCampo": "OD COMMISSION ADJUSTMENT",
+  "valCampo": null
+}, {
+  "codCob": 1202,
+  "numSecu": 2,
+  "codCampo": "PCT_TH_SA_FINAL_RATE",
+  "nomCampo": "TH FINAL RATE",
+  "valCampo": null
+}, {
+  "codCob": 1202,
+  "numSecu": 3,
+  "codCampo": "VAL_TH_SA_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "TH SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1202,
+  "numSecu": 4,
+  "codCampo": "IMP_TH_SA_DEDUCTIBLE",
+  "nomCampo": "TH DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1202,
+  "numSecu": 5,
+  "codCampo": "NUM_TH_SA_TOWING_LIMIT",
+  "nomCampo": "TH TOWING LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1202,
+  "numSecu": 6,
+  "codCampo": "NUM_TH_SA_REPAIR_LIMIT",
+  "nomCampo": "TH REPAIR LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1202,
+  "numSecu": 7,
+  "codCampo": "PCT_TH_SA_COMMN_ADJ",
+  "nomCampo": "TH COMMISSION ADJUSTMENT",
+  "valCampo": null
+}, {
+  "codCob": 1203,
+  "numSecu": 2,
+  "codCampo": "PCT_FIRE_SA_FINAL_RATE",
+  "nomCampo": "FIRE FINAL RATE",
+  "valCampo": null
+}, {
+  "codCob": 1203,
+  "numSecu": 3,
+  "codCampo": "VAL_FIRE_SA_SPECIAL_DEDUCTIBLE",
+  "nomCampo": "FIRE SPECIAL DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1203,
+  "numSecu": 4,
+  "codCampo": "IMP_FIRE_SA_DEDUCTIBLE",
+  "nomCampo": "FIRE DEDUCTIBLE",
+  "valCampo": null
+}, {
+  "codCob": 1203,
+  "numSecu": 5,
+  "codCampo": "NUM_FIRE_SA_TOWING_LIMIT",
+  "nomCampo": "FIRE TOWING LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1203,
+  "numSecu": 6,
+  "codCampo": "NUM_FIRE_SA_REPAIR_LIMIT",
+  "nomCampo": "FIRE REPAIR LIMIT",
+  "valCampo": null
+}, {
+  "codCob": 1203,
+  "numSecu": 7,
+  "codCampo": "PCT_FIRE_SA_COMMN_ADJ",
+  "nomCampo": "FIRE COMMISSION ADJUSTMENT",
+  "valCampo": null
+}];
+
 export interface TablesDTO {
   isMandatory: boolean;
   included: boolean;
@@ -1252,6 +1602,7 @@ export interface TablesDTO {
   netPremium: number;
   isRoadAssist: boolean;
   isSelect: boolean;
+  code: number;
 }
 
 @Component({
@@ -1263,14 +1614,16 @@ export class CoveragesComponent implements OnInit {
   @Input() carDetails: QuoteCar;
   @Input() coverageList: any[];
   @Input() amountList: any[];
-  // @Input() coverageVariable: any[];
+  @Input() coverageVariable: any[];
   @Input() premiumAmount: any[];
   @Input() coverageAmount: any[];
+  @Input() coverageVariableData: CoverageVariableData;
 
   cForm: FormGroup;
   displayedColumns: string[] = ['included', 'coverage', 'sumInsured', 'netPremium', 'action'];
   source: any[];
   dataSource = new MatTableDataSource < TablesDTO > (this.source);
+  cvddv: CoverageVariableData;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -1280,8 +1633,13 @@ export class CoveragesComponent implements OnInit {
     // for testing purposes
     // this.coverageList = coverageList;
     // this.amountList = amountList;
+    // this.coverageVariable = coverageVariable;
     // this.premiumAmount = premiumAmount;
     // this.coverageAmount = coverageAmount;
+
+    //getting and setting defaults to variable data
+    const cvd = new CoverageVariableData();
+    this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
 
     this.source = this.getData();
     this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
@@ -1289,34 +1647,40 @@ export class CoveragesComponent implements OnInit {
   }
 
   editCoverage(coverage: TablesDTO) {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    var modalData = {
+      c: coverage,
+      cvd: this.coverageVariableData,
+      cvddv: this.cvddv
+    };
+    const dialogRef = this.dialog.open(CoverageVariableDataComponent, {
       width: '500px',
-      data: coverage
+      data: modalData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       // if update button is clicked
-      if (result) {
-        this.updateRow(coverage);
+      if (!Utility.isUndefined(result)) {
+        const c = new CoverageVariableData();
+        c.validateValues(this.cvddv, this.coverageVariableData);
       }
     });
   }
 
-  updateRow(row: TablesDTO) {
-    let updateItem = this.source.find(this.findIndexToUpdate, row.coverage);
-    let index = this.source.indexOf(updateItem);
-    this.source[index] = row;
+  // updateRow(row: TablesDTO) {
+  //   let updateItem = this.source.find(this.findIndexToUpdate, row.coverage);
+  //   let index = this.source.indexOf(updateItem);
+  //   this.source[index] = row;
 
-    // updating source
-    this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
-    this.dataSource._updateChangeSubscription();
-    this.dataSource._renderChangesSubscription;
-    this.setForm(this.dataSource.filteredData);
-  }
+  //   // updating source
+  //   this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
+  //   this.dataSource._updateChangeSubscription();
+  //   this.dataSource._renderChangesSubscription;
+  //   this.setForm(this.dataSource.filteredData);
+  // }
 
-  findIndexToUpdate(row: any) {
-    return row.coverage === this;
-  }
+  // findIndexToUpdate(row: any) {
+  //   return row.coverage === this;
+  // }
 
   private setForm(d: any[]) {
     this.cForm = this.formBuilder.group({
@@ -1343,21 +1707,19 @@ export class CoveragesComponent implements OnInit {
       sumInsured: [coverage.sumInsured],
       netPremium: [coverage.netPremium],
       isRoadAssist: [coverage.isRoadAssist],
+      hasVariableData: [coverage.hasVariableData],
       isSelect: [coverage.isSelect]
     });
   }
 
   private getData() {
-    // this.coverage;
-    // this.amountList = amountList;
-    // this.premiumAmount = premiumAmount;
-    // this.coverageAmount = coverageAmount;
     var returnData: any[] = [];
 
     this.coverageList.forEach((cov) => {
       var code = cov.COD_COB;
       var vehicleValue = this.carDetails.vehicleValue;
       var product = this.carDetails.productList;
+      // for testing
       // var vehicleValue = 775000;
       // var product = 10001;
       var name = cov.NOM_COB;
@@ -1449,7 +1811,7 @@ export class CoveragesComponent implements OnInit {
       var sumInsured = isMandatory ? vehicleValue : isSelect ? selectedOpt : 0;
       var hasCounterpart = false;
       if (isSelect) {
-        options.forEach((o)=> {
+        options.forEach((o) => {
           if (o == sumInsured) {
             hasCounterpart = true;
           }
@@ -1470,11 +1832,28 @@ export class CoveragesComponent implements OnInit {
         options: options,
         sumInsured: sumInsured,
         netPremium: netPremium,
-        isRoadAssist: (code == '1027' || code == '1029' || code == '1040'),
+        isRoadAssist: (
+          code == '1027' ||
+          code == '1029' ||
+          code == '1040'),
+        hasVariableData: (
+          code == '1001' ||
+          code == '1100' ||
+          code == '1002' ||
+          code == '1003' ||
+          code == '1007' ||
+          code == '1008' ||
+          code == '1020' ||
+          code == '1029' ||
+          code == '1040'),
         isSelect: isSelect
       }
 
-      if (code != '1018' && code != '1037' && code != '1026' && !(code == '1036' && product == 10001)) {
+      //exclude to coverages list
+      if (code != '1018' &&
+        code != '1037' &&
+        code != '1026' &&
+        !(code == '1036' && product == 10001)) {
         returnData.push(returnObj);
       }
     });
@@ -1483,17 +1862,4 @@ export class CoveragesComponent implements OnInit {
   };
 }
 
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog.html',
-})
-export class DialogOverviewExampleDialog {
-  constructor(
-    public dialogRef: MatDialogRef < DialogOverviewExampleDialog > ,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  close(b: boolean): void {
-    this.dialogRef.close(b);
-  }
-}
 // function generateCoverageAmountByProduct(obj, quoteDetail, isLoadQuotation) {
