@@ -12,6 +12,9 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import {
+  CarLOVServices
+} from 'src/app/services/lov/car.service';
 
 @Component({
   selector: 'app-coverage-variable-data',
@@ -21,10 +24,12 @@ import {
 export class CoverageVariableDataComponent implements OnInit {
 
   variableForm: FormGroup;
+  sumInsuredPerPassengerLOV: any[];
 
   constructor(public dialogRef: MatDialogRef < CoverageVariableDataComponent > ,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private cls: CarLOVServices) {
     this.createVariableForm();
   }
 
@@ -34,7 +39,10 @@ export class CoverageVariableDataComponent implements OnInit {
   createVariableForm() {
     this.variableForm = this.fb.group({
       //1101
-      lossAndDamageType: ['', [Validators.nullValidator]],
+      lossAndDamageType: {
+        value: null,
+        disabled: true
+      },
       finalRate: ['', [Validators.nullValidator]],
       adjustedCommissionRate: ['', [Validators.nullValidator]],
       lossRatioRate: ['', [Validators.nullValidator]],
@@ -126,7 +134,13 @@ export class CoverageVariableDataComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.code == 1007) {
+      this.cls.getSumInsuredPerPassenger(this.data.subline).then((res)=> {
+        this.sumInsuredPerPassengerLOV = res;
+      });
+    }
+  }
 
   update(): void {
     this.dialogRef.close(true);

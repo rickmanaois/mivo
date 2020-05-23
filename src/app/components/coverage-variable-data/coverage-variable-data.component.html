@@ -96,8 +96,12 @@
 
             <div class="form-group">
               <label for="sumInsuredPerPassenger">Sum Insured per Passenger</label>
-              <input type="number" formControlName="sumInsuredPerPassenger" class="form-control"
+              <select class="custom-select mr-sm-2" formControlName="sumInsuredPerPassenger"
                 [(ngModel)]="data.cvd.sumInsuredPerPassenger">
+                <option></option>
+                <option *ngFor="let sumInsured of sumInsuredPerPassengerLOV" [ngValue]="sumInsured.COD_VALOR">
+                  {{ sumInsured.COD_VALOR }}</option>
+              </select>
             </div>
           </div>
 

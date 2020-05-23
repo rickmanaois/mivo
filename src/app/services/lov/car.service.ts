@@ -140,4 +140,12 @@ export class CarLOVServices {
       '|COD_RAMO~' + carDetails.subline);
     return this.lov.getIntLOV(dto, 'COD_MODALIDAD').then(lovs => lovs as any[]);
   }
+
+  async getSumInsuredPerPassenger(subline: number): Promise < any[] > {
+    const dto = new LOV(
+      'G2990006',
+      '3',
+      '|COD_RAMO~' + subline);
+      return this.lov.getLOV(dto).then(lovs => lovs as any[]);
+  }
 }

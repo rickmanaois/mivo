@@ -1642,6 +1642,7 @@ export class CoveragesComponent implements OnInit {
   editCoverage(coverage: TablesDTO) {
     var modalData = {
       c: coverage,
+      subline: this.carDetails.subline,
       cvd: this.coverageVariableData,
       cvddv: this.cvddv
     };
