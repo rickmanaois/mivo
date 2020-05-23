@@ -12,7 +12,7 @@
             <mat-header-cell *matHeaderCellDef> Included </mat-header-cell>
             <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" [attr.disabled]="row.isMandatory ? '' : null "
+                <input class="form-check-input" type="checkbox" [attr.disabled]="!isModifiedCoverage || row.isMandatory ? '' : null"
                   formControlName="included" id="chk{{rowIndex}}">
                 <label class="form-check-label" for="chk{{rowIndex}}">
                   {{row.isMandatory ? 'Included' : 'Optional'}}
@@ -34,7 +34,7 @@
               <span *ngIf="!row.isSelect">{{row.sumInsured | currency: 'PHP' : 'symbol-narrow'}}</span>
               <select *ngIf="row.isSelect" class="custom-select mr-sm-2 required" formControlName="sumInsured"
                 [(ngModel)]="row.sumInsured"
-                [attr.disabled]="row.included ? null : ''" >
+                [attr.disabled]="isModifiedCoverage && row.included ? null : ''" >
                 <option *ngFor="let opt of row.options" [ngValue]="opt.value">{{ opt.value }}</option>
               </select>
             </mat-cell>
@@ -50,7 +50,7 @@
           <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let row" [ngClass]="'amount'">
-              <i *ngIf="row.included && row.hasVariableData" class="fa fa-edit" (click)="editCoverage(row)"></i>
+              <i *ngIf="isModifiedCoverage && row.included && row.hasVariableData" class="fa fa-edit" (click)="editCoverage(row)"></i>
             </mat-cell>
           </ng-container>
 

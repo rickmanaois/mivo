@@ -1611,6 +1611,7 @@ export class CoveragesComponent implements OnInit {
   @Input() premiumAmount: any[];
   @Input() coverageAmount: any[];
   @Input() coverageVariableData: CoverageVariableData;
+  @Input() isModifiedCoverage: boolean;
 
   cForm: FormGroup;
   displayedColumns: string[] = ['included', 'coverage', 'sumInsured', 'netPremium', 'action'];

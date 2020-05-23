@@ -35,9 +35,6 @@ import {
   CarUtilityServices
 } from '../../services/car-utility.service';
 import {
-  UtilityService
-} from '../../services/utility.service';
-import {
   CarQuoteServices
 } from '../../services/car-quote.service';
 import {
@@ -137,7 +134,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private auths: AuthenticationService,
     private bms: BsModalService,
-    private us: UtilityService,
     public dialog: MatDialog,
     private router: Router,
   ) {
@@ -624,9 +620,13 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   manageBtn(opt: number) {
     this.showGenerateBtnGrp = (opt == 1 || opt == 4);
     if (opt == 1 || opt == 4) {
-      this.isModifiedCoverage = (opt == 4);
-      this.showCoverage = (opt == 4);
+      const isModified = (opt == 4);
+      this.isModifiedCoverage = isModified;
+      this.showCoverage = isModified;
       this.showPaymentBreakdown = false;
+      if (isModified) {
+        Utility.scroll('coverages');
+      }
     }
 
     this.showIssueQuoteBtnGrp = (opt == 2);
