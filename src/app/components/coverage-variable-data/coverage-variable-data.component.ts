@@ -46,6 +46,7 @@ export class CoverageVariableDataComponent implements OnInit {
       finalRate: ['', [Validators.nullValidator]],
       adjustedCommissionRate: ['', [Validators.nullValidator]],
       lossRatioRate: ['', [Validators.nullValidator]],
+
       //1002
       ownDamageTowingLimit: {
         value: null,
@@ -136,7 +137,7 @@ export class CoverageVariableDataComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.code == 1007) {
-      this.cls.getSumInsuredPerPassenger(this.data.subline).then((res)=> {
+      this.cls.getSumInsuredPerPassenger(this.data.subline).then((res) => {
         this.sumInsuredPerPassengerLOV = res;
       });
     }

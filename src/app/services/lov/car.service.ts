@@ -128,7 +128,6 @@ export class CarLOVServices {
       '|cod_mon~1' +
       '|fec_validez~' + carDetails.sublineEffectivityDate +
       '|cod_nivel1~|cod_nivel2~|cod_nivel3~|tip_docum~|cod_docum~');
-
     return this.lov.getIntLOV(dto, 'COD_FRACC_PAGO').then(lovs => lovs as any[]);
   }
 
@@ -146,6 +145,6 @@ export class CarLOVServices {
       'G2990006',
       '3',
       '|COD_RAMO~' + subline);
-      return this.lov.getLOV(dto).then(lovs => lovs as any[]);
+    return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
   }
 }
