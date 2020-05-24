@@ -672,8 +672,7 @@
 
           <!-- cannot use reference variable and ngIf -->
           <app-coverages
-            #appCoverages
-            [showCoverage]="showCoverage"
+            *ngIf="showCoverage"
             [carDetails]="carDetails"
             [coverageList]="coverageList"
             [coverageVariable]="coverageVariable"
@@ -753,13 +752,13 @@
           </div>
 
           <div *ngIf="showGenerateBtnGrp" class="btn-group" role="group">
-            <button type="button" (click)="test(appCoverages)" class="btn btn-primary">test</button>
+            <button type="button" (click)="test()" class="btn btn-primary">test</button>
             <button
               [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
               appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
               type="button" class="btn btn-primary"
-              (click)="issueQuote(appCoverages, 'S')">Generate</button>
+              (click)="issueQuote('S')">Generate</button>
           </div>
 
           <div *ngIf="showIssueQuoteBtnGrp" class="btn-group" role="group">
@@ -772,7 +771,7 @@
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
               appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
               type="button" class="btn btn-primary"
-              (click)="issueQuote(appCoverages, 'N')">Issue Qoute</button>
+              (click)="issueQuote('N')">Issue Qoute</button>
           </div>
 
           <div *ngIf="showProceedToIssuanceBtnGrp" class="text-right">

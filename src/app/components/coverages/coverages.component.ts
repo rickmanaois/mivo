@@ -1604,7 +1604,6 @@ export interface TablesDTO {
   styleUrls: ['./coverages.component.css']
 })
 export class CoveragesComponent implements OnInit {
-  @Input() showCoverage: boolean;
   @Input() carDetails: QuoteCar;
   @Input() coverageList: any[];
   @Input() amountList: any[];
@@ -1613,6 +1612,8 @@ export class CoveragesComponent implements OnInit {
   @Input() coverageAmount: any[];
   @Input() coverageVariableData: CoverageVariableData;
   @Input() isModifiedCoverage: boolean;
+
+  // @Input() cForm: FormGroup;
 
   cForm: FormGroup;
   displayedColumns: string[] = ['included', 'coverage', 'sumInsured', 'netPremium', 'action'];
@@ -1634,18 +1635,12 @@ export class CoveragesComponent implements OnInit {
 
     //getting and setting defaults to variable data
     const cvd = new CoverageVariableData();
-    if (!Utility.isUndefined(this.coverageVariable)) {
-      this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
-    }
-
-    if (this.showCoverage) {
-      this.source = this.getData();
+    this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
+    this.source = this.getData();
       if (this.source.length) {
         this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
         this.setForm(this.dataSource.filteredData);
       }
-    }
-   
   }
 
   editCoverage(coverage: TablesDTO) {

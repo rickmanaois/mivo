@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   AfterViewChecked,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ViewChild
 } from '@angular/core';
 import {
   FormGroup,
@@ -68,6 +69,7 @@ import {
   Globals
 } from 'src/app/utils/global';
 import { CoverageVariableData } from 'src/app/objects/CoverageVariableData';
+import { CoveragesComponent } from '../coverages/coverages.component';
 
 @Component({
   selector: 'app-quotation-car',
@@ -75,6 +77,8 @@ import { CoverageVariableData } from 'src/app/objects/CoverageVariableData';
   styleUrls: ['./quotation-car.component.css']
 })
 export class QuotationCarComponent implements OnInit, AfterViewChecked {
+  @ViewChild(CoveragesComponent) appCoverage: CoveragesComponent;
+
   currentUser = this.auths.currentUserValue;
   isIssuance: boolean = Globals.getAppType() == "I";
   isLoadQuotation: boolean = Globals.isLoadQuotation;
@@ -126,6 +130,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   //modal reference
   modalRef: BsModalRef;
+  
   constructor(
     private fb: FormBuilder,
     private cus: CarUtilityServices,
@@ -573,8 +578,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     Utility.scroll('coverages');
   }
 
-  test(appCoverages) {
-    console.log(appCoverages);
+  test() {
+    console.log(this.appCoverage);
     // this.modalRef = Utility.showHTMLError(this.bms, items);
     // this.hasIssuedQuote = true;
     // this.openPaymentBreakdownModal([], []);
@@ -657,7 +662,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   //generate and issue quote button
-  issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
+  issueQuote(mcaTmpPptoMph: string) {
     // includes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
     // includes policy holder to car details DTO
@@ -671,8 +676,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     // includes coverages to car details DTO
     this.carDetails.coverages = [];
-    if (!Utility.isUndefined(appCoverage) && appCoverage.showCoverage) {
-      var coverages = appCoverage.cForm.get('coverages').value;
+    if (!Utility.isUndefined(this.appCoverage)) {
+      var coverages = this.appCoverage.cForm.get('coverages').value;
       this.carDetails.coverages = coverages.length ? coverages : [];
     }
 
