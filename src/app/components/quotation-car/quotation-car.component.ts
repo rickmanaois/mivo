@@ -558,18 +558,18 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   populateCoverage(coverageList: any[], amountList: any[], premiumAmount: any[], coverageAmount: any[], coverageVariable: any[]) {
-    this.showCoverage = true;
     this.coverageList = coverageList;
     this.amountList = amountList;
     this.premiumAmount = premiumAmount;
     this.coverageAmount = coverageAmount;
     this.coverageVariable = coverageVariable;
+    this.showCoverage = true;
   }
 
   populatePaymentBreakdown(breakdown: any[], receipt: {}) {
-    this.showPaymentBreakdown = true;
     this.paymentBreakdown = breakdown;
     this.paymentReceipt = receipt;
+    this.showPaymentBreakdown = true;
     Utility.scroll('coverages');
   }
 
@@ -658,10 +658,6 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   //generate and issue quote button
   issueQuote(appCoverage: any, mcaTmpPptoMph: string) {
-    // to trigger changes when regenerating quotation
-    this.showCoverage = this.isModifiedCoverage;
-    this.showPaymentBreakdown = false;
-
     // includes group policy to car details DTO
     this.carDetails.groupPolicy = this.groupPolicy;
     // includes policy holder to car details DTO
@@ -679,6 +675,10 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       var coverages = appCoverage.cForm.get('coverages').value;
       this.carDetails.coverages = coverages.length ? coverages : [];
     }
+
+    // to trigger changes when regenerating quotation
+    this.showCoverage = this.isModifiedCoverage;
+    this.showPaymentBreakdown = false;
 
     // S for generation and N for issue quotation
     this.carDetails.mcaTmpPptoMph = mcaTmpPptoMph;
