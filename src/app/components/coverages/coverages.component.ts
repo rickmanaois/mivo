@@ -1638,11 +1638,14 @@ export class CoveragesComponent implements OnInit {
       this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
     }
 
-    this.source = this.getData();
-    if (this.source.length) {
-      this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
-      this.setForm(this.dataSource.filteredData);
+    if (this.showCoverage) {
+      this.source = this.getData();
+      if (this.source.length) {
+        this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
+        this.setForm(this.dataSource.filteredData);
+      }
     }
+   
   }
 
   editCoverage(coverage: TablesDTO) {
