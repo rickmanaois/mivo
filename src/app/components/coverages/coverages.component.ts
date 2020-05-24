@@ -1661,22 +1661,6 @@ export class CoveragesComponent implements OnInit {
     });
   }
 
-  // updateRow(row: TablesDTO) {
-  //   let updateItem = this.source.find(this.findIndexToUpdate, row.coverage);
-  //   let index = this.source.indexOf(updateItem);
-  //   this.source[index] = row;
-
-  //   // updating source
-  //   this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
-  //   this.dataSource._updateChangeSubscription();
-  //   this.dataSource._renderChangesSubscription;
-  //   this.setForm(this.dataSource.filteredData);
-  // }
-
-  // findIndexToUpdate(row: any) {
-  //   return row.coverage === this;
-  // }
-
   private setForm(d: any[]) {
     this.cForm = this.formBuilder.group({
       coverages: this.formBuilder.array([])
@@ -1687,9 +1671,54 @@ export class CoveragesComponent implements OnInit {
       control.push(this.setCoverageFormArray(coverage));
     });
 
-    this.cForm.get('coverages').valueChanges.subscribe(coverages => {
-      this.dataSource = coverages;
+    // this.cForm.get('coverages').valueChanges.subscribe(coverages => {
+    //   console.log(coverages);
+    //   this.dataSource = coverages;
+    // });
+
+    // this.coverages.controls.forEach(control => {
+    //   console.log(control);
+    //   control.valueChanges.subscribe(coverage => {
+    //     console.log(coverage);
+    //     this.updateRow(coverage);
+    //     // this.dataSource = coverage;
+    //   });
+    // });
+  }
+
+  updateRow(row: TablesDTO) {
+    console.log(row);
+    row.included = !row.included;
+    let updateItem = this.source.find(this.findIndexToUpdate, row.coverage);
+    let index = this.source.indexOf(updateItem);
+
+    //unselect Road Assits options
+    if (row.isRoadAssist) {
+      this.unselectRAOptions(row.code);
+    }
+    this.source[index] = row;
+
+    // updating source
+    this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
+    this.dataSource._updateChangeSubscription();
+    this.dataSource._renderChangesSubscription;
+    this.setForm(this.dataSource.filteredData);
+  }
+
+  findIndexToUpdate(row: any) {
+    return row.coverage === this;
+  }
+
+  unselectRAOptions(code: number) {
+    this.source.forEach(s => {
+      if (s.isRoadAssist && s.code != code) {
+        s.included = false;
+      }
     });
+  }
+
+  get coverages(): FormArray {
+    return <FormArray > this.cForm.get('coverages');
   }
 
   private setCoverageFormArray(coverage: any) {
@@ -1720,6 +1749,7 @@ export class CoveragesComponent implements OnInit {
       var name = cov.NOM_COB;
       var type = cov.MCA_TIP_CAPITAL;
       var isMandatory = cov.MCA_OBLIGATORIO == "S";
+      var included = isMandatory;
 
       var options = [];
       var isSelect = false;
@@ -1735,6 +1765,7 @@ export class CoveragesComponent implements OnInit {
       this.coverageAmount.forEach((covAmount) => {
         if (code == covAmount.codCob) {
           sumaAsegA = covAmount.sumaAseg;
+          //TODO
           // if (isLoadQuotation) {
           //   chked = 'checked=checked';
           //   optPremium = premium;
@@ -1746,7 +1777,9 @@ export class CoveragesComponent implements OnInit {
         }
       });
 
+      
       if (code == "1040") {
+        included = true; //TODO
         // var isRa1040Checked = $("#chk1040").is(':checked');
         // var isRa1029Checked = $("#chk1029").is(':checked');
         // var isRa1027Checked = $("#chk1027").is(':checked');
@@ -1803,25 +1836,23 @@ export class CoveragesComponent implements OnInit {
         vehicleValue = sumaAsegA;
       }
 
-      var sumInsured = isMandatory ? vehicleValue : isSelect ? selectedOpt : 0;
-      var hasCounterpart = false;
+      let sumInsured = isMandatory ? vehicleValue : isSelect ? selectedOpt : 0;
       if (isSelect) {
+        var hasCounterpart = false;
         options.forEach((o) => {
           if (o == sumInsured) {
             hasCounterpart = true;
           }
         });
-        //if has no counterpart to sum insured select options, adds the sumInsured value
+        //if has no counterpart to sum insured select options, gets the first option value
         if (!hasCounterpart) {
-          options.push({
-            value: sumInsured
-          });
+          sumInsured = options[0].value;
         }
       }
 
       var returnObj = {
         isMandatory: isMandatory,
-        included: isMandatory,
+        included: included,
         code: code,
         coverage: name,
         options: options,

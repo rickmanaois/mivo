@@ -245,7 +245,8 @@
                   || quoteForm.controls['serialNumber'].touched)}">
                     <label for="serialNumber">Chassis Number/Serial Number</label>
                     <input type="text" formControlName="serialNumber" class="form-control required"
-                      [(ngModel)]="carDetails.serialNumber">
+                      [(ngModel)]="carDetails.serialNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                     <p class="form-error" *ngIf="quoteForm.controls['serialNumber'].errors?.required">
                       * serial number is required
                     </p>
@@ -258,7 +259,8 @@
                   || quoteForm.controls['engineNumber'].touched)}">
                     <label for="engineNumber">Motor Number/Engine Number</label>
                     <input type="text" formControlName="engineNumber" class="form-control required"
-                      [(ngModel)]="carDetails.engineNumber">
+                      [(ngModel)]="carDetails.engineNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                     <p class="form-error" *ngIf="quoteForm.controls['engineNumber'].errors?.required">
                       * engine number is required
                     </p>
@@ -269,7 +271,8 @@
                   <div class="form-group">
                     <label for="mvFileNumber">MV File Number</label>
                     <input type="text" formControlName="mvFileNumber" class="form-control"
-                      [(ngModel)]="carDetails.mvFileNumber">
+                      [(ngModel)]="carDetails.mvFileNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                   </div>
                 </div>
 
@@ -640,7 +643,7 @@
             </div>
           </div>
 
-          <div class="card shadow mb-3">
+          <div *ngIf='isIssuance' class="card shadow mb-3">
             <div class="card-header d-flex justify-content-between optional" (click)="showSubAgent = !showSubAgent"
               matTooltip="click to show/hide subagents">
               <strong>Subagent (Optional)</strong>
