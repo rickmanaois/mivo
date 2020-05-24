@@ -1604,6 +1604,7 @@ export interface TablesDTO {
   styleUrls: ['./coverages.component.css']
 })
 export class CoveragesComponent implements OnInit {
+  @Input() showCoverage: boolean;
   @Input() carDetails: QuoteCar;
   @Input() coverageList: any[];
   @Input() amountList: any[];
@@ -1632,12 +1633,14 @@ export class CoveragesComponent implements OnInit {
     // this.coverageAmount = coverageAmount;
 
     //getting and setting defaults to variable data
-    const cvd = new CoverageVariableData();
-    this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
-
-    this.source = this.getData();
-    this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
-    this.setForm(this.dataSource.filteredData);
+    if (this.showCoverage) {
+      const cvd = new CoverageVariableData();
+      this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
+  
+      this.source = this.getData();
+      this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
+      this.setForm(this.dataSource.filteredData);
+    }
   }
 
   editCoverage(coverage: TablesDTO) {
