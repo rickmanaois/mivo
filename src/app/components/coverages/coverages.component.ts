@@ -1604,7 +1604,6 @@ export interface TablesDTO {
   styleUrls: ['./coverages.component.css']
 })
 export class CoveragesComponent implements OnInit {
-  @Input() showCoverage: boolean;
   @Input() carDetails: QuoteCar;
   @Input() coverageList: any[];
   @Input() amountList: any[];
