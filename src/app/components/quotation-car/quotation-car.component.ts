@@ -255,23 +255,29 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
   async validateConductionNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
-      this.carDetails.conductionNumber = control.value;
-      return this.cus.validateConductionNumberFormat(this.carDetails).then(res => {
-        return res.status && res.obj["valid"] ? null : {
-          invalidConductionNumber: true
-        };
-      });
+      //trigger after 5 characters
+      if (control.value.length >= 5) {
+        this.carDetails.conductionNumber = control.value;
+        return this.cus.validateConductionNumberFormat(this.carDetails).then(res => {
+          return res.status && res.obj["valid"] ? null : {
+            invalidConductionNumber: true
+          };
+        });
+      }
     }
   }
 
   async validatePlateNumber(control: AbstractControl) {
     if (!Utility.isUndefined(control.value)) {
-      this.carDetails.plateNumber = control.value;
-      return this.cus.validatePlateNumberFormat(this.carDetails).then(res => {
-        return res.status && res.obj["valid"] ? null : {
-          invalidPlateNumber: true
-        };
-      });
+      //trigger after 5 characters
+      if (control.value.length >= 5) {
+        this.carDetails.plateNumber = control.value;
+        return this.cus.validatePlateNumberFormat(this.carDetails).then(res => {
+          return res.status && res.obj["valid"] ? null : {
+            invalidPlateNumber: true
+          };
+        });
+      }
     }
   }
 
@@ -659,6 +665,9 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.groupPolicy = this.groupPolicy;
     // includes policy holder to car details DTO
     this.carDetails.policyHolder = this.policyHolder;
+    // includes coverage variable data to car details DTO
+    this.carDetails.coverageVariableData = this.coverageVariableData;
+
     // includes accessories to car details DTO
     var accessories = this.quoteForm.get('accessories').value;
     this.carDetails.accessories = accessories.length ? accessories : [];

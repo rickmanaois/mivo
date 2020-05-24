@@ -13,6 +13,9 @@ import {
 import {
   Coverage
 } from './Coverage';
+import {
+  CoverageVariableData
+} from './CoverageVariableData';
 
 export class QuoteCar {
   mcaTmpPptoMph: string;
@@ -80,6 +83,9 @@ export class QuoteCar {
 
   //coverages
   coverages: Array < Coverage > = [];
+
+  //coverage variable data
+  coverageVariableData: CoverageVariableData;
 
   constructor(init ? : Partial < QuoteCar > ) {
     Object.assign(this, init);

@@ -11,7 +11,7 @@ export class CoverageVariableData {
   adjustedCommissionRate: number;
   //PCT_ADJ_COMM_RATE
   lossRatioRate: number;
-  //PCT_ADJ_COMM_RATE
+  //PCT_LOSS_RATIO
 
   //1002
   ownDamageTowingLimit: number;
