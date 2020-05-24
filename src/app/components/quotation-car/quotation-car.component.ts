@@ -675,7 +675,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
     // includes coverages to car details DTO
     this.carDetails.coverages = [];
-    if (!Utility.isUndefined(appCoverage)) {
+    if (!Utility.isUndefined(appCoverage) && appCoverage.showCoverage) {
       var coverages = appCoverage.cForm.get('coverages').value;
       this.carDetails.coverages = coverages.length ? coverages : [];
     }
