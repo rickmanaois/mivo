@@ -573,7 +573,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     Utility.scroll('coverages');
   }
 
-  test() {
+  test(appCoverages) {
+    console.log(appCoverages);
     // this.modalRef = Utility.showHTMLError(this.bms, items);
     // this.hasIssuedQuote = true;
     // this.openPaymentBreakdownModal([], []);
@@ -581,7 +582,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     //   width: '1000px',
     //   data: 'modalData'
     // });
-    console.log(this.coverageVariableData);
+    console.log(this.carDetails);
   }
 
   // copyToClipboard(item) {
@@ -614,7 +615,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       payment: payment,
       receipt: receipt,
       breakdown: breakdown,
-      showExchangeRate: true,
+      showExchangeRate: false,
     };
 
     this.dialog.open(PaymentBreakdownModalComponent, {
