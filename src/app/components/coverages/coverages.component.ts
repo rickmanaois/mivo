@@ -1633,11 +1633,11 @@ export class CoveragesComponent implements OnInit {
     // this.coverageAmount = coverageAmount;
 
     //getting and setting defaults to variable data
-    if (this.showCoverage) {
-      const cvd = new CoverageVariableData();
-      this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
-  
-      this.source = this.getData();
+    const cvd = new CoverageVariableData();
+    this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
+
+    this.source = this.getData();
+    if (this.source.length) {
       this.dataSource = new MatTableDataSource < TablesDTO > (this.source);
       this.setForm(this.dataSource.filteredData);
     }
@@ -1690,7 +1690,6 @@ export class CoveragesComponent implements OnInit {
   }
 
   updateRow(row: TablesDTO) {
-    console.log(row);
     row.included = !row.included;
     let updateItem = this.source.find(this.findIndexToUpdate, row.coverage);
     let index = this.source.indexOf(updateItem);
