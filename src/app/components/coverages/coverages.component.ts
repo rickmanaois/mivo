@@ -1634,7 +1634,9 @@ export class CoveragesComponent implements OnInit {
 
     //getting and setting defaults to variable data
     const cvd = new CoverageVariableData();
-    this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
+    if (this.coverageVariable.length) {
+      this.cvddv = cvd.getDefaultValues(this.coverageVariable, this.coverageVariableData);
+    }
 
     this.source = this.getData();
     if (this.source.length) {
