@@ -101,6 +101,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   showAccessories: boolean = false;
   showAdditionalInformation: boolean = false;
   showSubAgent: boolean = false;
+  showCTPL: boolean = false;
   showPaymentBreakdown: boolean = false;
   showCoverage: boolean = false;
 
@@ -207,6 +208,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.purchaseDate = this.today; // current today
     this.carDetails.receivedDate = this.today; // current today
     this.carDetails.effectivityDate = this.today; // current today
+    this.carDetails.automaticAuth = "N";
   }
 
   createQuoteForm() {
@@ -231,7 +233,19 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
       purchaseDate: [null],
       receivedBy: ['', Validators.required],
       receivedDate: ['', Validators.required],
-      //travellers
+
+      //CTPL
+      automaticAuth: {
+        value: null,
+        disabled: true
+      },
+      registrationType: [null],
+      mvType: [null],
+      cocNumber: [null],
+      cbIsNotRequiredAuthNumber: [null],
+      authNumber: [null],
+
+      //accessories
       accessories: this.fb.array([]),
 
       effectivityDate: ['', Validators.required],
@@ -293,13 +307,29 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
   setValidations() {
     var conductionNumber = this.quoteForm.get('conductionNumber');
     var plateNumber = this.quoteForm.get('plateNumber');
+    var vehicleType = this.quoteForm.get('vehicleType');
+    var cbIsNotRequiredAuthNumber = this.quoteForm.get('cbIsNotRequiredAuthNumber');
+    var authNumber = this.quoteForm.get('authNumber');
 
-    conductionNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
-      Utility.updateValidator(plateNumber, !Utility.isUndefined(number) ? null : Validators.required);
+    // if vehicle type is trailer, remove plate number required validation
+    vehicleType.valueChanges.pipe(distinctUntilChanged()).subscribe(type => {
+      if (type == 30) {
+        Utility.updateValidator(plateNumber, null);
+      }
     });
 
+    //if has conduction number, plate number is not required
+    conductionNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
+      Utility.updateValidator(plateNumber, !Utility.isUndefined(number) ? null : vehicleType.value == 30 ? null : Validators.required);
+    });
+
+    //if has plate number, conduction number is not required
     plateNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(number => {
       Utility.updateValidator(conductionNumber, !Utility.isUndefined(number) ? null : Validators.required);
+    });
+
+    cbIsNotRequiredAuthNumber.valueChanges.pipe(distinctUntilChanged()).subscribe(bool => {
+      Utility.updateValidator(authNumber, bool ? null : Validators.required);
     });
   }
 
@@ -519,6 +549,14 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
     this.removeAccessories();
 
+    this.cls.getRegistrationType(this.carDetails).then(res => {
+      _this.LOV.registrationTypeLOV = res;
+    });
+
+    this.cls.getMVType(this.carDetails).then(res => {
+      _this.LOV.mvTypeLOV = res;
+    });
+
     this.cls.getPaymentPlan(this.carDetails).then(res => {
       _this.LOV.paymentMethodLOV = res;
     });
@@ -559,6 +597,14 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
 
       this.accessory().at(index).get('accessoryType').setValue(type == 'A' ? 'Additional' : type == 'B' ? 'Built-In' : 'Free');
       this.accessory().at(index).get('price').setValue(price);
+    }
+  }
+
+  productOnChange() {
+    this.showCTPL = this.carDetails.productList == 10001;
+    this.cqs.activateCTPL(this.quoteForm, this.carDetails);
+    if (this.showCTPL) {
+      Utility.scroll('CTPLAuth');
     }
   }
 
@@ -713,7 +759,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
           const status = res1.obj["status"];
           const coverageAmount = res1.obj["coverageAmount"];;
           if (status && coverageAmount.length) {
-            if (errorCode == "S") { //if quotation has warning
+            if (errorCode == "S") {
+              //if quotation has a warning
               this.modalRef = Utility.showHTMLWarning(this.bms, items);
             }
 
@@ -723,7 +770,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
             const breakdown = res1.obj["breakdown"];
             const receipt = res1.obj["receipt"];
 
-            if ("S" == mcaTmpPptoMph) { //for generation of quote
+            if ("S" == mcaTmpPptoMph) {
+              //for generation of quote
               const message = "You have successfully generated a quotation - " + policyNumber;
               this.modalRef = Utility.showInfo(this.bms, message);
 
@@ -731,6 +779,7 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               const amountList = res.obj["amountList"];;
               const premiumAmount = res1.obj["premiumAmount"];;
               const coverageVariable = res1.obj["coverageVariable"];
+
               if (this.isModifiedCoverage) {
                 this.showCoverage = true;
               } else {
@@ -740,7 +789,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
               this.isModifiedCoverage = false;
               this.populatePaymentBreakdown(breakdown, receipt);
               this.manageBtn(2);
-            } else { // for issuing the quote
+            } else {
+              // for issuing the quote
               this.openPaymentBreakdownModal(receipt, breakdown);
               this.manageBtn(3);
             }

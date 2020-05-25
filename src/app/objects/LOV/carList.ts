@@ -19,6 +19,10 @@ export class CarListObject {
   coverageAreaLOV: any[];
   inspectionAssessmentLOV: any[];
 
+  //ctpl
+  registrationTypeLOV: any[];
+  mvTypeLOV: any[];
+
   paymentMethodLOV: any[];
   productListLOV: any[];
   constructor() {

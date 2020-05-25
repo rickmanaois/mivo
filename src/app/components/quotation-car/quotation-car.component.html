@@ -670,10 +670,100 @@
             </div>
           </div>
 
+          <div *ngIf="showCTPL" class="card shadow mb-3" id="CTPLAuth">
+            <div class="card-header">
+              <strong>CTPL Authenctication (for products with CTPL)</strong>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['automaticAuth'].invalid 
+                    && (quoteForm.controls['automaticAuth'].dirty 
+                    || quoteForm.controls['automaticAuth'].touched)}">
+                    <label for="automaticAuth">Automatic Authentication</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="automaticAuth"
+                      [(ngModel)]="carDetails.automaticAuth">
+                      <option value="S">YES</option>
+                      <option value="N">NO</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['automaticAuth'].errors?.required">
+                      * automatic authentication is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['registrationType'].invalid 
+                    && (quoteForm.controls['registrationType'].dirty 
+                    || quoteForm.controls['registrationType'].touched)}">
+                    <label for="registrationType">Registration Type</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="registrationType"
+                      [(ngModel)]="carDetails.registrationType">
+                      <option *ngFor="let make of LOV.makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['registrationType'].errors?.required">
+                      * registration type is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group">
+                    <label for="mvType">MV Type (leave blank to set default value)</label>
+                    <select class="custom-select mr-sm-2" formControlName="mvType"
+                      [(ngModel)]="carDetails.mvType">
+                      <option *ngFor="let make of LOV.makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['cocNumber'].invalid 
+                  && (quoteForm.controls['cocNumber'].dirty 
+                  || quoteForm.controls['cocNumber'].touched)}">
+                    <label for="cocNumber">COC Number</label>
+                    <input type="text" formControlName="cocNumber" class="form-control required"
+                      [(ngModel)]="carDetails.cocNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['cocNumber'].errors?.required">
+                      * coc number is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['authNumber'].invalid 
+                  && (quoteForm.controls['authNumber'].dirty 
+                  || quoteForm.controls['authNumber'].touched)}">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="cbIsNotRequiredAuthNumber" formControlName="cbIsNotRequiredAuthNumber"
+                        [(ngModel)]="carDetails.cbIsNotRequiredAuthNumber">
+                      <label class="form-check-label" for="cbIsNotRequiredAuthNumber">
+                        Do not require Authentication Number
+                      </label>
+                    </div>
+                    <label class="form-check-label" for="cbIsNotRequiredAuthNumber">
+                      Authenctication Number (ISAP Authentication)
+                    </label>
+                    <input type="text" formControlName="authNumber"
+                      [attr.disabled]="carDetails.cbIsNotRequiredAuthNumber ? '' : null" class="form-control required"
+                      [(ngModel)]="carDetails.authNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['authNumber'].errors?.required">
+                      * authentication number is required
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
           <!-- cannot use reference variable and ngIf -->
           <app-coverages
             *ngIf="showCoverage"
             [carDetails]="carDetails"
+            [(showCTPL)]="showCTPL"
+            [quoteForm]="quoteForm"
             [coverageList]="coverageList"
             [coverageVariable]="coverageVariable"
             [amountList]="amountList"

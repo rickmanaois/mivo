@@ -32,6 +32,10 @@ import {
 import {
   Router
 } from '@angular/router';
+import {
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 @Injectable()
 export class CarQuoteServices {
@@ -84,5 +88,17 @@ export class CarQuoteServices {
       Globals.setLoadQuotation(true);
       this.router.navigate(['/reload']);
     }, 500);
+  }
+
+  activateCTPL(form: FormGroup, carDetails: QuoteCar, selectedCoverage ? : boolean) {
+    //if selected product is CTPL
+    const isCTPL = carDetails.productList == 10001 || selectedCoverage;
+    var registrationType = form.get('registrationType');
+    var cocNumber = form.get('cocNumber');
+    var authNumber = form.get('authNumber');
+
+    Utility.updateValidator(registrationType, isCTPL ? Validators.required : null);
+    Utility.updateValidator(cocNumber, isCTPL ? Validators.required : null);
+    Utility.updateValidator(authNumber, isCTPL ? Validators.required : null);
   }
 }

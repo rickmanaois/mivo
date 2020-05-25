@@ -41,6 +41,14 @@ export class QuoteCar {
   receivedBy: string;
   receivedDate: Date;
 
+  //CTPL
+  automaticAuth: string;
+  registrationType: string;
+  mvType: string;
+  cocNumber: string;
+  cbIsNotRequiredAuthNumber: boolean;
+  authNumber: string;
+
   //accessories
   accessories: Array < Accessory > = [];
 
