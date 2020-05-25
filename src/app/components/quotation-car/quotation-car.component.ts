@@ -549,11 +549,11 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     });
     this.removeAccessories();
 
-    this.cls.getRegistrationType(this.carDetails).then(res => {
+    this.cls.getRegistrationType().then(res => {
       _this.LOV.registrationTypeLOV = res;
     });
 
-    this.cls.getMVType(this.carDetails).then(res => {
+    this.cls.getMVType().then(res => {
       _this.LOV.mvTypeLOV = res;
     });
 

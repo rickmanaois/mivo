@@ -11,7 +11,8 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
-.mat-cell.amount, .mat-header-cell.amount-header {
+.mat-cell.amount,
+.mat-header-cell.amount-header {
   display: inline-grid;
   text-align: right !important;
 }

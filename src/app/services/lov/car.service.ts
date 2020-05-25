@@ -11,9 +11,6 @@ import {
 import {
   OptionList
 } from '../../objects/OptionList';
-import {
-  QuoteCar
-} from 'src/app/objects/QuoteCar';
 
 @Injectable()
 export class CarLOVServices {
@@ -151,19 +148,19 @@ export class CarLOVServices {
     return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
   }
 
-  async getRegistrationType(carDetails: QuoteCar): Promise < any[] > {
+  async getRegistrationType(): Promise < any[] > {
     const dto = new LOV(
-      'G2990006',
-      '3',
-      '|COD_RAMO~' + carDetails.subline);
+      'G1010031',
+      '58',
+      '');
     return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
   }
 
-  async getMVType(carDetails: QuoteCar): Promise < any[] > {
+  async getMVType(): Promise < any[] > {
     const dto = new LOV(
-      'G2990006',
-      '3',
-      '|COD_RAMO~' + carDetails.subline);
+      'G1010031',
+      '59',
+      '');
     return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
   }
 }

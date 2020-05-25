@@ -700,7 +700,9 @@
                     <label for="registrationType">Registration Type</label>
                     <select class="custom-select mr-sm-2 required" formControlName="registrationType"
                       [(ngModel)]="carDetails.registrationType">
-                      <option *ngFor="let make of LOV.makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                      <option selected></option>
+                      <option *ngFor="let rType of LOV.registrationTypeLOV" [ngValue]="rType.COD_VALOR">
+                        {{ rType.NOM_VALOR }}</option>
                     </select>
                     <p class="form-error" *ngIf="quoteForm.controls['registrationType'].errors?.required">
                       * registration type is required
@@ -711,9 +713,9 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                   <div class="form-group">
                     <label for="mvType">MV Type (leave blank to set default value)</label>
-                    <select class="custom-select mr-sm-2" formControlName="mvType"
-                      [(ngModel)]="carDetails.mvType">
-                      <option *ngFor="let make of LOV.makeLOV" [ngValue]="make.COD_MARCA">{{ make.NOM_MARCA }}</option>
+                    <select class="custom-select mr-sm-2" formControlName="mvType" [(ngModel)]="carDetails.mvType">
+                      <option selected></option>
+                      <option *ngFor="let mv of LOV.mvTypeLOV" [ngValue]="mv.COD_VALOR">{{ mv.NOM_VALOR }}</option>
                     </select>
                   </div>
                 </div>
