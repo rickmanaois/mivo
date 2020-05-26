@@ -20,18 +20,18 @@
 
 <div class="modal-footer">
   <div *ngIf="isConfirm">
-    <button type="button" class="btn btn-success" (click)="confirm()">{{ 'Confirm' }}</button>
+    <button type="button" class="btn btn-success" (click)="confirm()">Confirm</button>
   </div>
 
   <div *ngIf="isOkay">
-    <button type="button" class="btn btn-default" (click)="okay()">{{ 'Okay' }}</button>
+    <button type="button" class="btn btn-default" (click)="okay()">Okay</button>
   </div>
 
   <div *ngIf="isClose">
-    <button type="button" class="btn btn-default" (click)="close()">{{ 'Close' }}</button>
+    <button type="button" class="btn btn-default" (click)="close()">Close</button>
   </div>
 
   <div *ngIf="isCancel">
-    <button class="btn btn-default" type="button" (click)="cancel()">{{ 'Cancel' }}</button>
+    <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
   </div>
 </div>

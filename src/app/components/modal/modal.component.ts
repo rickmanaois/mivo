@@ -3,9 +3,6 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  TranslateService
-} from '@ngx-translate/core';
-import {
   BsModalRef
 } from 'ngx-bootstrap/modal';
 
@@ -16,8 +13,18 @@ import {
 })
 export class ModalComponent implements OnInit {
 
+  className: string;
+  title: string;
+  message: string;
+  items: any[];
+  isHtml: boolean;
+  isConfirm: boolean;
+  isOkay: boolean;
+  isClose: boolean;
+  isCancel: boolean;
+
   constructor(
-    private bsModalRef: BsModalRef,) {}
+    private bsModalRef: BsModalRef) {}
 
   ngOnInit(): void {}
 

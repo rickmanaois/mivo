@@ -90,7 +90,6 @@
             <div class="form-group">
               <label for="uppaCommissionAdjustment">UPPA Commission Adjustment (%)</label>
               <input type="number" formControlName="uppaCommissionAdjustment" class="form-control"
-                (change)="percentage($event, 'uppaCommissionAdjustment')"
                 [(ngModel)]="data.cvd.uppaCommissionAdjustment">
             </div>
 
@@ -109,7 +108,7 @@
             <div class="form-group">
               <label for="aonFinalRate">AON Final Rate</label>
               <input type="number" formControlName="aonFinalRate" class="form-control"
-                (change)="percentage($event, 'aonFinalRate')" [(ngModel)]="data.cvd.aonFinalRate">
+                [(ngModel)]="data.cvd.aonFinalRate">
             </div>
 
             <div class="form-group">
@@ -133,7 +132,7 @@
             <div class="form-group">
               <label for="aonCommissionAdjustment">AON Commission Adjustment (%)</label>
               <input type="number" formControlName="aonCommissionAdjustment" class="form-control"
-                (change)="percentage($event, 'aonCommissionAdjustment')" [(ngModel)]="data.cvd.aonCommissionAdjustment">
+                [(ngModel)]="data.cvd.aonCommissionAdjustment">
             </div>
           </div>
 
@@ -141,7 +140,7 @@
             <div class="form-group">
               <label for="srccFinalRate">SRCC Final Rate</label>
               <input type="number" formControlName="srccFinalRate" class="form-control"
-                (change)="percentage($event, 'srccFinalRate')" [(ngModel)]="data.cvd.srccFinalRate">
+                [(ngModel)]="data.cvd.srccFinalRate">
             </div>
 
             <div class="form-group">
@@ -165,7 +164,6 @@
             <div class="form-group">
               <label for="srccCommissionAdjustment">SRCC Commission Adjustment (%)</label>
               <input type="number" formControlName="srccCommissionAdjustment" class="form-control"
-                (change)="percentage($event, 'srccCommissionAdjustment')"
                 [(ngModel)]="data.cvd.srccCommissionAdjustment">
             </div>
           </div>
