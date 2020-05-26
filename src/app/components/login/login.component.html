@@ -17,7 +17,8 @@
 
           <form class="login-form" [formGroup]="loginForm">
             <span class="login-form-title">
-              LOGIN
+              <strong class="d-none d-lg-block">LOGIN</strong>
+              <strong class="d-block d-lg-none">MIVO LOGIN</strong>
             </span>
 
             <div *ngIf="alert" class="alert alert-danger">{{message}}</div>
@@ -53,7 +54,8 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="contact-form-checkbox">
-                  <input type="checkbox" id="rememberMe" class="input-checkbox" formControlName="rememberMe" name="rememberMe">
+                  <input type="checkbox" id="rememberMe" class="input-checkbox" formControlName="rememberMe"
+                    name="rememberMe">
                   <label class="label-checkbox" for="rememberMe">
                     Remember me
                   </label>

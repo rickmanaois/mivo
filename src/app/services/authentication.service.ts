@@ -60,7 +60,8 @@ export class AuthenticationService {
 
   getPages() {
     // removing unavailable pages for user
-    const unavailablePages = ['commissionsPaid',
+    const unavailablePages = [
+      'commissionsPaid',
       'estimatedCommissions',
       'premiumCollection',
       'quickHome',
@@ -74,7 +75,9 @@ export class AuthenticationService {
       'issuanceAccident',
       'account',
       'client',
-      'issuance',
+
+      // 'issuance',
+
       'query',
       'changePassword',
       'news',

@@ -1,0 +1,41 @@
+#paymentBreakdown table {
+  text-align: center !important;
+  width: 100%;
+}
+
+#paymentBreakdown .mat-header-cell {
+  text-align: center;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.breakdown .col-4 {
+  padding: 10px 0;
+}
+
+.breakdown .col-4.right {
+  text-align: right;
+}
+
+.clearfix.divider {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.show-more {
+  margin: 10px 0;
+  padding: 10px 0;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+
+.show-more:hover {
+  background: #e7e7e7;
+}
+
+.emphasize {
+  font-size: 16px;
+  font-weight: 600;
+}

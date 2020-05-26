@@ -10,8 +10,15 @@ import {
 import {
   PolicyHolder
 } from './PolicyHolder';
+import {
+  Coverage
+} from './Coverage';
+import {
+  CoverageVariableData
+} from './CoverageVariableData';
 
 export class QuoteCar {
+  mcaTmpPptoMph: string;
   quotationNumber: string;
   //vehicle information
   make: number;
@@ -34,6 +41,14 @@ export class QuoteCar {
   receivedBy: string;
   receivedDate: Date;
 
+  //CTPL
+  automaticAuth: string;
+  registrationType: string;
+  mvType: string;
+  cocNumber: string;
+  cbIsNotRequiredAuthNumber: boolean;
+  authNumber: string;
+
   //accessories
   accessories: Array < Accessory > = [];
 
@@ -42,7 +57,7 @@ export class QuoteCar {
 
   policyHolder: PolicyHolder;
 
-  //groupPolicy
+  //group policy
   groupPolicy: GroupPolicy;
 
   //general information
@@ -71,7 +86,14 @@ export class QuoteCar {
   paymentMethod: number;
   productList: number;
 
+  //sub agents
   subAgent: any[];
+
+  //coverages
+  coverages: Array < Coverage > = [];
+
+  //coverage variable data
+  coverageVariableData: CoverageVariableData;
 
   constructor(init ? : Partial < QuoteCar > ) {
     Object.assign(this, init);

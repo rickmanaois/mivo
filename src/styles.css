@@ -133,7 +133,7 @@ form .form-group.input-error .multiselect-dropdown {
 }
 
 form .card-header {
-  background: #7e7e7e;
+  background: #6a6a6a;
   color: #fff;
 }
 
@@ -207,6 +207,25 @@ form .card-header.optional {
 /* modal */
 .modal-body {
   overflow-wrap: break-word;
+}
+
+.modal-header .close {
+  color: #fff !important;
+}
+
+.modal-header.modal-error {
+  background: #b82c2c;
+  color: #fff;
+}
+
+.modal-header.modal-warning {
+  background: #b8662c;
+  color: #fff;
+}
+
+.modal-header.modal-info {
+  background: #3a3a3a;
+  color: #fff;
 }
 
 /* utilities */

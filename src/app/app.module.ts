@@ -40,7 +40,8 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule
 } from '@angular/material';
 
 import {
@@ -157,6 +158,21 @@ import {
 import {
   PolicyHolderComponent
 } from './components/policy-holder/policy-holder.component';
+import {
+  PaymentBreakdownComponent
+} from './components/payment-breakdown/payment-breakdown.component';
+import {
+  CoveragesComponent
+} from './components/coverages/coverages.component';
+import {
+  PaymentBreakdownModalComponent
+} from './components/payment-breakdown-modal/payment-breakdown-modal.component';
+import {
+  ReloadComponent
+} from './components/reload/reload.component';
+import {
+  CoverageVariableDataComponent
+} from './components/coverage-variable-data/coverage-variable-data.component';
 
 const routes: Routes = [{
     path: 'login',
@@ -170,6 +186,11 @@ const routes: Routes = [{
   {
     path: '',
     component: TemplateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reload',
+    component: ReloadComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -210,7 +231,12 @@ const routes: Routes = [{
     IndividualPolicyComponent,
     ChooseAgentComponent,
     DocumentPrintingComponent,
-    PolicyHolderComponent
+    PolicyHolderComponent,
+    PaymentBreakdownComponent,
+    CoveragesComponent,
+    PaymentBreakdownModalComponent,
+    ReloadComponent,
+    CoverageVariableDataComponent
   ],
   entryComponents: [
     ModalComponent
@@ -226,6 +252,7 @@ const routes: Routes = [{
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

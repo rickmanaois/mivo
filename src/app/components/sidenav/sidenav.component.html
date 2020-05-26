@@ -86,15 +86,15 @@
   </li>
 
   <li *ngIf="menu.quotation" class="nav-item">
-    <a class="nav-link collapsed" data-toggle="collapse" data-target="#quotation" aria-expanded="true"
+    <a class="nav-link{{appType!='Q' ? ' collapsed' : ''}}" data-toggle="collapse" data-target="#quotation" aria-expanded="true"
       aria-controls="quotation">
       <i class="fas fa-fw fa-play"></i>
       <span>Quotation</span>
     </a>
-    <div id="quotation" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div id="quotation" class="collapse{{appType=='Q' ? ' show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <a *ngIf="menu.quotationCar" class="collapse-item" [ngClass]="{'active': page==p.QUO.CAR}"
-          (click)="setPage(p.QUO.CAR)"><i class="fas fa-fw fa-car"></i> Car</a>
+          (click)="setAppPage(p.QUO.CAR, 'Q')"><i class="fas fa-fw fa-car"></i> Car</a>
         <a *ngIf="menu.quotationHome" class="collapse-item" [ngClass]="{'active': page==p.QUO.HOM}"
           (click)="setPage(p.QUO.HOM)"><i class="fas fa-fw fa-home"></i> Home</a>
         <a *ngIf="menu.quotationTravel" class="collapse-item" [ngClass]="{'active': page==p.QUO.TRA}"
@@ -106,15 +106,15 @@
   </li>
 
   <li *ngIf="menu.issuance" class="nav-item">
-    <a class="nav-link collapsed" data-toggle="collapse" data-target="#policyIssuance" aria-expanded="true"
+    <a class="nav-link{{appType!='I' ? ' collapsed' : ''}}" data-toggle="collapse" data-target="#policyIssuance" aria-expanded="true"
       aria-controls="policyIssuance">
       <i class="fas fa-fw fa-play"></i>
       <span>Policy Issuance</span>
     </a>
-    <div id="policyIssuance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div id="policyIssuance" class="collapse{{appType=='I' ? ' show' : ''}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <a *ngIf="menu.issuanceCar" class="collapse-item" [ngClass]="{'active': page==p.ISS.CAR}"
-          (click)="setPage(p.ISS.CAR)"><i class="fas fa-fw fa-car"></i> Car</a>
+          (click)="setAppPage(p.ISS.CAR, 'I')"><i class="fas fa-fw fa-car"></i> Car</a>
         <a *ngIf="menu.issuanceHome" class="collapse-item" [ngClass]="{'active': page==p.ISS.HOM}"
           (click)="setPage(p.ISS.HOM)"><i class="fas fa-fw fa-home"></i> Home</a>
         <a *ngIf="menu.issuanceTravel" class="collapse-item" [ngClass]="{'active': page==p.ISS.TRA}"
@@ -199,17 +199,13 @@
 
     <li class="nav-item">
       <div class="nav-link">
-        <label>Name</label>
-        <br>
-        <i class="fas fa-fw fa-caret-right"></i>
+        <i class="fas fa-fw fa-user"></i>
         <span>{{currentUser.selectedAgent.agentName}}</span></div>
     </li>
 
     <li class="nav-item">
       <div class="nav-link">
-        <label>Address</label>
-        <br>
-        <i class="fas fa-fw fa-caret-right"></i>
+        <i class="fas fa-fw fa-map-marked-alt"></i>
         <span>{{currentUser.selectedAgent.agentAddress}}</span></div>
     </li>
   </div>

@@ -128,7 +128,6 @@ export class CarLOVServices {
       '|cod_mon~1' +
       '|fec_validez~' + carDetails.sublineEffectivityDate +
       '|cod_nivel1~|cod_nivel2~|cod_nivel3~|tip_docum~|cod_docum~');
-
     return this.lov.getIntLOV(dto, 'COD_FRACC_PAGO').then(lovs => lovs as any[]);
   }
 
@@ -139,5 +138,29 @@ export class CarLOVServices {
       '|COD_CIA~1' +
       '|COD_RAMO~' + carDetails.subline);
     return this.lov.getIntLOV(dto, 'COD_MODALIDAD').then(lovs => lovs as any[]);
+  }
+
+  async getSumInsuredPerPassenger(subline: number): Promise < any[] > {
+    const dto = new LOV(
+      'G2990006',
+      '3',
+      '|COD_RAMO~' + subline);
+    return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
+  }
+
+  async getRegistrationType(): Promise < any[] > {
+    const dto = new LOV(
+      'G1010031',
+      '58',
+      '');
+    return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
+  }
+
+  async getMVType(): Promise < any[] > {
+    const dto = new LOV(
+      'G1010031',
+      '59',
+      '');
+    return this.lov.getIntLOV(dto, 'COD_VALOR').then(lovs => lovs as any[]);
   }
 }

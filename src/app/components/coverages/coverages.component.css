@@ -1,0 +1,22 @@
+#coverages table {
+  text-align: center !important;
+  width: 100%;
+}
+
+#coverages .mat-header-cell {
+  text-align: center;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-cell.amount,
+.mat-header-cell.amount-header {
+  display: inline-grid;
+  text-align: right !important;
+}
+
+.mat-row.included {
+  background-color: #e1fce3;
+}

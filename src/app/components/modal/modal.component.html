@@ -1,4 +1,4 @@
-<div class="modal-header">
+<div class="modal-header {{className}}">
   <strong>{{title}}</strong>
   <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
     <span aria-hidden="true">&times;</span>
@@ -7,26 +7,31 @@
 
 <div class="modal-body">
   <div class="row">
-    <div class="col-12">
+    <div *ngIf="!isHtml" class="col-12">
       {{message}}
+    </div>
+    <div *ngIf="isHtml" class="col-12">
+      <p *ngFor="let item of items">
+        {{item}}
+      </p>
     </div>
   </div>
 </div>
 
 <div class="modal-footer">
   <div *ngIf="isConfirm">
-    <button type="button" class="btn btn-success" (click)="confirm()">{{ 'Confirm' }}</button>
+    <button type="button" class="btn btn-success" (click)="confirm()">Confirm</button>
   </div>
 
   <div *ngIf="isOkay">
-    <button type="button" class="btn btn-default" (click)="okay()">{{ 'Okay' }}</button>
+    <button type="button" class="btn btn-default" (click)="okay()">Okay</button>
   </div>
 
   <div *ngIf="isClose">
-    <button type="button" class="btn btn-default" (click)="close()">{{ 'Close' }}</button>
+    <button type="button" class="btn btn-default" (click)="close()">Close</button>
   </div>
 
   <div *ngIf="isCancel">
-    <button class="btn btn-default" type="button" (click)="cancel()">{{ 'Cancel' }}</button>
+    <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
   </div>
 </div>

@@ -9,10 +9,12 @@
 
   <div class="col-xl-12">
     <div class="card shadow">
-      <div class="card-body">
+      <div class="card-body" id="topDiv">
         <form [formGroup]="quoteForm" class="regular-quote-form">
-          
-          <app-individual-policy *ngIf='isIssuance'></app-individual-policy>
+
+          <app-individual-policy
+            *ngIf='isIssuance'>
+          </app-individual-policy>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -154,7 +156,7 @@
                   || quoteForm.controls['vehicleValue'].touched)}">
                     <label for="vehicleValue">Vehicle Value</label>
                     <input type="text" formControlName="vehicleValue" class="form-control"
-                      [(ngModel)]="carDetails.vehicleValue" readonly>
+                      [(ngModel)]="carDetails.vehicleValue">
                     <p class="form-error" *ngIf="quoteForm.controls['vehicleValue'].errors?.required">
                       * vehicle value is required
                     </p>
@@ -243,7 +245,8 @@
                   || quoteForm.controls['serialNumber'].touched)}">
                     <label for="serialNumber">Chassis Number/Serial Number</label>
                     <input type="text" formControlName="serialNumber" class="form-control required"
-                      [(ngModel)]="carDetails.serialNumber">
+                      [(ngModel)]="carDetails.serialNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                     <p class="form-error" *ngIf="quoteForm.controls['serialNumber'].errors?.required">
                       * serial number is required
                     </p>
@@ -256,7 +259,8 @@
                   || quoteForm.controls['engineNumber'].touched)}">
                     <label for="engineNumber">Motor Number/Engine Number</label>
                     <input type="text" formControlName="engineNumber" class="form-control required"
-                      [(ngModel)]="carDetails.engineNumber">
+                      [(ngModel)]="carDetails.engineNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                     <p class="form-error" *ngIf="quoteForm.controls['engineNumber'].errors?.required">
                       * engine number is required
                     </p>
@@ -267,7 +271,8 @@
                   <div class="form-group">
                     <label for="mvFileNumber">MV File Number</label>
                     <input type="text" formControlName="mvFileNumber" class="form-control"
-                      [(ngModel)]="carDetails.mvFileNumber">
+                      [(ngModel)]="carDetails.mvFileNumber"
+                      oninput="this.value = this.value.toUpperCase()">
                   </div>
                 </div>
 
@@ -317,13 +322,15 @@
           <app-policy-holder
             #appPolicyHolder
             [details]="carDetails"
-            [policyHolder]="policyHolder"> </app-policy-holder>
+            [policyHolder]="policyHolder">
+          </app-policy-holder>
 
-          <app-group-policy 
+          <app-group-policy
             #appGroupPolicy
             [subline]="carDetails.subline"
             [details]="carDetails"
-            [groupPolicy]="groupPolicy"> </app-group-policy>
+            [groupPolicy]="groupPolicy">
+          </app-group-policy>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -371,7 +378,7 @@
           <div class="card shadow mb-3">
             <div class="card-header d-flex justify-content-between optional"
               (click)="showAccessories = !showAccessories" matTooltip="click to show/hide accessories">
-              <strong>Accessories</strong>
+              <strong>Accessories (Optional)</strong>
               <div class="dropdown no-arrow">
                 <i class="fas fa-angle-double-down fa-sm fa-fw text-gray-400"></i>
               </div>
@@ -473,7 +480,7 @@
             <div class="card-header d-flex justify-content-between optional"
               (click)="showAdditionalInformation = !showAdditionalInformation"
               matTooltip="click to show/hide additional policy information">
-              <strong>Additional Policy Information</strong>
+              <strong>Additional Policy Information (Optional)</strong>
               <div class="dropdown no-arrow">
                 <i class="fas fa-angle-double-down fa-sm fa-fw text-gray-400"></i>
               </div>
@@ -505,7 +512,8 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="weight">Weight</label>
-                    <input type="text" class="form-control" [(ngModel)]="carDetails.weight" formControlName="weight" readonly>
+                    <input type="text" class="form-control" [(ngModel)]="carDetails.weight" formControlName="weight"
+                      readonly>
                   </div>
                 </div>
 
@@ -635,10 +643,10 @@
             </div>
           </div>
 
-          <div class="card shadow mb-3">
+          <div *ngIf='isIssuance' class="card shadow mb-3">
             <div class="card-header d-flex justify-content-between optional" (click)="showSubAgent = !showSubAgent"
               matTooltip="click to show/hide subagents">
-              <strong>Subagent</strong>
+              <strong>Subagent (Optional)</strong>
               <div class="dropdown no-arrow">
                 <i class="fas fa-angle-double-down fa-sm fa-fw text-gray-400"></i>
               </div>
@@ -661,6 +669,124 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="showCTPL" class="card shadow mb-3" id="CTPLAuth">
+            <div class="card-header">
+              <strong>CTPL Authenctication (for products with CTPL)</strong>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['automaticAuth'].invalid 
+                    && (quoteForm.controls['automaticAuth'].dirty 
+                    || quoteForm.controls['automaticAuth'].touched)}">
+                    <label for="automaticAuth">Automatic Authentication</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="automaticAuth"
+                      [(ngModel)]="carDetails.automaticAuth">
+                      <option value="S">YES</option>
+                      <option value="N">NO</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['automaticAuth'].errors?.required">
+                      * automatic authentication is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['registrationType'].invalid 
+                    && (quoteForm.controls['registrationType'].dirty 
+                    || quoteForm.controls['registrationType'].touched)}">
+                    <label for="registrationType">Registration Type</label>
+                    <select class="custom-select mr-sm-2 required" formControlName="registrationType"
+                      [(ngModel)]="carDetails.registrationType">
+                      <option selected></option>
+                      <option *ngFor="let rType of LOV.registrationTypeLOV" [ngValue]="rType.COD_VALOR">
+                        {{ rType.NOM_VALOR }}</option>
+                    </select>
+                    <p class="form-error" *ngIf="quoteForm.controls['registrationType'].errors?.required">
+                      * registration type is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group">
+                    <label for="mvType">MV Type (leave blank to set default value)</label>
+                    <select class="custom-select mr-sm-2" formControlName="mvType" [(ngModel)]="carDetails.mvType">
+                      <option selected></option>
+                      <option *ngFor="let mv of LOV.mvTypeLOV" [ngValue]="mv.COD_VALOR">{{ mv.NOM_VALOR }}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['cocNumber'].invalid 
+                  && (quoteForm.controls['cocNumber'].dirty 
+                  || quoteForm.controls['cocNumber'].touched)}">
+                    <label for="cocNumber">COC Number</label>
+                    <input type="text" formControlName="cocNumber" class="form-control required"
+                      [(ngModel)]="carDetails.cocNumber">
+                    <p class="form-error" *ngIf="quoteForm.controls['cocNumber'].errors?.required">
+                      * coc number is required
+                    </p>
+                  </div>
+                </div>
+
+                <div class="col-sm-8">
+                  <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['authNumber'].invalid 
+                    && (quoteForm.controls['authNumber'].dirty 
+                    || quoteForm.controls['authNumber'].touched)}">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="cbIsNotRequiredAuthNumber"
+                        formControlName="cbIsNotRequiredAuthNumber" [(ngModel)]="carDetails.cbIsNotRequiredAuthNumber">
+                      <label class="form-check-label" for="cbIsNotRequiredAuthNumber">
+                        Do not require Authentication Number
+                      </label>
+                    </div>
+                    <label class="form-check-label" for="cbIsNotRequiredAuthNumber">
+                      Authenctication Number (ISAP Authentication)
+                    </label>
+                    <div class="input-group mb-3">
+                      <input type="text" formControlName="authNumber"
+                        [attr.disabled]="carDetails.cbIsNotRequiredAuthNumber ? '' : null" class="form-control required"
+                        [(ngModel)]="carDetails.authNumber">
+                      <div class="input-group-append">
+                        <button (click)="authCOCRegistration()" [attr.disabled]="carDetails.cbIsNotRequiredAuthNumber ? '' : null"
+                          class="btn btn-primary" type="button">Authenticate</button>
+                      </div>
+                      <p class="form-error" *ngIf="quoteForm.controls['authNumber'].errors?.required">
+                        * authentication number is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- cannot use reference variable and ngIf -->
+          <app-coverages
+            *ngIf="showCoverage"
+            [carDetails]="carDetails"
+            [(showCTPL)]="showCTPL"
+            [quoteForm]="quoteForm"
+            [coverageList]="coverageList"
+            [coverageVariable]="coverageVariable"
+            [amountList]="amountList"
+            [premiumAmount]="premiumAmount"
+            [coverageAmount]="coverageAmount"
+            [coverageVariableData]="coverageVariableData"
+            [isModifiedCoverage]="isModifiedCoverage">
+          </app-coverages>
+
+          <app-payment-breakdown
+            *ngIf="showPaymentBreakdown"
+            #appPaymentBreakdown
+            [paymentReceipt]="paymentReceipt"
+            [paymentBreakdown]="paymentBreakdown"
+            [showExchangeRate]="false">
+          </app-payment-breakdown>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -696,6 +822,7 @@
                         || quoteForm.controls['product'].touched)}">
                     <label for="product">Product List</label>
                     <select class="custom-select mr-sm-2 required" formControlName="product"
+                      [attr.disabled]="showGenerateBtnGrp && !isModifiedCoverage ? null : true"
                       [(ngModel)]="carDetails.productList" [attr.disabled]=" LOV.productListLOV?.length ? null : true">
                       <option selected></option>
                       <option *ngFor="let product of LOV.productListLOV" [ngValue]="product.COD_MODALIDAD">
@@ -711,7 +838,7 @@
                 <div class="col-xl-12">
                   <div class="alert alert-info note">
                     <p><strong>Important Reminder:</strong> Make sure to fill out all required fields to enable the
-                      product list selection.
+                      generate button.
                     </p>
                   </div>
                   <!-- .note -->
@@ -721,15 +848,36 @@
             </div>
           </div>
 
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-primary" (click)="test(carDetails)">Test</button>
-            <button [disabled]="quoteForm.pristine || quoteForm.invalid ||
+          <div *ngIf="showGenerateBtnGrp" class="btn-group" role="group">
+            <button type="button" (click)="test()" class="btn btn-primary">test</button>
+            <button
+              [disabled]="quoteForm.pristine || quoteForm.invalid ||
               appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
-              appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid" type="button" class="btn btn-primary"
-              (click)="issueQuote(carDetails, groupPolicy)">Issue
-              Qoute</button>
-            <button [disabled]="true" type="button" class="btn btn-primary">Print Qoute</button>
-            <button [disabled]="true" type="button" class="btn btn-primary">Proceed to Issuance</button>
+              appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
+              type="button" class="btn btn-primary"
+              (click)="issueQuote('S')">Generate</button>
+          </div>
+
+          <div *ngIf="showIssueQuoteBtnGrp" class="btn-group" role="group">
+            <button type="button" class="btn btn-primary"
+              (click)="manageBtn(1)">Change Product</button>
+            <button type="button" class="btn btn-primary"
+              (click)="manageBtn(4)">Edit Coverage</button>
+            <button
+              [disabled]="quoteForm.pristine || quoteForm.invalid ||
+              appGroupPolicy.gpForm.pristine || appGroupPolicy.gpForm.invalid ||
+              appPolicyHolder.phForm.pristine || appPolicyHolder.phForm.invalid"
+              type="button" class="btn btn-primary"
+              (click)="issueQuote('N')">Issue Qoute</button>
+          </div>
+
+          <div *ngIf="showProceedToIssuanceBtnGrp" class="text-right">
+            <h5><small>Your quotation number:</small> {{carDetails.quotationNumber}}</h5>
+          </div>
+          <div *ngIf="showProceedToIssuanceBtnGrp" class="btn-group" role="group">
+            <button type="button" (click)="newQuote()" class="btn btn-primary">New Quote</button>
+            <button type="button" (click)="printQuote()" class="btn btn-primary">Print Qoute</button>
+            <button type="button" (click)="proceedToIssuance()" class="btn btn-primary">Proceed to Issuance</button>
           </div>
 
         </form>

@@ -74,6 +74,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   coveragelist: Array < QuickQuoteResultDTO > = [];
   
   vehicleValue: any;
+
   //flag to display product comparison and coverage
   showProductComparison: boolean = false;
   //modal reference
@@ -81,11 +82,11 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private fb: FormBuilder,
-    private cu: CarUtilityServices,
-    private qq: QuickQuoteService,
-    private carlov: CarLOVServices,
+    private cus: CarUtilityServices,
+    private qqs: QuickQuoteService,
+    private cls: CarLOVServices,
     private changeDetector: ChangeDetectorRef,
-    private modalService: BsModalService
+    private bms: BsModalService
   ) {
     this.createQuickQuoteForm();
   }
@@ -96,7 +97,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     var _this = this;
-    this.carlov.getMakeList().then(res => {
+    this.cls.getMakeList().then(res => {
       _this.LOV.makeLOV = res;
     });
   }
@@ -427,7 +428,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   makeOnchange() {
     this.clearRiskDetails(1);
     var _this = this;
-    this.carlov.getModelList(this.carDetails).then(res => {
+    this.cls.getModelList(this.carDetails).then(res => {
       _this.LOV.modelLOV = res;
     });
   }
@@ -438,7 +439,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
     this.carDetails.make = _carDetails.make;
 
     var _this = this;
-    this.carlov.getVehicleTypeList(this.carDetails).then(res => {
+    this.cls.getVehicleTypeList(this.carDetails).then(res => {
       _this.LOV.vehicleTypeLOV = res;
     });
   }
@@ -451,7 +452,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
     if (this.carDetails.vehicleType > 0) {
       var _this = this;
-      this.carlov.getModelYearList(this.carDetails).then(res => {
+      this.cls.getModelYearList(this.carDetails).then(res => {
         _this.LOV.modelYearLOV = res;
       });
     }
@@ -466,10 +467,10 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
     if (this.carDetails.modelYear != '') {
       var _this = this;
-      this.carlov.getSubModelList(this.carDetails).then(res => {
+      this.cls.getSubModelList(this.carDetails).then(res => {
         _this.LOV.subModelLOV = res;
       });
-      this.carlov.getTypeOfUseList(this.carDetails).then(res => {
+      this.cls.getTypeOfUseList(this.carDetails).then(res => {
         _this.LOV.typeOfUseLOV = res;
       });
     }
@@ -503,14 +504,14 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
 
   getVehicleValue() {
     const _this = this;
-    this.cu.getFMV(this.carDetails).then(res => {
+    this.cus.getFMV(this.carDetails).then(res => {
       _this.carDetails.vehicleValue = res.obj["fmv"];
     });
   }
 
   getSubline() {
     const _this = this;
-    this.cu.getSubline(this.carDetails).then(res => {
+    this.cus.getSubline(this.carDetails).then(res => {
       _this.LOV.sublineLOV = res.obj["list"];
     });
   }
@@ -529,7 +530,7 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
   }
 
   quickQuote(carDetails: QQCar) {
-    this.qq.quickQuoteCar(carDetails).then(res => {
+    this.qqs.quickQuoteCar(carDetails).then(res => {
       if (!Utility.isUndefined(res)) {
         if (res.status) {
           var quickQuoteDetails = res.obj["quickQuoteDetails"];
@@ -543,11 +544,10 @@ export class QuickQuotationCarComponent implements OnInit, AfterViewChecked {
           this.showProductComparison = true;
 
           setTimeout(() => {
-            var el = document.getElementById('productComparison');
-            Utility.scroll(el);
+            Utility.scroll('productComparison');
           });
         } else {
-          this.modalRef = Utility.showError(this.modalService, res.message);
+          this.modalRef = Utility.showError(this.bms, res.message);
         }
       }
     });

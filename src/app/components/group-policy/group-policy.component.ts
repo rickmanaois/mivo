@@ -23,6 +23,9 @@ import {
 import {
   AuthenticationService
 } from '../../services/authentication.service';
+import {
+  Utility
+} from 'src/app/utils/utility';
 
 @Component({
   selector: 'app-group-policy',
@@ -31,7 +34,7 @@ import {
 })
 
 export class GroupPolicyComponent {
-  currentUser = this.authenticationService.currentUserValue;
+  user = this.auths.currentUserValue;
   @Input() subline: String;
   @Input() groupPolicy: GroupPolicy;
   @Input() details: any;
@@ -44,18 +47,25 @@ export class GroupPolicyComponent {
   expiryDateMinDate: Date = moment().add(1, 'years').toDate();
 
   constructor(
-    private gplov: GroupPolicyLOVServices,
+    private gpls: GroupPolicyLOVServices,
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService) {
-    this.createForm();
-  }
+    private auths: AuthenticationService) {}
 
   ngOnInit(): void {
+    this.createForm();
     setTimeout(() => {
-      this.groupPolicy.agentCode = this.currentUser.agentCode; //TODO
+      const hasSelectedAgent = this.user.selectedAgent != null;
+      this.groupPolicy.agentCode = hasSelectedAgent ? this.user.agentCode : this.user.userId; //TODO
+
+      this.groupPolicy.commercialStructure = this.user.selectedAgent != null ?
+        this.user.selectedAgent.commStructure :
+        this.user.commStructure;
+      if (!Utility.isUndefined(this.groupPolicy.commercialStructure)) {
+        this.gpForm.get('commercialStructure').markAsDirty();
+      }
 
       const _this = this;
-      this.gplov.getCommercialStructure().then(res => {
+      this.gpls.getCommercialStructure().then(res => {
         _this.GPLOV.commercialStructureLOV = res;
       });
 
@@ -66,7 +76,7 @@ export class GroupPolicyComponent {
   ngOnChanges() {
     this._details = this.details;
     const _this = this;
-    this.gplov.getGroupPolicy(this._details.subline).then(res => {
+    this.gpls.getGroupPolicy(this._details.subline).then(res => {
       _this.GPLOV.groupPolicyLOV = res;
     });
   }
@@ -87,7 +97,7 @@ export class GroupPolicyComponent {
   groupPolicyOnChange() {
     const _this = this;
     _this.GPLOV.contractLOV = []
-    this.gplov.getContract(this._details.subline, this.groupPolicy).then(res => {
+    this.gpls.getContract(this._details.subline, this.groupPolicy).then(res => {
       _this.GPLOV.contractLOV = res;
     });
   }
@@ -95,7 +105,7 @@ export class GroupPolicyComponent {
   contractOnChange() {
     const _this = this;
     _this.GPLOV.subContractLOV = []
-    this.gplov.getSubContract(this._details.subline, this.groupPolicy).then(res => {
+    this.gpls.getSubContract(this._details.subline, this.groupPolicy).then(res => {
       _this.GPLOV.subContractLOV = res;
     });
   }

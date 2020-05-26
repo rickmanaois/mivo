@@ -42,4 +42,7 @@ export class CarUtilityServices {
     return this.app.post(carDetails, '/car/getPreAdditionalInfo').then(ReturnDTO => ReturnDTO as ReturnDTO);
   }
 
+  async authCOCRegistration(carDetails: QuoteCar): Promise < ReturnDTO > {
+    return this.app.post(carDetails, '/car/lto/authCOCRegistration').then(ReturnDTO => ReturnDTO as ReturnDTO);
+  }
 }

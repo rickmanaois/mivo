@@ -1,0 +1,65 @@
+<div id="coverages" class="card shadow mb-3">
+  <div class="card-header">
+    <strong>Coverages</strong>
+  </div>
+  <div class="card-body">
+
+    <div class="flexitable">
+
+      <form [formGroup]="cForm">
+        <mat-table formArrayName="coverages" [dataSource]="dataSource">
+          <ng-container matColumnDef="included">
+            <mat-header-cell *matHeaderCellDef> Included </mat-header-cell>
+            <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
+              <div class="form-check">
+                <input (change)="updateRow(row)" class="form-check-input" type="checkbox" [attr.disabled]="!isModifiedCoverage || row.isMandatory ? '' : null"
+                  formControlName="included" id="chk{{rowIndex}}">
+                <label class="form-check-label" for="chk{{rowIndex}}">
+                  {{row.isMandatory ? 'Included' : 'Optional'}}
+                </label>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="coverage">
+            <mat-header-cell *matHeaderCellDef> Coverage </mat-header-cell>
+            <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
+              {{row.coverage}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="sumInsured">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'amount-header'"> Sum Insured </mat-header-cell>
+            <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex" [ngClass]="'amount'">
+              <span *ngIf="!row.isSelect">{{row.sumInsured | currency: 'PHP' : 'symbol-narrow'}}</span>
+              <select *ngIf="row.isSelect" class="custom-select mr-sm-2 required" formControlName="sumInsured"
+                [(ngModel)]="row.sumInsured"
+                [attr.disabled]="isModifiedCoverage && row.included ? null : ''" >
+                <option *ngFor="let opt of row.options" [ngValue]="opt.value">{{ opt.value }}</option>
+              </select>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="netPremium">
+            <mat-header-cell *matHeaderCellDef [ngClass]="'amount-header'"> Net Premium </mat-header-cell>
+            <mat-cell *matCellDef="let row let rowIndex = index" [formGroupName]="rowIndex" [ngClass]="'amount'">
+              <span>{{row.netPremium | currency: 'PHP' : 'symbol-narrow'}}</span>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngClass]="'amount'">
+              <i *ngIf="isModifiedCoverage && row.included && row.hasVariableData" class="fa fa-edit" (click)="editCoverage(row)"></i>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="row.included ? 'included' : ''"></mat-row>
+
+        </mat-table>
+      </form>
+    </div>
+
+  </div>
+</div>

@@ -4,6 +4,7 @@ import {
 import {
   ModalComponent
 } from '../components/modal/modal.component';
+import * as moment from 'moment';
 
 export class Utility {
 
@@ -39,8 +40,35 @@ export class Utility {
   static modal(modalService: any, message: String, title: String) {
     const initialState = {
       message: message,
+      className: "modal-" + title.toLowerCase(),
       title: title,
-      isClose: true
+      isClose: true,
+      isHtml: false
+    };
+    return modalService.show(ModalComponent, {
+      initialState
+    });
+  }
+
+  static showHTMLError(modalService: any, items: String[]) {
+    return this.modalHTML(modalService, items, "Error");
+  }
+
+  static showHTMLWarning(modalService: any, items: String[]) {
+    return this.modalHTML(modalService, items, "Warning");
+  }
+
+  static showHTMLInfo(modalService: any, items: String[]) {
+    return this.modalHTML(modalService, items, "Info");
+  }
+
+  static modalHTML(modalService: any, items: String[], title: String) {
+    const initialState = {
+      items: items,
+      className: "modal-" + title.toLowerCase(),
+      title: title,
+      isClose: true,
+      isHtml: true
     };
     return modalService.show(ModalComponent, {
       initialState
@@ -48,8 +76,14 @@ export class Utility {
   }
 
   //smooth scroll to preferred html element
-  static scroll(el: HTMLElement) {
-    el.scrollIntoView({behavior: 'smooth'});
+  static scroll(id: string) {
+    //buffer if id is hidden
+    setTimeout(()=> {
+      var el = document.getElementById(id);
+      if (!this.isUndefined(el)) {
+        el.scrollIntoView({behavior: 'smooth'});
+      }
+    }, 500);
   }
 
   //converts string value to integer
@@ -58,5 +92,11 @@ export class Utility {
       a[param] = parseInt(a[param]);
     });
     return arr;
+  }
+
+  //format date string
+  static formatDate(d : Date, f ?: string) {
+    const format = !this.isUndefined(f) ? f : "MM/DD/YYYY";
+    return moment(d).format(format);
   }
 }

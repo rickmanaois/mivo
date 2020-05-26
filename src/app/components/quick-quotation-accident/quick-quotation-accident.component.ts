@@ -68,10 +68,10 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
 
   constructor(
     private fb: FormBuilder,
-    private qq: QuickQuoteService,
-    private accidentlov: AccidentLOVServices,
+    private qqs: QuickQuoteService,
+    private als: AccidentLOVServices,
     private changeDetector: ChangeDetectorRef,
-    private modalService: BsModalService
+    private bms: BsModalService
   ) {
     this.createQuickQuoteForm();
     this.setValidations();
@@ -83,7 +83,7 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
 
   ngOnInit() {
     var _this = this;
-    this.accidentlov.getSubline().then(res => {
+    this.als.getSubline().then(res => {
       _this.LOV.sublineLOV = res;
     });
 
@@ -131,7 +131,7 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
         this.showSPADetails = true;
         Utility.updateValidator(occupationalClass, [Validators.required]);
         Utility.updateValidator(disablementValue, [Validators.required]);
-        this.accidentlov.getOccupationalClass().then(res => {
+        this.als.getOccupationalClass().then(res => {
           _this.LOV.occupationalClassLOV = res;
         });
       } else if (subline == 326) { //hospital cash benefit
@@ -226,13 +226,12 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
     // displaying product coverage
     this.showProductCoverage = true;
     setTimeout(() => {
-      var el = document.getElementById('productCoverage');
-      Utility.scroll(el);
+      Utility.scroll('productCoverage');
     }, 500);
   }
 
   quickQuote(accidentDetails: QQAccident) {
-    this.qq.quickQuoteAccident(accidentDetails).then(res => {
+    this.qqs.quickQuoteAccident(accidentDetails).then(res => {
       if (!Utility.isUndefined(res)) {
         if (res.status) {
           var quickQuoteDetails = res.obj["quickQuoteDetails"];
@@ -245,11 +244,10 @@ export class QuickQuotationAccidentComponent implements OnInit, AfterViewChecked
           // displaying product comparison
           this.showProductComparison = true;
           setTimeout(() => {
-            var el = document.getElementById('productComparison');
-            Utility.scroll(el);
+            Utility.scroll('productComparison');
           });
         } else {
-          this.modalRef = Utility.showError(this.modalService, res.message);
+          this.modalRef = Utility.showError(this.bms, res.message);
         }
       }
     });
