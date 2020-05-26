@@ -140,8 +140,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private auths: AuthenticationService,
     private bms: BsModalService,
-    public dialog: MatDialog,
     private router: Router,
+    public dialog: MatDialog,
   ) {
     // this.createQuoteForm();
     // this.setValidations();
@@ -157,7 +157,8 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     if (this.isIssuance) {
       this.pageLabel = 'Issuance';
       if (this.isLoadQuotation) {
-        alert(this.isLoadQuotation);
+        //if loaded from car quotation
+        alert(Globals.loadNumber);
         this.init();
       } else {
         this.init();
@@ -606,6 +607,20 @@ export class QuotationCarComponent implements OnInit, AfterViewChecked {
     if (this.showCTPL) {
       Utility.scroll('CTPLAuth');
     }
+  }
+
+  authCOCRegistration(){
+    this.cus.authCOCRegistration(this.carDetails).then(res => {
+      if (res.status) {
+        if (res.obj['status']) {
+          this.carDetails.authNumber = res.obj['authNumber'];
+        } else {
+          this.modalRef = Utility.showError(this.bms, res.obj['error']);
+        }
+      } else {
+        this.modalRef = Utility.showError(this.bms, res.message);
+      }
+    });
   }
 
   populateCoverage(coverageList: any[], amountList: any[], premiumAmount: any[], coverageAmount: any[], coverageVariable: any[]) {
