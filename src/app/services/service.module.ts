@@ -36,6 +36,9 @@ import {
 import {
   UtilityService
 } from './utility.service';
+import {
+  ThirdPartyService
+} from './third-party';
 
 /* LOV Services */
 import {
@@ -74,6 +77,7 @@ import {
     AgentService, //as
     DashboardService, //ds
     UtilityService, //us
+    ThirdPartyService, //tps
 
     LovService, //ls
     GroupPolicyLOVServices, //gpls

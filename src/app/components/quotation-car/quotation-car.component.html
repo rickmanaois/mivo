@@ -12,9 +12,28 @@
       <div class="card-body" id="topDiv">
         <form [formGroup]="quoteForm" class="regular-quote-form">
 
-          <app-individual-policy
-            *ngIf='isIssuance'>
-          </app-individual-policy>
+          <div *ngIf='isIssuance' class="card shadow mb-3">
+            <div class="card-header">
+              <strong>Individual Policy</strong>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="inputGroupSelect01">Quotation Number</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Quotation Number here.."
+                      formControlName="quotationNumber" [(ngModel)]="carDetails.quotationNumber">
+                    <div class="input-group-append">
+                      <button [disabled]="disableLoadBtn" class="btn btn-outline-secondary" (click)="loadQuotation()"
+                        type="button">Load</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="card shadow mb-3">
             <div class="card-header">
@@ -322,7 +341,8 @@
           <app-policy-holder
             #appPolicyHolder
             [details]="carDetails"
-            [policyHolder]="policyHolder">
+            [policyHolder]="policyHolder"
+            [isIssuance]="isIssuance">
           </app-policy-holder>
 
           <app-group-policy
@@ -798,6 +818,15 @@
                   <h6>Product Data</h6>
                 </div>
 
+                <div class="col-xl-12">
+                  <div class="alert alert-info note">
+                    <p><strong>Important Reminder:</strong> Make sure to fill out all required fields to enable the
+                      generate button.
+                    </p>
+                  </div>
+                  <!-- .note -->
+                </div>
+
                 <div class="col-lg-3 col-md-4 col-sm-6">
                   <div class="form-group" [ngClass]="{'input-error': quoteForm.controls['paymentMethod'].invalid 
                         && (quoteForm.controls['paymentMethod'].dirty 
@@ -833,15 +862,6 @@
                       * product list is required
                     </p>
                   </div>
-                </div>
-
-                <div class="col-xl-12">
-                  <div class="alert alert-info note">
-                    <p><strong>Important Reminder:</strong> Make sure to fill out all required fields to enable the
-                      generate button.
-                    </p>
-                  </div>
-                  <!-- .note -->
                 </div>
 
               </div>
