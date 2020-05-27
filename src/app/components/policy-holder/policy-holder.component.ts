@@ -112,7 +112,7 @@ export class PolicyHolderComponent implements OnInit {
 
   searchResult() {
     this.showSearchResult = false;
-    this.tps.getThirdPartyList(this.policyHolderType, this.firstName, this.lastName).then((res)=> {
+    this.tps.getThirdPartyList(1, this.firstName, this.lastName).then((res)=> {
       if (res.status) {
         this.showSearchResult = true;
         this.source = res.obj["thirdPartyList"];

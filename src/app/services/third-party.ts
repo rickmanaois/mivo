@@ -12,9 +12,9 @@ import {
 export class ThirdPartyService {
   constructor(private app: AppService) {}
 
-  async getThirdPartyList(policyHolderType: string, firstName: string, lastName: string): Promise < ReturnDTO > {
+  async getThirdPartyList(codActTercero: number, firstName: string, lastName: string): Promise < ReturnDTO > {
     return this.app.post({
-      policyHolderType,
+      codActTercero,
       firstName,
       lastName
     }, '/thirdParty/getThirdPartyList').then(ReturnDTO => ReturnDTO as ReturnDTO);
