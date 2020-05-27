@@ -115,7 +115,7 @@ export class PolicyHolderComponent implements OnInit {
     this.tps.getThirdPartyList(1, this.firstName, this.lastName).then((res)=> {
       if (res.status) {
         this.showSearchResult = true;
-        this.source = res.obj["thirdPartyList"];
+        this.source = res.obj as [];
         if (this.source.length) {
           this.dataSource = new MatTableDataSource(this.source);
           setTimeout(() => {
