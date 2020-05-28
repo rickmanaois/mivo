@@ -23,7 +23,9 @@ import {
   BsModalRef,
   BsModalService
 } from 'ngx-bootstrap/modal';
-import { ThirdPartyService } from 'src/app/services/third-party';
+import {
+  ThirdPartyService
+} from 'src/app/services/third-party';
 
 @Component({
   selector: 'app-policy-holder',
@@ -69,20 +71,16 @@ export class PolicyHolderComponent implements OnInit {
     this.setValidations();
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   createForm() {
     this.phForm = this.fb.group({
-      //policy holder
-      name: ['', Validators.required],
-      documentCode: ['', Validators.required],
-      documentType: ['', Validators.required]
+      name: ['', this.isIssuance ? null : Validators.required],
+      documentCode: ['', this.isIssuance ? Validators.required : null],
+      documentType: ['', this.isIssuance ? Validators.required : null]
     });
 
     this.searchForm = this.fb.group({
-      //policy holder
       policyHolderType: [null],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -92,7 +90,7 @@ export class PolicyHolderComponent implements OnInit {
   setValidations() {
     var policyHolderType = this.searchForm.get('policyHolderType');
     var lastName = this.searchForm.get('lastName');
-    
+
     policyHolderType.valueChanges.subscribe(type => {
       this.showLastName = type == "P";
       this.firstNameLabel = type == "P" ? "First Name" : "Company/Organization";
@@ -107,23 +105,26 @@ export class PolicyHolderComponent implements OnInit {
   }
 
   create() {
-    // this.showSearch = true;
+    this.showSearch = false;
+    this.showSearchResult = false;
   }
 
   searchResult() {
     this.showSearchResult = false;
-    this.tps.getThirdPartyList(1, this.firstName, this.lastName).then((res)=> {
+    const isPerson = this.policyHolderType == "P";
+    this.lastName = isPerson ? this.lastName : null;
+    this.tps.getThirdPartyList(1, this.firstName, this.lastName).then((res) => {
       if (res.status) {
-        this.showSearchResult = true;
-        this.source = res.obj as [];
+        this.source = res.obj as[];
         if (this.source.length) {
+          this.showSearchResult = true;
           this.dataSource = new MatTableDataSource(this.source);
           setTimeout(() => {
             this.dataSource.paginator = this.paginator;
           }, 100);
         } else {
-          var completName = this.policyHolderType == "P" ? this.firstName + " " + this.lastName : this.firstName;
-          this.modalRef = Utility.showInfo(this.bms, "No results for " + completName);
+          var completeName = isPerson ? this.firstName + " " + this.lastName : this.firstName;
+          this.modalRef = Utility.showInfo(this.bms, "No results for " + completeName);
         }
       } else {
         this.modalRef = Utility.showError(this.bms, res.message);
@@ -144,7 +145,7 @@ export class PolicyHolderComponent implements OnInit {
       this.showSearchResult = false;
       Utility.scroll('policyHolderInfoPanel');
     } else {
-      var completeName = row.codActTercero == 1 ? row.nomTercero + " " + row.ape2Tercero : row.nomTercero; 
+      var completeName = this.policyHolderType == "P" ? this.firstName + " " + this.lastName : this.firstName;
       this.modalRef = Utility.showError(this.bms, "Incorrect document code entered for " + completeName);
     }
   }
