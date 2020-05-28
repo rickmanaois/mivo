@@ -11,7 +11,7 @@ export class ThirdParty {
   birthDate: Date;
   mobileNumber: string;
   correspondenceType: number;
-  country: number;
+  country: string;
   state: number;
   municipility: number;
   city: number;

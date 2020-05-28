@@ -42,7 +42,7 @@ export class ThirdPartyLOVServices {
     return this.lov.getIntOptionList(dto, 'TIPO_SUFIJO_NOMBRE').then(lovs => lovs as any[]);
   }
 
-  async getCorrespondence(): Promise < any[] > {
+  async getCorrespondenceType(): Promise < any[] > {
     const dto = new OptionList(
       'EN',
       'TIP_ETIQUETA',
@@ -55,7 +55,7 @@ export class ThirdPartyLOVServices {
       'A1000101',
       '1',
       '');
-    return this.lov.getIntLOV(dto, 'COD_PAIS').then(lovs => lovs as any[]);
+    return this.lov.getLOV(dto).then(lovs => lovs as any[]);
   }
 
   async getState(thirdParty: ThirdParty): Promise < any[] > {

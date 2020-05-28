@@ -2,7 +2,7 @@ export class ThirdPartyListObject {
   documentTypeLOV: any[];
   prefixLOV: any[];
   suffixLOV: any[];
-  correspondenceLOV: any[];
+  correspondenceTypeLOV: any[];
   countryLOV: any[];
   stateLOV: any[];
   municipalityLOV: any[];

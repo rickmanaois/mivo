@@ -393,7 +393,7 @@
               <div class="form-group">
                 <label for="personType">Type</label>
                 <select class="custom-select mr-sm-2" formControlName="personType" [(ngModel)]="thirdParty.personType">
-                  <option *ngFor="let personType of TPLOV.personTypeLOV" [ngValue]="personType.COD_MARCA">
+                  <option *ngFor="let personType of TPLOV.TIP_NACIONALIDAD" [ngValue]="personType.NOM_VALOR">
                     {{ personType.NOM_MARCA }}
                   </option>
                 </select>

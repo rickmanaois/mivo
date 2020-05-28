@@ -133,8 +133,8 @@ export class CreateThirdPartyComponent implements OnInit {
     this.tpls.getSuffix().then(res => {
       _this.TPLOV.suffixLOV = res;
     });
-    this.tpls.getCorrespondence().then(res => {
-      _this.TPLOV.correspondenceLOV = res;
+    this.tpls.getCorrespondenceType().then(res => {
+      _this.TPLOV.correspondenceTypeLOV = res;
     });
     this.tpls.getCountry().then(res => {
       _this.TPLOV.countryLOV = res;
