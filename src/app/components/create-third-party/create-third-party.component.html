@@ -183,7 +183,7 @@
           <div class="form-group">
             <label for="gender">State</label>
             <select class="custom-select mr-sm-2" formControlName="state" [(ngModel)]="thirdParty.state"
-                (change)="getMunicipilaty()">
+                (change)="getMunicipality()">
               <option *ngFor="let state of TPLOV.stateLOV" [ngValue]="state.COD_ESTADO">{{ state.NOM_ESTADO }}
               </option>
             </select>
