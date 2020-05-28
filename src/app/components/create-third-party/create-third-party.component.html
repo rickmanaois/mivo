@@ -264,8 +264,8 @@
                 <label for="orgDocumentType">Contact Document Type</label>
                 <select class="custom-select mr-sm-2" formControlName="orgDocumentType"
                   [(ngModel)]="thirdParty.orgDocumentType">
-                  <option *ngFor="let documentType of TPLOV.documentTypeLOV" [ngValue]="documentType.COD_MARCA">
-                    {{ documentType.NOM_MARCA }}
+                  <option *ngFor="let documentType of TPLOV.documentTypeLOV" [ngValue]="documentType.COD_DOCUM">
+                    {{ documentType.NOM_DOCUM }}
                   </option>
                 </select>
               </div>
