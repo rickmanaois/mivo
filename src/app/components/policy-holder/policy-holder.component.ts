@@ -67,18 +67,24 @@ export class PolicyHolderComponent implements OnInit {
     private fb: FormBuilder,
     private bms: BsModalService,
     private tps: ThirdPartyService) {
+  }
+
+  ngOnInit(): void {
     this.createForm();
     this.setValidations();
   }
 
-  ngOnInit(): void {}
-
   createForm() {
-    this.phForm = this.fb.group({
-      name: ['', this.isIssuance ? null : Validators.required],
-      documentCode: ['', this.isIssuance ? Validators.required : null],
-      documentType: ['', this.isIssuance ? Validators.required : null]
-    });
+    if (this.isIssuance) {
+      this.phForm = this.fb.group({
+        documentCode: ['', Validators.required],
+        documentType: ['', Validators.required]
+      });
+    } else {
+      this.phForm = this.fb.group({
+        name: ['', Validators.required],
+      });
+    }
 
     this.searchForm = this.fb.group({
       policyHolderType: [null],
@@ -112,7 +118,7 @@ export class PolicyHolderComponent implements OnInit {
   searchResult() {
     this.showSearchResult = false;
     const isPerson = this.policyHolderType == "P";
-    this.lastName = isPerson ? this.lastName : null;
+    this.lastName = isPerson ? this.lastName : "";
     this.tps.getThirdPartyList(1, this.firstName, this.lastName).then((res) => {
       if (res.status) {
         this.source = res.obj as[];
