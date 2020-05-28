@@ -13,7 +13,7 @@ export class ThirdParty {
   correspondenceType: number;
   country: string;
   state: number;
-  municipility: number;
+  municipality: number;
   city: number;
   address: string;
   zipcode: number;
