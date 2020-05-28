@@ -139,18 +139,6 @@ export class CreateThirdPartyComponent implements OnInit {
     this.tpls.getCountry().then(res => {
       _this.TPLOV.countryLOV = res;
     });
-    this.tpls.getState(this.thirdParty).then(res => {
-      _this.TPLOV.stateLOV = res;
-    });
-    this.tpls.getMunicipality(this.thirdParty).then(res => {
-      _this.TPLOV.municipalityLOV = res;
-    });
-    this.tpls.getCity(this.thirdParty).then(res => {
-      _this.TPLOV.documentTypeLOV = res;
-    });
-    this.tpls.getZipCode(this.thirdParty).then(res => {
-      _this.TPLOV.zipcodeLOV = res;
-    });
     this.tpls.getNationality().then(res => {
       _this.TPLOV.nationalityLOV = res;
     });
@@ -172,6 +160,34 @@ export class CreateThirdPartyComponent implements OnInit {
     });
     this.tpls.getLanguage().then(res => {
       _this.TPLOV.personLanguageLOV = res;
+    });
+  }
+
+  getState() {
+    const _this = this;
+    this.tpls.getState(this.thirdParty).then(res => {
+      _this.TPLOV.stateLOV = res;
+    });
+  }
+
+  getMunicipality() {
+    const _this = this;
+    this.tpls.getMunicipality(this.thirdParty).then(res => {
+      _this.TPLOV.municipalityLOV = res;
+    });
+  }
+
+  getCity() {
+    const _this = this;
+    this.tpls.getCity(this.thirdParty).then(res => {
+      _this.TPLOV.documentTypeLOV = res;
+    });
+  }
+
+  getZipCode() {
+    const _this = this;
+    this.tpls.getZipCode(this.thirdParty).then(res => {
+      _this.TPLOV.zipcodeLOV = res;
     });
   }
 

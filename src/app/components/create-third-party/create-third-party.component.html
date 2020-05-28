@@ -31,7 +31,7 @@
             <label for="documentType">Document Type</label>
             <select class="custom-select mr-sm-2 required" formControlName="documentType"
               [(ngModel)]="thirdParty.documentType">
-              <option *ngFor="let type of TPLOV.documentTypeLOV" [ngValue]="type.COD_MARCA">{{ type.NOM_MARCA }}
+              <option *ngFor="let type of TPLOV.documentTypeLOV" [ngValue]="type.TIP_DOCUM">{{ type.NOM_DOCUM }}
               </option>
             </select>
             <p class="form-error" *ngIf="tpForm.controls['documentType'].errors?.required">
@@ -59,7 +59,7 @@
           <div class="form-group">
             <label for="prefix">Prefix</label>
             <select class="custom-select mr-sm-2" formControlName="prefix" [(ngModel)]="thirdParty.prefix">
-              <option *ngFor="let pre of TPLOV.prefixLOV" [ngValue]="pre.COD_MARCA">{{ pre.NOM_MARCA }}</option>
+              <option *ngFor="let pre of TPLOV.prefixLOV" [ngValue]="pre.TIP_PREFIJO_NOMBRE">{{ pre.NOM_VALOR }}</option>
             </select>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <div class="form-group">
             <label for="suffix">Suffix</label>
             <select class="custom-select mr-sm-2" formControlName="suffix" [(ngModel)]="thirdParty.suffix">
-              <option *ngFor="let suff of TPLOV.suffixLOV" [ngValue]="suff.COD_MARCA">{{ suff.NOM_MARCA }}</option>
+              <option *ngFor="let suff of TPLOV.suffixLOV" [ngValue]="suff.TIPO_SUFIJO_NOMBRE">{{ suff.NOM_VALOR }}</option>
             </select>
           </div>
         </div>
@@ -157,7 +157,7 @@
             <select class="custom-select mr-sm-2 required" formControlName="correspondenceType"
               [(ngModel)]="thirdParty.correspondenceType">
               <option *ngFor="let correspondenceType of TPLOV.correspondenceTypeLOV"
-                [ngValue]="correspondenceType.COD_MARCA">{{ correspondenceType.NOM_MARCA }}</option>
+                [ngValue]="correspondenceType.TIP_ETIQUETA">{{ correspondenceType.NOM_VALOR }}</option>
             </select>
             <p class="form-error" *ngIf="tpForm.controls['correspondenceType'].errors?.required">
               * correspondence type is required
@@ -170,8 +170,9 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="gender">Country</label>
-            <select class="custom-select mr-sm-2" formControlName="country" [(ngModel)]="thirdParty.country">
-              <option *ngFor="let country of TPLOV.countryLOV" [ngValue]="country.COD_MARCA">{{ country.NOM_MARCA }}
+            <select class="custom-select mr-sm-2" formControlName="country" [(ngModel)]="thirdParty.country"
+                (change)="getState()">
+              <option *ngFor="let country of TPLOV.countryLOV" [ngValue]="country.COD_PAIS">{{ country.NOM_PAIS }}
               </option>
             </select>
           </div>
@@ -180,7 +181,8 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="gender">State</label>
-            <select class="custom-select mr-sm-2" formControlName="state" [(ngModel)]="thirdParty.state">
+            <select class="custom-select mr-sm-2" formControlName="state" [(ngModel)]="thirdParty.state"
+                (change)="getMunicipilaty()">
               <option *ngFor="let state of TPLOV.stateLOV" [ngValue]="state.COD_MARCA">{{ state.NOM_MARCA }}
               </option>
             </select>
@@ -191,7 +193,8 @@
           <div class="form-group">
             <label for="gender">Municipality</label>
             <select class="custom-select mr-sm-2" formControlName="municipality" [(ngModel)]="thirdParty.municipality">
-              <option *ngFor="let municipality of TPLOV.municipalityLOV" [ngValue]="municipality.COD_MARCA">
+              <option *ngFor="let municipality of TPLOV.municipalityLOV" [ngValue]="municipality.COD_MARCA"
+                (change)="getCity()">
                 {{ municipality.NOM_MARCA }}
               </option>
             </select>
@@ -201,7 +204,8 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="gender">Town/City</label>
-            <select class="custom-select mr-sm-2" formControlName="city" [(ngModel)]="thirdParty.city">
+            <select class="custom-select mr-sm-2" formControlName="city" [(ngModel)]="thirdParty.city"
+                (change)="getZipCode()">
               <option *ngFor="let city of TPLOV.cityLOV" [ngValue]="city.COD_MARCA">
                 {{ city.NOM_MARCA }}
               </option>
@@ -279,8 +283,8 @@
                 <label for="orgNationality">Nationality</label>
                 <select class="custom-select mr-sm-2" formControlName="orgNationality"
                   [(ngModel)]="thirdParty.orgNationality">
-                  <option *ngFor="let nationality of TPLOV.nationalityLOV" [ngValue]="nationality.COD_MARCA">
-                    {{ nationality.NOM_MARCA }}
+                  <option *ngFor="let nationality of TPLOV.nationalityLOV" [ngValue]="nationality.COD_PAIS">
+                    {{ nationality.NOM_PAIS }}
                   </option>
                 </select>
               </div>
@@ -340,8 +344,8 @@
                 <select class="custom-select mr-sm-2" formControlName="personMaritalStatus"
                   [(ngModel)]="thirdParty.personMaritalStatus">
                   <option *ngFor="let personMaritalStatus of TPLOV.personMaritalStatusLOV"
-                    [ngValue]="personMaritalStatus.COD_MARCA">
-                    {{ personMaritalStatus.NOM_MARCA }}
+                    [ngValue]="personMaritalStatus.COD_EST_CIVIL">
+                    {{ personMaritalStatus.NOM_VALOR }}
                   </option>
                 </select>
               </div>
@@ -353,8 +357,8 @@
                 <select class="custom-select mr-sm-2" formControlName="personProfession"
                   [(ngModel)]="thirdParty.personProfession">
                   <option *ngFor="let personProfession of TPLOV.personProfessionLOV"
-                    [ngValue]="personProfession.COD_MARCA">
-                    {{ personProfession.NOM_MARCA }}
+                    [ngValue]="personProfession.COD_PROFESION">
+                    {{ personProfession.NOM_PROFESION }}
                   </option>
                 </select>
               </div>
@@ -366,8 +370,8 @@
                 <select class="custom-select mr-sm-2" formControlName="personOccupation"
                   [(ngModel)]="thirdParty.personOccupation">
                   <option *ngFor="let personOccupation of TPLOV.personOccupationLOV"
-                    [ngValue]="personOccupation.COD_MARCA">
-                    {{ personOccupation.NOM_MARCA }}
+                    [ngValue]="personOccupation.COD_PROFESION">
+                    {{ personOccupation.NOM_PROFESION }}
                   </option>
                 </select>
               </div>
@@ -378,8 +382,8 @@
                 <label for="personNationality">Nationality</label>
                 <select class="custom-select mr-sm-2" formControlName="personNationality"
                   [(ngModel)]="thirdParty.personNationality">
-                  <option *ngFor="let nationality of TPLOV.nationalityLOV" [ngValue]="nationality.COD_MARCA">
-                    {{ nationality.NOM_MARCA }}
+                  <option *ngFor="let nationality of TPLOV.nationalityLOV" [ngValue]="nationality.COD_PAIS">
+                    {{ nationality.NOM_PAIS }}
                   </option>
                 </select>
               </div>
@@ -403,8 +407,8 @@
                 <label for="personLanguage">Language</label>
                 <select class="custom-select mr-sm-2 required" formControlName="personLanguage"
                   [(ngModel)]="thirdParty.personLanguage">
-                  <option *ngFor="let personLanguage of TPLOV.personLanguageLOV" [ngValue]="personLanguage.COD_MARCA">
-                    {{ personLanguage.NOM_MARCA }}
+                  <option *ngFor="let personLanguage of TPLOV.personLanguageLOV" [ngValue]="personLanguage.COD_IDIOMA">
+                    {{ personLanguage.NOM_IDIOMA }}
                   </option>
                 </select>
                 <p class="form-error" *ngIf="tpForm.controls['personLanguage'].errors?.required">
