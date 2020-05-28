@@ -180,7 +180,7 @@ export class CreateThirdPartyComponent implements OnInit {
   getCity() {
     const _this = this;
     this.tpls.getCity(this.thirdParty).then(res => {
-      _this.TPLOV.documentTypeLOV = res;
+      _this.TPLOV.cityLOV = res;
     });
   }
 
