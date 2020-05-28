@@ -147,6 +147,8 @@ export class PolicyHolderComponent implements OnInit {
     if (row.codDocum == input.value) {
       this.policyHolder.documentCode = row.codDocum;
       this.policyHolder.documentType = row.tipDocum;
+      this.phForm.get('documentType').markAsDirty();
+      this.phForm.get('documentCode').markAsDirty();
       this.showSearch = false;
       this.showSearchResult = false;
       Utility.scroll('policyHolderInfoPanel');
