@@ -101,8 +101,8 @@
               <div class="form-group" [ngClass]="{'input-error': searchForm.controls['firstName'].invalid 
                   && (searchForm.controls['firstName'].dirty 
                   || searchForm.controls['firstName'].touched)}">
-                <input type="text" placeholder="{{firstNameLabel}}" formControlName="firstName" class="form-control required"
-                  oninput="this.value = this.value.toUpperCase()" [(ngModel)]="firstName">
+                <input type="text" placeholder="{{firstNameLabel}}" formControlName="firstName"
+                  class="form-control required" [(ngModel)]="firstName">
                 <p class="form-error" *ngIf="searchForm.controls['firstName'].errors?.required">
                   * {{firstNameError}} is required
                 </p>
@@ -114,7 +114,7 @@
                   && (searchForm.controls['lastName'].dirty 
                   || searchForm.controls['lastName'].touched)}">
                 <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control required"
-                  oninput="this.value = this.value.toUpperCase()" [(ngModel)]="lastName">
+                  [(ngModel)]="lastName">
                 <p class="form-error" *ngIf="searchForm.controls['lastName'].errors?.required">
                   * last name is required
                 </p>

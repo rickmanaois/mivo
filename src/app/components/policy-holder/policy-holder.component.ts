@@ -14,7 +14,8 @@ import {
 } from '@angular/forms';
 import {
   MatTableDataSource,
-  MatPaginator
+  MatPaginator,
+  MatDialog
 } from '@angular/material';
 import {
   Utility
@@ -25,7 +26,10 @@ import {
 } from 'ngx-bootstrap/modal';
 import {
   ThirdPartyService
-} from 'src/app/services/third-party';
+} from 'src/app/services/third-party.service';
+import {
+  CreateThirdPartyComponent
+} from '../create-third-party/create-third-party.component';
 
 @Component({
   selector: 'app-policy-holder',
@@ -66,8 +70,8 @@ export class PolicyHolderComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private bms: BsModalService,
-    private tps: ThirdPartyService) {
-  }
+    private tps: ThirdPartyService,
+    public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -113,6 +117,25 @@ export class PolicyHolderComponent implements OnInit {
   create() {
     this.showSearch = false;
     this.showSearchResult = false;
+
+    const modalData = {
+      title: "Create Policy Holder"
+    };
+
+    const dialogRef = this.dialog.open(CreateThirdPartyComponent, {
+      width: '1000px',
+      data: modalData
+    });
+
+    dialogRef.afterClosed().subscribe(thirdParty => {
+      // if create button is clicked
+      if (!Utility.isUndefined(thirdParty)) {
+        this.policyHolder.documentCode = thirdParty.documentCode;
+        this.policyHolder.documentType = thirdParty.documentType;
+        this.phForm.get('documentType').markAsDirty();
+        this.phForm.get('documentCode').markAsDirty();
+      }
+    });
   }
 
   searchResult() {
