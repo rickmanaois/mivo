@@ -130,6 +130,7 @@ export class PolicyHolderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(thirdParty => {
       // if create button is clicked
       if (!Utility.isUndefined(thirdParty)) {
+        console.log(thirdParty);
         this.policyHolder.documentCode = thirdParty.documentCode;
         this.policyHolder.documentType = thirdParty.documentType;
         this.phForm.get('documentType').markAsDirty();
