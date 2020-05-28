@@ -193,9 +193,9 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="gender">Municipality</label>
-            <select class="custom-select mr-sm-2" formControlName="municipality" [(ngModel)]="thirdParty.municipality">
-              <option *ngFor="let municipality of TPLOV.municipalityLOV" [ngValue]="municipality.COD_PROV"
+            <select class="custom-select mr-sm-2" formControlName="municipality" [(ngModel)]="thirdParty.municipality"
                 (change)="getCity()">
+              <option *ngFor="let municipality of TPLOV.municipalityLOV" [ngValue]="municipality.COD_PROV">
                 {{ municipality.NOM_PROV }}
               </option>
             </select>
