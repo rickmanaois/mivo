@@ -22,7 +22,7 @@ export class ThirdPartyLOVServices {
     const dto = new LOV(
       'A1002300',
       '3',
-      '');
+      '|COD_CIA~1');
     return this.lov.getLOV(dto).then(lovs => lovs as any[]);
   }
 
